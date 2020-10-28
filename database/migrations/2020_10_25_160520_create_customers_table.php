@@ -17,7 +17,6 @@ class CreateCustomersTable extends Migration
             $table->uuid('id');
             $table->string('name')->unique();
             $table->boolean('is_company');
-            $table->string('uuid');
             $table->timestamps();
         });
     }

@@ -16,9 +16,10 @@ class CreateGarageModelsTable extends Migration
         Schema::create('garage_models', function (Blueprint $table) {
             $table->uuid('id');
             $table->string('name');
-            $table->integer('trucks_count');
+            $table->integer('truck_count');
             $table->integer('trailer_count');
-            $table->foreignId('location_id')->constrained();
+            $table->uuid('location_id');
+            $table->foreign('location_id')->references('id')->on('locations');
             $table->decimal('insurance');
             $table->decimal('tax');
             $table->string('image');
