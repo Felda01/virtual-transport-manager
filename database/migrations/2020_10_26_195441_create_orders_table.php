@@ -27,8 +27,6 @@ class CreateOrdersTable extends Migration
             $table->foreign('trailer_id')->references('id')->on('trailers');
             $table->uuid('trailer_id');
             $table->foreign('trailer_id')->references('id')->on('trailers');
-
-
             $table->timestamps();
         });
     }

@@ -6,7 +6,7 @@ use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BankLoad extends Model
+class BankLoanType extends Model
 {
     use HasFactory, HasUuid;
 
@@ -16,12 +16,4 @@ class BankLoad extends Model
      * @var array
      */
     protected $guarded = [];
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function bankLoadType()
-    {
-        return $this->belongsTo(BankLoadType::class);
-    }
 }

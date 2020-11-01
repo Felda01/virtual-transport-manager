@@ -94,6 +94,6 @@ class Company extends Model
      */
     public function bankLoads()
     {
-        return $this->hasMany(BankLoad::class);
+        return $this->hasMany(BankLoan::class);
     }
 }
