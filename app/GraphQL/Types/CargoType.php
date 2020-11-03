@@ -6,6 +6,7 @@ namespace App\GraphQL\Types;
 
 use App\Models\Cargo;
 use GraphQL\Type\Definition\Type;
+use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Type as GraphQLType;
 
 /**
@@ -52,6 +53,12 @@ class CargoType extends GraphQLType
             ],
             'image' => [
                 'type' => Type::string(),
+            ],
+            'customers' => [
+                'type' => Type::listOf(GraphQL::type('Customer')),
+            ],
+            'trailers' => [
+                'type' => Type::listOf(GraphQL::type('Trailer')),
             ],
         ];
     }

@@ -6,6 +6,7 @@ namespace App\GraphQL\Types;
 
 use App\Models\RoadTrip;
 use GraphQL\Type\Definition\Type;
+use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Type as GraphQLType;
 
 class RoadTripType extends GraphQLType
@@ -33,6 +34,9 @@ class RoadTripType extends GraphQLType
             ],
             'status' => [
                 'type' => Type::string(),
+            ],
+            'order' => [
+                'type' => GraphQL::type('Order'),
             ],
         ];
     }

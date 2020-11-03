@@ -38,6 +38,9 @@ class OrderType extends GraphQLType
             'trailer' => [
                 'type' => GraphQL::type('Trailer')
             ],
+            'roadTrip' => [
+                'type' => GraphQL::type('RoadTrip')
+            ]
         ];
     }
 }

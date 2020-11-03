@@ -51,9 +51,9 @@ return [
     //
     // Example:
     //
-    // 'route_group_attributes' => ['guard' => 'api']
+    'route_group_attributes' => ['guard' => 'api'],
     //
-    'route_group_attributes' => [],
+    //'route_group_attributes' => [],
 
     // The name of the default schema used when no argument is provided
     // to GraphQL::schema() or when the route is used without the graphql_schema
@@ -124,12 +124,37 @@ return [
         // 'example'           => ExampleType::class,
         // 'relation_example'  => ExampleRelationType::class,
         // \Rebing\GraphQL\Support\UploadType::class,
+        'BankLoan' => \App\GraphQL\Types\BankLoanType::class,
+        'BankLoanType' => \App\GraphQL\Types\BankLoanTypeType::class,
+        'Cargo' => \App\GraphQL\Types\CargoType::class,
+        'Company' => \App\GraphQL\Types\CompanyType::class,
+        'Constant' => \App\GraphQL\Types\ConstantType::class,
+        'Contract' => \App\GraphQL\Types\ContractType::class,
+        'Country' => \App\GraphQL\Types\CountryType::class,
+        'Customer' => \App\GraphQL\Types\CustomerType::class,
+        'Driver' => \App\GraphQL\Types\DriverType::class,
+        'GarageModel' => \App\GraphQL\Types\GarageModelType::class,
+        'Garage' => \App\GraphQL\Types\GarageType::class,
+        'LanguageLine' => \App\GraphQL\Types\LanguageLineType::class,
+        'Location' => \App\GraphQL\Types\LocationType::class,
+        'Market' => \App\GraphQL\Types\MarketType::class,
+        'Message' => \App\GraphQL\Types\MessageType::class,
+        'Notification' => \App\GraphQL\Types\NotificationType::class,
+        'Order' => \App\GraphQL\Types\OrderType::class,
+        'RoadTrip' => \App\GraphQL\Types\RoadTripType::class,
+        'Route' => \App\GraphQL\Types\RouteType::class,
+        'TrailerModel' => \App\GraphQL\Types\TrailerModelType::class,
+        'Trailer' => \App\GraphQL\Types\TrailerType::class,
+        'Transaction' => \App\GraphQL\Types\TransactionType::class,
+        'TruckModel' =>  \App\GraphQL\Types\TruckModelType::class,
+        'Truck' => \App\GraphQL\Types\TruckType::class,
+        'User' => \App\GraphQL\Types\UserType::class
     ],
 
     // The types will be loaded on demand. Default is to load all types on each request
     // Can increase performance on schemes with many types
     // Presupposes the config type key to match the type class name property
-    'lazyload_types' => false,
+    'lazyload_types' => true,
 
     // This callable will be passed the Error object for each errors GraphQL catch.
     // The method should return an array representing the error.

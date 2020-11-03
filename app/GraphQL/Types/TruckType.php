@@ -32,6 +32,9 @@ class TruckType extends GraphQLType
             'trailer' => [
                 'type' => GraphQL::type('Trailer'),
             ],
+            'driver' => [
+                'type' => GraphQL::type('Driver'),
+            ],
             'garage' => [
                 'type' => GraphQL::type('Garage'),
             ],

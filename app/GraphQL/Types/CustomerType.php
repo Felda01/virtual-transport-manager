@@ -6,6 +6,7 @@ namespace App\GraphQL\Types;
 
 use App\Models\Customer;
 use GraphQL\Type\Definition\Type;
+use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Type as GraphQLType;
 
 /**
@@ -31,6 +32,12 @@ class CustomerType extends GraphQLType
             ],
             'is_company' => [
                 'type' => Type::boolean(),
+            ],
+            'contracts' => [
+                'type' => Type::listOf(GraphQL::type('Contract')),
+            ],
+            'cargos' => [
+                'type' => Type::listOf(GraphQL::type('Cargo')),
             ],
         ];
     }

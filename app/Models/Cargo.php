@@ -28,7 +28,7 @@ class Cargo extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function customer()
+    public function customers()
     {
         return $this->belongsToMany(Cargo::class, 'customer_cargo');
     }

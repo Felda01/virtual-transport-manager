@@ -32,6 +32,15 @@ class GarageType extends GraphQLType
             'company' => [
                 'type' => GraphQL::type('Company'),
             ],
+            'trucks' => [
+                'type' => Type::listOf(GraphQL::type('Truck')),
+            ],
+            'drivers' => [
+                'type' => Type::listOf(GraphQL::type('Driver')),
+            ],
+            'trailers' => [
+                'type' => Type::listOf(GraphQL::type('Trailer')),
+            ],
         ];
     }
 }

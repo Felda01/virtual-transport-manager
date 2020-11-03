@@ -32,6 +32,9 @@ class TrailerType extends GraphQLType
             'garage' => [
                 'type' => GraphQL::type('Garage'),
             ],
+            'truck' => [
+                'type' => GraphQL::type('Truck'),
+            ],
             'km' => [
                 'type' => Type::int(),
             ],

@@ -62,6 +62,9 @@ class MarketType extends GraphQLType
             'expires_at' => [
                 'type' => Type::int(),
             ],
+            'orders' => [
+                'type' => Type::listOf(GraphQL::type('Order')),
+            ],
         ];
     }
 
