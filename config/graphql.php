@@ -106,7 +106,17 @@ return [
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,
             ],
-            'middleware' => [],
+            'middleware' => ['auth:sanctum'],
+            'method' => ['get', 'post'],
+        ],
+        'admin' => [
+            'query' => [
+                // 'example_query' => ExampleQuery::class,
+            ],
+            'mutation' => [
+                // 'example_mutation'  => ExampleMutation::class,
+            ],
+            'middleware' => ['auth:sanctum'],
             'method' => ['get', 'post'],
         ],
     ],
