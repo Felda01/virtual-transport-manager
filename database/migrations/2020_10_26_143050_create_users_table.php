@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('image');
             $table->string('password');
             $table->decimal('salary');
-            $table->uuid('company_id');
+            $table->uuid('company_id')->nullable();
             $table->foreign('company_id')->references('id')->on('companies');
             $table->softDeletes();
             $table->rememberToken();
