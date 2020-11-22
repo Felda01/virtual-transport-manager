@@ -3,27 +3,58 @@ import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 
+import VueApollo from "vue-apollo";
+Vue.use(VueApollo);
+
+import VueI18n from 'vue-i18n'
+Vue.use(VueI18n)
+
 Vue.config.productionTip = false
 
-import ApolloClient from 'apollo-boost'
+import axios from 'axios';
+import VueAxios from 'vue-axios'
 
-const apolloClient = new ApolloClient({
+Vue.use(VueAxios, axios);
+
+Vue.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+Vue.axios.defaults.headers.common['Accept'] = 'application/json';
+Vue.axios.defaults.withCredentials = true;
+
+import { ApolloClient } from 'apollo-client'
+import { createHttpLink } from 'apollo-link-http'
+import { InMemoryCache } from 'apollo-cache-inmemory'
+
+// HTTP connection to the API
+const httpLink = createHttpLink({
   // You should use an absolute URL here
-  uri: 'https://api.graphcms.com/simple/v1/awesomeTalksClone'
+  uri: 'https://virtual-transport-manager.ddev.site/graphql',
 })
 
-import VueApollo from 'vue-apollo'
+// Cache implementation
+const cache = new InMemoryCache()
 
-Vue.use(VueApollo)
+// Create the apollo client
+const apolloClient = new ApolloClient({
+  link: httpLink,
+  cache,
+  connectToDevTools: true
+})
 
 const apolloProvider = new VueApollo({
   defaultClient: apolloClient,
 })
 
+import DashboardPlugin from "./material-dashboard";
+Vue.use(DashboardPlugin);
 
+import titleMixin from './mixins/titleMixin'
+Vue.mixin(titleMixin)
+
+import i18n from './lang/index.js';
 
 new Vue({
   router,
+  i18n,
   apolloProvider,
   render: h => h(App)
 }).$mount('#app')

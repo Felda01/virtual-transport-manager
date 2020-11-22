@@ -51,7 +51,7 @@ return [
     //
     // Example:
     //
-    'route_group_attributes' => ['guard' => 'api'],
+    'route_group_attributes' => [],
     //
     //'route_group_attributes' => [],
 
@@ -104,9 +104,9 @@ return [
                 // 'example_query' => ExampleQuery::class,
             ],
             'mutation' => [
-                // 'example_mutation'  => ExampleMutation::class,
+                'login' => \App\GraphQL\Mutations\LoginMutation::class,
             ],
-            'middleware' => ['auth:sanctum'],
+            'middleware' => [],
             'method' => ['get', 'post'],
         ],
         'admin' => [

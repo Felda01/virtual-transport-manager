@@ -1,0 +1,14 @@
+{
+  "pages": {
+    "login": "Login",
+    "register": "Register"
+  },
+  "login": {
+    "logIn": "Log in",
+    "submitBtn": "Lets Go"
+  },
+  "user": {
+    "email": "Email",
+    "password": "Password"
+  }
+}
