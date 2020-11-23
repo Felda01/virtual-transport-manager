@@ -29,7 +29,9 @@
   import { SIGN_IN_USER_MUTATION } from '@/graphql/mutations/auth';
 
   export default {
-    title: 'Login',
+    title () {
+      return this.$t('pages.login');
+    },
     components: {
       LoginCard
     },
@@ -44,13 +46,13 @@
         const { email, password } = this.$data
         let self = this;
         axios.get('https://virtual-transport-manager.ddev.site/sanctum/csrf-cookie').then(response => {
-          console.log(response);
           self.$apollo.mutate({
             mutation: SIGN_IN_USER_MUTATION,
             variables: {
               email,
               password
-            }
+            },
+            client: 'apolloClientDefault'
           }).then(result => {
             console.log(result);
           }).catch(error => {

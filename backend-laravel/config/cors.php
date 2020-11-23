@@ -19,6 +19,7 @@ return [
         'api/*',
         'sanctum/csrf-cookie',
         'graphql',
+        'graphql/*',
     ],
 
     'allowed_methods' => ['*'],

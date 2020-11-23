@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Queries;
 
+use App\Models\Country;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -11,7 +12,7 @@ use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\SelectFields;
 
-class Countries extends Query
+class CountriesQuery extends Query
 {
     protected $attributes = [
         'name' => 'countries',
@@ -20,13 +21,20 @@ class Countries extends Query
 
     public function type(): Type
     {
-        return Type::listOf(GraphQL::type('Country'));
+        return GraphQL::paginate('Country');
     }
 
     public function args(): array
     {
         return [
-
+            'limit' => [
+                'type' => Type::int(),
+                'defaultValue' => 50,
+            ],
+            'page' => [
+                'type' => Type::int(),
+                'defaultValue' => 1,
+            ],
         ];
     }
 
@@ -37,8 +45,8 @@ class Countries extends Query
         $select = $fields->getSelect();
         $with = $fields->getRelations();
 
-        return [
-            'The countries works',
-        ];
+        return Country::with($with)
+            ->select($select)
+            ->paginate($args['limit'], ['*'], 'page', $args['page']);
     }
 }

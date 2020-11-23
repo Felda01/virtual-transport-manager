@@ -1,7 +1,16 @@
 {
   "pages": {
     "login": "Login",
-    "register": "Register"
+    "register": "Register",
+    "countries": "Countries",
+    "locations": "Locations",
+    "routes": "Routes",
+    "constants": "Constants",
+    "dashboard": "Dashboard",
+    "adminDashboard": "Admin Dashboard"
+  },
+  "navigation": {
+    "staticMapData": "Static Map data"
   },
   "login": {
     "logIn": "Log in",

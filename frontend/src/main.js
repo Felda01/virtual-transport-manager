@@ -24,24 +24,69 @@ import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 
+const defaultOptions = {
+  // You can use `wss` for secure connection (recommended in production)
+  // Use `null` to disable subscriptions
+  wsEndpoint: null,
+  // Enable Automatic Query persisting with Apollo Engine
+  persisting: false,
+  // Use websockets for everything (no HTTP)
+  // You need to pass a `wsEndpoint` for this to work
+  websocketsOnly: false,
+  // Is being rendered on the server?
+  ssr: false,
+
+  watchQuery: {fetchPolicy: 'network-only'},
+
+  query: {fetchPolicy: 'network-only'}
+}
+
 // HTTP connection to the API
-const httpLink = createHttpLink({
+const httpLinkDefault = createHttpLink({
   // You should use an absolute URL here
   uri: 'https://virtual-transport-manager.ddev.site/graphql',
+  headers: {
+    'Accept': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest'
+  }
 })
+
+// HTTP connection to the API
+const httpLinkAuth = createHttpLink({
+  // You should use an absolute URL here
+  uri: 'https://virtual-transport-manager.ddev.site/graphql/auth',
+  headers: {
+    'Accept': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest'
+  }
+})
+
 
 // Cache implementation
 const cache = new InMemoryCache()
 
-// Create the apollo client
-const apolloClient = new ApolloClient({
-  link: httpLink,
+// Create the apollo client default
+const apolloClientDefault = new ApolloClient({
+  link: httpLinkDefault,
   cache,
-  connectToDevTools: true
+  defaultOptions: defaultOptions,
+  connectToDevTools: true,
+})
+
+// Create the apollo client auth
+const apolloClientAuth = new ApolloClient({
+  link: httpLinkAuth,
+  cache,
+  defaultOptions: defaultOptions,
+  connectToDevTools: true,
 })
 
 const apolloProvider = new VueApollo({
-  defaultClient: apolloClient,
+  clients: {
+    apolloClientAuth,
+    apolloClientDefault
+  },
+  defaultClient: apolloClientAuth,
 })
 
 import DashboardPlugin from "./material-dashboard";

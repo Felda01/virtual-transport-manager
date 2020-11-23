@@ -109,14 +109,16 @@ return [
             'middleware' => [],
             'method' => ['get', 'post'],
         ],
-        'admin' => [
+        'auth' => [
             'query' => [
+                'countries' => \App\GraphQL\Queries\CountriesQuery::class,
                 // 'example_query' => ExampleQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,
             ],
-            'middleware' => ['auth:sanctum'],
+            'middleware' => [],
+//            'middleware' => ['auth:sanctum'],
             'method' => ['get', 'post'],
         ],
     ],
@@ -148,7 +150,7 @@ return [
         'Transaction' => \App\GraphQL\Types\TransactionType::class,
         'TruckModel' =>  \App\GraphQL\Types\TruckModelType::class,
         'Truck' => \App\GraphQL\Types\TruckType::class,
-        'User' => \App\GraphQL\Types\UserType::class
+        'User' => \App\GraphQL\Types\UserType::class,
     ],
 
     // The types will be loaded on demand. Default is to load all types on each request
