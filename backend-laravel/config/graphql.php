@@ -10,7 +10,7 @@ use example\Type\ExampleType;
 return [
 
     // The prefix for routes
-    'prefix' => 'graphql',
+    'prefix' => 'api/graphql',
 
     // The routes to make GraphQL request. Either a string that will apply
     // to both query and mutation or an array containing the key 'query' and/or
@@ -102,25 +102,25 @@ return [
         'default' => [
             'query' => [
                 // 'example_query' => ExampleQuery::class,
-            ],
-            'mutation' => [
-                'login' => \App\GraphQL\Mutations\LoginMutation::class,
-            ],
-            'middleware' => [],
-            'method' => ['get', 'post'],
-        ],
-        'auth' => [
-            'query' => [
                 'countries' => \App\GraphQL\Queries\CountriesQuery::class,
-                // 'example_query' => ExampleQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,
             ],
-            'middleware' => [],
-//            'middleware' => ['auth:sanctum'],
+            'middleware' => ['auth:api'],
             'method' => ['get', 'post'],
         ],
+//        'auth' => [
+//            'query' => [
+//                'countries' => \App\GraphQL\Queries\CountriesQuery::class,
+//                // 'example_query' => ExampleQuery::class,
+//            ],
+//            'mutation' => [
+//                // 'example_mutation'  => ExampleMutation::class,
+//            ],
+//            'middleware' => ['auth:api'],
+//            'method' => ['get', 'post'],
+//        ],
     ],
 
     // The types available in the application.

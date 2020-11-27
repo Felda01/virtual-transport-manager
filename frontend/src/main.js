@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import './registerServiceWorker'
+// import './registerServiceWorker'
 import router from './router'
 
 import VueApollo from "vue-apollo";
@@ -16,6 +16,8 @@ import VueAxios from 'vue-axios'
 
 Vue.use(VueAxios, axios);
 
+import store from './store';
+
 Vue.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 Vue.axios.defaults.headers.common['Accept'] = 'application/json';
 Vue.axios.defaults.withCredentials = true;
@@ -23,6 +25,35 @@ Vue.axios.defaults.withCredentials = true;
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import { onError } from 'apollo-link-error';
+import { from } from 'apollo-link';
+
+import { setContext } from "apollo-link-context";
+
+// HTTP connection to the API
+const httpLinkDefault = createHttpLink({
+  // You should use an absolute URL here
+  uri: 'https://virtual-transport-manager.ddev.site/api/graphql',
+  headers: {
+    'Accept': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest'
+  },
+  credentials: 'include'
+})
+
+// HTTP connection to the API
+// const httpLinkAuth = createHttpLink({
+//   // You should use an absolute URL here
+//   uri: 'https://virtual-transport-manager.ddev.site/api/graphql/auth',
+//   headers: {
+//     'Accept': 'application/json',
+//     'X-Requested-With': 'XMLHttpRequest'
+//   },
+//   credentials: 'include'
+// })
+
+// Cache implementation
+const cache = new InMemoryCache();
 
 const defaultOptions = {
   // You can use `wss` for secure connection (recommended in production)
@@ -38,55 +69,41 @@ const defaultOptions = {
 
   watchQuery: {fetchPolicy: 'network-only'},
 
-  query: {fetchPolicy: 'network-only'}
+  query: {fetchPolicy: 'network-only'},
 }
-
-// HTTP connection to the API
-const httpLinkDefault = createHttpLink({
-  // You should use an absolute URL here
-  uri: 'https://virtual-transport-manager.ddev.site/graphql',
-  headers: {
-    'Accept': 'application/json',
-    'X-Requested-With': 'XMLHttpRequest'
-  }
-})
-
-// HTTP connection to the API
-const httpLinkAuth = createHttpLink({
-  // You should use an absolute URL here
-  uri: 'https://virtual-transport-manager.ddev.site/graphql/auth',
-  headers: {
-    'Accept': 'application/json',
-    'X-Requested-With': 'XMLHttpRequest'
-  }
-})
-
-
-// Cache implementation
-const cache = new InMemoryCache()
 
 // Create the apollo client default
 const apolloClientDefault = new ApolloClient({
-  link: httpLinkDefault,
+  link: from([
+    onError(errorHandler => {
+      if (errorHandler.networkError.statusCode === 401) {
+        store.dispatch('logout');
+        if (router.currentRoute.matched.some(record => record.meta.requiresAuth)) {
+          router.push({ path: '/login', query: { redirect: router.currentRoute.fullPath } });
+        }
+      }
+     }),
+    httpLinkDefault,
+  ]),
   cache,
   defaultOptions: defaultOptions,
-  connectToDevTools: true,
 })
 
 // Create the apollo client auth
-const apolloClientAuth = new ApolloClient({
-  link: httpLinkAuth,
-  cache,
-  defaultOptions: defaultOptions,
-  connectToDevTools: true,
-})
+// const apolloClientAuth = new ApolloClient({
+//   link: httpLinkAuth,
+//   cache,
+//   defaultOptions: defaultOptions,
+//   connectToDevTools: true
+// })
 
 const apolloProvider = new VueApollo({
-  clients: {
-    apolloClientAuth,
-    apolloClientDefault
-  },
-  defaultClient: apolloClientAuth,
+  // clients: {
+  //   apolloClientAuth,
+  //   apolloClientDefault
+  // },
+  // defaultClient: apolloClientAuth,
+  defaultClient: apolloClientDefault,
 })
 
 import DashboardPlugin from "./material-dashboard";
@@ -100,6 +117,7 @@ import i18n from './lang/index.js';
 new Vue({
   router,
   i18n,
+  store,
   apolloProvider,
   render: h => h(App)
 }).$mount('#app')

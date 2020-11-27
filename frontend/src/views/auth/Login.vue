@@ -8,12 +8,12 @@
         <md-field class="md-form-group" slot="inputs">
           <md-icon>email</md-icon>
           <label>{{ $t('user.email') }}...</label>
-          <md-input v-model="email" type="email"></md-input>
+          <md-input v-model="form.email" type="email"></md-input>
         </md-field>
         <md-field class="md-form-group" slot="inputs">
           <md-icon>lock_outline</md-icon>
           <label>{{ $t('user.password') }}...</label>
-          <md-input v-model="password"></md-input>
+          <md-input v-model="form.password"></md-input>
         </md-field>
         <md-button slot="footer" class="md-simple md-success md-lg" @click="login">
           {{ $t('login.submitBtn') }}
@@ -26,7 +26,7 @@
 <script>
   import { LoginCard } from "@/components";
   import axios from 'axios';
-  import { SIGN_IN_USER_MUTATION } from '@/graphql/mutations/auth';
+  import Cookies from 'js-cookie'
 
   export default {
     title () {
@@ -37,30 +37,30 @@
     },
     data() {
       return {
-        email: null,
-        password: null
+        form: {
+          email: null,
+          password: null
+        }
       };
     },
     methods: {
       login() {
-        const { email, password } = this.$data
         let self = this;
-        axios.get('https://virtual-transport-manager.ddev.site/sanctum/csrf-cookie').then(response => {
-          self.$apollo.mutate({
-            mutation: SIGN_IN_USER_MUTATION,
-            variables: {
-              email,
-              password
-            },
-            client: 'apolloClientDefault'
-          }).then(result => {
-            console.log(result);
-          }).catch(error => {
-            console.log(error);
-          })
-        });
-      }
+        axios.post('https://virtual-transport-manager.ddev.site/api/login', self.form)
+          .then(response => {
+            let payload = {
+              token: response.data.token,
+              expiresIn: response.data.expiresIn
+            };
 
+            this.$store.dispatch('setToken', payload).then(() => {
+              this.$router.push(this.$route.query.redirect || { name: this.$t('pages.adminDashboard') });
+            });
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
     }
   };
 </script>

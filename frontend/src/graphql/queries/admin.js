@@ -17,4 +17,4 @@ export const COUNTRIES_QUERY = gql`
             has_more_pages
         }
     }
-`
+`;

@@ -139,7 +139,6 @@ export default {
   mounted() {
     this.onResponsiveInverted();
     window.addEventListener("resize", this.onResponsiveInverted);
-    console.log(this.$route);
   },
   beforeDestroy() {
     this.closeMenu();

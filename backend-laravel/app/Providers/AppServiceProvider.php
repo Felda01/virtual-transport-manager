@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Passport\Client;
+use Ramsey\Uuid\Uuid;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,5 +29,14 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
+        Client::creating(function (Client $client) {
+            $client->incrementing = false;
+            $client->id = config('services.passport.password_client_id');
+        });
+
+        Client::retrieved(function (Client $client) {
+            $client->incrementing = false;
+        });
     }
 }

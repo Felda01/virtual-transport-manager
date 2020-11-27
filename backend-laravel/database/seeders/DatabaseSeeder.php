@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             LanguageLinesSeeder::class,
             ConstantsSeeder::class,
             RolesAndPermissionsSeeder::class,
-            UsersSeeder::class
+            UsersSeeder::class,
+            PassportSeeder::class
         ]);
     }
 }

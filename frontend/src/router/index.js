@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Cookies from 'js-cookie'
 
 Vue.use(VueRouter)
 
@@ -76,38 +77,6 @@ const routes = [
   }
 ];
 
-// router.beforeEach((to, from, next) => {
-//   if(to.matched.some(record => record.meta.requiresAuth)) {
-//     if (localStorage.getItem('jwt') == null) {
-//       next({
-//         path: '/login',
-//         params: { nextUrl: to.fullPath }
-//       })
-//     } else {
-//       let user = JSON.parse(localStorage.getItem('user'))
-//       if(to.matched.some(record => record.meta.is_admin)) {
-//         if(user.is_admin == 1){
-//           next()
-//         }
-//         else{
-//           next({ name: 'userboard'})
-//         }
-//       }else {
-//         next()
-//       }
-//     }
-//   } else if(to.matched.some(record => record.meta.guest)) {
-//     if(localStorage.getItem('jwt') == null){
-//       next()
-//     }
-//     else{
-//       next({ name: 'userboard'})
-//     }
-//   }else {
-//     next()
-//   }
-// });
-
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -121,5 +90,38 @@ const router = new VueRouter({
   linkExactActiveClass: "nav-item active",
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+    if (!Cookies.get('x-access-token')) {
+      next({
+        path: '/login',
+        params: { redirect: to.fullPath }
+      })
+    } else {
+      // let user = JSON.parse(localStorage.getItem('user'))
+      // if(to.matched.some(record => record.meta.is_admin)) {
+      //   if(user.is_admin == 1){
+      //     next()
+      //   }
+      //   else{
+      //     next({ name: 'userboard'})
+      //   }
+      // }else {
+      //   next()
+      // }
+      next()
+    }
+  } else if(to.matched.some(record => record.meta.guest)) {
+    if(!Cookies.get('x-access-token')){
+      next()
+    }
+    else{
+      next({ name: i18n.t('pages.dashboard')})
+    }
+  }else {
+    next()
+  }
+});
 
 export default router
