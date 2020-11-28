@@ -8,6 +8,7 @@ use App\Models\Country;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
+use Illuminate\Support\Facades\Auth;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Mutation;
 
@@ -23,10 +24,15 @@ class CreateCountryMutation extends Mutation
         return GraphQL::type('Country');
     }
 
+    private function guard()
+    {
+        return Auth::guard('api');
+    }
+
     public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
         // true, if logged in
-        return true;
+        return $this->guard()->check() && $this->guard()->user()->hasRole('admin');
     }
 
     public function rules(array $args = []): array

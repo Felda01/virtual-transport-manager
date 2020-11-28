@@ -106,6 +106,7 @@ return [
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,
+                'createCountry' => \App\GraphQL\Mutations\CreateCountryMutation::class
             ],
             'middleware' => ['auth:api'],
             'method' => ['get', 'post'],

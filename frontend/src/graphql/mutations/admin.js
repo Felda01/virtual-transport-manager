@@ -1,10 +1,11 @@
 import gql from 'graphql-tag'
 
-// export const SIGN_IN_USER_MUTATION = gql`
-//     mutation SigninUserMutation($email: String!, $password: String!) {
-//         login(email: $email, password: $password) {
-//             id
-//             email
-//         }
-//     }
-// `;
+export const CREATE_COUNTRY_MUTATION = gql`
+    mutation CreateCountryMutation($name: String!, $short_name: String!) {
+        createCountry(name: $name, short_name: $short_name) {
+            id
+            name
+            short_name
+        }
+    }
+`;

@@ -71,10 +71,10 @@ class ProxyRequest
         }
         $data = json_decode($response->getContent());
 
-        $this->setHttpOnlyCookie($data->refresh_token, 'refresh_token');
+        $this->setHttpOnlyCookie($data->refresh_token, 'refresh_token', 864000);
 
         if ($data->access_token) {
-            $this->setHttpOnlyCookie($data->access_token, 'access_token');
+            $this->setHttpOnlyCookie($data->access_token, 'access_token', 14400);
         }
 
         return $data;
@@ -83,13 +83,14 @@ class ProxyRequest
     /**
      * @param string $refreshToken
      * @param string $cookieName
+     * @param int $time
      */
-    protected function setHttpOnlyCookie(string $refreshToken, string $cookieName)
+    protected function setHttpOnlyCookie(string $refreshToken, string $cookieName, int $time)
     {
         cookie()->queue(
             $cookieName,
             $refreshToken,
-            14400, // 10 days
+            $time,
             null,
             config('services.frontend.cookie_domain'),
             false,

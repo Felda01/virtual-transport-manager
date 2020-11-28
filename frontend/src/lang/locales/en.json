@@ -12,12 +12,38 @@
   "navigation": {
     "staticMapData": "Static Map data"
   },
+  "modal": {
+    "add": {
+      "btn": "Create"
+    },
+    "cancel": {
+      "btn": "Cancel"
+    }
+  },
   "login": {
     "logIn": "Log in",
     "submitBtn": "Lets Go"
   },
   "user": {
-    "email": "Email",
-    "password": "Password"
+    "property": {
+      "email": "Email",
+      "password": "Password"
+    }
+  },
+  "countries": {
+    "property": {
+      "name": "Name",
+      "short_name": "Short name"
+    },
+    "actions": "Actions",
+    "modal": {
+      "title": "Create new country"
+    },
+    "new": "Create new",
+    "response": {
+      "success": {
+        "created": "The country {country} was successfully created."
+      }
+    }
   }
 }

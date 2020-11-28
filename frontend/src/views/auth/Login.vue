@@ -11,7 +11,7 @@
             <ValidationProvider name="email" rules="required" v-slot="{ passed, failed, errors }" slot="inputs">
               <md-field class="md-form-group" :class="[{ 'md-error md-invalid': failed }, { 'md-valid': passed }]">
                 <md-icon>email</md-icon>
-                <label>{{ $t('user.email') }}...</label>
+                <label>{{ $t('user.property.email') }}...</label>
                 <md-input v-model="form.email" type="email"></md-input>
                 <span class="md-error" v-show="failed">{{ errors[0] }}</span>
 
@@ -27,7 +27,7 @@
             <ValidationProvider name="password" slot="inputs" rules="required" v-slot="{ passed, failed, errors }">
               <md-field class="md-form-group" :class="[{ 'md-error md-invalid': failed }, { 'md-valid': passed }]">
                 <md-icon>lock_outline</md-icon>
-                <label>{{ $t('user.password') }}...</label>
+                <label>{{ $t('user.property.password') }}...</label>
                 <md-input v-model="form.password" type="password"></md-input>
                 <span class="md-error" v-show="failed">{{ errors[0] }}</span>
 
@@ -40,7 +40,7 @@
               </md-field>
             </ValidationProvider>
             <md-button slot="footer" class="md-simple md-success md-lg" @click="login">
-              {{ $t('login.submitBtn') }}
+              <md-progress-spinner v-if="loading" style="margin-right: 15px;" :md-diameter="20" :md-stroke="3" md-mode="indeterminate"></md-progress-spinner> {{ $t('login.submitBtn') }}
             </md-button>
           </login-card>
     </div>
@@ -71,12 +71,14 @@
         form: {
           email: null,
           password: null
-        }
+        },
+        loading: false
       };
     },
     methods: {
       login() {
         let self = this;
+        this.loading = true;
         axios.post('https://virtual-transport-manager.ddev.site/api/login', self.form)
           .then(response => {
             let payload = {
@@ -89,9 +91,8 @@
             });
           })
           .catch(error => {
-            console.log(error.response);
-            console.log(error.response.data.errors);
             this.$refs.form.setErrors(error.response.data.errors);
+            this.loading = false;
           });
       }
     }

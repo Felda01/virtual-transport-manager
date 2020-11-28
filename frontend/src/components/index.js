@@ -4,6 +4,7 @@ import Badge from "./Badge";
 import DropDown from "./Dropdown.vue";
 // Modals
 import Modal from "./Modal.vue";
+import MutationModal from "./MutationModal";
 
 // Tables
 import GlobalSalesTable from "./Tables/GlobalSalesTable.vue";
@@ -38,6 +39,7 @@ export {
   IconCheckbox,
   Badge,
   Modal,
+  MutationModal,
   Pagination,
   GlobalSalesTable,
   LockCard,

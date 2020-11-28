@@ -16,6 +16,10 @@ import VueAxios from 'vue-axios'
 
 Vue.use(VueAxios, axios);
 
+import VueContentPlaceholders from 'vue-content-placeholders';
+
+Vue.use(VueContentPlaceholders);
+
 import store from './store';
 
 import { localize } from 'vee-validate';
@@ -86,7 +90,7 @@ const defaultOptions = {
 const apolloClientDefault = new ApolloClient({
   link: from([
     onError(errorHandler => {
-      if (errorHandler.networkError.statusCode === 401) {
+      if (errorHandler && errorHandler.networkError && errorHandler.networkError.statusCode === 401) {
         store.dispatch('logout');
         if (router.currentRoute.matched.some(record => record.meta.requiresAuth)) {
           router.push({ path: '/login', query: { redirect: router.currentRoute.fullPath } });

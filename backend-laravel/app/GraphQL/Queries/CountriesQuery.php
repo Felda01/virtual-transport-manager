@@ -58,6 +58,7 @@ class CountriesQuery extends Query
 
         return Country::with($with)
             ->select($select)
+            ->orderBy('name')
             ->paginate($args['limit'], ['*'], 'page', $args['page']);
     }
 }

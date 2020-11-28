@@ -37,7 +37,7 @@ export default new Vuex.Store({
     },
     actions: {
         setToken({commit}, {token, expiresIn}) {
-            const expiryTime = new Date(new Date().getTime() + expiresIn * 1000);
+            const expiryTime = new Date(new Date().getTime() + expiresIn * 10000); //TODO set correct time
             Cookies.set('x-access-token', true, {expires: expiryTime, sameSite: 'lax'});
             commit('SET_TOKEN', token);
         },

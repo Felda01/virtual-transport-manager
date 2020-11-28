@@ -19,7 +19,8 @@ module.exports = {
                 "@": path.resolve(__dirname, './src')
             },
             extensions: ['.js', '.vue', '.json']
-        }
+        },
+        devtool: 'eval-source-map'
     },
     chainWebpack: config => {
         config.module
