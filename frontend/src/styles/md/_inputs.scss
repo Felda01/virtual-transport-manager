@@ -423,9 +423,12 @@ select.form-control {
       background-color: $brand-danger !important;
     }
 
-    .md-icon{
+    .md-icon {
       color: $brand-danger !important;
     }
+  }
+  & .md-error {
+    bottom: -15px !important;
   }
 
   &.md-has-textarea:not(.md-autogrow) label{
@@ -542,7 +545,7 @@ select.form-control {
 .md-field{
   padding-bottom: 10px;
   padding-top: 0;
-  margin: 13px 0 0;
+  margin: 13px 0 30px;
   min-height: auto;
 
   &.md-focused label,

@@ -18,6 +18,16 @@ Vue.use(VueAxios, axios);
 
 import store from './store';
 
+import { localize } from 'vee-validate';
+import en from 'vee-validate/dist/locale/en.json';
+import sk from 'vee-validate/dist/locale/sk.json';
+
+// Install English and Slovak locales.
+localize({
+  en,
+  sk
+});
+
 Vue.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 Vue.axios.defaults.headers.common['Accept'] = 'application/json';
 Vue.axios.defaults.withCredentials = true;
