@@ -6,7 +6,10 @@
                     <div class="card-icon">
                         <md-icon>satellite</md-icon>
                     </div>
-                    <h4 class="title">{{ $t('pages.countries') }}</h4>
+                    <div class="title">
+                        <h4>{{ $t('pages.countries') }}</h4>
+                        <md-button class="md-primary" @click="addCountryModal">{{ $t('countries.new') }}</md-button>
+                    </div>
                 </md-card-header>
                 <md-card-content>
                     <template v-if="$apollo.queries.countries.loading">
@@ -34,6 +37,17 @@
                         </div>
                     </template>
                 </md-card-content>
+                <md-card-actions md-alignment="space-between">
+                    <div class="">
+                        <p class="card-category">
+                            {{ $t('pagination.display', {from: countries.from, to: countries.to, total: countries.total}) }}
+                        </p>
+                    </div>
+                    <pagination class="pagination-no-border pagination-success"
+                            v-model="page"
+                            :per-page="countries.per_page"
+                            :total="countries.total"></pagination>
+                </md-card-actions>
             </md-card>
         </div>
 
@@ -45,7 +59,7 @@
 <script>
     import { COUNTRIES_QUERY } from '@/graphql/queries/admin';
     import { CREATE_COUNTRY_MUTATION } from '@/graphql/mutations/admin';
-    import { MutationModal } from "@/components";
+    import { MutationModal, Pagination } from "@/components";
 
     export default {
         title () {
@@ -53,7 +67,8 @@
         },
         name: "Countries",
         components: {
-            MutationModal
+            MutationModal,
+            Pagination
         },
         data() {
             return {
@@ -62,6 +77,7 @@
                     per_page: 10,
                     current_page: 1,
                 },
+                page: 1,
                 modalSchemaAddCountry: {
                     form: {
                         mutation: CREATE_COUNTRY_MUTATION,
@@ -117,7 +133,7 @@
             countries: {
                 query: COUNTRIES_QUERY,
                 variables() {
-                    return { page: this.countries.current_page, limit: this.countries.per_page }
+                    return { page: this.page, limit: this.countries.per_page }
                 }
             },
         },

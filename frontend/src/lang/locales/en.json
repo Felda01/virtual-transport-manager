@@ -20,6 +20,9 @@
       "btn": "Cancel"
     }
   },
+  "pagination": {
+    "display": "Showing {from} to {to} of {total} entries"
+  },
   "login": {
     "logIn": "Log in",
     "submitBtn": "Lets Go"
