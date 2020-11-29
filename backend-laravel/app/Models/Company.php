@@ -6,6 +6,44 @@ use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Company
+ *
+ * @property string $id
+ * @property string $name
+ * @property string $money
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\BankLoan[] $bankLoads
+ * @property-read int|null $bank_loads_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Contract[] $contracts
+ * @property-read int|null $contracts_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Driver[] $drivers
+ * @property-read int|null $drivers_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Garage[] $garages
+ * @property-read int|null $garages_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Market[] $markets
+ * @property-read int|null $markets_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Order[] $orders
+ * @property-read int|null $orders_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Trailer[] $trailers
+ * @property-read int|null $trailers_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Transaction[] $transactions
+ * @property-read int|null $transactions_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Truck[] $trucks
+ * @property-read int|null $trucks_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $users
+ * @property-read int|null $users_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Company newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Company newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Company query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereMoney($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Company extends Model
 {
     use HasFactory, HasUuid;

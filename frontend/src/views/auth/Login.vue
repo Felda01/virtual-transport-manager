@@ -82,7 +82,6 @@
         axios.post('https://virtual-transport-manager.ddev.site/api/login', self.form)
           .then(response => {
             let payload = {
-              token: response.data.token,
               expiresIn: response.data.expiresIn
             };
 

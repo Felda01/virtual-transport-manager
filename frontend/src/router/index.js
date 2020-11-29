@@ -5,6 +5,7 @@ import Cookies from 'js-cookie'
 Vue.use(VueRouter)
 
 import i18n from '../lang';
+import store from '../store';
 
 const routes = [
   {
@@ -13,10 +14,11 @@ const routes = [
     children: [
       {
         path: '',
-        name: i18n.t('pages.login'),
+        name: 'login',
         component: () => import('../views/auth/Login.vue'),
         meta: {
-          guest: true
+          guest: true,
+          title: i18n.t('pages.login'),
         }
       },
     ],
@@ -27,10 +29,11 @@ const routes = [
     children: [
       {
         path: '',
-        name: i18n.t('pages.register'),
+        name: 'register',
         component: () => import('../views/auth/Login.vue'),
         meta: {
-          guest: true
+          guest: true,
+          title: i18n.t('pages.register'),
         }
       },
     ],
@@ -41,10 +44,11 @@ const routes = [
     children: [
       {
         path: '',
-        name: i18n.t('pages.dashboard'),
+        name: 'dashboard',
         component: () => import('../views/Dashboard.vue'),
         meta: {
-          requiresAuth: true
+          requiresAuth: true,
+          title: i18n.t('pages.dashboard'),
         }
       }
     ]
@@ -55,18 +59,20 @@ const routes = [
     children: [
       {
         path: '',
-        name: i18n.t('pages.adminDashboard'),
+        name: 'adminDashboard',
         component: () => import('../views/admin/Dashboard.vue'),
         meta: {
-          requiresAuth: true
+          requiresAuth: true,
+          title: i18n.t('pages.adminDashboard'),
         }
       },
       {
         path: 'countries',
-        name: i18n.t('pages.countries'),
+        name: 'countries',
         component: () => import('../views/admin/Countries.vue'),
         meta: {
-          requiresAuth: true
+          requiresAuth: true,
+          title: i18n.t('pages.countries'),
         }
       }
     ]
@@ -94,10 +100,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if(to.matched.some(record => record.meta.requiresAuth)) {
     if (!Cookies.get('x-access-token')) {
-      next({
-        path: '/login',
-        params: { redirect: to.fullPath }
-      })
+      store.dispatch('refreshToken', { fullPath: to.fullPath });
     } else {
       // let user = JSON.parse(localStorage.getItem('user'))
       // if(to.matched.some(record => record.meta.is_admin)) {
@@ -117,7 +120,7 @@ router.beforeEach((to, from, next) => {
       next()
     }
     else{
-      next({ name: i18n.t('pages.dashboard')})
+      next({ name: 'dashboard' })
     }
   }else {
     next()

@@ -422,6 +422,15 @@
             img{
                 width: 100%;
             }
+            &-letters {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+
+              span {
+                color: #fff!important;
+              }
+            }
         }
 
         a{

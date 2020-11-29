@@ -36,6 +36,7 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request)
     {
+        /** @var User $user */
         $user = User::where($this->username(), $request->input($this->username()))->first();
 
         if (!$user || !Hash::check($request->input('password'), $user->password)) {
@@ -48,7 +49,6 @@ class AuthController extends Controller
         $resp = $this->proxy->grantPasswordToken($request->input('email'), $request->input('password'));
 
         return response()->json([
-            'token' => $resp->access_token,
             'expiresIn' => $resp->expires_in,
             'message' => 'You have been logged in',
         ], 200);
@@ -58,8 +58,7 @@ class AuthController extends Controller
     {
         $resp = $this->proxy->refreshAccessToken();
 
-        return response([
-            'token' => $resp->access_token,
+        return response()->json([
             'expiresIn' => $resp->expires_in,
             'message' => 'Token has been refreshed.',
         ], 200);
@@ -75,6 +74,7 @@ class AuthController extends Controller
         $token->revoke();
 
         cookie()->queue(cookie()->forget('refresh_token'));
+        cookie()->queue(cookie()->forget('access_token'));
 
         return response()->json([
             'message' => 'You have been successfully logged out',

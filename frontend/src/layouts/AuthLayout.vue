@@ -3,7 +3,7 @@
     <md-toolbar md-elevation="0" class="md-transparent md-toolbar-absolute">
       <div class="md-toolbar-row md-offset">
         <div class="md-toolbar-section-start">
-          <h3 class="md-title">{{ $route.name }}</h3>
+          <h3 class="md-title">{{ $route.meta.title }}</h3>
         </div>
         <div class="md-toolbar-section-end">
           <md-button
@@ -95,11 +95,11 @@ export default {
         Register: "/img/register.jpg",
       };
       return {
-        backgroundImage: `url(${images[this.$route.name]})`
+        backgroundImage: `url(${images[this.$route.meta.title]})`
       };
     },
     setPageClass() {
-      return `${this.$route.name}-page`.toLowerCase();
+      return `${this.$route.meta.title}-page`.toLowerCase();
     }
   },
   methods: {

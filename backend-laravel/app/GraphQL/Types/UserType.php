@@ -47,6 +47,9 @@ class UserType extends GraphQLType
             'notifications' => [
                 'type' => Type::listOf(GraphQL::type('Notification')),
             ],
+            'roles' => [
+                'type' => Type::listOf(GraphQL::type('Role')),
+            ],
         ];
     }
 }

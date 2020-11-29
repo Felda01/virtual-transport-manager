@@ -1,7 +1,10 @@
 <template>
-  <div class="user">
-    <div class="photo">
-      <img :src="avatar" alt="avatar" />
+  <div class="user" v-if="me">
+    <div class="photo" v-if="me.image">
+      <img :src="me.image" :alt="name + ' avatar'" />
+    </div>
+    <div class="photo photo-letters">
+      <span class="sidebar-mini">{{ letters }}</span>
     </div>
     <div class="user-info">
       <a
@@ -10,12 +13,8 @@
         @click.stop="toggleMenu"
         @click.capture="clicked"
       >
-        <span v-if="$route.meta.rtlActive">
-          {{ rtlTitle }}
-          <b class="caret"></b>
-        </span>
-        <span v-else>
-          {{ title }}
+        <span>
+          {{ name }}
           <b class="caret"></b>
         </span>
       </a>
@@ -25,31 +24,19 @@
           <ul class="nav">
             <slot>
               <li>
-                <a v-if="$route.meta.rtlActive" href="#vue">
-                  <span class="sidebar-mini">مع</span>
-                  <span class="sidebar-normal">ملف</span>
-                </a>
-                <a v-else href="#vue">
+                <a href="#vue">
                   <span class="sidebar-mini">MP</span>
                   <span class="sidebar-normal">My Profile</span>
                 </a>
               </li>
               <li>
-                <a v-if="$route.meta.rtlActive" href="#vue">
-                  <span class="sidebar-mini">هوع</span>
-                  <span class="sidebar-normal">تعديل الملف الشخصي</span>
-                </a>
-                <a v-else href="#vue">
+                <a href="#vue">
                   <span class="sidebar-mini">EP</span>
                   <span class="sidebar-normal">Edit Profile</span>
                 </a>
               </li>
               <li>
-                <a v-if="$route.meta.rtlActive" href="#vue">
-                  <span class="sidebar-mini">و</span>
-                  <span class="sidebar-normal">إعدادات</span>
-                </a>
-                <a v-else href="#vue">
+                <a href="#vue">
                   <span class="sidebar-mini">S</span>
                   <span class="sidebar-normal">Settings</span>
                 </a>
@@ -62,40 +49,56 @@
   </div>
 </template>
 <script>
-import { CollapseTransition } from "vue2-transitions";
+  import { CollapseTransition } from "vue2-transitions";
+  import { mapGetters } from 'vuex';
+  import { ME_QUERY } from "../../graphql/queries/common";
 
-export default {
-  components: {
-    CollapseTransition
-  },
-  props: {
-    title: {
-      type: String,
-      default: "Tania Andrew"
+  export default {
+    components: {
+      CollapseTransition
     },
-    rtlTitle: {
-      type: String,
-      default: "تانيا أندرو"
+    computed: {
+      ...mapGetters([
+        'user'
+      ]),
+      letters() {
+        if (this.me) {
+          return this.me.first_name[0].toUpperCase() + " " + this.me.last_name[0].toUpperCase();
+        }
+        return '';
+      },
+      name() {
+        if (this.me) {
+          return this.me.first_name + " " + this.me.last_name;
+        }
+        return '';
+      }
     },
-    avatar: {
-      type: String,
-      default: "/img/avatar.jpg"
+    data() {
+      return {
+        isClosed: true,
+        me: null,
+      };
+    },
+    methods: {
+      clicked: function(e) {
+        e.preventDefault();
+      },
+      toggleMenu: function() {
+        this.isClosed = !this.isClosed;
+      }
+    },
+    apollo: {
+      me: {
+        query: ME_QUERY
+      }
+    },
+    watch: {
+      me: function (newMe, oldMe) {
+        this.$store.dispatch('setUser', {newMe});
+      }
     }
-  },
-  data() {
-    return {
-      isClosed: true
-    };
-  },
-  methods: {
-    clicked: function(e) {
-      e.preventDefault();
-    },
-    toggleMenu: function() {
-      this.isClosed = !this.isClosed;
-    }
-  }
-};
+  };
 </script>
 <style>
 .collapsed {

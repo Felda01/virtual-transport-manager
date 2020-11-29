@@ -101,6 +101,7 @@ return [
     'schemas' => [
         'default' => [
             'query' => [
+                'me' => \App\GraphQL\Queries\MeQuery::class,
                 // 'example_query' => ExampleQuery::class,
                 'countries' => \App\GraphQL\Queries\CountriesQuery::class,
             ],
@@ -145,6 +146,7 @@ return [
         'Notification' => \App\GraphQL\Types\NotificationType::class,
         'Order' => \App\GraphQL\Types\OrderType::class,
         'RoadTrip' => \App\GraphQL\Types\RoadTripType::class,
+        'Role' => \App\GraphQL\Types\RoleType::class,
         'Route' => \App\GraphQL\Types\RouteType::class,
         'TrailerModel' => \App\GraphQL\Types\TrailerModelType::class,
         'Trailer' => \App\GraphQL\Types\TrailerType::class,
