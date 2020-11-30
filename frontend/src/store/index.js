@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import Cookies from 'js-cookie';
 import router from '../router'
+import i18n from "../lang";
 
 
 Vue.use(Vuex);
@@ -41,11 +42,13 @@ export default new Vuex.Store({
                     if (fullPath) {
                         router.push({
                             name: 'login',
-                            query: { redirect: fullPath }
+                            query: { redirect: fullPath },
+                            params: { locale: i18n.locale }
                         });
                     } else {
                         router.push({
-                            name: 'login'
+                            name: 'login',
+                            params: { locale: i18n.locale }
                         });
                     }
                 });
@@ -53,6 +56,12 @@ export default new Vuex.Store({
 
         setUser({commit}, {user}) {
             commit('SET_USER', user);
+        },
+
+        getUser({commit}) {
+            return Vue.axios.get('https://virtual-transport-manager.ddev.site/api/user').then(response => {
+                commit('SET_USER', response.data.user);
+            });
         },
 
         logout({commit}) {

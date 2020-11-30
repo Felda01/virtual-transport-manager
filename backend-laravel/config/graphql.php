@@ -101,7 +101,6 @@ return [
     'schemas' => [
         'default' => [
             'query' => [
-                'me' => \App\GraphQL\Queries\MeQuery::class,
                 // 'example_query' => ExampleQuery::class,
                 'countries' => \App\GraphQL\Queries\CountriesQuery::class,
             ],

@@ -21,7 +21,7 @@
                     <template v-else>
                         <md-table v-model="countries.data" v-if="countries && countries.data" class="table-striped">
                             <md-table-row slot="md-table-row" slot-scope="{ item, index }">
-                                <md-table-cell md-label="#">{{ index + 1 }}</md-table-cell>
+                                <md-table-cell md-label="#">{{ index + countries.from }}</md-table-cell>
                                 <md-table-cell :md-label="$t('countries.property.name')">{{ item.name }}</md-table-cell>
                                 <md-table-cell :md-label="$t('countries.property.short_name')">{{ item.short_name }}</md-table-cell>
                                 <md-table-cell :md-label="$t('countries.actions')" class="text-right">

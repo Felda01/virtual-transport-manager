@@ -23,5 +23,6 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth:api')->group(function () {
+    Route::get('user', [AuthController::class, 'user'])->name('user');
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 });

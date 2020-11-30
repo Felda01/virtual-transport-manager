@@ -21,11 +21,11 @@
             :class="{ 'off-canvas-sidebar': responsive }"
           >
             <md-list>
-              <md-list-item :to="{ name: 'Register' }" @click="linkClick">
+              <md-list-item :to="{ name: 'register', params: { locale: $i18n.locale} }" @click="linkClick">
                 <md-icon>person_add</md-icon>
                 {{ $t('pages.register') }}
               </md-list-item>
-              <md-list-item :to="{ name: 'Login' }" @click="linkClick">
+              <md-list-item :to="{ name: 'login', params: { locale: $i18n.locale} }" @click="linkClick">
                 <md-icon>fingerprint</md-icon>
                 {{ $t('pages.login') }}
               </md-list-item>

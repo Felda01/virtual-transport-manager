@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Utilities\ProxyRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Http\Requests\LoginRequest;
@@ -61,6 +62,13 @@ class AuthController extends Controller
         return response()->json([
             'expiresIn' => $resp->expires_in,
             'message' => 'Token has been refreshed.',
+        ], 200);
+    }
+
+    public function user()
+    {
+        return response()->json([
+            'user' => Auth::guard('api')->user()->load('roles')
         ], 200);
     }
 

@@ -14,21 +14,21 @@
             <user-menu></user-menu>
             <mobile-menu></mobile-menu>
             <template slot="links">
-                <sidebar-item :link="{ name: 'Dashboard', icon: 'dashboard', path: '/dashboard' }"
+                <sidebar-item :link="{ name: 'Dashboard', icon: 'dashboard', path: { name: 'adminDashboard', params: { locale: $i18n.locale }} }"
                 ></sidebar-item>
                 <sidebar-item :link="{ name: $t('navigation.staticMapData'), icon: 'location_on' }">
                     <sidebar-item
-                            :link="{ name: $t('pages.countries'), path: '/admin/countries' }"
+                            :link="{ name: $t('pages.countries'), path: { name: 'countries', params: { locale: $i18n.locale }} }"
                     ></sidebar-item>
                     <sidebar-item
-                            :link="{ name: $t('pages.locations'), path: '/admin/locations' }"
+                            :link="{ name: $t('pages.locations'), path: { name: 'locations', params: { locale: $i18n.locale }} }"
                     ></sidebar-item>
                     <sidebar-item
-                            :link="{ name: $t('pages.routes'), path: '/admin/routes' }"
+                            :link="{ name: $t('pages.routes'), path: { name: 'routes', params: { locale: $i18n.locale }} }"
                     ></sidebar-item>
                 </sidebar-item>
                 <sidebar-item
-                        :link="{ name: $t('pages.constants'), icon: 'storage', path: '/admin/constants' }"
+                        :link="{ name: $t('pages.constants'), icon: 'storage', path: { name: 'constants', params: { locale: $i18n.locale }} }"
                 ></sidebar-item>
             </template>
         </side-bar>

@@ -1,7 +1,7 @@
 <template>
-  <div class="user" v-if="me">
-    <div class="photo" v-if="me.image">
-      <img :src="me.image" :alt="name + ' avatar'" />
+  <div class="user" v-if="user">
+    <div class="photo" v-if="user.image">
+      <img :src="user.image" :alt="name + ' avatar'" />
     </div>
     <div class="photo photo-letters">
       <span class="sidebar-mini">{{ letters }}</span>
@@ -62,14 +62,14 @@
         'user'
       ]),
       letters() {
-        if (this.me) {
-          return this.me.first_name[0].toUpperCase() + " " + this.me.last_name[0].toUpperCase();
+        if (this.user) {
+          return this.user.first_name[0].toUpperCase() + " " + this.user.last_name[0].toUpperCase();
         }
         return '';
       },
       name() {
-        if (this.me) {
-          return this.me.first_name + " " + this.me.last_name;
+        if (this.user) {
+          return this.user.first_name + " " + this.user.last_name;
         }
         return '';
       }
@@ -77,7 +77,6 @@
     data() {
       return {
         isClosed: true,
-        me: null,
       };
     },
     methods: {
@@ -86,16 +85,6 @@
       },
       toggleMenu: function() {
         this.isClosed = !this.isClosed;
-      }
-    },
-    apollo: {
-      me: {
-        query: ME_QUERY
-      }
-    },
-    watch: {
-      me: function (newMe, oldMe) {
-        this.$store.dispatch('setUser', {newMe});
       }
     }
   };

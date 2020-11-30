@@ -9,6 +9,16 @@
     "dashboard": "Dashboard",
     "adminDashboard": "Admin Dashboard"
   },
+  "routes": {
+    "login": "login",
+    "register": "register",
+    "countries": "countries",
+    "locations": "locations",
+    "routes": "routes",
+    "constants": "constants",
+    "dashboard": "",
+    "adminDashboard": "admin"
+  },
   "navigation": {
     "staticMapData": "Static Map data"
   },
