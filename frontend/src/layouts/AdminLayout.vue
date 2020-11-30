@@ -14,21 +14,21 @@
             <user-menu></user-menu>
             <mobile-menu></mobile-menu>
             <template slot="links">
-                <sidebar-item :link="{ name: 'Dashboard', icon: 'dashboard', path: { name: 'adminDashboard', params: { locale: $i18n.locale }} }"
+                <sidebar-item :link="{ name: 'Dashboard', icon: 'dashboard', path: generatePath('adminDashboard') }"
                 ></sidebar-item>
                 <sidebar-item :link="{ name: $t('navigation.staticMapData'), icon: 'location_on' }">
                     <sidebar-item
-                            :link="{ name: $t('pages.countries'), path: { name: 'countries', params: { locale: $i18n.locale }} }"
+                            :link="{ name: $t('pages.countries'), path: generatePath('countries') }"
                     ></sidebar-item>
                     <sidebar-item
-                            :link="{ name: $t('pages.locations'), path: { name: 'locations', params: { locale: $i18n.locale }} }"
+                            :link="{ name: $t('pages.locations'), path: generatePath('locations') }"
                     ></sidebar-item>
                     <sidebar-item
-                            :link="{ name: $t('pages.routes'), path: { name: 'routes', params: { locale: $i18n.locale }} }"
+                            :link="{ name: $t('pages.routes'), path: generatePath('routes') }"
                     ></sidebar-item>
                 </sidebar-item>
                 <sidebar-item
-                        :link="{ name: $t('pages.constants'), icon: 'storage', path: { name: 'constants', params: { locale: $i18n.locale }} }"
+                        :link="{ name: $t('pages.constants'), icon: 'storage', path: generatePath('constants') }"
                 ></sidebar-item>
             </template>
         </side-bar>
@@ -116,6 +116,13 @@
                 if (this.$sidebar) {
                     this.$sidebar.toggleMinimize();
                 }
+            },
+            generatePath(name) {
+                let path = this.$router.resolve({
+                    name: name,
+                    params: { locale: this.$i18n.locale },
+                });
+                return path.href;
             }
         },
         updated() {
