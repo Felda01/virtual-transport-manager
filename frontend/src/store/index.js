@@ -26,7 +26,7 @@ export default new Vuex.Store({
     },
     actions: {
         setToken({commit}, {expiresIn}) {
-            const expiryTime = new Date(new Date().getTime() + expiresIn * 1000);
+            const expiryTime = new Date(new Date().getTime() + expiresIn * 1000 * 60);
             Cookies.set('x-access-token', true, {expires: expiryTime, sameSite: 'lax'});
         },
 
@@ -58,10 +58,15 @@ export default new Vuex.Store({
             commit('SET_USER', user);
         },
 
-        getUser({commit}) {
-            return Vue.axios.get('https://virtual-transport-manager.ddev.site/api/user').then(response => {
-                commit('SET_USER', response.data.user);
-            });
+        getUser({dispatch}, {fullPath}) {
+            return Vue.axios.get('https://virtual-transport-manager.ddev.site/api/user')
+                .then(response => {
+                    dispatch('setUser', {user: response.data.user});
+                })
+                .catch(error => {
+                    console.log('tam');
+                    dispatch('refreshToken', {fullPath: fullPath});
+                })
         },
 
         logout({commit}) {
@@ -72,5 +77,13 @@ export default new Vuex.Store({
         setLoading({commit}, {loading}) {
             commit('SET_LOADING', loading);
         },
+
+        setLanguageCookie({commit}, {locale}) {
+            let current = Cookies.get('locale');
+            if (locale !== current) {
+                const expiryTime = new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000);
+                Cookies.set('locale', locale, {expires: expiryTime, sameSite: 'lax'});
+            }
+        }
     }
 })

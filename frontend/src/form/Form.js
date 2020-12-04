@@ -1,6 +1,9 @@
 import { deepCopy } from './util'
 
+export const TRANSLATABLE_KEY = 'translatable';
+
 class Form {
+
     /**
      * Create a new form instance.
      *
@@ -34,6 +37,31 @@ class Form {
         return this.keys().reduce((data, key) => (
             { ...data, [key]: this[key] }
         ), {})
+    }
+
+    transformTranslatableData(data) {
+        let result = [];
+
+        for (let key in data) {
+            if (data.hasOwnProperty(key)) {
+                if (key !== TRANSLATABLE_KEY) {
+                    result[key] = data[key];
+                } else {
+                    for (let translatableProperty in data[key]) {
+                        if (data[key].hasOwnProperty(translatableProperty)) {
+                            result[translatableProperty] = []
+                            for (let locale in data[key][translatableProperty]) {
+                                if (data[key][translatableProperty].hasOwnProperty(locale)) {
+                                    result[translatableProperty].push({'locale': locale, 'value': data[key][translatableProperty][locale]});
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -90,12 +118,14 @@ class Form {
     submit (apollo, mutation) {
         this.startProcessing()
 
-        const data = this.data()
+        let data = this.data()
+
+        const finalData = this.transformTranslatableData(data);
 
         return new Promise((resolve, reject) => {
             apollo.mutate({
                 mutation: mutation,
-                variables: data
+                variables: finalData
             }).then(response => {
                 this.finishProcessing()
                 resolve(response)
@@ -104,7 +134,7 @@ class Form {
                 this.busy = false
                 reject(error)
             })
-        })
+        });
     }
 }
 

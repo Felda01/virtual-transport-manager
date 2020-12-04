@@ -13,3 +13,9 @@ export const ME_QUERY = gql`
         }
     }
 `;
+
+export const LOCALES_QUERY = gql`
+    query LocalesQuery {
+        locales
+    }
+`;

@@ -15,10 +15,16 @@
                 <form @submit.prevent="handleSubmit(submitModal)">
                     <template v-for="(field, index) in modalSchema.form.fields">
                         <template v-if="field.input === 'text'">
-                            <ValidationProvider :vid="field.name" :name="field.label" :rules="field.rules" v-slot="{ passed, failed, errors }" slot="inputs">
+                            <ValidationProvider :vid="field.name" :name="fieldLabel(field.label, field.config)" :rules="field.rules" v-slot="{ passed, failed, errors }">
                                 <md-field :class="[{ 'md-error md-invalid': failed }, { 'md-valid': passed }]">
-                                    <label>{{ field.label }}{{ field.rules.includes('required') ? ' *' : '' }}</label>
-                                    <md-input v-model="form[field.name]" :type="field.type"></md-input>
+                                    <label>{{ fieldLabel(field.label, field.config) }}{{ field.rules.includes('required') ? ' *' : '' }}</label>
+                                    <template v-if="field.config && field.config.translatable">
+                                        <md-input v-model="form[translatableKey][field.name][field.config.locale]" :type="field.type"></md-input>
+                                    </template>
+                                    <template v-else>
+                                        <md-input v-model="form[field.name]" :type="field.type"></md-input>
+                                    </template>
+
                                     <span class="md-error" v-show="failed">{{ errors[0] }}</span>
 
                                     <slide-y-down-transition>
@@ -47,6 +53,7 @@
 
 <script>
     import Form from "../form/Form";
+    import { TRANSLATABLE_KEY } from "../form/Form";
     import { Modal } from "@/components";
     import { SlideYDownTransition } from "vue2-transitions";
     import { extend } from "vee-validate";
@@ -68,6 +75,11 @@
         components: {
             Modal,
             SlideYDownTransition
+        },
+        computed: {
+            translatableKey() {
+                return TRANSLATABLE_KEY;
+            }
         },
         data() {
             return {
@@ -92,14 +104,25 @@
                         });
                     })
                     .catch(error => {
-                        this.$refs[this.formRef].setErrors(error.graphQLErrors[0].extensions.validation);
-                    })
+                        if (error.graphQLErrors && error.graphQLErrors[0]) {
+                            this.$refs[this.formRef].setErrors(error.graphQLErrors[0].extensions.validation);
+                        } else if (error.errors && error.errors[0]) {
+                            this.$refs[this.formRef].setErrors(error.errors[0].extensions.validation);
+                        }
+                    });
             },
             openModal() {
                 let fields = {};
                 for (let i = 0; i < this.modalSchema.form.fields.length; i++) {
                     let field = this.modalSchema.form.fields[i];
-                    fields[field.name] = field.value;
+                    if (field.config && field.config.translatable) {
+                        fields[TRANSLATABLE_KEY] = [];
+                        fields[TRANSLATABLE_KEY][field.name] = [];
+                        fields[TRANSLATABLE_KEY][field.name][field.config.locale] = field.value;
+                    } else  {
+                        fields[field.name] = field.value;
+                    }
+
                 }
                 for (let i = 0; i < this.modalSchema.form.hiddenFields.length; i++) {
                     let field = this.modalSchema.form.hiddenFields[i];
@@ -109,6 +132,12 @@
 
                 this.showModal = true;
             },
+            fieldLabel(name, config) {
+                if (config && config.translatable) {
+                    return name + ' ' + config.locale.toUpperCase();
+                }
+                return name;
+            }
         }
     }
 </script>

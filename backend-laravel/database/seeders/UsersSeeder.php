@@ -28,7 +28,7 @@ class UsersSeeder extends Seeder
             'company_id' => null
         ]);
 
-        $roleAdmin = Role::findByName('admin');
+        $roleAdmin = Role::findByName('admin', 'api');
         if ($roleAdmin) {
             $admin->assignRole($roleAdmin);
         }

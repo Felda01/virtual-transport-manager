@@ -102,6 +102,7 @@ return [
         'default' => [
             'query' => [
                 // 'example_query' => ExampleQuery::class,
+                'locales' => \App\GraphQL\Queries\LocalesQuery::class,
                 'countries' => \App\GraphQL\Queries\CountriesQuery::class,
             ],
             'mutation' => [
@@ -153,6 +154,8 @@ return [
         'TruckModel' =>  \App\GraphQL\Types\TruckModelType::class,
         'Truck' => \App\GraphQL\Types\TruckType::class,
         'User' => \App\GraphQL\Types\UserType::class,
+
+        'TranslationInput' => \App\GraphQL\Inputs\TranslationInput::class
     ],
 
     // The types will be loaded on demand. Default is to load all types on each request

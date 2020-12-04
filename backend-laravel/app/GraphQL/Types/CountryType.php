@@ -6,6 +6,7 @@ namespace App\GraphQL\Types;
 
 use App\Models\Country;
 use GraphQL\Type\Definition\Type;
+use Illuminate\Support\Facades\Auth;
 use Rebing\GraphQL\Support\Type as GraphQLType;
 
 /**
@@ -28,6 +29,21 @@ class CountryType extends GraphQLType
             ],
             'name' => [
                 'type' => Type::string(),
+                'resolve' => function($root, $args) {
+                    $user = Auth::guard('api')->user();
+                    if ($user->hasRole('admin')) {
+                        $locales = config('translatable.available_locales');
+
+                        $translations = [];
+
+                        foreach ($locales as $locale) {
+                            $translations[] = $root->getTranslation('name', $locale);
+                        }
+
+                        return implode(' / ', $translations);
+                    }
+                    return $root->name;
+                }
             ],
             'short_name' => [
                 'type' => Type::string(),

@@ -29,7 +29,7 @@ const adminRoutes = [
                     adminOnly: true,
                     title: i18n.t('pages.countries'),
                     path: {
-                        en: enRoute.countries
+                        en: enRoute.adminDashboard + '/' + enRoute.countries
                     }
                 }
             }

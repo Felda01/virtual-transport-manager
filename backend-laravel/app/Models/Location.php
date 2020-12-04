@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
 /**
  * App\Models\Location
@@ -33,7 +34,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Location extends Model
 {
-    use HasFactory, HasUuid;
+    use HasFactory, HasUuid, HasTranslations;
+
+    /**
+     * @var string[]
+     */
+    public $translatable = ['name'];
 
     /**
      * The attributes that aren't mass assignable.

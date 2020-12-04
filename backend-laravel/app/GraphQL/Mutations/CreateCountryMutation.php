@@ -38,10 +38,10 @@ class CreateCountryMutation extends Mutation
     public function rules(array $args = []): array
     {
         return [
-            'name' => [
+            'name_translations.*.value' => [
                 'required',
                 'string',
-                'unique:countries,name'
+//                'unique_translation:countries,name'
             ],
             'short_name' => [
                 'string',
@@ -53,9 +53,9 @@ class CreateCountryMutation extends Mutation
     public function args(): array
     {
         return [
-            'name' => [
-                'name' => 'name',
-                'type' => Type::nonNull(Type::string()),
+            'name_translations' => [
+                'name' => 'name_translations',
+                'type' => Type::nonNull(Type::listOf(GraphQL::type('TranslationInput'))),
             ],
             'short_name' => [
                 'name' => 'short_name',
@@ -66,8 +66,16 @@ class CreateCountryMutation extends Mutation
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
-        $country = new Country();
-        $country->fill($args);
+        $nameTranslations = [];
+
+        foreach ($args['name_translations'] as $nameTranslation) {
+            $nameTranslations[$nameTranslation['locale']] = $nameTranslation['value'];
+        }
+
+        $country = Country::create([
+            'name' => $nameTranslations,
+            'short_name' => $args['short_name']
+        ]);
         $country->save();
 
         return $country;

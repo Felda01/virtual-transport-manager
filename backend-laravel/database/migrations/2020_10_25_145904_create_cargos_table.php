@@ -15,7 +15,7 @@ class CreateCargosTable extends Migration
     {
         Schema::create('cargos', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
+            $table->json('name');
             $table->integer('adr');
             $table->integer('weight');
             $table->integer('engine_power');

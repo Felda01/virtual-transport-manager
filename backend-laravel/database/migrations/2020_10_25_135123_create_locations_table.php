@@ -15,7 +15,7 @@ class CreateLocationsTable extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name')->nullable();
+            $table->json('name')->nullable();
             $table->boolean('is_city')->default(true);
             $table->decimal('lat', 10, 6);
             $table->decimal('lng', 10, 6);

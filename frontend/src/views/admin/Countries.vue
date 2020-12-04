@@ -60,6 +60,7 @@
     import { COUNTRIES_QUERY } from '@/graphql/queries/admin';
     import { CREATE_COUNTRY_MUTATION } from '@/graphql/mutations/admin';
     import { MutationModal, Pagination } from "@/components";
+    import { LOCALES_QUERY } from "../../graphql/queries/common";
 
     export default {
         title () {
@@ -77,6 +78,7 @@
                     per_page: 10,
                     current_page: 1,
                 },
+                locales: null,
                 page: 1,
                 modalSchemaAddCountry: {
                     form: {
@@ -91,17 +93,27 @@
             }
         },
         methods: {
-            addCountryModal() {
+            addCountryModal: function () {
+                let translatableNameFields = [];
+                for (let locale in this.locales) {
+                    if (this.locales.hasOwnProperty(locale)) {
+                        translatableNameFields.push({
+                            label: this.$t('countries.property.name'),
+                            rules: 'required',
+                            name: 'name_translations',
+                            input: 'text',
+                            type: 'text',
+                            value: '',
+                            config: {
+                                translatable: true,
+                                locale: this.locales[locale]
+                            }
+                        });
+                    }
+                }
+
                 this.modalSchemaAddCountry.form.fields = [
-                    {
-                        label: this.$t('countries.property.name'),
-                        rules: 'required',
-                        name: 'name',
-                        input: 'text',
-                        type: 'text',
-                        value: '',
-                        config: {}
-                    },
+                    ...translatableNameFields,
                     {
                         label: this.$t('countries.property.short_name'),
                         rules: 'required',
@@ -136,6 +148,9 @@
                     return { page: this.page, limit: this.countries.per_page }
                 }
             },
+            locales: {
+                query: LOCALES_QUERY,
+            }
         },
     }
 </script>

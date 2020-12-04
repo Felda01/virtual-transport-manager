@@ -20,16 +20,16 @@
                     <sidebar-item
                             :link="{ name: $t('pages.countries'), path: generatePath('countries') }"
                     ></sidebar-item>
-                    <sidebar-item
-                            :link="{ name: $t('pages.locations'), path: generatePath('locations') }"
-                    ></sidebar-item>
-                    <sidebar-item
-                            :link="{ name: $t('pages.routes'), path: generatePath('routes') }"
-                    ></sidebar-item>
+<!--                    <sidebar-item-->
+<!--                            :link="{ name: $t('pages.locations'), path: generatePath('locations') }"-->
+<!--                    ></sidebar-item>-->
+<!--                    <sidebar-item-->
+<!--                            :link="{ name: $t('pages.routes'), path: generatePath('routes') }"-->
+<!--                    ></sidebar-item>-->
                 </sidebar-item>
-                <sidebar-item
-                        :link="{ name: $t('pages.constants'), icon: 'storage', path: generatePath('constants') }"
-                ></sidebar-item>
+<!--                <sidebar-item-->
+<!--                        :link="{ name: $t('pages.constants'), icon: 'storage', path: generatePath('constants') }"-->
+<!--                ></sidebar-item>-->
             </template>
         </side-bar>
         <div class="main-panel">
