@@ -7,6 +7,7 @@ namespace App\GraphQL\Types;
 use App\Models\Country;
 use GraphQL\Type\Definition\Type;
 use Illuminate\Support\Facades\Auth;
+use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Type as GraphQLType;
 
 /**
@@ -43,6 +44,18 @@ class CountryType extends GraphQLType
                         return implode(' / ', $translations);
                     }
                     return $root->name;
+                }
+            ],
+            'name_translations' => [
+                'name' => 'name_translations',
+                'type' => Type::nonNull(Type::string()),
+                'privacy' => function(array $args): bool {
+                    $user = Auth::guard('api')->user();
+                    return $user->hasRole('admin');
+                },
+                'alias' => 'name',
+                'resolve' => function($root, $args) {
+                    return json_encode($root->getTranslations('name'));
                 }
             ],
             'short_name' => [

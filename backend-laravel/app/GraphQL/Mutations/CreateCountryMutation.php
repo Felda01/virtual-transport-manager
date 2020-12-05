@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\GraphQL\Mutations;
 
 use App\Models\Country;
+use App\Rules\UniqueTranslationRule;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Mutation;
 
@@ -41,7 +43,14 @@ class CreateCountryMutation extends Mutation
             'name_translations.*.value' => [
                 'required',
                 'string',
-//                'unique_translation:countries,name'
+            ],
+            'name_translations.*.locale' => [
+                'required',
+                'string',
+                Rule::in(config('translatable.available_locales'))
+            ],
+            'name_translations.*' => [
+                new UniqueTranslationRule('countries', 'name')
             ],
             'short_name' => [
                 'string',

@@ -98,7 +98,16 @@ const apolloClientDefault = new ApolloClient({
   ]),
   cache,
   defaultOptions: defaultOptions,
-})
+});
+
+Vue.axios.interceptors.response.use(function (response) {
+    return response
+  }, function (error) {
+    if (error.response.status === 401) {
+      store.dispatch('refreshToken', { fullPath: router.currentRoute.fullPath });
+    }
+    return Promise.reject(error)
+  });
 
 // Create the apollo client auth
 // const apolloClientAuth = new ApolloClient({

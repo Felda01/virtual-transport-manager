@@ -1,0 +1,77 @@
+<template>
+    <modal v-if="showModal" @close="modalHide">
+        <template slot="header">
+            <md-button
+                    class="md-simple md-just-icon md-round modal-default-button"
+                    @click="modalHide"
+            >
+                <md-icon>clear</md-icon>
+            </md-button>
+        </template>
+
+        <template slot="body">
+            <p>{{ modalSchema.message }}</p>
+        </template>
+
+        <template slot="footer">
+            <md-button class="md-danger md-simple" @click="modalHide">{{ modalSchema.cancelBtnTitle }}</md-button>
+            <md-button class="md-success md-simple" @click="submit">{{ modalSchema.okBtnTitle }}</md-button>
+        </template>
+    </modal>
+</template>
+
+<script>
+    import { Modal } from "@/components";
+    import { SlideYDownTransition } from "vue2-transitions";
+    import Form from "../form/Form";
+
+    export default {
+        name: "DeleteModal",
+        props: {
+            modalSchema: {
+                type: Object,
+                required: true
+            },
+        },
+        components: {
+            Modal,
+            SlideYDownTransition
+        },
+        data() {
+            return {
+                showModal: false,
+                form: null,
+            }
+        },
+        methods: {
+            modalHide() {
+                this.showModal = false;
+            },
+            submit() {
+                this.form.submit(this.$apollo, this.modalSchema.form.mutation)
+                    .then(response => {
+                        this.$emit('ok', response);
+
+                        this.$nextTick(() => {
+                            this.showModal = false;
+                            this.form.reset();
+                        });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            },
+            openModal() {
+                let fields = {};
+
+                if (this.modalSchema.form.idField) {
+                    fields['id'] = this.modalSchema.form.idField;
+                }
+
+                this.form = new Form(fields);
+
+                this.showModal = true;
+            }
+        }
+    }
+</script>

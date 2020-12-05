@@ -23,11 +23,11 @@
     "staticMapData": "Static Map data"
   },
   "modal": {
-    "add": {
-      "btn": "Create"
-    },
-    "cancel": {
-      "btn": "Cancel"
+    "btn" : {
+      "add": "Create",
+      "update": "Update",
+      "cancel": "Cancel",
+      "delete": "Delete"
     }
   },
   "pagination": {
@@ -50,12 +50,18 @@
     },
     "actions": "Actions",
     "modal": {
-      "title": "Create new country"
+      "title": {
+        "add": "Create new country",
+        "update": "Update this country"
+      },
+      "message": "Are you sure you want to delete this country?"
     },
     "new": "Create new",
     "response": {
       "success": {
-        "created": "The country {country} was successfully created."
+        "created": "The country {country} was successfully created.",
+        "updated": "The country {country} was successfully updated.",
+        "deleted": "The country {country} was successfully deleted."
       }
     }
   }

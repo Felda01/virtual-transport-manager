@@ -118,6 +118,7 @@ return [
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',
+    'unique_translation' => 'The :attribute :LOCALE has already been taken.',
 
     /*
     |--------------------------------------------------------------------------
@@ -147,6 +148,9 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name_translations' => 'Name',
+        'short_name' => 'Short name'
+    ],
 
 ];

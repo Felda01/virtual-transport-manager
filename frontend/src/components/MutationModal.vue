@@ -11,11 +11,11 @@
         </template>
 
         <template slot="body">
-            <ValidationObserver :ref="formRef" v-slot="{ handleSubmit }">
+            <ValidationObserver :ref="formRef" v-slot="{ handleSubmit }" tag="div">
                 <form @submit.prevent="handleSubmit(submitModal)">
                     <template v-for="(field, index) in modalSchema.form.fields">
                         <template v-if="field.input === 'text'">
-                            <ValidationProvider :vid="field.name" :name="fieldLabel(field.label, field.config)" :rules="field.rules" v-slot="{ passed, failed, errors }">
+                            <ValidationProvider :name="fieldLabel(field.label, field.config)" :rules="field.rules" v-slot="{ passed, failed, errors }" tag="div">
                                 <md-field :class="[{ 'md-error md-invalid': failed }, { 'md-valid': passed }]">
                                     <label>{{ fieldLabel(field.label, field.config) }}{{ field.rules.includes('required') ? ' *' : '' }}</label>
                                     <template v-if="field.config && field.config.translatable">
@@ -71,6 +71,9 @@
                 type: Object,
                 required: true
             },
+            locales: {
+                type: Array
+            }
         },
         components: {
             Modal,
@@ -104,11 +107,36 @@
                         });
                     })
                     .catch(error => {
+                        let errors = {};
+                        let finalErrors = {};
+
                         if (error.graphQLErrors && error.graphQLErrors[0]) {
-                            this.$refs[this.formRef].setErrors(error.graphQLErrors[0].extensions.validation);
+                            errors = error.graphQLErrors[0].extensions.validation;
                         } else if (error.errors && error.errors[0]) {
-                            this.$refs[this.formRef].setErrors(error.errors[0].extensions.validation);
+                            errors = error.errors[0].extensions.validation;
                         }
+
+                        for (let errorKey in errors) {
+                            if (errors.hasOwnProperty(errorKey)) {
+                                if (errorKey.includes('translations')) {
+                                    let attributeKey = errorKey.split('.');
+                                    let attributeName = attributeKey[0];
+                                    attributeName = attributeName.replace('_translations', '');
+
+                                    let attributeLocale = attributeKey[1];
+
+                                    attributeName = this.transformErrorKey(attributeName);
+                                    attributeName = attributeName + " " + this.locales[attributeLocale].toUpperCase();
+
+                                    finalErrors[attributeName] = errors[errorKey];
+                                } else {
+                                    let attributeName = this.transformErrorKey(errorKey);
+                                    finalErrors[attributeName] = errors[errorKey];
+                                }
+                            }
+                        }
+
+                        this.$refs[this.formRef].setErrors(finalErrors);
                     });
             },
             openModal() {
@@ -116,18 +144,27 @@
                 for (let i = 0; i < this.modalSchema.form.fields.length; i++) {
                     let field = this.modalSchema.form.fields[i];
                     if (field.config && field.config.translatable) {
-                        fields[TRANSLATABLE_KEY] = [];
-                        fields[TRANSLATABLE_KEY][field.name] = [];
+                        if (!fields.hasOwnProperty(TRANSLATABLE_KEY)) {
+                            fields[TRANSLATABLE_KEY] = {};
+                        }
+                        if (!fields[TRANSLATABLE_KEY].hasOwnProperty(field.name)) {
+                            fields[TRANSLATABLE_KEY][field.name] = {};
+                        }
+
                         fields[TRANSLATABLE_KEY][field.name][field.config.locale] = field.value;
                     } else  {
                         fields[field.name] = field.value;
                     }
-
                 }
                 for (let i = 0; i < this.modalSchema.form.hiddenFields.length; i++) {
                     let field = this.modalSchema.form.hiddenFields[i];
                     fields[field.name] = field.value;
                 }
+
+                if (this.modalSchema.form.idField) {
+                    fields['id'] = this.modalSchema.form.idField;
+                }
+
                 this.form = new Form(fields);
 
                 this.showModal = true;
@@ -137,6 +174,11 @@
                     return name + ' ' + config.locale.toUpperCase();
                 }
                 return name;
+            },
+            transformErrorKey(errorKey) {
+                let result = errorKey;
+                result = result.replaceAll('_', ' ');
+                return result[0].toUpperCase() + result.substring(1);
             }
         }
     }

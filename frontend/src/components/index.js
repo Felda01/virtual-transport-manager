@@ -5,6 +5,7 @@ import DropDown from "./Dropdown.vue";
 // Modals
 import Modal from "./Modal.vue";
 import MutationModal from "./MutationModal";
+import DeleteModal from "./DeleteModal";
 
 // Tables
 import GlobalSalesTable from "./Tables/GlobalSalesTable.vue";
@@ -40,6 +41,7 @@ export {
   Badge,
   Modal,
   MutationModal,
+  DeleteModal,
   Pagination,
   GlobalSalesTable,
   LockCard,

@@ -25,8 +25,8 @@
                                 <md-table-cell :md-label="$t('countries.property.name')">{{ item.name }}</md-table-cell>
                                 <md-table-cell :md-label="$t('countries.property.short_name')">{{ item.short_name }}</md-table-cell>
                                 <md-table-cell :md-label="$t('countries.actions')" class="text-right">
-                                    <md-button class="md-just-icon md-success md-simple"><md-icon>edit</md-icon></md-button>
-                                    <md-button class="md-just-icon md-danger md-simple"><md-icon>close</md-icon></md-button>
+                                    <md-button class="md-just-icon md-success md-simple" @click="updateCountryModal(item)"><md-icon>edit</md-icon></md-button>
+                                    <md-button class="md-just-icon md-danger md-simple" @click="deleteCountryModal(item)"><md-icon>close</md-icon></md-button>
                                 </md-table-cell>
                             </md-table-row>
                         </md-table>
@@ -52,15 +52,21 @@
         </div>
 
         <!-- Add country modal-->
-        <mutation-modal ref="addCountryModal" @ok="addCountry" :modalSchema="modalSchemaAddCountry" />
+        <mutation-modal ref="addCountryModal" @ok="addCountry" :modalSchema="modalSchemaAddCountry" :locales="locales" />
+
+        <!-- Update country modal-->
+        <mutation-modal ref="updateCountryModal" @ok="updateCountry" :modalSchema="modalSchemaUpdateCountry" :locales="locales" />
+
+        <delete-modal ref="deleteCountryModal" @ok="deleteCountry" :modalSchema="modalSchemaDeleteCountry" />
     </div>
 </template>
 
 <script>
     import { COUNTRIES_QUERY } from '@/graphql/queries/admin';
-    import { CREATE_COUNTRY_MUTATION } from '@/graphql/mutations/admin';
+    import { CREATE_COUNTRY_MUTATION, UPDATE_COUNTRY_MUTATION, DELETE_COUNTRY_MUTATION } from '@/graphql/mutations/admin';
     import { MutationModal, Pagination } from "@/components";
     import { LOCALES_QUERY } from "../../graphql/queries/common";
+    import DeleteModal from "../../components/DeleteModal";
 
     export default {
         title () {
@@ -69,7 +75,8 @@
         name: "Countries",
         components: {
             MutationModal,
-            Pagination
+            Pagination,
+            DeleteModal
         },
         data() {
             return {
@@ -86,10 +93,30 @@
                         fields: [],
                         hiddenFields: [],
                     },
-                    modalTitle: this.$t('countries.modal.title'),
-                    okBtnTitle: this.$t('modal.add.btn'),
-                    cancelBtnTitle: this.$t('modal.cancel.btn')
+                    modalTitle: this.$t('countries.modal.title.add'),
+                    okBtnTitle: this.$t('modal.btn.add'),
+                    cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
+                modalSchemaUpdateCountry: {
+                    form: {
+                        mutation: UPDATE_COUNTRY_MUTATION,
+                        fields: [],
+                        hiddenFields: [],
+                        idField: null
+                    },
+                    modalTitle: this.$t('countries.modal.title.update'),
+                    okBtnTitle: this.$t('modal.btn.update'),
+                    cancelBtnTitle: this.$t('modal.btn.cancel')
+                },
+                modalSchemaDeleteCountry: {
+                    message: this.$t('countries.modal.message'),
+                    form: {
+                        mutation: DELETE_COUNTRY_MUTATION,
+                        idField: null,
+                    },
+                    okBtnTitle: this.$t('modal.btn.delete'),
+                    cancelBtnTitle: this.$t('modal.btn.cancel')
+                }
             }
         },
         methods: {
@@ -129,7 +156,6 @@
             },
             addCountry(response) {
                 let country = response.data.createCountry;
-                this.countries.data.push(country);
                 this.$notify({
                     timeout: 5000,
                     message: this.$t('countries.response.success.created', { country: country.name }),
@@ -140,6 +166,72 @@
                 });
                 this.$apollo.queries.countries.refresh();
             },
+            updateCountryModal(country) {
+                let translatableNameFields = [];
+                let translatableNameValue = JSON.parse(country.name_translations);
+                for (let locale in this.locales) {
+                    if (this.locales.hasOwnProperty(locale)) {
+                        translatableNameFields.push({
+                            label: this.$t('countries.property.name'),
+                            rules: 'required',
+                            name: 'name_translations',
+                            input: 'text',
+                            type: 'text',
+                            value: translatableNameValue[this.locales[locale]],
+                            config: {
+                                translatable: true,
+                                locale: this.locales[locale]
+                            }
+                        });
+                    }
+                }
+
+                this.modalSchemaUpdateCountry.form.fields = [
+                    ...translatableNameFields,
+                    {
+                        label: this.$t('countries.property.short_name'),
+                        rules: 'required',
+                        name: 'short_name',
+                        input: 'text',
+                        type: 'text',
+                        value: country.short_name,
+                        config: {}
+                    }
+                ];
+
+                this.modalSchemaUpdateCountry.form.idField = country.id;
+
+                this.$refs['updateCountryModal'].openModal();
+            },
+            updateCountry(response) {
+                let country = response.data.updateCountry;
+                this.$notify({
+                    timeout: 5000,
+                    message: this.$t('countries.response.success.updated', { country: country.name }),
+                    icon: "add_alert",
+                    horizontalAlign: 'right',
+                    verticalAlign: 'top',
+                    type: 'success'
+                });
+                this.$apollo.queries.countries.refresh();
+            },
+            deleteCountryModal(country) {
+                this.modalSchemaDeleteCountry.form.idField = country.id;
+
+                this.$refs['deleteCountryModal'].openModal();
+            },
+            deleteCountry(response) {
+                let country = response.data.deleteCountry;
+                this.$notify({
+                    timeout: 5000,
+                    message: this.$t('countries.response.success.deleted', { country: country.name }),
+                    icon: "add_alert",
+                    horizontalAlign: 'right',
+                    verticalAlign: 'top',
+                    type: 'success'
+                });
+                this.$apollo.queries.countries.refresh();
+            }
         },
         apollo: {
             countries: {

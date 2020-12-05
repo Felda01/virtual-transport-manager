@@ -107,7 +107,9 @@ return [
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,
-                'createCountry' => \App\GraphQL\Mutations\CreateCountryMutation::class
+                'createCountry' => \App\GraphQL\Mutations\CreateCountryMutation::class,
+                'updateCountry' => \App\GraphQL\Mutations\UpdateCountryMutation::class,
+                'deleteCountry' => \App\GraphQL\Mutations\DeleteCountryMutation::class
             ],
             'middleware' => ['auth:api'],
             'method' => ['get', 'post'],

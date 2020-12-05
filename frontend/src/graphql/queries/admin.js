@@ -6,6 +6,7 @@ export const COUNTRIES_QUERY = gql`
             data {
                 id,
                 name,
+                name_translations,
                 short_name
             }
             total,
