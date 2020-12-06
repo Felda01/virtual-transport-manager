@@ -26,33 +26,34 @@ export default new Vuex.Store({
     },
     actions: {
         setToken({commit}, {expiresIn}) {
-            const expiryTime = new Date(new Date().getTime() + expiresIn * 1000 * 60);
-            Cookies.set('x-access-token', true, {expires: expiryTime, sameSite: 'lax'});
+            let expiryTime = new Date();
+            expiryTime.setSeconds(expiryTime.getSeconds() + expiresIn - 3600);
+            Cookies.set('x-access-token', true, {expires: expiryTime, sameSite: 'lax', secure: true});
         },
 
-         refreshToken({dispatch}, {fullPath}) {
-            return Vue.axios.post('https://virtual-transport-manager.ddev.site/api/refresh-token')
-                .then(response => {
-                    let payload = {
-                        expiresIn: response.data.expiresIn
-                    };
-                    dispatch('setToken', payload);
-                }).catch(error => {
-                    dispatch('logout');
-                    if (fullPath) {
-                        router.push({
-                            name: 'login',
-                            query: { redirect: fullPath },
-                            params: { locale: i18n.locale }
-                        });
-                    } else {
-                        router.push({
-                            name: 'login',
-                            params: { locale: i18n.locale }
-                        });
-                    }
-                });
-        },
+        //  refreshToken({dispatch}, {fullPath}) {
+        //     return Vue.axios.post('https://virtual-transport-manager.ddev.site/api/refresh-token')
+        //         .then(response => {
+        //             let payload = {
+        //                 expiresIn: response.data.expiresIn
+        //             };
+        //             dispatch('setToken', payload);
+        //         }).catch(error => {
+        //             dispatch('logout');
+        //             if (fullPath) {
+        //                 router.push({
+        //                     name: 'login',
+        //                     query: { redirect: fullPath },
+        //                     params: { locale: i18n.locale }
+        //                 });
+        //             } else {
+        //                 router.push({
+        //                     name: 'login',
+        //                     params: { locale: i18n.locale }
+        //                 });
+        //             }
+        //         });
+        // },
 
         setUser({commit}, {user}) {
             commit('SET_USER', user);
@@ -64,14 +65,26 @@ export default new Vuex.Store({
                     dispatch('setUser', {user: response.data.user});
                 })
                 .catch(error => {
-                    console.log('tam');
-                    dispatch('refreshToken', {fullPath: fullPath});
+                    dispatch('logout', {fullPath: fullPath});
                 })
         },
 
-        logout({commit}) {
+        logout({commit}, {fullPath}) {
             Cookies.remove('x-access-token');
             commit('SET_USER', null);
+
+            if (fullPath) {
+                router.push({
+                    name: 'login',
+                    query: { redirect: fullPath },
+                    params: { locale: i18n.locale }
+                });
+            } else {
+                router.push({
+                    name: 'login',
+                    params: { locale: i18n.locale }
+                });
+            }
         },
 
         setLoading({commit}, {loading}) {
@@ -82,7 +95,7 @@ export default new Vuex.Store({
             let current = Cookies.get('locale');
             if (locale !== current) {
                 const expiryTime = new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000);
-                Cookies.set('locale', locale, {expires: expiryTime, sameSite: 'lax'});
+                Cookies.set('locale', locale, {expires: expiryTime, sameSite: 'lax', secure: true});
             }
         }
     }

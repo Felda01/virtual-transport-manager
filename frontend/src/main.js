@@ -91,7 +91,7 @@ const apolloClientDefault = new ApolloClient({
   link: from([
     onError(errorHandler => {
       if (errorHandler && errorHandler.networkError && errorHandler.networkError.statusCode === 401) {
-        store.dispatch('refreshToken', { fullPath: router.currentRoute.fullPath });
+        store.dispatch('logout', { fullPath: router.currentRoute.fullPath });
       }
      }),
     httpLinkDefault,
@@ -104,7 +104,7 @@ Vue.axios.interceptors.response.use(function (response) {
     return response
   }, function (error) {
     if (error.response.status === 401) {
-      store.dispatch('refreshToken', { fullPath: router.currentRoute.fullPath });
+      store.dispatch('logout', { fullPath: router.currentRoute.fullPath });
     }
     return Promise.reject(error)
   });

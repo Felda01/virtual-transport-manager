@@ -97,7 +97,7 @@ router.beforeEach((to, from, next) => {
 
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!Cookies.get('x-access-token')) {
-      store.dispatch('refreshToken', { fullPath: to.fullPath });
+      store.dispatch('logout', { fullPath: to.fullPath });
     } else {
       user(to.fullPath).then(() => {
         if (to.matched.some(record => record.meta.adminOnly)) {
@@ -116,9 +116,6 @@ router.beforeEach((to, from, next) => {
           }
         }
         next()
-      }).catch(error => {
-        console.log('tu');
-        store.dispatch('refreshToken', { fullPath: to.fullPath });
       });
     }
   } else if (to.matched.some(record => record.meta.guest)) {
