@@ -19,3 +19,29 @@ export const COUNTRIES_QUERY = gql`
         }
     }
 `;
+
+export const LOCATIONS_QUERY = gql`
+    query LocationsQuery($limit: Int!, $page: Int!) {
+        locations(limit: $limit, page: $page) {
+            data {
+                id,
+                name,
+                name_translations,
+                is_city,
+                lat,
+                lng,
+                country {
+                    id,
+                    name
+                }
+            }
+            total,
+            per_page,
+            current_page,
+            from,
+            to,
+            last_page,
+            has_more_pages
+        }
+    }
+`;

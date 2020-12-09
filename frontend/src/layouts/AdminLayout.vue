@@ -20,9 +20,9 @@
                     <sidebar-item
                             :link="{ name: $t('pages.countries'), path: generatePath('countries') }"
                     ></sidebar-item>
-<!--                    <sidebar-item-->
-<!--                            :link="{ name: $t('pages.locations'), path: generatePath('locations') }"-->
-<!--                    ></sidebar-item>-->
+                    <sidebar-item
+                            :link="{ name: $t('pages.locations'), path: generatePath('locations') }"
+                    ></sidebar-item>
 <!--                    <sidebar-item-->
 <!--                            :link="{ name: $t('pages.routes'), path: generatePath('routes') }"-->
 <!--                    ></sidebar-item>-->

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Queries;
 
-use App\Models\Country;
+use App\Models\Location;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -13,21 +13,21 @@ use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\SelectFields;
 
-class CountriesQuery extends Query
+class LocationsQuery extends Query
 {
     protected $attributes = [
-        'name' => 'countries',
+        'name' => 'locations',
         'description' => 'A query'
     ];
 
     public function type(): Type
     {
-        return GraphQL::paginate('Country');
+        return GraphQL::paginate('Location');
     }
 
     public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
-       return Auth::check() ? Auth::user()->hasRole('admin') : false;
+        return Auth::check() ? Auth::user()->hasRole('admin') : false;
     }
 
     public function getAuthorizationMessage(): string
@@ -56,11 +56,7 @@ class CountriesQuery extends Query
         $select = $fields->getSelect();
         $with = $fields->getRelations();
 
-        if ($args['limit'] === -1) {
-            $args['limit'] = Country::count();
-        }
-
-        return Country::with($with)
+        return Location::with($with)
             ->select($select)
             ->orderBy('name')
             ->paginate($args['limit'], ['*'], 'page', $args['page']);

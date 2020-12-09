@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace App\GraphQL\Mutations;
 
 use App\Models\Location;
+use App\Rules\UniqueTranslationRule;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Mutation;
 
@@ -23,18 +26,31 @@ class CreateLocationMutation extends Mutation
         return GraphQL::type('Location');
     }
 
+    private function guard()
+    {
+        return Auth::guard('api');
+    }
+
     public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
         // true, if logged in
-        return true;
+        return $this->guard()->check() && $this->guard()->user()->hasRole('admin');
     }
 
     public function rules(array $args = []): array
     {
         return [
-            'name' => [
-                'optional',
+            'name_translations.*.value' => [
+                'required',
                 'string',
+            ],
+            'name_translations.*.locale' => [
+                'required',
+                'string',
+                Rule::in(config('translatable.available_locales'))
+            ],
+            'name_translations.*' => [
+                new UniqueTranslationRule('countries', 'name')
             ],
             'is_city' => [
                 'required',
@@ -42,11 +58,13 @@ class CreateLocationMutation extends Mutation
             ],
             'lat' => [
                 'required',
-                'decimal',
+                'string',
+                'regex:/'.Location::LATITUDE_REGEX.'/i'
             ],
             'lng' => [
                 'required',
-                'decimal',
+                'string',
+                'regex:/'.Location::LONGITUDE_REGEX.'/i'
             ],
             'country' => [
                 'required',
@@ -58,9 +76,9 @@ class CreateLocationMutation extends Mutation
     public function args(): array
     {
         return [
-            'name' => [
-                'name' => 'name',
-                'type' => Type::string(),
+            'name_translations' => [
+                'name' => 'name_translations',
+                'type' => Type::nonNull(Type::listOf(GraphQL::type('TranslationInput'))),
             ],
             'is_city' => [
                 'name' => 'is_city',
@@ -68,23 +86,34 @@ class CreateLocationMutation extends Mutation
             ],
             'lat' => [
                 'name' => 'lat',
-                'type' => Type::nonNull(Type::float()),
+                'type' => Type::nonNull(Type::string()),
             ],
             'lng' => [
-                'name' => 'lat',
-                'type' => Type::nonNull(Type::float()),
+                'name' => 'lng',
+                'type' => Type::nonNull(Type::string()),
             ],
             'country' => [
                 'name' => 'country',
-                'type' => GraphQL::type('Country'),
+                'type' => Type::nonNull(Type::string()),
             ]
         ];
     }
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
-        $location = new Location();
-        $location->fill($args);
+        $nameTranslations = [];
+
+        foreach ($args['name_translations'] as $nameTranslation) {
+            $nameTranslations[$nameTranslation['locale']] = $nameTranslation['value'];
+        }
+
+        $location = Location::create([
+            'name' => $nameTranslations,
+            'is_city' => $args['is_city'],
+            'lat' => $args['lat'],
+            'lng' => $args['lng'],
+            'country_id' => $args['country']
+        ]);
         $location->save();
 
         return $location;

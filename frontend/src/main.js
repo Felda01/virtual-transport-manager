@@ -39,15 +39,27 @@ Vue.axios.defaults.withCredentials = true;
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import { BatchHttpLink } from 'apollo-link-batch-http'
 import { onError } from 'apollo-link-error';
 import { from } from 'apollo-link';
 
 import { setContext } from "apollo-link-context";
 
+const HTTP_END_POINT = 'https://virtual-transport-manager.ddev.site/api/graphql'
+
+// const batchLink = new BatchHttpLink({
+//   uri: HTTP_END_POINT,
+//   headers: {
+//     'Accept': 'application/json',
+//     'X-Requested-With': 'XMLHttpRequest'
+//   },
+//   credentials: 'include'
+// });
+
 // HTTP connection to the API
 const httpLinkDefault = createHttpLink({
   // You should use an absolute URL here
-  uri: 'https://virtual-transport-manager.ddev.site/api/graphql',
+  uri: HTTP_END_POINT,
   headers: {
     'Accept': 'application/json',
     'X-Requested-With': 'XMLHttpRequest'

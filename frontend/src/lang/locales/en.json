@@ -33,6 +33,11 @@
   "pagination": {
     "display": "Showing {from} to {to} of {total} entries"
   },
+  "validation": {
+    "latitude": "The Latitude format is invalid.",
+    "longitude": "The Longitude format is invalid.",
+    "autocomplete": "No {model} matching \"{term}\" were found."
+  },
   "login": {
     "logIn": "Log in",
     "submitBtn": "Lets Go"
@@ -62,6 +67,31 @@
         "created": "The country {country} was successfully created.",
         "updated": "The country {country} was successfully updated.",
         "deleted": "The country {country} was successfully deleted."
+      }
+    }
+  },
+  "locations": {
+    "property": {
+      "name": "Name",
+      "is_city": "Is city",
+      "lat": "Latitude",
+      "lng": "Longitude",
+      "country": "Country"
+    },
+    "actions": "Actions",
+    "modal": {
+      "title": {
+        "add": "Create new location",
+        "update": "Update this location"
+      },
+      "message": "Are you sure you want to delete this location?"
+    },
+    "new": "Create new",
+    "response": {
+      "success": {
+        "created": "The location {location} was successfully created.",
+        "updated": "The location {location} was successfully updated.",
+        "deleted": "The location {location} was successfully deleted."
       }
     }
   }

@@ -36,6 +36,9 @@ class Location extends Model
 {
     use HasFactory, HasUuid, HasTranslations;
 
+    const LATITUDE_REGEX = '^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$';
+    const LONGITUDE_REGEX = '^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$';
+
     /**
      * @var string[]
      */
@@ -54,5 +57,32 @@ class Location extends Model
     public function country()
     {
         return $this->belongsTo(Country::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function routesLocation1()
+    {
+        return $this->hasMany(Route::class, 'location1_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function routesLocation2()
+    {
+        return $this->hasMany(Route::class, 'location2_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function routes()
+    {
+        $routesLocation1 = $this->routesLocation1;
+        $routesLocation2 = $this->routesLocation2;
+
+        return $routesLocation1->merge($routesLocation2);
     }
 }

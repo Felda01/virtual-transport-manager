@@ -104,12 +104,17 @@ return [
                 // 'example_query' => ExampleQuery::class,
                 'locales' => \App\GraphQL\Queries\LocalesQuery::class,
                 'countries' => \App\GraphQL\Queries\CountriesQuery::class,
+                'locations' => \App\GraphQL\Queries\LocationsQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,
                 'createCountry' => \App\GraphQL\Mutations\CreateCountryMutation::class,
                 'updateCountry' => \App\GraphQL\Mutations\UpdateCountryMutation::class,
-                'deleteCountry' => \App\GraphQL\Mutations\DeleteCountryMutation::class
+                'deleteCountry' => \App\GraphQL\Mutations\DeleteCountryMutation::class,
+
+                'createLocation' => \App\GraphQL\Mutations\CreateLocationMutation::class,
+                'updateLocation' => \App\GraphQL\Mutations\UpdateLocationMutation::class,
+                'deleteLocation' => \App\GraphQL\Mutations\DeleteLocationMutation::class,
             ],
             'middleware' => ['auth:api'],
             'method' => ['get', 'post'],

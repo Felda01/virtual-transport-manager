@@ -32,6 +32,19 @@ const adminRoutes = [
                         en: enRoute.adminDashboard + '/' + enRoute.countries
                     }
                 }
+            },
+            {
+                path: enRoute.locations,
+                name: 'locations',
+                component: () => import('../views/admin/Locations.vue'),
+                meta: {
+                    requiresAuth: true,
+                    adminOnly: true,
+                    title: i18n.t('pages.locations'),
+                    path: {
+                        en: enRoute.adminDashboard + '/' + enRoute.locations
+                    }
+                }
             }
         ]
     },

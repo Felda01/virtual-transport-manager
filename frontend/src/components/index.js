@@ -4,8 +4,8 @@ import Badge from "./Badge";
 import DropDown from "./Dropdown.vue";
 // Modals
 import Modal from "./Modal.vue";
-import MutationModal from "./MutationModal";
-import DeleteModal from "./DeleteModal";
+import MutationModal from "./MutationModal.vue";
+import DeleteModal from "./DeleteModal.vue";
 
 // Tables
 import GlobalSalesTable from "./Tables/GlobalSalesTable.vue";

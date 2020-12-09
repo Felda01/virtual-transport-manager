@@ -32,12 +32,12 @@
       border: 1px solid $brand-primary;
 
       .md-ripple .md-ripple-wave{
-        background-color: rgba(156,39,176,.7) !important;
+        background-color: md-get-palette-color(green, 600) !important;
       }
     }
 
     .md-switch-container {
-      background-color: rgba(156,39,176,.7) !important;
+      background-color: md-get-palette-color(green, 600) !important;
     }
   }
 }

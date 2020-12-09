@@ -27,3 +27,43 @@ export const DELETE_COUNTRY_MUTATION = gql`
         }
     }
 `;
+
+export const CREATE_LOCATION_MUTATION = gql`
+    mutation CreateLocationMutation($name_translations: [TranslationInput]!, $is_city: Boolean!, $lat: String!, $lng: String!, $country: String!) {
+        createLocation(name_translations: $name_translations, is_city: $is_city, lat: $lat, lng: $lng, country: $country) {
+            id
+            name
+            is_city
+            lat
+            lng
+            country {
+                id
+                name
+            }
+        }
+    }
+`;
+
+export const UPDATE_LOCATION_MUTATION = gql`
+    mutation UpdateLocationMutation($id: String!, $name_translations: [TranslationInput]!, $is_city: Boolean!, $lat: String!, $lng: String!, $country: String!) {
+        updateLocation(id: $id, name_translations: $name_translations, is_city: $is_city, lat: $lat, lng: $lng, country: $country) {
+            id
+            name
+            is_city
+            lat
+            lng
+            country {
+                id
+                name
+            }
+        }
+    }
+`;
+
+export const DELETE_LOCATION_MUTATION = gql`
+    mutation DeleteLocationMutation($id: String!) {
+        deleteLocation(id: $id) {
+            name
+        }
+    }
+`;

@@ -17,8 +17,8 @@ class CreateLocationsTable extends Migration
             $table->uuid('id')->primary();
             $table->json('name')->nullable();
             $table->boolean('is_city')->default(true);
-            $table->decimal('lat', 10, 6);
-            $table->decimal('lng', 10, 6);
+            $table->string('lat');
+            $table->string('lng');
             $table->uuid('country_id');
             $table->foreign('country_id')->references('id')->on('countries');
             $table->timestamps();

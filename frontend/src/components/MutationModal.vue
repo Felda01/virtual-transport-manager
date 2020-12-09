@@ -36,6 +36,53 @@
                                 </md-field>
                             </ValidationProvider>
                         </template>
+                        <template v-else-if="field.input === 'switch'">
+                            <ValidationProvider :name="field.label" :rules="field.rules" v-slot="{ passed, failed, errors }" tag="div">
+                                <md-switch class="md-primary" v-model="form[field.name]">{{ field.label }}</md-switch>
+                            </ValidationProvider>
+                        </template>
+                        <template v-else-if="field.input === 'autocomplete'">
+                            <ValidationProvider :name="field.label" :rules="field.rules" v-slot="{ passed, failed, errors }" tag="div">
+                                <md-autocomplete v-model="form[field.name]" :md-options="field.config.options" :class="[{ 'md-error md-invalid': failed }, { 'md-valid': passed }]" md-dense
+                                                 @md-changed="getCustomers" @md-opened="getCustomers" @md-selected="selectCustomer">
+                                    <label>{{ field.label }}{{ field.rules.includes('required') ? ' *' : '' }}</label>
+
+                                    <template slot="md-autocomplete-empty" slot-scope="{ term }">
+                                        {{ $t('validation.autocomplete', {term: term, model: field.config.autocompleteModel}) }}
+                                    </template>
+
+                                    <template slot="md-autocomplete-item" slot-scope="{ item }">{{ item.name }}</template>
+
+                                    <span class="md-error" v-show="failed">{{ errors[0] }}</span>
+
+                                    <slide-y-down-transition>
+                                        <md-icon class="error" v-show="failed">close</md-icon>
+                                    </slide-y-down-transition>
+                                    <slide-y-down-transition>
+                                        <md-icon class="success" v-show="passed">done</md-icon>
+                                    </slide-y-down-transition>
+                                </md-autocomplete>
+                            </ValidationProvider>
+                        </template>
+                        <template v-else-if="field.input === 'select'">
+                            <ValidationProvider :name="field.label" :rules="field.rules" v-slot="{ passed, failed, errors }" tag="div">
+                                <md-field :class="[{ 'md-error md-invalid': failed }, { 'md-valid': passed }]">
+                                    <label>{{ field.label }}{{ field.rules.includes('required') ? ' *' : '' }}</label>
+                                    <md-select v-model="form[field.name]">
+                                        <md-option :value="option[field.config.valueField]" v-for="option in field.config.options" :key="option[field.config.valueField]">{{ field.config.optionLabel(option) }}</md-option>
+                                    </md-select>
+
+                                    <span class="md-error" v-show="failed">{{ errors[0] }}</span>
+
+                                    <slide-y-down-transition>
+                                        <md-icon class="error" v-show="failed">close</md-icon>
+                                    </slide-y-down-transition>
+                                    <slide-y-down-transition>
+                                        <md-icon class="success" v-show="passed">done</md-icon>
+                                    </slide-y-down-transition>
+                                </md-field>
+                            </ValidationProvider>
+                        </template>
                     </template>
                 </form>
             </ValidationObserver>
@@ -57,12 +104,30 @@
     import { Modal } from "@/components";
     import { SlideYDownTransition } from "vue2-transitions";
     import { extend } from "vee-validate";
-    import { required, email, min } from "vee-validate/dist/rules";
-    import MdUuid from 'vue-material/src/core/utils/MdUuid'
+    import { required, email, min, regex } from "vee-validate/dist/rules";
+    import MdUuid from 'vue-material/src/core/utils/MdUuid';
+    import i18n from '../lang';
 
     extend("email", email);
     extend("required", required);
     extend("min", min);
+    extend("regex", regex);
+    extend("latitude", value => {
+        let latitudeRegex = /^-?([1-8]?[1-9]|[1-9]0)\.\d{1,6}$/;
+        if (latitudeRegex.test(value)) {
+            return true;
+        }
+
+        return i18n.t('validation.latitude');
+    });
+    extend("longitude", value => {
+        let longitudeRegex = /^-?([1]?[1-7][1-9]|[1]?[1-8][0]|[1-9]?[0-9])\.\d{1,6}$/;
+        if (longitudeRegex.test(value)) {
+            return true;
+        }
+
+        return i18n.t('validation.longitude');
+    });
 
     export default {
         name: "MutationModal",
@@ -77,7 +142,7 @@
         },
         components: {
             Modal,
-            SlideYDownTransition
+            SlideYDownTransition,
         },
         computed: {
             translatableKey() {
@@ -183,3 +248,10 @@
         }
     }
 </script>
+
+<style lang="scss">
+    .md-menu-content,
+    .md-select-menu {
+        z-index: 10000!important;
+    }
+</style>

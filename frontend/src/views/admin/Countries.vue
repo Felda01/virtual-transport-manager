@@ -30,11 +30,6 @@
                                 </md-table-cell>
                             </md-table-row>
                         </md-table>
-                        <div class="table table-stats">
-                            <div class="text-right">
-                                <md-button class="md-primary" @click="addCountryModal">{{ $t('countries.new') }}</md-button>
-                            </div>
-                        </div>
                     </template>
                 </md-card-content>
                 <md-card-actions md-alignment="space-between">
@@ -64,9 +59,8 @@
 <script>
     import { COUNTRIES_QUERY } from '@/graphql/queries/admin';
     import { CREATE_COUNTRY_MUTATION, UPDATE_COUNTRY_MUTATION, DELETE_COUNTRY_MUTATION } from '@/graphql/mutations/admin';
-    import { MutationModal, Pagination } from "@/components";
+    import { MutationModal, Pagination, DeleteModal } from "@/components";
     import { LOCALES_QUERY } from "../../graphql/queries/common";
-    import DeleteModal from "../../components/DeleteModal";
 
     export default {
         title () {
@@ -257,34 +251,5 @@
     }
     .md-table .md-table-head:last-child {
         text-align: right;
-    }
-    .table-stats {
-        display: flex;
-        align-items: center;
-        text-align: right;
-        flex-flow: row wrap;
-
-        .td-price .td-total {
-            display: inline-flex;
-            font-weight: 500;
-            font-size: 1.0625rem;
-            margin-right: 50px;
-        }
-
-        &.table-striped .td-price {
-            border-bottom: 0;
-        }
-
-        .td-price {
-            font-size: 26px;
-            border-top: 1px solid #ddd;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .td-price,
-        > div {
-            flex: 0 0 100%;
-            padding: 12px 8px;
-        }
     }
 </style>
