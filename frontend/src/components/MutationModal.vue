@@ -17,7 +17,7 @@
                         <template v-if="field.input === 'text'">
                             <ValidationProvider :name="fieldLabel(field.label, field.config)" :rules="field.rules" v-slot="{ passed, failed, errors }" tag="div">
                                 <md-field :class="[{ 'md-error md-invalid': failed }, { 'md-valid': passed }]">
-                                    <label>{{ fieldLabel(field.label, field.config) }}{{ field.rules.includes('required') ? ' *' : '' }}</label>
+                                    <label>{{ fieldLabel(field.label, field.config) }}{{ fieldAdditionalLabelText(field.config) }}{{ field.rules.includes('required') ? ' *' : '' }}</label>
                                     <template v-if="field.config && field.config.translatable">
                                         <md-input v-model="form[translatableKey][field.name][field.config.locale]" :type="field.type"></md-input>
                                     </template>
@@ -38,14 +38,14 @@
                         </template>
                         <template v-else-if="field.input === 'switch'">
                             <ValidationProvider :name="field.label" :rules="field.rules" v-slot="{ passed, failed, errors }" tag="div">
-                                <md-switch class="md-primary" v-model="form[field.name]">{{ field.label }}</md-switch>
+                                <md-switch class="md-primary" v-model="form[field.name]">{{ field.label }}{{ fieldAdditionalLabelText(field.config) }}</md-switch>
                             </ValidationProvider>
                         </template>
                         <template v-else-if="field.input === 'autocomplete'">
                             <ValidationProvider :name="field.label" :rules="field.rules" v-slot="{ passed, failed, errors }" tag="div">
                                 <md-autocomplete v-model="form[field.name]" :md-options="field.config.options" :class="[{ 'md-error md-invalid': failed }, { 'md-valid': passed }]" md-dense
                                                  @md-changed="getCustomers" @md-opened="getCustomers" @md-selected="selectCustomer">
-                                    <label>{{ field.label }}{{ field.rules.includes('required') ? ' *' : '' }}</label>
+                                    <label>{{ field.label }}{{ fieldAdditionalLabelText(field.config) }}{{ field.rules.includes('required') ? ' *' : '' }}</label>
 
                                     <template slot="md-autocomplete-empty" slot-scope="{ term }">
                                         {{ $t('validation.autocomplete', {term: term, model: field.config.autocompleteModel}) }}
@@ -67,7 +67,7 @@
                         <template v-else-if="field.input === 'select'">
                             <ValidationProvider :name="field.label" :rules="field.rules" v-slot="{ passed, failed, errors }" tag="div">
                                 <md-field :class="[{ 'md-error md-invalid': failed }, { 'md-valid': passed }]">
-                                    <label>{{ field.label }}{{ field.rules.includes('required') ? ' *' : '' }}</label>
+                                    <label>{{ field.label }}{{ fieldAdditionalLabelText(field.config) }}{{ field.rules.includes('required') ? ' *' : '' }}</label>
                                     <md-select v-model="form[field.name]">
                                         <md-option :value="option[field.config.valueField]" v-for="option in field.config.options" :key="option[field.config.valueField]">{{ field.config.optionLabel(option) }}</md-option>
                                     </md-select>
@@ -127,6 +127,15 @@
         }
 
         return i18n.t('validation.longitude');
+    });
+    extend('different', {
+        params: ['target', 'other'],
+        validate(value, { target }) {
+            return value !== target;
+        },
+        message: (_, values) =>  {
+            return i18n.t('validation.different', { attribute: values._field_, other: values.other })
+        }
     });
 
     export default {
@@ -240,9 +249,21 @@
                 }
                 return name;
             },
+            fieldAdditionalLabelText(config){
+                if (config && config.labelAdditionalText) {
+                    return ' ' + config.labelAdditionalText;
+                }
+                return '';
+            },
             transformErrorKey(errorKey) {
                 let result = errorKey;
                 result = result.replaceAll('_', ' ');
+
+                if (result === 'location1') {
+                    result = 'location 1';
+                } else if (result === 'location2') {
+                    result = 'location 2';
+                }
                 return result[0].toUpperCase() + result.substring(1);
             }
         }
@@ -253,5 +274,8 @@
     .md-menu-content,
     .md-select-menu {
         z-index: 10000!important;
+    }
+    .md-menu.md-select:not(.md-disabled) .md-icon {
+        margin-right: 25px;
     }
 </style>

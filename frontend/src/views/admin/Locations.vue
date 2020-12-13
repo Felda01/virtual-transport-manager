@@ -8,7 +8,7 @@
                     </div>
                     <div class="title">
                         <h4>{{ $t('pages.locations') }}</h4>
-                        <md-button class="md-primary md-simple" @click="addLocationModal">{{ $t('locations.new') }}</md-button>
+                        <md-button class="md-primary md-simple" @click="addLocationModal"><md-icon>add</md-icon>{{ $t('model.new') }}</md-button>
                     </div>
                 </md-card-header>
                 <md-card-content>
@@ -22,11 +22,11 @@
                         <md-table v-model="locations.data" v-if="locations && locations.data" class="table-striped">
                             <md-table-row slot="md-table-row" slot-scope="{ item, index }">
                                 <md-table-cell md-label="#">{{ index + locations.from }}</md-table-cell>
-                                <md-table-cell :md-label="$t('locations.property.name')">{{ item.name }}</md-table-cell>
-                                <md-table-cell :md-label="$t('locations.property.lat')">{{ item.lat }}</md-table-cell>
-                                <md-table-cell :md-label="$t('locations.property.lng')">{{ item.lng }}</md-table-cell>
-                                <md-table-cell :md-label="$t('locations.property.country')">{{ item.country.name }}</md-table-cell>
-                                <md-table-cell :md-label="$t('locations.actions')" class="text-right">
+                                <md-table-cell :md-label="$t('location.property.name')">{{ item.name }}</md-table-cell>
+                                <md-table-cell :md-label="$t('location.property.lat')">{{ item.lat }}</md-table-cell>
+                                <md-table-cell :md-label="$t('location.property.lng')">{{ item.lng }}</md-table-cell>
+                                <md-table-cell :md-label="$t('location.property.country')">{{ item.country.name }}</md-table-cell>
+                                <md-table-cell :md-label="$t('model.actions')" class="text-right">
                                     <md-button class="md-just-icon md-success md-simple" @click="updateLocationModal(item)"><md-icon>edit</md-icon></md-button>
                                     <md-button class="md-just-icon md-danger md-simple" @click="deleteLocationModal(item)"><md-icon>close</md-icon></md-button>
                                 </md-table-cell>
@@ -92,7 +92,7 @@
                         fields: [],
                         hiddenFields: [],
                     },
-                    modalTitle: this.$t('locations.modal.title.add'),
+                    modalTitle: this.$t('model.modal.title.add', { model: 'location' }),
                     okBtnTitle: this.$t('modal.btn.add'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
@@ -103,12 +103,12 @@
                         hiddenFields: [],
                         idField: null
                     },
-                    modalTitle: this.$t('locations.modal.title.update'),
+                    modalTitle: this.$t('model.modal.title.update', { model: 'location' }),
                     okBtnTitle: this.$t('modal.btn.update'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
                 modalSchemaDeleteLocation: {
-                    message: this.$t('locations.modal.message'),
+                    message: this.$t('model.modal.message', { model: 'location' }),
                     form: {
                         mutation: DELETE_LOCATION_MUTATION,
                         idField: null,
@@ -119,12 +119,12 @@
             }
         },
         methods: {
-            addLocationModal: function () {
+            addLocationModal() {
                 let translatableNameFields = [];
                 for (let locale in this.locales) {
                     if (this.locales.hasOwnProperty(locale)) {
                         translatableNameFields.push({
-                            label: this.$t('locations.property.name'),
+                            label: this.$t('location.property.name'),
                             rules: 'required',
                             name: 'name_translations',
                             input: 'text',
@@ -141,7 +141,7 @@
                 this.modalSchemaAddLocation.form.fields = [
                     ...translatableNameFields,
                     {
-                        label: this.$t('locations.property.is_city'),
+                        label: this.$t('location.property.is_city'),
                         rules: 'required',
                         name: 'is_city',
                         input: 'switch',
@@ -150,7 +150,7 @@
                         config: {}
                     },
                     {
-                        label: this.$t('locations.property.lat'),
+                        label: this.$t('location.property.lat'),
                         rules: 'required|latitude',
                         name: 'lat',
                         input: 'text',
@@ -159,7 +159,7 @@
                         config: {}
                     },
                     {
-                        label: this.$t('locations.property.lng'),
+                        label: this.$t('location.property.lng'),
                         rules: 'required|longitude',
                         name: 'lng',
                         input: 'text',
@@ -168,7 +168,7 @@
                         config: {}
                     },
                     {
-                        label: this.$t('locations.property.country'),
+                        label: this.$t('location.property.country'),
                         rules: 'required',
                         name: 'country',
                         input: 'select',
@@ -191,7 +191,7 @@
                 let location = response.data.createLocation;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('locations.response.success.created', { location: location.name }),
+                    message: this.$t('model.response.success.created', { model: 'location', modelName: location.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',
@@ -205,7 +205,7 @@
                 for (let locale in this.locales) {
                     if (this.locales.hasOwnProperty(locale)) {
                         translatableNameFields.push({
-                            label: this.$t('locations.property.name'),
+                            label: this.$t('location.property.name'),
                             rules: 'required',
                             name: 'name_translations',
                             input: 'text',
@@ -222,7 +222,7 @@
                 this.modalSchemaUpdateLocation.form.fields = [
                     ...translatableNameFields,
                     {
-                        label: this.$t('locations.property.is_city'),
+                        label: this.$t('location.property.is_city'),
                         rules: 'required',
                         name: 'is_city',
                         input: 'switch',
@@ -231,7 +231,7 @@
                         config: {}
                     },
                     {
-                        label: this.$t('locations.property.lat'),
+                        label: this.$t('location.property.lat'),
                         rules: 'required|latitude',
                         name: 'lat',
                         input: 'text',
@@ -240,7 +240,7 @@
                         config: {}
                     },
                     {
-                        label: this.$t('locations.property.lng'),
+                        label: this.$t('location.property.lng'),
                         rules: 'required|longitude',
                         name: 'lng',
                         input: 'text',
@@ -249,7 +249,7 @@
                         config: {}
                     },
                     {
-                        label: this.$t('locations.property.country'),
+                        label: this.$t('location.property.country'),
                         rules: 'required',
                         name: 'country',
                         input: 'select',
@@ -274,7 +274,7 @@
                 let location = response.data.updateLocation;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('locations.response.success.updated', { location: location.name }),
+                    message: this.$t('model.response.success.updated', { model: 'location', modelName: location.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',
@@ -291,7 +291,7 @@
                 let location = response.data.deleteLocation;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('locations.response.success.deleted', { location: location.name }),
+                    message: this.$t('model.response.success.deleted', { model: 'location', modelName: location.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',

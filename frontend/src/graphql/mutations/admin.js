@@ -67,3 +67,51 @@ export const DELETE_LOCATION_MUTATION = gql`
         }
     }
 `;
+
+export const CREATE_ROUTE_MUTATION = gql`
+    mutation CreateRouteMutation($location1: String!, $location2: String!, $time: String, $distance: String, $fee: String!) {
+        createRoute(location1: $location1, location2: $location2, time: $time, distance: $distance, fee: $fee) {
+            id
+            location1 {
+                id
+                name
+            }
+            location2 {
+                id
+                name
+            }
+        }
+    }
+`;
+
+export const UPDATE_ROUTE_MUTATION = gql`
+    mutation UpdateRouteMutation($id: String!, $location1: String!, $location2: String!, $time: String!, $distance: String!, $fee: String!) {
+        updateRoute(id: $id, location1: $location1, location2: $location2, time: $time, distance: $distance, fee: $fee) {
+            id
+            location1 {
+                id
+                name
+            }
+            location2 {
+                id
+                name
+            }
+        }
+    }
+`;
+
+export const DELETE_ROUTE_MUTATION = gql`
+    mutation DeleteRouteMutation($id: String!) {
+        deleteRoute(id: $id) {
+            id
+            location1 {
+                id
+                name
+            }
+            location2 {
+                id
+                name
+            }
+        }
+    }
+`;

@@ -8,7 +8,7 @@
                     </div>
                     <div class="title">
                         <h4>{{ $t('pages.countries') }}</h4>
-                        <md-button class="md-primary" @click="addCountryModal">{{ $t('countries.new') }}</md-button>
+                        <md-button class="md-primary md-simple" @click="addCountryModal"><md-icon>add</md-icon>{{ $t('model.new') }}</md-button>
                     </div>
                 </md-card-header>
                 <md-card-content>
@@ -22,9 +22,9 @@
                         <md-table v-model="countries.data" v-if="countries && countries.data" class="table-striped">
                             <md-table-row slot="md-table-row" slot-scope="{ item, index }">
                                 <md-table-cell md-label="#">{{ index + countries.from }}</md-table-cell>
-                                <md-table-cell :md-label="$t('countries.property.name')">{{ item.name }}</md-table-cell>
-                                <md-table-cell :md-label="$t('countries.property.short_name')">{{ item.short_name }}</md-table-cell>
-                                <md-table-cell :md-label="$t('countries.actions')" class="text-right">
+                                <md-table-cell :md-label="$t('country.property.name')">{{ item.name }}</md-table-cell>
+                                <md-table-cell :md-label="$t('country.property.short_name')">{{ item.short_name }}</md-table-cell>
+                                <md-table-cell :md-label="$t('model.actions')" class="text-right">
                                     <md-button class="md-just-icon md-success md-simple" @click="updateCountryModal(item)"><md-icon>edit</md-icon></md-button>
                                     <md-button class="md-just-icon md-danger md-simple" @click="deleteCountryModal(item)"><md-icon>close</md-icon></md-button>
                                 </md-table-cell>
@@ -87,7 +87,7 @@
                         fields: [],
                         hiddenFields: [],
                     },
-                    modalTitle: this.$t('countries.modal.title.add'),
+                    modalTitle: this.$t('model.modal.title.add', { model: 'country' }),
                     okBtnTitle: this.$t('modal.btn.add'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
@@ -98,12 +98,12 @@
                         hiddenFields: [],
                         idField: null
                     },
-                    modalTitle: this.$t('countries.modal.title.update'),
+                    modalTitle: this.$t('model.modal.title.update', { model: 'country' }),
                     okBtnTitle: this.$t('modal.btn.update'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
                 modalSchemaDeleteCountry: {
-                    message: this.$t('countries.modal.message'),
+                    message: this.$t('model.modal.message', { model: 'country' }),
                     form: {
                         mutation: DELETE_COUNTRY_MUTATION,
                         idField: null,
@@ -114,12 +114,12 @@
             }
         },
         methods: {
-            addCountryModal: function () {
+            addCountryModal() {
                 let translatableNameFields = [];
                 for (let locale in this.locales) {
                     if (this.locales.hasOwnProperty(locale)) {
                         translatableNameFields.push({
-                            label: this.$t('countries.property.name'),
+                            label: this.$t('country.property.name'),
                             rules: 'required',
                             name: 'name_translations',
                             input: 'text',
@@ -136,7 +136,7 @@
                 this.modalSchemaAddCountry.form.fields = [
                     ...translatableNameFields,
                     {
-                        label: this.$t('countries.property.short_name'),
+                        label: this.$t('country.property.short_name'),
                         rules: 'required',
                         name: 'short_name',
                         input: 'text',
@@ -152,7 +152,7 @@
                 let country = response.data.createCountry;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('countries.response.success.created', { country: country.name }),
+                    message: this.$t('model.response.success.created', { model: 'country', modelName: country.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',
@@ -166,7 +166,7 @@
                 for (let locale in this.locales) {
                     if (this.locales.hasOwnProperty(locale)) {
                         translatableNameFields.push({
-                            label: this.$t('countries.property.name'),
+                            label: this.$t('country.property.name'),
                             rules: 'required',
                             name: 'name_translations',
                             input: 'text',
@@ -183,7 +183,7 @@
                 this.modalSchemaUpdateCountry.form.fields = [
                     ...translatableNameFields,
                     {
-                        label: this.$t('countries.property.short_name'),
+                        label: this.$t('country.property.short_name'),
                         rules: 'required',
                         name: 'short_name',
                         input: 'text',
@@ -201,7 +201,7 @@
                 let country = response.data.updateCountry;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('countries.response.success.updated', { country: country.name }),
+                    message: this.$t('model.response.success.updated', { model: 'country', modelName: country.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',
@@ -218,7 +218,7 @@
                 let country = response.data.deleteCountry;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('countries.response.success.deleted', { country: country.name }),
+                    message: this.$t('model.response.success.deleted', { model: 'country', modelName: country.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',

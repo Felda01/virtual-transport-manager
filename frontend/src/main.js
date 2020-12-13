@@ -47,14 +47,14 @@ import { setContext } from "apollo-link-context";
 
 const HTTP_END_POINT = 'https://virtual-transport-manager.ddev.site/api/graphql'
 
-// const batchLink = new BatchHttpLink({
-//   uri: HTTP_END_POINT,
-//   headers: {
-//     'Accept': 'application/json',
-//     'X-Requested-With': 'XMLHttpRequest'
-//   },
-//   credentials: 'include'
-// });
+const batchLink = new BatchHttpLink({
+  uri: HTTP_END_POINT,
+  headers: {
+    'Accept': 'application/json',
+    'X-Requested-With': 'XMLHttpRequest'
+  },
+  credentials: 'include'
+});
 
 // HTTP connection to the API
 const httpLinkDefault = createHttpLink({
@@ -106,7 +106,8 @@ const apolloClientDefault = new ApolloClient({
         store.dispatch('logout', { fullPath: router.currentRoute.fullPath });
       }
      }),
-    httpLinkDefault,
+    // httpLinkDefault,
+    batchLink,
   ]),
   cache,
   defaultOptions: defaultOptions,

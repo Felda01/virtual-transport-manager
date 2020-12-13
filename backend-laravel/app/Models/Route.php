@@ -60,4 +60,27 @@ class Route extends Model
     {
         return $this->belongsTo(Location::class, 'location2_id');
     }
+
+    /**
+     * Return distance between 2 locations
+     *
+     * @param $locationFrom Location
+     * @param $locationTo Location
+     * @return float|int
+     */
+    public static function getDistanceBetween($locationFrom, $locationTo)
+    {
+        if ($locationFrom->id == $locationTo->id) {
+            return 0;
+        }
+
+        $R = 6371;
+        $dLat = deg2rad($locationTo->lat - $locationFrom->lat);
+        $dLon = deg2rad($locationTo->lng - $locationFrom->lng);
+        $a = (sin($dLat/2) * sin($dLat/2)) + cos(deg2rad($locationFrom->lat)) * cos(deg2rad($locationTo->lat)) * sin($dLon/2) * sin($dLon/2);
+        $c = 2 * atan2(sqrt($a), sqrt(1-$a));
+        $d = $R * $c;
+
+        return ceil($d);
+    }
 }

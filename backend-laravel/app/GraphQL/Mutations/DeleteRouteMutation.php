@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
-use App\Models\Location;
-use App\Rules\NotExistsRelationRule;
+use App\Models\Route;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Illuminate\Support\Facades\Auth;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Mutation;
+use Rebing\GraphQL\Support\SelectFields;
 
-class DeleteLocationMutation extends Mutation
+class DeleteRouteMutation extends Mutation
 {
     protected $attributes = [
-        'name' => 'deleteLocation',
+        'name' => 'deleteRoute',
         'description' => 'A mutation'
     ];
 
     public function type(): Type
     {
-        return GraphQL::type('Location');
+        return GraphQL::type('Route');
     }
 
     private function guard()
@@ -42,10 +42,8 @@ class DeleteLocationMutation extends Mutation
             'id' => [
                 'required',
                 'string',
-                'exists:locations',
-                new NotExistsRelationRule('Location', 'routesLocation1'),
-                new NotExistsRelationRule('Location', 'routesLocation2'),
-            ],
+                'exists:routes'
+            ]
         ];
     }
 
@@ -61,16 +59,16 @@ class DeleteLocationMutation extends Mutation
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
-        /** @var Location $location */
-        $location = Location::find($args['id']);
+        /** @var Route $route */
+        $route = Route::find($args['id']);
 
-        $deletedLocation = $location;
+        $deletedRoute = $route;
 
         try {
-            $location->delete();
+            $route->delete();
         } catch (\Exception $e) {
         }
 
-        return $deletedLocation;
+        return $deletedRoute;
     }
 }

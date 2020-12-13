@@ -105,6 +105,7 @@ return [
                 'locales' => \App\GraphQL\Queries\LocalesQuery::class,
                 'countries' => \App\GraphQL\Queries\CountriesQuery::class,
                 'locations' => \App\GraphQL\Queries\LocationsQuery::class,
+                'routes' => \App\GraphQL\Queries\RoutesQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,
@@ -115,6 +116,10 @@ return [
                 'createLocation' => \App\GraphQL\Mutations\CreateLocationMutation::class,
                 'updateLocation' => \App\GraphQL\Mutations\UpdateLocationMutation::class,
                 'deleteLocation' => \App\GraphQL\Mutations\DeleteLocationMutation::class,
+
+                'createRoute' => \App\GraphQL\Mutations\CreateRouteMutation::class,
+                'updateRoute' => \App\GraphQL\Mutations\UpdateRouteMutation::class,
+                'deleteRoute' => \App\GraphQL\Mutations\DeleteRouteMutation::class,
             ],
             'middleware' => ['auth:api'],
             'method' => ['get', 'post'],

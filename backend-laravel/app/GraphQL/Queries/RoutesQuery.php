@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Queries;
 
-use App\Models\Location;
+use App\Models\Route;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -13,16 +13,16 @@ use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\SelectFields;
 
-class LocationsQuery extends Query
+class RoutesQuery extends Query
 {
     protected $attributes = [
-        'name' => 'locations',
+        'name' => 'routes',
         'description' => 'A query'
     ];
 
     public function type(): Type
     {
-        return GraphQL::paginate('Location');
+        return GraphQL::paginate('Route');
     }
 
     public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
@@ -57,12 +57,11 @@ class LocationsQuery extends Query
         $with = $fields->getRelations();
 
         if ($args['limit'] === -1) {
-            $args['limit'] = Location::count();
+            $args['limit'] = Route::count();
         }
 
-        return Location::with($with)
+        return Route::with($with)
             ->select($select)
-            ->orderBy('name')
             ->paginate($args['limit'], ['*'], 'page', $args['page']);
     }
 }
