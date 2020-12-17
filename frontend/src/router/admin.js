@@ -58,6 +58,19 @@ const adminRoutes = [
                         en: enRoute.adminDashboard + '/' + enRoute.routes
                     }
                 }
+            },
+            {
+                path: enRoute.bankLoanTypes,
+                name: 'bankLoanTypes',
+                component: () => import('../views/admin/BankLoanTypes.vue'),
+                meta: {
+                    requiresAuth: true,
+                    adminOnly: true,
+                    title: i18n.t('pages.bankLoanTypes'),
+                    path: {
+                        en: enRoute.adminDashboard + '/' + enRoute.bankLoanTypes
+                    }
+                }
             }
         ]
     },

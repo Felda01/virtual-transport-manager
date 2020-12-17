@@ -23,6 +23,7 @@ class CreateTrailerModelsTable extends Migration
             $table->decimal('insurance');
             $table->decimal('tax');
             $table->string('image');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

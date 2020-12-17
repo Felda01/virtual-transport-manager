@@ -115,3 +115,25 @@ export const DELETE_ROUTE_MUTATION = gql`
         }
     }
 `;
+
+export const CREATE_BANK_LOAN_TYPE_MUTATION = gql`
+    mutation CreateBankLoanTypeMutation($value: String!, $payment: String!, $period: String!) {
+        createBankLoanType(value: $value, payment: $payment, period: $period) {
+            id
+            value
+            payment
+            period
+        }
+    }
+`;
+
+export const DELETE_BANK_LOAN_TYPE_MUTATION = gql`
+    mutation DeleteBankLoanTypeMutation($id: String!) {
+        deleteBankLoanType(id: $id) {
+            id
+            value
+            payment
+            period
+        }
+    }
+`;

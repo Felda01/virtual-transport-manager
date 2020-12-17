@@ -7,7 +7,8 @@
     "routes": "Routes",
     "constants": "Constants",
     "dashboard": "Dashboard",
-    "adminDashboard": "Admin Dashboard"
+    "adminDashboard": "Admin Dashboard",
+    "bankLoanTypes": "Bank loan types"
   },
   "routes": {
     "login": "login",
@@ -17,7 +18,8 @@
     "routes": "routes",
     "constants": "constants",
     "dashboard": "",
-    "adminDashboard": "admin"
+    "adminDashboard": "admin",
+    "bankLoanTypes": "bank-loan-types"
   },
   "navigation": {
     "staticMapData": "Static Map data"
@@ -87,15 +89,33 @@
       "location1": "Location 1",
       "location2": "Location 2",
       "time": "Time",
+      "timeUnit": "minutes",
       "distance": "Distance",
+      "distanceUnit": "km",
       "type": "Type",
-      "fee": "Fee"
+      "fee": "Fee",
+      "feeUnit": "€/km"
     },
     "additionalLabelText": {
       "location": "(empty == auto calculate)",
       "time": "(in minutes, empty == auto calculate)",
       "timeUpdate": "(in minutes)",
-      "fee": "(euro per km)"
+      "fee": "(€ per km)"
+    }
+  },
+  "bankLoanType": {
+    "property": {
+      "value": "Value",
+      "valueUnit": "€",
+      "payment": "Payment",
+      "paymentUnit": "€/week",
+      "period": "Period",
+      "periodUnit": "0 | week | weeks"
+    },
+    "additionalLabelText": {
+      "value": "(in €)",
+      "payment": "(€ per week)",
+      "period": "(in weeks)"
     }
   }
 }

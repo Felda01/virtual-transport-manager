@@ -11,7 +11,7 @@ use Rebing\GraphQL\Support\Type as GraphQLType;
 class BankLoanTypeType extends GraphQLType
 {
     protected $attributes = [
-        'name' => 'BankLoadType',
+        'name' => 'BankLoanType',
         'description' => 'A type',
         'model' => BankLoanType::class
     ];
@@ -23,13 +23,13 @@ class BankLoanTypeType extends GraphQLType
                 'type' => Type::nonNull(Type::string()),
             ],
             'value' => [
-                'type' => Type::int(),
+                'type' => Type::string(),
             ],
             'payment' => [
-                'type' => Type::int(),
+                'type' => Type::string(),
             ],
             'period' => [
-                'type' => Type::int(),
+                'type' => Type::string(),
             ],
         ];
     }

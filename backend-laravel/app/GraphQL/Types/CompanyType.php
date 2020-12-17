@@ -60,8 +60,8 @@ class CompanyType extends GraphQLType
             'users' => [
                 'type' => Type::listOf(GraphQL::type('User')),
             ],
-            'bankLoads' => [
-                'type' => Type::listOf(GraphQL::type('BankLoad')),
+            'bankLoans' => [
+                'type' => Type::listOf(GraphQL::type('bankLoan')),
             ],
         ];
     }

@@ -23,6 +23,7 @@ class CreateRoutesTable extends Migration
             $table->integer('distance');
             $table->decimal('fee');
             $table->string('type')->default('truck');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

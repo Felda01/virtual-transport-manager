@@ -18,6 +18,7 @@ class CreateBankLoanTypesTable extends Migration
             $table->integer('value');
             $table->integer('payment');
             $table->integer('period');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

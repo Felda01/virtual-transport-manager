@@ -24,6 +24,7 @@ class CreateCargosTable extends Migration
             $table->decimal('max_price');
             $table->boolean('own_trailer');
             $table->string('image');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

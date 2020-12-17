@@ -30,6 +30,9 @@
 <!--                <sidebar-item-->
 <!--                        :link="{ name: $t('pages.constants'), icon: 'storage', path: generatePath('constants') }"-->
 <!--                ></sidebar-item>-->
+                <sidebar-item
+                        :link="{ name: $t('pages.bankLoanTypes'), icon: 'account_balance', path: generatePath('bankLoanTypes') }"
+                ></sidebar-item>
             </template>
         </side-bar>
         <div class="main-panel">

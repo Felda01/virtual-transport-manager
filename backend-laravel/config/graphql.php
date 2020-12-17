@@ -106,6 +106,7 @@ return [
                 'countries' => \App\GraphQL\Queries\CountriesQuery::class,
                 'locations' => \App\GraphQL\Queries\LocationsQuery::class,
                 'routes' => \App\GraphQL\Queries\RoutesQuery::class,
+                'bankLoanTypes' => \App\GraphQL\Queries\BankLoanTypesQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,
@@ -120,6 +121,9 @@ return [
                 'createRoute' => \App\GraphQL\Mutations\CreateRouteMutation::class,
                 'updateRoute' => \App\GraphQL\Mutations\UpdateRouteMutation::class,
                 'deleteRoute' => \App\GraphQL\Mutations\DeleteRouteMutation::class,
+
+                'createBankLoanType' => \App\GraphQL\Mutations\CreateBankLoanTypeMutation::class,
+                'deleteBankLoanType' => \App\GraphQL\Mutations\DeleteBankLoanTypeMutation::class,
             ],
             'middleware' => ['auth:api'],
             'method' => ['get', 'post'],

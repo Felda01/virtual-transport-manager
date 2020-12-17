@@ -18,6 +18,7 @@ class CreateCountriesTable extends Migration
             $table->uuid('id')->primary();
             $table->json('name');
             $table->string('short_name');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

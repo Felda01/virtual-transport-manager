@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $money
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\BankLoan[] $bankLoads
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\BankLoan[] $bankLoans
  * @property-read int|null $bank_loads_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Contract[] $contracts
  * @property-read int|null $contracts_count
@@ -130,7 +130,7 @@ class Company extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function bankLoads()
+    public function bankLoans()
     {
         return $this->hasMany(BankLoan::class);
     }

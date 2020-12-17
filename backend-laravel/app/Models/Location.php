@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Translatable\HasTranslations;
 
 /**
@@ -34,7 +35,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class Location extends Model
 {
-    use HasFactory, HasUuid, HasTranslations;
+    use HasFactory, HasUuid, HasTranslations, SoftDeletes;
 
     const LATITUDE_REGEX = '^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$';
     const LONGITUDE_REGEX = '^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$';

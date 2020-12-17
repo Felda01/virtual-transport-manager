@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Translatable\HasTranslations;
 
 /**
@@ -29,7 +30,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class Country extends Model
 {
-    use HasFactory, HasUuid, HasTranslations;
+    use HasFactory, HasUuid, HasTranslations, SoftDeletes;
 
     /**
      * @var string[]

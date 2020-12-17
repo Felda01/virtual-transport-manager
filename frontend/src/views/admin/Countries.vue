@@ -52,6 +52,7 @@
         <!-- Update country modal-->
         <mutation-modal ref="updateCountryModal" @ok="updateCountry" :modalSchema="modalSchemaUpdateCountry" :locales="locales" />
 
+        <!-- Delete country modal-->
         <delete-modal ref="deleteCountryModal" @ok="deleteCountry" :modalSchema="modalSchemaDeleteCountry" />
     </div>
 </template>

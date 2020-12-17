@@ -21,6 +21,7 @@ class CreateLocationsTable extends Migration
             $table->string('lng');
             $table->uuid('country_id');
             $table->foreign('country_id')->references('id')->on('countries');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -4,17 +4,17 @@ export const COUNTRIES_QUERY = gql`
     query CountriesQuery($limit: Int!, $page: Int!) {
         countries(limit: $limit, page: $page) {
             data {
-                id,
-                name,
-                name_translations,
+                id
+                name
+                name_translations
                 short_name
             }
-            total,
-            per_page,
-            current_page,
-            from,
-            to,
-            last_page,
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
             has_more_pages
         }
     }
@@ -24,23 +24,23 @@ export const LOCATIONS_QUERY = gql`
     query LocationsQuery($limit: Int!, $page: Int!) {
         locations(limit: $limit, page: $page) {
             data {
-                id,
-                name,
-                name_translations,
-                is_city,
-                lat,
-                lng,
+                id
+                name
+                name_translations
+                is_city
+                lat
+                lng
                 country {
-                    id,
+                    id
                     name
                 }
             }
-            total,
-            per_page,
-            current_page,
-            from,
-            to,
-            last_page,
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
             has_more_pages
         }
     }
@@ -50,26 +50,46 @@ export const ROUTES_QUERY = gql`
     query RoutesQuery($limit: Int!, $page: Int!) {
         routes(limit: $limit, page: $page) {
             data {
-                id,
+                id
                 location1 {
-                    id,
+                    id
                     name
                 },
                 location2 {
-                    id,
+                    id
                     name
                 },
-                time,
-                distance,
-                fee,
+                time
+                distance
+                fee
                 type
             }
-            total,
-            per_page,
-            current_page,
-            from,
-            to,
-            last_page,
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
+            has_more_pages
+        }
+    }
+`;
+
+export const BANK_LOAN_TYPES_QUERY = gql`
+    query BankLoanTypesQuery($limit: Int!, $page: Int!) {
+        bankLoanTypes(limit: $limit, page: $page) {
+            data {
+                id
+                value
+                payment
+                period
+            }
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
             has_more_pages
         }
     }
