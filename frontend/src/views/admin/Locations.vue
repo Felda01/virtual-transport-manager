@@ -19,7 +19,7 @@
                         </content-placeholders>
                     </template>
                     <template v-else>
-                        <md-table v-model="locations.data" v-if="locations && locations.data" class="table-striped">
+                        <md-table v-model="locations.data" v-if="locations && locations.data">
                             <md-table-row slot="md-table-row" slot-scope="{ item, index }">
                                 <md-table-cell md-label="#">{{ index + locations.from }}</md-table-cell>
                                 <md-table-cell :md-label="$t('location.property.name')">{{ item.name }}</md-table-cell>

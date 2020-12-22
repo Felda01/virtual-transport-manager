@@ -11,7 +11,15 @@
         </template>
 
         <template slot="body">
-            <ValidationObserver :ref="formRef" v-slot="{ handleSubmit }" tag="div">
+            <ValidationObserver :ref="formRef" v-slot="{ handleSubmit, errors }" :slim="true">
+                <ValidationProvider name="General" v-slot="{ failed, errors }" tag="div">
+                    <template v-if="failed">
+                        <div class="alert alert-danger mb-5">
+                            {{ errors[0] }}
+                        </div>
+                    </template>
+                </ValidationProvider>
+
                 <form @submit.prevent="handleSubmit(submitModal)">
                     <template v-for="(field, index) in modalSchema.form.fields">
                         <template v-if="field.input === 'text'">
@@ -22,7 +30,7 @@
                                         <md-input v-model="form[translatableKey][field.name][field.config.locale]" :type="field.type"></md-input>
                                     </template>
                                     <template v-else>
-                                        <md-input v-model="form[field.name]" :type="field.type"></md-input>
+                                        <md-input v-model="form[field.name]" :type="field.type" :disabled="field.config.readOnly"></md-input>
                                     </template>
 
                                     <span class="md-error" v-show="failed">{{ errors[0] }}</span>
@@ -209,6 +217,8 @@
                                 }
                             }
                         }
+
+                        console.log(finalErrors);
 
                         this.$refs[this.formRef].setErrors(finalErrors);
                     });

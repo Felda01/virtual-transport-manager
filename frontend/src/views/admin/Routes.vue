@@ -19,7 +19,7 @@
                         </content-placeholders>
                     </template>
                     <template v-else>
-                        <md-table v-model="routes.data" v-if="routes && routes.data" class="table-striped">
+                        <md-table v-model="routes.data" v-if="routes && routes.data" style="flex-flow:nowrap; overflow:scroll;">
                             <md-table-row slot="md-table-row" slot-scope="{ item, index }">
                                 <md-table-cell md-label="#">{{ index + routes.from }}</md-table-cell>
                                 <md-table-cell :md-label="$t('route.property.location1')">{{ item.location1.name }}</md-table-cell>
@@ -205,34 +205,24 @@
                 this.modalSchemaUpdateRoute.form.fields = [
                     {
                         label: this.$t('route.property.location1'),
-                        rules: 'required|different:@Location 2,Location 2',
+                        rules: '',
                         name: 'location1',
-                        input: 'select',
-                        type: 'select',
-                        value: route.location1.id,
+                        input: 'text',
+                        type: 'text',
+                        value: route.location1.name,
                         config: {
-                            options: this.locations.data,
-                            autocompleteModel: 'Location',
-                            valueField: 'id',
-                            optionLabel: (option) => {
-                                return option.name;
-                            }
+                            readOnly: true
                         }
                     },
                     {
                         label: this.$t('route.property.location2'),
-                        rules: 'required|different:@Location 1,Location 1',
+                        rules: '',
                         name: 'location2',
-                        input: 'select',
-                        type: 'select',
-                        value: route.location2.id,
+                        input: 'text',
+                        type: 'text',
+                        value: route.location2.name,
                         config: {
-                            options: this.locations.data,
-                            autocompleteModel: 'Location',
-                            valueField: 'id',
-                            optionLabel: (option) => {
-                                return option.name;
-                            }
+                            readOnly: true
                         }
                     },
                     {

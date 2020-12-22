@@ -28,6 +28,7 @@
 
 .md-table-head{
   padding: 12px 8px;
+  white-space: nowrap;
 }
 
 .md-tabs-content table thead{
@@ -41,6 +42,7 @@
 .md-table-cell{
   padding: 12px 8px;
   font-size: $font-size-base;
+  white-space: nowrap;
 }
 
 .md-table-head-label{
@@ -52,8 +54,11 @@
 }
 
 .md-table{
+  flex-flow:nowrap;
+  overflow:scroll;
+
   .md-checkbox.md-checked .md-checkbox-container:after{
-    top: 0px;
+    top: 0;
     left: 5px;
   }
 }
@@ -292,4 +297,24 @@
   .md-table-cell:first-child {
     padding-left: 28px;
   }
+}
+
+.md-table-content {
+  background:
+          radial-gradient(farthest-side at 0% 50%, rgba(0,0,0,.2), rgba(0,0,0,0)),
+          radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,.2), rgba(0,0,0,0)) 100% 0;
+  background-color: white;
+  background-repeat: no-repeat;
+  background-size: 10px 100%;
+  margin-bottom: 15px;
+}
+
+.md-table-content > table {
+  background:
+          linear-gradient(to right, white 30%, rgba(255,255,255,0)),
+          linear-gradient(to left, white 30%, rgba(255,255,255,0)) 100% 0;
+  background-size: 50px 100%;
+  background-repeat: no-repeat;
+  max-width: none;
+  margin-bottom: 0;
 }

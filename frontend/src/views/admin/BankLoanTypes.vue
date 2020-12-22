@@ -19,13 +19,14 @@
                         </content-placeholders>
                     </template>
                     <template v-else>
-                        <md-table v-model="bankLoanTypes.data" v-if="bankLoanTypes && bankLoanTypes.data" class="table-striped">
+                        <md-table v-model="bankLoanTypes.data" v-if="bankLoanTypes && bankLoanTypes.data">
                             <md-table-row slot="md-table-row" slot-scope="{ item, index }">
                                 <md-table-cell md-label="#">{{ index + bankLoanTypes.from }}</md-table-cell>
                                 <md-table-cell :md-label="$t('bankLoanType.property.value')">{{ item.value }} {{ $t('bankLoanType.property.valueUnit') }}</md-table-cell>
                                 <md-table-cell :md-label="$t('bankLoanType.property.payment')">{{ item.payment }} {{ $t('bankLoanType.property.paymentUnit') }}</md-table-cell>
                                 <md-table-cell :md-label="$t('bankLoanType.property.period')">{{ item.period }} {{ $tc('bankLoanType.property.periodUnit', item.period) }}</md-table-cell>
                                 <md-table-cell :md-label="$t('model.actions')" class="text-right">
+                                    <md-button class="md-just-icon md-success md-simple" @click="updateBankLoanTypeModal(item)"><md-icon>edit</md-icon></md-button>
                                     <md-button class="md-just-icon md-danger md-simple" @click="deleteBankLoanTypeModal(item)"><md-icon>close</md-icon></md-button>
                                 </md-table-cell>
                             </md-table-row>
@@ -48,6 +49,9 @@
 
         <!-- Add bank load type modal-->
         <mutation-modal ref="addBankLoanTypeModal" @ok="addBankLoanType" :modalSchema="modalSchemaAddBankLoanType" />
+
+        <!-- Update bank load type modal-->
+        <mutation-modal ref="updateBankLoanTypeModal" @ok="updateBankLoanType" :modalSchema="modalSchemaUpdateBankLoanType" />
 
         <!-- Delete bank load type modal-->
         <delete-modal ref="deleteBankLoanTypeModal" @ok="deleteBankLoanType" :modalSchema="modalSchemaDeleteBankLoanType" />
@@ -86,6 +90,17 @@
                     },
                     modalTitle: this.$t('model.modal.title.add', {model: 'bank loan type'}),
                     okBtnTitle: this.$t('modal.btn.add'),
+                    cancelBtnTitle: this.$t('modal.btn.cancel')
+                },
+                modalSchemaUpdateBankLoanType: {
+                    form: {
+                        mutation: UPDATE_BANK_LOAN_TYPE_MUTATION,
+                        fields: [],
+                        hiddenFields: [],
+                        idField: null
+                    },
+                    modalTitle: this.$t('model.modal.title.update', {model: 'bank loan type'}),
+                    okBtnTitle: this.$t('modal.btn.update'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
                 modalSchemaDeleteBankLoanType: {
@@ -144,6 +159,59 @@
                 this.$notify({
                     timeout: 5000,
                     message: this.$t('model.response.success.created', { model: 'bank loan type', modelName: bankLoanType.value + "€" }),
+                    icon: "add_alert",
+                    horizontalAlign: 'right',
+                    verticalAlign: 'top',
+                    type: 'success'
+                });
+                this.$apollo.queries.bankLoanTypes.refresh();
+            },
+            updateBankLoanTypeModal(bankLoanType) {
+                this.modalSchemaUpdateBankLoanType.form.fields = [
+                    {
+                        label: this.$t('bankLoanType.property.value'),
+                        rules: 'required',
+                        name: 'value',
+                        input: 'text',
+                        type: 'text',
+                        value: bankLoanType.value,
+                        config: {
+                            labelAdditionalText: this.$t('bankLoanType.additionalLabelText.value')
+                        }
+                    },
+                    {
+                        label: this.$t('bankLoanType.property.payment'),
+                        rules: 'required',
+                        name: 'payment',
+                        input: 'text',
+                        type: 'text',
+                        value: bankLoanType.payment,
+                        config: {
+                            labelAdditionalText: this.$t('bankLoanType.additionalLabelText.payment')
+                        }
+                    },
+                    {
+                        label: this.$t('bankLoanType.property.period'),
+                        rules: 'required',
+                        name: 'period',
+                        input: 'text',
+                        type: 'text',
+                        value: bankLoanType.period,
+                        config: {
+                            labelAdditionalText: this.$t('bankLoanType.additionalLabelText.period')
+                        }
+                    },
+                ];
+
+                this.modalSchemaUpdateBankLoanType.form.idField = bankLoanType.id;
+
+                this.$refs['updateBankLoanTypeModal'].openModal();
+            },
+            updateBankLoanType(response) {
+                let bankLoanType = response.data.updateBankLoanType;
+                this.$notify({
+                    timeout: 5000,
+                    message: this.$t('model.response.success.updated', { model: 'bank loan type', modelName: bankLoanType.value + "€" }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',

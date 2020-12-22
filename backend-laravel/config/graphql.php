@@ -123,6 +123,7 @@ return [
                 'deleteRoute' => \App\GraphQL\Mutations\DeleteRouteMutation::class,
 
                 'createBankLoanType' => \App\GraphQL\Mutations\CreateBankLoanTypeMutation::class,
+                'updateBankLoanType' => \App\GraphQL\Mutations\UpdateBankLoanTypeMutation::class,
                 'deleteBankLoanType' => \App\GraphQL\Mutations\DeleteBankLoanTypeMutation::class,
             ],
             'middleware' => ['auth:api'],

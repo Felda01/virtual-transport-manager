@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\GraphQL\Mutations;
 
 use App\Models\BankLoanType;
+use App\Rules\UniqueBankLoanTypeRule;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -42,18 +43,24 @@ class CreateBankLoanTypeMutation extends Mutation
             'value' => [
                 'required',
                 'numeric',
+                'integer',
                 'min:1'
             ],
             'payment' => [
                 'required',
                 'numeric',
+                'integer',
                 'min:1'
             ],
             'period' => [
                 'required',
                 'numeric',
+                'integer',
                 'min:1'
             ],
+            'general' => [
+                new UniqueBankLoanTypeRule($args),
+            ]
         ];
     }
 

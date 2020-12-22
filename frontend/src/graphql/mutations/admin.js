@@ -85,8 +85,8 @@ export const CREATE_ROUTE_MUTATION = gql`
 `;
 
 export const UPDATE_ROUTE_MUTATION = gql`
-    mutation UpdateRouteMutation($id: String!, $location1: String!, $location2: String!, $time: String!, $distance: String!, $fee: String!) {
-        updateRoute(id: $id, location1: $location1, location2: $location2, time: $time, distance: $distance, fee: $fee) {
+    mutation UpdateRouteMutation($id: String!, $time: String!, $distance: String!, $fee: String!) {
+        updateRoute(id: $id, time: $time, distance: $distance, fee: $fee) {
             id
             location1 {
                 id
@@ -119,6 +119,17 @@ export const DELETE_ROUTE_MUTATION = gql`
 export const CREATE_BANK_LOAN_TYPE_MUTATION = gql`
     mutation CreateBankLoanTypeMutation($value: String!, $payment: String!, $period: String!) {
         createBankLoanType(value: $value, payment: $payment, period: $period) {
+            id
+            value
+            payment
+            period
+        }
+    }
+`;
+
+export const UPDATE_BANK_LOAN_TYPE_MUTATION = gql`
+    mutation UpdateBankLoanTypeMutation($id: String!, $value: String!, $payment: String!, $period: String!) {
+        updateBankLoanType(id: $id, value: $value, payment: $payment, period: $period) {
             id
             value
             payment

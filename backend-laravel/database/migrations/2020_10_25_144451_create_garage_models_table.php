@@ -18,8 +18,6 @@ class CreateGarageModelsTable extends Migration
             $table->string('name');
             $table->integer('truck_count');
             $table->integer('trailer_count');
-            $table->uuid('location_id');
-            $table->foreign('location_id')->references('id')->on('locations');
             $table->decimal('insurance');
             $table->decimal('tax');
             $table->string('image');

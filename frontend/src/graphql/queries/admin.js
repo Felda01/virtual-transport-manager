@@ -94,3 +94,30 @@ export const BANK_LOAN_TYPES_QUERY = gql`
         }
     }
 `;
+
+export const GARAGE_MODELS_QUERY = gql`
+    query GarageModelsQuery($limit: Int!, $page: Int!) {
+        garageModels(limit: $limit, page: $page) {
+            data {
+                id
+                name
+                truck_count
+                trailer_count
+                location {
+                    id
+                    name
+                }
+                insurance
+                tax
+                image
+            }
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
+            has_more_pages
+        }
+    }
+`;

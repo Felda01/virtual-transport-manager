@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
-use App\Models\Route;
-use App\Rules\UniqueLocationsRule;
+use App\Models\BankLoanType;
+use App\Rules\UniqueBankLoanTypeRule;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -14,16 +14,16 @@ use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Mutation;
 use Rebing\GraphQL\Support\SelectFields;
 
-class UpdateRouteMutation extends Mutation
+class UpdateBankLoanTypeMutation extends Mutation
 {
     protected $attributes = [
-        'name' => 'updateRoute',
+        'name' => 'updateBankLoanType',
         'description' => 'A mutation'
     ];
 
     public function type(): Type
     {
-        return GraphQL::type('Route');
+        return GraphQL::type('BankLoanType');
     }
 
     private function guard()
@@ -42,19 +42,28 @@ class UpdateRouteMutation extends Mutation
         return [
             'id' => [
                 'required',
-                'exists:routes'
+                'exists:bank_loan_types'
             ],
-            'time' => [
+            'value' => [
                 'required',
-                'int'
+                'numeric',
+                'integer',
+                'min:1'
             ],
-            'distance' => [
+            'payment' => [
                 'required',
-                'int'
+                'numeric',
+                'integer',
+                'min:1'
             ],
-            'fee' => [
+            'period' => [
                 'required',
-                'numeric'
+                'numeric',
+                'integer',
+                'min:1'
+            ],
+            'general' => [
+                new UniqueBankLoanTypeRule($args, $args['id']),
             ]
         ];
     }
@@ -66,32 +75,30 @@ class UpdateRouteMutation extends Mutation
                 'name' => 'id',
                 'type' => Type::nonNull(Type::string())
             ],
-            'time' => [
-                'name' => 'time',
+            'value' => [
+                'name' => 'value',
                 'type' => Type::nonNull(Type::string())
             ],
-            'distance' => [
-                'name' => 'distance',
+            'payment' => [
+                'name' => 'payment',
                 'type' => Type::nonNull(Type::string())
             ],
-            'fee' => [
-                'name' => 'fee',
+            'period' => [
+                'name' => 'period',
                 'type' => Type::nonNull(Type::string())
-            ]
+            ],
         ];
     }
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
-        /** @var Route $route */
-        $route = Route::find($args['id']);
+        /** @var BankLoanType $bankLoanType */
+        $bankLoanType = BankLoanType::find($args['id']);
 
-        $route->distance = $args['distance'];
-        $route->time = $args['time'];
-        $route->fee = $args['fee'];
+        $bankLoanType->update($args);
 
-        $route->save();
+        $bankLoanType->save();
 
-        return $route;
+        return $bankLoanType;
     }
 }

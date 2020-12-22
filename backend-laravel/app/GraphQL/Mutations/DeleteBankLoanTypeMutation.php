@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\GraphQL\Mutations;
 
 use App\Models\BankLoanType;
+use App\Rules\NotExistsRelationRule;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -43,6 +44,9 @@ class DeleteBankLoanTypeMutation extends Mutation
                 'string',
                 'exists:bank_loan_types'
             ],
+            'general' => [
+                new NotExistsRelationRule('BankLoanType', 'bankLoans'),
+            ]
         ];
     }
 
