@@ -46,6 +46,9 @@ class GarageModelType extends GraphQLType
             'image' => [
                 'type' => Type::string(),
             ],
+            'price' => [
+                'type' => Type::string(),
+            ],
         ];
     }
 }

@@ -30,6 +30,7 @@
                                 <md-table-cell :md-label="$t('garageModel.property.name')" class="td-name">{{ item.name }}</md-table-cell>
                                 <md-table-cell :md-label="$t('garageModel.property.truck_count')">{{ item.truck_count }}</md-table-cell>
                                 <md-table-cell :md-label="$t('garageModel.property.trailer_count')">{{ item.trailer_count }}</md-table-cell>
+                                <md-table-cell :md-label="$t('garageModel.property.price')">{{ item.price }} {{ $t('garageModel.property.priceUnit') }}</md-table-cell>
                                 <md-table-cell :md-label="$t('garageModel.property.insurance')">{{ item.insurance }} {{ $t('garageModel.property.insuranceUnit') }}</md-table-cell>
                                 <md-table-cell :md-label="$t('garageModel.property.tax')">{{ item.tax }} {{ $t('garageModel.property.taxUnit') }}</md-table-cell>
                                 <md-table-cell :md-label="$t('model.actions')">
@@ -160,6 +161,17 @@
                         }
                     },
                     {
+                        label: this.$t('garageModel.property.price'),
+                        rules: 'required|min_integer:1',
+                        name: 'price',
+                        input: 'text',
+                        type: 'text',
+                        value: '',
+                        config: {
+                            labelAdditionalText: this.$t('garageModel.additionalLabelText.price')
+                        }
+                    },
+                    {
                         label: this.$t('garageModel.property.insurance'),
                         rules: 'required|min_integer:1',
                         name: 'insurance',
@@ -234,6 +246,17 @@
                         type: 'text',
                         value: garageModel.trailer_count,
                         config: {}
+                    },
+                    {
+                        label: this.$t('garageModel.property.price'),
+                        rules: 'required|min_integer:1',
+                        name: 'price',
+                        input: 'text',
+                        type: 'text',
+                        value: garageModel.price,
+                        config: {
+                            labelAdditionalText: this.$t('garageModel.additionalLabelText.price')
+                        }
                     },
                     {
                         label: this.$t('garageModel.property.insurance'),

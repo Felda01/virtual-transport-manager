@@ -128,15 +128,18 @@
       "trailer_count": "Trailer count",
       "image": "Image",
       "insurance": "Insurance",
-      "insuranceUnit": "(€ per month)",
+      "insuranceUnit": "€/month",
       "tax": "Tax",
-      "taxUnit": "(€ per month)"
+      "taxUnit": "€/month",
+      "price": "Price",
+      "priceUnit": "€"
     },
     "additionalLabelText": {
       "truck_count": "(max)",
       "trailer_count": "(max)",
       "insurance": "(€ per month)",
-      "tax": "(€ per month)"
+      "tax": "(€ per month)",
+      "price": "(in €)"
     }
   }
 }
