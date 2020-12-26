@@ -11,7 +11,7 @@
 
     // Create the rule
     .#{$prefix}-#{$i - 1} {
-      #{$property}: $spacing * $size;
+      #{$property}: $spacing * $size !important;
     }
   }
 }
@@ -21,6 +21,10 @@ $rules: [
   [mt, margin-top],
   [mb, margin-bottom],
   [mr, margin-right],
+  [pl, padding-left],
+  [pt, padding-top],
+  [pb, padding-bottom],
+  [pr, padding-right],
 ];
 
 @each $item in $rules {

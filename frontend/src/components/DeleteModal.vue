@@ -10,6 +10,10 @@
         </template>
 
         <template slot="body">
+            <div class="alert alert-danger mb-3 mt-2" v-if="errorMessage">
+                {{ errorMessage }}
+            </div>
+
             <p>{{ modalSchema.message }}</p>
         </template>
 
@@ -41,6 +45,7 @@
             return {
                 showModal: false,
                 form: null,
+                errorMessage: ''
             }
         },
         methods: {
@@ -58,7 +63,21 @@
                         });
                     })
                     .catch(error => {
-                        console.log(error);
+                        let errors = {};
+
+                        if (error.graphQLErrors && error.graphQLErrors[0]) {
+                            errors = error.graphQLErrors[0].extensions.validation;
+                        } else if (error.errors && error.errors[0]) {
+                            errors = error.errors[0].extensions.validation;
+                        }
+
+                        for (let errorKey in errors) {
+                            if (errors.hasOwnProperty(errorKey)) {
+                                this.errorMessage = errors[errorKey][0];
+                                break;
+                            }
+                        }
+
                     });
             },
             openModal() {

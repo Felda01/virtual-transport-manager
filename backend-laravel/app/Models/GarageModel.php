@@ -45,4 +45,12 @@ class GarageModel extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function garages()
+    {
+        return $this->hasMany(Garage::class);
+    }
 }

@@ -132,8 +132,6 @@ export const UPDATE_BANK_LOAN_TYPE_MUTATION = gql`
         updateBankLoanType(id: $id, value: $value, payment: $payment, period: $period) {
             id
             value
-            payment
-            period
         }
     }
 `;
@@ -145,6 +143,38 @@ export const DELETE_BANK_LOAN_TYPE_MUTATION = gql`
             value
             payment
             period
+        }
+    }
+`;
+
+export const CREATE_GARAGE_MODEL_MUTATION = gql`
+    mutation CreateGarageModelMutation($image: String!, $name: String!, $truck_count: String!, $trailer_count: String!, $insurance: String!, $tax: String!) {
+        createGarageModel(image: $image, name: $name, truck_count: $truck_count, trailer_count: $trailer_count, insurance: $insurance, tax: $tax) {
+            id
+            image
+            name
+            truck_count
+            trailer_count
+            insurance
+            tax
+        }
+    }
+`;
+
+export const UPDATE_GARAGE_MODEL_MUTATION = gql`
+    mutation UpdateGarageModelMutation($id: String!, $image: String!, $name: String!, $truck_count: String!, $trailer_count: String!, $insurance: String!, $tax: String!) {
+        updateGarageModel(id: $id, image: $image, name: $name, truck_count: $truck_count, trailer_count: $trailer_count, insurance: $insurance, tax: $tax) {
+            id
+            name
+        }
+    }
+`;
+
+export const DELETE_GARAGE_MODEL_MUTATION = gql`
+    mutation DeleteGarageModelMutation($id: String!) {
+        deleteGarageModel(id: $id) {
+            id
+            name
         }
     }
 `;

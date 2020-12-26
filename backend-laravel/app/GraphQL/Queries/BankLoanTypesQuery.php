@@ -25,9 +25,14 @@ class BankLoanTypesQuery extends Query
         return GraphQL::paginate('BankLoanType');
     }
 
+    private function guard()
+    {
+        return Auth::guard('api');
+    }
+
     public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
-        return Auth::check() ? Auth::user()->hasRole('admin') : false;
+        return $this->guard()->check() ? $this->guard()->user()->hasRole('admin') : false;
     }
 
     public function getAuthorizationMessage(): string

@@ -14,7 +14,15 @@
             <ValidationObserver :ref="formRef" v-slot="{ handleSubmit, errors }" :slim="true">
                 <ValidationProvider name="General" v-slot="{ failed, errors }" tag="div">
                     <template v-if="failed">
-                        <div class="alert alert-danger mb-5">
+                        <div class="alert alert-danger mb-3">
+                            {{ errors[0] }}
+                        </div>
+                    </template>
+                </ValidationProvider>
+
+                <ValidationProvider name="Id" v-slot="{ failed, errors }" tag="div">
+                    <template v-if="failed">
+                        <div class="alert alert-danger mb-3">
                             {{ errors[0] }}
                         </div>
                     </template>
@@ -91,6 +99,30 @@
                                 </md-field>
                             </ValidationProvider>
                         </template>
+                        <template v-else-if="field.input === 'image'">
+                            <ValidationProvider :name="field.label" :rules="field.rules" v-slot="{ passed, failed, errors }" tag="div">
+                                <div class="file-input">
+                                    <div v-if="!form[field.name]">
+                                        <div class="image-container">
+                                            <img :src="imgPlaceholderSrc" />
+                                        </div>
+                                    </div>
+                                    <div class="image-container" v-else>
+                                        <img :src="form[field.name]" />
+                                    </div>
+                                    <div class="button-container">
+                                        <md-button class="md-danger md-round" @click="removeImage(field.name)" v-if="form[field.name]">
+                                            <i class="fa fa-times"></i>Remove
+                                        </md-button>
+                                        <md-button class="md-success md-round md-fileinput">
+                                            <template v-if="!form[field.name]">Select image</template>
+                                            <template v-else>Change</template>
+                                            <input type="file" @change="onFileChange($event, field.name)" />
+                                        </md-button>
+                                    </div>
+                                </div>
+                            </ValidationProvider>
+                        </template>
                     </template>
                 </form>
             </ValidationObserver>
@@ -120,6 +152,15 @@
     extend("required", required);
     extend("min", min);
     extend("regex", regex);
+    extend("min_integer", {
+        params: ['other'],
+        validate(value, { other }) {
+            return parseInt(value) >= parseInt(other);
+        },
+        message: (_, values) =>  {
+            return i18n.t('validation.min_integer', { attribute: values._field_, min: values.other })
+        }
+    });
     extend("latitude", value => {
         let latitudeRegex = /^-?([1-8]?[1-9]|[1-9]0)\.\d{1,6}$/;
         if (latitudeRegex.test(value)) {
@@ -159,7 +200,7 @@
         },
         components: {
             Modal,
-            SlideYDownTransition,
+            SlideYDownTransition
         },
         computed: {
             translatableKey() {
@@ -172,6 +213,7 @@
                 fileName: '',
                 showModal: false,
                 formRef: 'form-' + MdUuid(),
+                imgPlaceholderSrc: '/img/image_placeholder.jpg'
             }
         },
         methods: {
@@ -217,8 +259,6 @@
                                 }
                             }
                         }
-
-                        console.log(finalErrors);
 
                         this.$refs[this.formRef].setErrors(finalErrors);
                     });
@@ -275,6 +315,22 @@
                     result = 'location 2';
                 }
                 return result[0].toUpperCase() + result.substring(1);
+            },
+            removeImage(name) {
+                this.form[name] = '';
+            },
+            onFileChange(event, name) {
+                let files = event.target.files || event.dataTransfer.files;
+                if (!files.length) return;
+
+                let file = files[0];
+                let reader = new FileReader();
+                let vm = this;
+
+                reader.onload = e => {
+                    vm.form[name] = e.target.result;
+                };
+                reader.readAsDataURL(file);
             }
         }
     }

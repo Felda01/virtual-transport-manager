@@ -107,6 +107,7 @@ return [
                 'locations' => \App\GraphQL\Queries\LocationsQuery::class,
                 'routes' => \App\GraphQL\Queries\RoutesQuery::class,
                 'bankLoanTypes' => \App\GraphQL\Queries\BankLoanTypesQuery::class,
+                'garageModels' => \App\GraphQL\Queries\GarageModelsQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,
@@ -125,6 +126,10 @@ return [
                 'createBankLoanType' => \App\GraphQL\Mutations\CreateBankLoanTypeMutation::class,
                 'updateBankLoanType' => \App\GraphQL\Mutations\UpdateBankLoanTypeMutation::class,
                 'deleteBankLoanType' => \App\GraphQL\Mutations\DeleteBankLoanTypeMutation::class,
+
+                'createGarageModel' => \App\GraphQL\Mutations\CreateGarageModelMutation::class,
+                'updateGarageModel' => \App\GraphQL\Mutations\UpdateGarageModelMutation::class,
+                'deleteGarageModel' => \App\GraphQL\Mutations\DeleteGarageModelMutation::class,
             ],
             'middleware' => ['auth:api'],
             'method' => ['get', 'post'],

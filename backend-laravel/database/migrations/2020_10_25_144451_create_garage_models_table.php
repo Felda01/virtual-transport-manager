@@ -21,6 +21,7 @@ class CreateGarageModelsTable extends Migration
             $table->decimal('insurance');
             $table->decimal('tax');
             $table->string('image');
+            $table->decimal('price');
             $table->softDeletes();
             $table->timestamps();
         });

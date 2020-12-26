@@ -33,6 +33,9 @@
                 <sidebar-item
                         :link="{ name: $t('pages.bankLoanTypes'), icon: 'account_balance', path: generatePath('bankLoanTypes') }"
                 ></sidebar-item>
+                <sidebar-item
+                        :link="{ name: $t('pages.garageModels'), icon: 'account_balance', path: generatePath('garageModels') }"
+                ></sidebar-item>
             </template>
         </side-bar>
         <div class="main-panel">

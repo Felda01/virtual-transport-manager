@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\GraphQL\Types;
 
 use App\Models\Garage;
+use App\Models\GarageModel;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Type as GraphQLType;
@@ -18,7 +19,7 @@ class GarageModelType extends GraphQLType
     protected $attributes = [
         'name' => 'GarageModel',
         'description' => 'A type',
-        'model' => Garage::class
+        'model' => GarageModel::class
     ];
 
     public function fields(): array
@@ -31,19 +32,16 @@ class GarageModelType extends GraphQLType
                 'type' => Type::string(),
             ],
             'truck_count' => [
-                'type' => Type::int(),
+                'type' => Type::string(),
             ],
             'trailer_count' => [
-                'type' => Type::int(),
-            ],
-            'location' => [
-                'type' => GraphQL::type('Location'),
+                'type' => Type::string(),
             ],
             'insurance' => [
-                'type' => Type::float(),
+                'type' => Type::string(),
             ],
             'tax' => [
-                'type' => Type::float(),
+                'type' => Type::string(),
             ],
             'image' => [
                 'type' => Type::string(),

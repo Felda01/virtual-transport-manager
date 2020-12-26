@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
-use App\Models\BankLoanType;
+use App\Models\GarageModel;
 use App\Rules\NotExistsRelationRule;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -12,17 +12,18 @@ use GraphQL\Type\Definition\Type;
 use Illuminate\Support\Facades\Auth;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Mutation;
+use Rebing\GraphQL\Support\SelectFields;
 
-class DeleteBankLoanTypeMutation extends Mutation
+class DeleteGarageModelMutation extends Mutation
 {
     protected $attributes = [
-        'name' => 'deleteBankLoanTypes',
+        'name' => 'deleteGarageModel',
         'description' => 'A mutation'
     ];
 
     public function type(): Type
     {
-        return GraphQL::type('BankLoanType');
+        return GraphQL::type('GarageModel');
     }
 
     private function guard()
@@ -42,9 +43,9 @@ class DeleteBankLoanTypeMutation extends Mutation
             'id' => [
                 'required',
                 'string',
-                'exists:bank_loan_types',
-                new NotExistsRelationRule('BankLoanType', 'bankLoans'),
-            ],
+                'exists:garage_models',
+                new NotExistsRelationRule('GarageModel', 'garages')
+            ]
         ];
     }
 
@@ -60,16 +61,16 @@ class DeleteBankLoanTypeMutation extends Mutation
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
-        /** @var BankLoanType $bankLoanType */
-        $bankLoanType = BankLoanType::find($args['id']);
+        /** @var GarageModel $garageModel */
+        $garageModel = GarageModel::find($args['id']);
 
-        $deletedBankLoanType = $bankLoanType;
+        $deletedGarageModel = $garageModel;
 
         try {
-            $bankLoanType->delete();
+            $garageModel->delete();
         } catch (\Exception $e) {
         }
 
-        return $deletedBankLoanType;
+        return $deletedGarageModel;
     }
 }

@@ -8,7 +8,8 @@
     "constants": "Constants",
     "dashboard": "Dashboard",
     "adminDashboard": "Admin Dashboard",
-    "bankLoanTypes": "Bank loan types"
+    "bankLoanTypes": "Bank loan types",
+    "garageModels": "Garage models"
   },
   "routes": {
     "login": "login",
@@ -19,7 +20,8 @@
     "constants": "constants",
     "dashboard": "",
     "adminDashboard": "admin",
-    "bankLoanTypes": "bank-loan-types"
+    "bankLoanTypes": "bank-loan-types",
+    "garageModels": "garage-models"
   },
   "navigation": {
     "staticMapData": "Static Map data"
@@ -39,7 +41,8 @@
     "latitude": "The Latitude format is invalid.",
     "longitude": "The Longitude format is invalid.",
     "autocomplete": "No {model} matching \"{term}\" were found.",
-    "different": "The {attribute} and {other} must be different."
+    "different": "The {attribute} and {other} must be different.",
+    "min_integer": "The {attribute} must be at least {min}."
   },
   "login": {
     "logIn": "Log in",
@@ -108,14 +111,32 @@
       "value": "Value",
       "valueUnit": "€",
       "payment": "Payment",
-      "paymentUnit": "€/week",
+      "paymentUnit": "€/month",
       "period": "Period",
-      "periodUnit": "0 | week | weeks"
+      "periodUnit": "0 | month | months"
     },
     "additionalLabelText": {
       "value": "(in €)",
-      "payment": "(€ per week)",
-      "period": "(in weeks)"
+      "payment": "(€ per month)",
+      "period": "(in months)"
+    }
+  },
+  "garageModel": {
+    "property": {
+      "name": "Name",
+      "truck_count": "Truck count",
+      "trailer_count": "Trailer count",
+      "image": "Image",
+      "insurance": "Insurance",
+      "insuranceUnit": "(€ per month)",
+      "tax": "Tax",
+      "taxUnit": "(€ per month)"
+    },
+    "additionalLabelText": {
+      "truck_count": "(max)",
+      "trailer_count": "(max)",
+      "insurance": "(€ per month)",
+      "tax": "(€ per month)"
     }
   }
 }

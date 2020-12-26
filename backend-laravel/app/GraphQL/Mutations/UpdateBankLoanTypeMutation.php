@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\GraphQL\Mutations;
 
 use App\Models\BankLoanType;
+use App\Rules\NotExistsRelationRule;
 use App\Rules\UniqueBankLoanTypeRule;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -64,6 +65,7 @@ class UpdateBankLoanTypeMutation extends Mutation
             ],
             'general' => [
                 new UniqueBankLoanTypeRule($args, $args['id']),
+                new NotExistsRelationRule('BankLoanType', 'bankLoans', 'update'),
             ]
         ];
     }

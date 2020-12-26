@@ -2,25 +2,29 @@
 
 namespace App\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Contracts\Validation\ImplicitRule;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
-class NotExistsRelationRule implements Rule
+class NotExistsRelationRule implements ImplicitRule
 {
     public $model;
     public $relation;
+    public $type;
 
     /**
      * Create a new rule instance.
      *
      * @param $model
      * @param $relation
+     * @param string $type
      */
-    public function __construct($model, $relation)
+    public function __construct($model, $relation, $type = 'delete')
     {
         /** @var Model model */
         $this->model = "App\\Models\\{$model}";
         $this->relation = $relation;
+        $this->type = $type;
     }
 
     /**
@@ -42,6 +46,6 @@ class NotExistsRelationRule implements Rule
      */
     public function message()
     {
-        return 'The validation error message.';
+        return 'The validation error message. '. $this->type;
     }
 }

@@ -71,6 +71,19 @@ const adminRoutes = [
                         en: enRoute.adminDashboard + '/' + enRoute.bankLoanTypes
                     }
                 }
+            },
+            {
+                path: enRoute.garageModels,
+                name: 'garageModels',
+                component: () => import('../views/admin/GarageModels.vue'),
+                meta: {
+                    requiresAuth: true,
+                    adminOnly: true,
+                    title: i18n.t('pages.garageModels'),
+                    path: {
+                        en: enRoute.adminDashboard + '/' + enRoute.garageModels
+                    }
+                }
             }
         ]
     },

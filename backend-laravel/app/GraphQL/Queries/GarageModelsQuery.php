@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Queries;
 
-use App\Models\Route;
+use App\Models\GarageModel;
+use App\Utilities\ImageUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -13,16 +14,16 @@ use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\SelectFields;
 
-class RoutesQuery extends Query
+class GarageModelsQuery extends Query
 {
     protected $attributes = [
-        'name' => 'routes',
+        'name' => 'garageModels',
         'description' => 'A query'
     ];
 
     public function type(): Type
     {
-        return GraphQL::paginate('Route');
+        return GraphQL::paginate('GarageModel');
     }
 
     private function guard()
@@ -62,11 +63,12 @@ class RoutesQuery extends Query
         $with = $fields->getRelations();
 
         if ($args['limit'] === -1) {
-            $args['limit'] = Route::count();
+            $args['limit'] = GarageModel::count();
         }
 
-        return Route::with($with)
+        return GarageModel::with($with)
             ->select($select)
+            ->orderBy('truck_count')
             ->paginate($args['limit'], ['*'], 'page', $args['page']);
     }
 }

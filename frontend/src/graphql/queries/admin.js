@@ -103,10 +103,6 @@ export const GARAGE_MODELS_QUERY = gql`
                 name
                 truck_count
                 trailer_count
-                location {
-                    id
-                    name
-                }
                 insurance
                 tax
                 image

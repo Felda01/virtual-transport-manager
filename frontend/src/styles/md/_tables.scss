@@ -306,7 +306,6 @@
   background-color: white;
   background-repeat: no-repeat;
   background-size: 10px 100%;
-  margin-bottom: 15px;
 }
 
 .md-table-content > table {
@@ -317,4 +316,17 @@
   background-repeat: no-repeat;
   max-width: none;
   margin-bottom: 0;
+}
+
+.md-table {
+  .img-container{
+    width: 120px;
+    max-height: 160px;
+    overflow: hidden;
+    display: block;
+
+    img{
+      width: 100%;
+    }
+  }
 }
