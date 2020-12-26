@@ -66,7 +66,11 @@ class CreateGarageModelMutation extends Mutation
                 'required',
                 'string',
                 'regex:/'.ImageUtility::BASE64_IMAGE_REGEX.'/i'
-            ]
+            ],
+            'price' => [
+                'required',
+                'min:1'
+            ],
         ];
     }
 
@@ -96,7 +100,11 @@ class CreateGarageModelMutation extends Mutation
             'image' => [
                 'name' => 'image',
                 'type' => Type::nonNull(Type::string()),
-            ]
+            ],
+            'price' => [
+                'name' => 'price',
+                'type' => Type::nonNull(Type::string()),
+            ],
         ];
     }
 
@@ -114,6 +122,7 @@ class CreateGarageModelMutation extends Mutation
             'trailer_count' => $args['trailer_count'],
             'insurance' => $args['insurance'],
             'tax' => $args['tax'],
+            'price' => $args['price'],
             'image' => Storage::disk('public')->url(ImageUtility::IMAGES_FOLDER . $fileName)
         ]);
         $garageModel->save();

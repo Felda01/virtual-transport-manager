@@ -78,6 +78,10 @@ class UpdateGarageModelMutation extends Mutation
                 'string',
                 'regex:/' . ImageUtility::getBase64ImageOrUrlImageRegex() . '/i'
             ],
+            'price' => [
+                'required',
+                'min:1'
+            ],
         ];
     }
 
@@ -111,7 +115,11 @@ class UpdateGarageModelMutation extends Mutation
             'image' => [
                 'name' => 'image',
                 'type' => Type::nonNull(Type::string()),
-            ]
+            ],
+            'price' => [
+                'name' => 'price',
+                'type' => Type::nonNull(Type::string()),
+            ],
         ];
     }
 
@@ -131,6 +139,7 @@ class UpdateGarageModelMutation extends Mutation
         $garageModel->trailer_count = $args['trailer_count'];
         $garageModel->insurance = $args['insurance'];
         $garageModel->tax = $args['tax'];
+        $garageModel->price = $args['price'];
         $garageModel->image = $fileName;
 
         $garageModel->save();

@@ -148,22 +148,17 @@ export const DELETE_BANK_LOAN_TYPE_MUTATION = gql`
 `;
 
 export const CREATE_GARAGE_MODEL_MUTATION = gql`
-    mutation CreateGarageModelMutation($image: String!, $name: String!, $truck_count: String!, $trailer_count: String!, $insurance: String!, $tax: String!) {
-        createGarageModel(image: $image, name: $name, truck_count: $truck_count, trailer_count: $trailer_count, insurance: $insurance, tax: $tax) {
+    mutation CreateGarageModelMutation($image: String!, $name: String!, $truck_count: String!, $trailer_count: String!, $insurance: String!, $tax: String!, $price: String!) {
+        createGarageModel(image: $image, name: $name, truck_count: $truck_count, trailer_count: $trailer_count, insurance: $insurance, tax: $tax, price: $price) {
             id
-            image
             name
-            truck_count
-            trailer_count
-            insurance
-            tax
         }
     }
 `;
 
 export const UPDATE_GARAGE_MODEL_MUTATION = gql`
-    mutation UpdateGarageModelMutation($id: String!, $image: String!, $name: String!, $truck_count: String!, $trailer_count: String!, $insurance: String!, $tax: String!) {
-        updateGarageModel(id: $id, image: $image, name: $name, truck_count: $truck_count, trailer_count: $trailer_count, insurance: $insurance, tax: $tax) {
+    mutation UpdateGarageModelMutation($id: String!, $image: String!, $name: String!, $truck_count: String!, $trailer_count: String!, $insurance: String!, $tax: String!, $price: String!) {
+        updateGarageModel(id: $id, image: $image, name: $name, truck_count: $truck_count, trailer_count: $trailer_count, insurance: $insurance, tax: $tax, price: $price) {
             id
             name
         }

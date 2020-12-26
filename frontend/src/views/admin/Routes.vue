@@ -11,7 +11,7 @@
                         <md-button class="md-primary md-simple" @click="addRouteModal"><md-icon>add</md-icon>{{ $t('model.new') }}</md-button>
                     </div>
                 </md-card-header>
-                <md-card-content>
+                <md-card-content class="pb-0">
                     <template v-if="$apollo.queries.routes.loading">
                         <content-placeholders class="mb-4">
                             <content-placeholders-heading />
@@ -310,13 +310,6 @@
 </script>
 
 <style lang="scss" scoped>
-    .text-right {
-        display: flex;
-    }
-    .text-right .md-table-cell-container {
-        display: flex!important;
-        justify-content: flex-end;
-    }
     .md-table .md-table-head:last-child {
         text-align: right;
     }

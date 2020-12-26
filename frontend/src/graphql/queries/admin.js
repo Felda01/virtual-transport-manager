@@ -106,6 +106,7 @@ export const GARAGE_MODELS_QUERY = gql`
                 insurance
                 tax
                 image
+                price
             }
             total
             per_page
