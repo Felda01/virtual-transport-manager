@@ -9,7 +9,8 @@
     "dashboard": "Dashboard",
     "adminDashboard": "Admin Dashboard",
     "bankLoanTypes": "Bank loan types",
-    "garageModels": "Garage models"
+    "garageModels": "Garage models",
+    "trailerModels": "Trailer models"
   },
   "routes": {
     "login": "login",
@@ -21,10 +22,12 @@
     "dashboard": "",
     "adminDashboard": "admin",
     "bankLoanTypes": "bank-loan-types",
-    "garageModels": "garage-models"
+    "garageModels": "garage-models",
+    "trailerModels": "trailer-models"
   },
   "navigation": {
-    "staticMapData": "Static Map data"
+    "staticMapData": "Map data",
+    "companyEquipmentData": "Company equipment"
   },
   "modal": {
     "btn" : {
@@ -141,5 +144,39 @@
       "tax": "(€ per month)",
       "price": "(in €)"
     }
+  },
+  "trailerModel": {
+    "property": {
+      "name": "Name",
+      "type": "Type",
+      "load": "Load",
+      "loadUnit": "Kg",
+      "adr": "ADR",
+      "km": "Km",
+      "kmUnit": "km",
+      "image": "Image",
+      "insurance": "Insurance",
+      "insuranceUnit": "€/month",
+      "tax": "Tax",
+      "taxUnit": "€/month",
+      "price": "Price",
+      "priceUnit": "€"
+    },
+    "additionalLabelText": {
+      "load": "(in kg)",
+      "km": "(in km)",
+      "insurance": "(€ per month)",
+      "tax": "(€ per month)",
+      "price": "(in €)"
+    }
+  },
+  "trailerADRs": {
+    "0": "No Class",
+    "1": "Class 1 - Explosives",
+    "2": "Class 2 - Gases",
+    "3": "Class 3 - Flammable liquids",
+    "4": "Class 4 - Flammable solids",
+    "5": "Class 6 - Toxic and infectious substances",
+    "6": "Class 8 - Corrosive substances"
   }
 }

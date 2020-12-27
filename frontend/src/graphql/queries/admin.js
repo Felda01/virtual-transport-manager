@@ -118,3 +118,29 @@ export const GARAGE_MODELS_QUERY = gql`
         }
     }
 `;
+
+export const TRAILER_MODELS_QUERY = gql`
+    query TrailerModelsQuery($limit: Int!, $page: Int!) {
+        trailerModels(limit: $limit, page: $page) {
+            data {
+                id
+                name
+                type
+                load
+                adr
+                km
+                insurance
+                tax
+                image
+                price
+            }
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
+            has_more_pages
+        }
+    }
+`;

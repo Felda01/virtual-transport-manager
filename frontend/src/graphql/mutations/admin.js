@@ -173,3 +173,30 @@ export const DELETE_GARAGE_MODEL_MUTATION = gql`
         }
     }
 `;
+
+export const CREATE_TRAILER_MODEL_MUTATION = gql`
+    mutation CreateTrailerModelMutation($image: String!, $name: String!, $type: String!, $load: String!, $adr: String!, $km: String!, $insurance: String!, $tax: String!, $price: String!) {
+        createTrailerModel(image: $image, name: $name, type: $type, load: $load, adr: $adr, km: $km, insurance: $insurance, tax: $tax, price: $price) {
+            id
+            name
+        }
+    }
+`;
+
+export const UPDATE_TRAILER_MODEL_MUTATION = gql`
+    mutation UpdateTrailerModelMutation($id: String!, $image: String!, $name: String!, $type: String!, $load: String!, $adr: String!, $km: String!, $insurance: String!, $tax: String!, $price: String!) {
+        updateTrailerModel(id: $id, image: $image, name: $name, type: $type, load: $load, adr: $adr, km: $km, insurance: $insurance, tax: $tax, price: $price) {
+            id
+            name
+        }
+    }
+`;
+
+export const DELETE_TRAILER_MODEL_MUTATION = gql`
+    mutation DeleteTrailerModelMutation($id: String!) {
+        deleteTrailerModel(id: $id) {
+            id
+            name
+        }
+    }
+`;

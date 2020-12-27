@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $insurance
  * @property string $tax
  * @property string $image
+ * @property string $price
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Cargo[] $cargos
@@ -36,6 +37,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|TrailerModel whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TrailerModel whereTax($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TrailerModel whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|TrailerModel wherePrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TrailerModel whereUpdatedAt($value)
  * @mixin \Eloquent
  */
@@ -56,5 +58,13 @@ class TrailerModel extends Model
     public function cargos()
     {
         return $this->belongsToMany(Cargo::class, 'cargo_trailer_model');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function trailers()
+    {
+        return $this->hasMany(Trailer::class);
     }
 }

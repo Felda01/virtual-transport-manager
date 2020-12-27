@@ -33,9 +33,15 @@
                 <sidebar-item
                         :link="{ name: $t('pages.bankLoanTypes'), icon: 'account_balance', path: generatePath('bankLoanTypes') }"
                 ></sidebar-item>
-                <sidebar-item
-                        :link="{ name: $t('pages.garageModels'), icon: 'house_siding', path: generatePath('garageModels') }"
-                ></sidebar-item>
+                <sidebar-item :link="{ name: $t('navigation.companyEquipmentData'), icon: 'local_shipping' }">
+                    <sidebar-item
+                            :link="{ name: $t('pages.garageModels'), path: generatePath('garageModels') }"
+                    ></sidebar-item>
+                    <sidebar-item
+                            :link="{ name: $t('pages.trailerModels'), path: generatePath('trailerModels') }"
+                    ></sidebar-item>
+                </sidebar-item>
+
             </template>
         </side-bar>
         <div class="main-panel">

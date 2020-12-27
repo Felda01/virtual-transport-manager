@@ -129,8 +129,9 @@
                         value: '',
                         config: {
                             options: this.locations.data,
-                            autocompleteModel: 'Location',
-                            valueField: 'id',
+                            optionValue: (option) => {
+                                return option.id;
+                            },
                             optionLabel: (option) => {
                                 return option.name;
                             }
@@ -145,8 +146,9 @@
                         value: '',
                         config: {
                             options: this.locations.data,
-                            autocompleteModel: 'Location',
-                            valueField: 'id',
+                            optionValue: (option) => {
+                                return option.id;
+                            },
                             optionLabel: (option) => {
                                 return option.name;
                             }

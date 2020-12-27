@@ -176,8 +176,9 @@
                         value: null,
                         config: {
                             options: this.countries.data,
-                            autocompleteModel: 'Country',
-                            valueField: 'id',
+                            optionValue: (option) => {
+                                return option.id;
+                            },
                             optionLabel: (option) => {
                                 return option.name;
                             }
@@ -257,8 +258,9 @@
                         value: location.country.id,
                         config: {
                             options: this.countries.data,
-                            autocompleteModel: 'Country',
-                            valueField: 'id',
+                            optionValue: (option) => {
+                                return option.id;
+                            },
                             optionLabel: (option) => {
                                 return option.name;
                             }

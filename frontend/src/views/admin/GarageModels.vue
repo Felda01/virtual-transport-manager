@@ -90,9 +90,6 @@
                     from: 0,
                     to: 0
                 },
-                locations: {
-                    data: [],
-                },
                 page: 1,
                 modalSchemaAddGarageModel: {
                     form: {

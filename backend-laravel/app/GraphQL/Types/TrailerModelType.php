@@ -33,21 +33,24 @@ class TrailerModelType extends GraphQLType
                 'type' => Type::string(),
             ],
             'load' => [
-                'type' => Type::int(),
+                'type' => Type::string(),
             ],
             'adr' => [
-                'type' => Type::int(),
+                'type' => Type::string(),
             ],
             'km' => [
-                'type' => Type::int(),
+                'type' => Type::string(),
             ],
             'insurance' => [
-                'type' => Type::float(),
+                'type' => Type::string(),
             ],
             'tax' => [
-                'type' => Type::float(),
+                'type' => Type::string(),
             ],
             'image' => [
+                'type' => Type::string(),
+            ],
+            'price' => [
                 'type' => Type::string(),
             ],
         ];

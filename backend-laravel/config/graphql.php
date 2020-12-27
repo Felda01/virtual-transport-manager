@@ -108,6 +108,10 @@ return [
                 'routes' => \App\GraphQL\Queries\RoutesQuery::class,
                 'bankLoanTypes' => \App\GraphQL\Queries\BankLoanTypesQuery::class,
                 'garageModels' => \App\GraphQL\Queries\GarageModelsQuery::class,
+                'trailerModels' => \App\GraphQL\Queries\TrailerModelsQuery::class,
+
+                'trailerTypes' => \App\GraphQL\Queries\TrailerTypesQuery::class,
+                'trailerADRs' => \App\GraphQL\Queries\TrailerADRsQuery::class
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,
@@ -130,6 +134,10 @@ return [
                 'createGarageModel' => \App\GraphQL\Mutations\CreateGarageModelMutation::class,
                 'updateGarageModel' => \App\GraphQL\Mutations\UpdateGarageModelMutation::class,
                 'deleteGarageModel' => \App\GraphQL\Mutations\DeleteGarageModelMutation::class,
+
+                'createTrailerModel' => \App\GraphQL\Mutations\CreateTrailerModelMutation::class,
+                'updateTrailerModel' => \App\GraphQL\Mutations\UpdateTrailerModelMutation::class,
+                'deleteTrailerModel' => \App\GraphQL\Mutations\DeleteTrailerModelMutation::class,
             ],
             'middleware' => ['auth:api'],
             'method' => ['get', 'post'],

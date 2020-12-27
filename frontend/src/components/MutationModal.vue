@@ -84,8 +84,8 @@
                             <ValidationProvider :name="field.label" :rules="field.rules" v-slot="{ passed, failed, errors }" tag="div">
                                 <md-field :class="[{ 'md-error md-invalid': failed }, { 'md-valid': passed }]">
                                     <label>{{ field.label }}{{ fieldAdditionalLabelText(field.config) }}{{ field.rules.includes('required') ? ' *' : '' }}</label>
-                                    <md-select v-model="form[field.name]">
-                                        <md-option :value="option[field.config.valueField]" v-for="option in field.config.options" :key="option[field.config.valueField]">{{ field.config.optionLabel(option) }}</md-option>
+                                    <md-select v-model="form[field.name]" :name="field.label">
+                                        <md-option :value="field.config.optionValue(option)" v-for="option in field.config.options" :key="field.config.optionValue(option)">{{ field.config.translatableLabel ? $t(field.config.translatableLabel + field.config.optionLabel(option)) : field.config.optionLabel(option) }}</md-option>
                                     </md-select>
 
                                     <span class="md-error" v-show="failed">{{ errors[0] }}</span>
