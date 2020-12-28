@@ -31,3 +31,21 @@ export const TRAILER_ADRS_QUERY = gql`
         trailerADRs
     }
 `;
+
+export const TRUCK_BRANDS_QUERY = gql`
+    query TruckBrandsQuery {
+        truckBrands
+    }
+`;
+
+export const TRUCK_CHASSIS_QUERY = gql`
+    query TruckChassisQuery {
+        truckChassis
+    }
+`;
+
+export const TRUCK_EMISSION_CLASSES_QUERY = gql`
+    query TruckEmissionClassesQuery {
+        truckEmissionClasses
+    }
+`;

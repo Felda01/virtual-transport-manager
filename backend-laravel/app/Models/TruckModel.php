@@ -53,4 +53,12 @@ class TruckModel extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function trucks()
+    {
+        return $this->hasMany(Truck::class);
+    }
 }

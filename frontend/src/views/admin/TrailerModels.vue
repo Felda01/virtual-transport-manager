@@ -30,11 +30,11 @@
                                 <md-table-cell :md-label="$t('trailerModel.property.name')" class="td-name">{{ item.name }}</md-table-cell>
                                 <md-table-cell :md-label="$t('trailerModel.property.type')">{{ item.type }}</md-table-cell>
                                 <md-table-cell :md-label="$t('trailerModel.property.load')">{{ item.load }} {{ $t('trailerModel.property.loadUnit') }}</md-table-cell>
-                                <md-table-cell :md-label="$t('trailerModel.property.adr')">{{ item.adr }}</md-table-cell>
-                                <md-table-cell :md-label="$t('trailerModel.property.km')">{{ item.km }}</md-table-cell>
-                                <md-table-cell :md-label="$t('trailerModel.property.price')">{{ item.price }} {{ $t('garageModel.property.priceUnit') }}</md-table-cell>
-                                <md-table-cell :md-label="$t('trailerModel.property.insurance')">{{ item.insurance }} {{ $t('garageModel.property.insuranceUnit') }}</md-table-cell>
-                                <md-table-cell :md-label="$t('trailerModel.property.tax')">{{ item.tax }} {{ $t('garageModel.property.taxUnit') }}</md-table-cell>
+                                <md-table-cell :md-label="$t('trailerModel.property.adr')">{{ $t('trailerADRs.' + item.adr) }}</md-table-cell>
+                                <md-table-cell :md-label="$t('trailerModel.property.km')">{{ item.km }} {{ $t('trailerModel.property.kmUnit') }}</md-table-cell>
+                                <md-table-cell :md-label="$t('trailerModel.property.price')">{{ item.price }} {{ $t('trailerModel.property.priceUnit') }}</md-table-cell>
+                                <md-table-cell :md-label="$t('trailerModel.property.insurance')">{{ item.insurance }} {{ $t('trailerModel.property.insuranceUnit') }}</md-table-cell>
+                                <md-table-cell :md-label="$t('trailerModel.property.tax')">{{ item.tax }} {{ $t('trailerModel.property.taxUnit') }}</md-table-cell>
                                 <md-table-cell :md-label="$t('model.actions')">
                                     <md-button class="md-just-icon md-success md-simple" @click="updateTrailerModelModal(item)"><md-icon>edit</md-icon></md-button>
                                     <md-button class="md-just-icon md-danger md-simple" @click="deleteTrailerModelModal(item)"><md-icon>close</md-icon></md-button>
@@ -63,7 +63,7 @@
         <!-- Update trailer model modal-->
         <mutation-modal ref="updateTrailerModelModal" @ok="updateTrailerModel" :modalSchema="modalSchemaUpdateTrailerModel" />
 
-        <!-- Delete trailer model model-->
+        <!-- Delete trailer model modal-->
         <delete-modal ref="deleteTrailerModelModal" @ok="deleteTrailerModel" :modalSchema="modalSchemaDeleteTrailerModel" />
     </div>
 </template>
@@ -93,12 +93,8 @@
                     from: 0,
                     to: 0
                 },
-                trailerADRs: {
-                    data: [],
-                },
-                trailerTypes: {
-                    data: [],
-                },
+                trailerADRs: [],
+                trailerTypes: [],
                 page: 1,
                 modalSchemaAddTrailerModel: {
                     form: {

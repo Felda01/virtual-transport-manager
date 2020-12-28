@@ -112,7 +112,7 @@
                                     </div>
                                     <div class="button-container">
                                         <md-button class="md-danger md-round" @click="removeImage(field.name)" v-if="form[field.name]">
-                                            <i class="fa fa-times"></i>Remove
+                                            <md-icon>close</md-icon>Remove
                                         </md-button>
                                         <md-button class="md-success md-round md-fileinput">
                                             <template v-if="!form[field.name]">Select image</template>

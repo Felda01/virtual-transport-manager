@@ -56,7 +56,7 @@
         <!-- Update route modal-->
         <mutation-modal ref="updateRouteModal" @ok="updateRoute" :modalSchema="modalSchemaUpdateRoute" />
 
-        <!-- Delete route model-->
+        <!-- Delete route modal-->
         <delete-modal ref="deleteRouteModal" @ok="deleteRoute" :modalSchema="modalSchemaDeleteRoute" />
     </div>
 </template>

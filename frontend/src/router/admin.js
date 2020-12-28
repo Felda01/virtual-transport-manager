@@ -97,6 +97,19 @@ const adminRoutes = [
                         en: enRoute.adminDashboard + '/' + enRoute.trailerModels
                     }
                 }
+            },
+            {
+                path: enRoute.truckModels,
+                name: 'truckModels',
+                component: () => import('../views/admin/TruckModels.vue'),
+                meta: {
+                    requiresAuth: true,
+                    adminOnly: true,
+                    title: i18n.t('pages.truckModels'),
+                    path: {
+                        en: enRoute.adminDashboard + '/' + enRoute.truckModels
+                    }
+                }
             }
         ]
     },

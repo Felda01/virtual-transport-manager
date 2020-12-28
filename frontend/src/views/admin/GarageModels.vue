@@ -61,7 +61,7 @@
         <!-- Update garage model modal-->
         <mutation-modal ref="updateGarageModelModal" @ok="updateGarageModel" :modalSchema="modalSchemaUpdateGarageModel" />
 
-        <!-- Delete garage model model-->
+        <!-- Delete garage model modal-->
         <delete-modal ref="deleteGarageModelModal" @ok="deleteGarageModel" :modalSchema="modalSchemaDeleteGarageModel" />
     </div>
 </template>

@@ -200,3 +200,33 @@ export const DELETE_TRAILER_MODEL_MUTATION = gql`
         }
     }
 `;
+
+export const CREATE_TRUCK_MODEL_MUTATION = gql`
+    mutation CreateTruckModelMutation($image: String!, $name: String!, $brand: String!, $engine_power: String!, $chassis: String!, $load: String!, $emission_class: String!, $km: String!, $insurance: String!, $tax: String!, $price: String!) {
+        createTruckModel(image: $image, name: $name, brand: $brand, engine_power: $engine_power, chassis: $chassis, load: $load, emission_class: $emission_class, km: $km, insurance: $insurance, tax: $tax, price: $price) {
+            id
+            name
+            brand
+        }
+    }
+`;
+
+export const UPDATE_TRUCK_MODEL_MUTATION = gql`
+    mutation UpdateTruckModelMutation($id: String!, $image: String!, $name: String!, $brand: String!, $engine_power: String!, $chassis: String!, $load: String!, $emission_class: String!, $km: String!, $insurance: String!, $tax: String!, $price: String!) {
+        updateTruckModel(id: $id, image: $image, name: $name, brand: $brand, engine_power: $engine_power, chassis: $chassis, load: $load, emission_class: $emission_class, km: $km, insurance: $insurance, tax: $tax, price: $price) {
+            id
+            name
+            brand
+        }
+    }
+`;
+
+export const DELETE_TRUCK_MODEL_MUTATION = gql`
+    mutation DeleteTruckModelMutation($id: String!) {
+        deleteTruckModel(id: $id) {
+            id
+            name
+            brand
+        }
+    }
+`;

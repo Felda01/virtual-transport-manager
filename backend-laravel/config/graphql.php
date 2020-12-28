@@ -111,7 +111,13 @@ return [
                 'trailerModels' => \App\GraphQL\Queries\TrailerModelsQuery::class,
 
                 'trailerTypes' => \App\GraphQL\Queries\TrailerTypesQuery::class,
-                'trailerADRs' => \App\GraphQL\Queries\TrailerADRsQuery::class
+                'trailerADRs' => \App\GraphQL\Queries\TrailerADRsQuery::class,
+
+                'truckModels' => \App\GraphQL\Queries\TruckModelsQuery::class,
+
+                'truckBrands' => \App\GraphQL\Queries\TruckBrandsQuery::class,
+                'truckChassis' => \App\GraphQL\Queries\TruckChassisQuery::class,
+                'truckEmissionClasses' => \App\GraphQL\Queries\TruckEmissionClassesQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,
@@ -138,6 +144,10 @@ return [
                 'createTrailerModel' => \App\GraphQL\Mutations\CreateTrailerModelMutation::class,
                 'updateTrailerModel' => \App\GraphQL\Mutations\UpdateTrailerModelMutation::class,
                 'deleteTrailerModel' => \App\GraphQL\Mutations\DeleteTrailerModelMutation::class,
+
+                'createTruckModel' => \App\GraphQL\Mutations\CreateTruckModelMutation::class,
+                'updateTruckModel' => \App\GraphQL\Mutations\UpdateTruckModelMutation::class,
+                'deleteTruckModel' => \App\GraphQL\Mutations\DeleteTruckModelMutation::class,
             ],
             'middleware' => ['auth:api'],
             'method' => ['get', 'post'],

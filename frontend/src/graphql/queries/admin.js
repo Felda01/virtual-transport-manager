@@ -144,3 +144,32 @@ export const TRAILER_MODELS_QUERY = gql`
         }
     }
 `;
+
+export const TRUCK_MODELS_QUERY = gql`
+    query TruckModelsQuery($limit: Int!, $page: Int!) {
+        truckModels(limit: $limit, page: $page) {
+            data {
+                id
+                name
+                brand
+                engine_power
+                chassis
+                load
+                emission_class
+                km
+                insurance
+                tax
+                image
+                price
+            }
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
+            has_more_pages
+        }
+    }
+`;
+

@@ -10,7 +10,8 @@
     "adminDashboard": "Admin Dashboard",
     "bankLoanTypes": "Bank loan types",
     "garageModels": "Garage models",
-    "trailerModels": "Trailer models"
+    "trailerModels": "Trailer models",
+    "truckModels": "Truck models"
   },
   "routes": {
     "login": "login",
@@ -23,7 +24,8 @@
     "adminDashboard": "admin",
     "bankLoanTypes": "bank-loan-types",
     "garageModels": "garage-models",
-    "trailerModels": "trailer-models"
+    "trailerModels": "trailer-models",
+    "truckModels": "truck-models"
   },
   "navigation": {
     "staticMapData": "Map data",
@@ -176,7 +178,42 @@
     "2": "Class 2 - Gases",
     "3": "Class 3 - Flammable liquids",
     "4": "Class 4 - Flammable solids",
-    "5": "Class 6 - Toxic and infectious substances",
+    "5": "Class 6 - Toxic substances",
     "6": "Class 8 - Corrosive substances"
+  },
+  "truckModel": {
+    "property": {
+      "name": "Name",
+      "brand": "Brand",
+      "engine_power": "Engine power",
+      "engine_powerUnit": "hp",
+      "chassis": "Chassis",
+      "load": "Load",
+      "loadUnit": "Kg",
+      "emission_class": "Emission class",
+      "km": "Km",
+      "kmUnit": "km",
+      "image": "Image",
+      "insurance": "Insurance",
+      "insuranceUnit": "€/month",
+      "tax": "Tax",
+      "taxUnit": "€/month",
+      "price": "Price",
+      "priceUnit": "€"
+    },
+    "additionalLabelText": {
+      "load": "(in kg)",
+      "km": "(in km)",
+      "engine_power": "(in hp)",
+      "insurance": "(€ per month)",
+      "tax": "(€ per month)",
+      "price": "(in €)"
+    }
+  },
+  "truckEmissionClasses": {
+    "3": "Euro III",
+    "4": "Euro IV",
+    "5": "Euro V",
+    "6": "Euro VI"
   }
 }

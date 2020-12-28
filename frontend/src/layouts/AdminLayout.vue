@@ -40,6 +40,9 @@
                     <sidebar-item
                             :link="{ name: $t('pages.trailerModels'), path: generatePath('trailerModels') }"
                     ></sidebar-item>
+                    <sidebar-item
+                            :link="{ name: $t('pages.truckModels'), path: generatePath('truckModels') }"
+                    ></sidebar-item>
                 </sidebar-item>
 
             </template>

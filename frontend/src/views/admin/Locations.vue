@@ -54,6 +54,7 @@
         <!-- Update location modal-->
         <mutation-modal ref="updateLocationModal" @ok="updateLocation" :modalSchema="modalSchemaUpdateLocation" :locales="locales" />
 
+        <!-- Delete location modal-->
         <delete-modal ref="deleteLocationModal" @ok="deleteLocation" :modalSchema="modalSchemaDeleteLocation" />
     </div>
 </template>
