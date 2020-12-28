@@ -68,7 +68,7 @@ class Truck extends Model
      */
     public function truckModel()
     {
-        return $this->belongsTo(TruckModel::class);
+        return $this->belongsTo(TruckModel::class)->withTrashed();
     }
 
     /**

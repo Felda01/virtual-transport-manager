@@ -30,7 +30,7 @@
                                 <md-table-cell :md-label="$t('trailerModel.property.name')" class="td-name">{{ item.name }}</md-table-cell>
                                 <md-table-cell :md-label="$t('trailerModel.property.type')">{{ item.type }}</md-table-cell>
                                 <md-table-cell :md-label="$t('trailerModel.property.load')">{{ item.load }} {{ $t('trailerModel.property.loadUnit') }}</md-table-cell>
-                                <md-table-cell :md-label="$t('trailerModel.property.adr')">{{ $t('trailerADRs.' + item.adr) }}</md-table-cell>
+                                <md-table-cell :md-label="$t('trailerModel.property.adr')">{{ $t('ADRs.' + item.adr) }}</md-table-cell>
                                 <md-table-cell :md-label="$t('trailerModel.property.km')">{{ item.km }} {{ $t('trailerModel.property.kmUnit') }}</md-table-cell>
                                 <md-table-cell :md-label="$t('trailerModel.property.price')">{{ item.price }} {{ $t('trailerModel.property.priceUnit') }}</md-table-cell>
                                 <md-table-cell :md-label="$t('trailerModel.property.insurance')">{{ item.insurance }} {{ $t('trailerModel.property.insuranceUnit') }}</md-table-cell>
@@ -70,7 +70,7 @@
 
 <script>
     import { TRAILER_MODELS_QUERY } from '@/graphql/queries/admin';
-    import { TRAILER_TYPES_QUERY, TRAILER_ADRS_QUERY } from "@/graphql/queries/common";
+    import { TRAILER_TYPES_QUERY, ADRS_QUERY } from "@/graphql/queries/common";
     import { CREATE_TRAILER_MODEL_MUTATION, UPDATE_TRAILER_MODEL_MUTATION, DELETE_TRAILER_MODEL_MUTATION } from '@/graphql/mutations/admin';
     import { MutationModal, Pagination, DeleteModal } from "@/components";
 
@@ -93,7 +93,7 @@
                     from: 0,
                     to: 0
                 },
-                trailerADRs: [],
+                ADRs: [],
                 trailerTypes: [],
                 page: 1,
                 modalSchemaAddTrailerModel: {
@@ -176,11 +176,11 @@
                         type: 'select',
                         value: '',
                         config: {
-                            options: this.trailerADRs,
+                            options: this.ADRs,
                             optionValue: (option) => {
                                 return option;
                             },
-                            translatableLabel: 'trailerADRs.',
+                            translatableLabel: 'ADRs.',
                             optionLabel: (option) => {
                                 return option;
                             }
@@ -302,11 +302,11 @@
                         type: 'select',
                         value: trailerModel.adr,
                         config: {
-                            options: this.trailerADRs,
+                            options: this.ADRs,
                             optionValue: (option) => {
                                 return option;
                             },
-                            translatableLabel: 'trailerADRs.',
+                            translatableLabel: 'ADRs.',
                             optionLabel: (option) => {
                                 return option;
                             }
@@ -411,8 +411,8 @@
             trailerTypes: {
                 query: TRAILER_TYPES_QUERY,
             },
-            trailerADRs: {
-                query: TRAILER_ADRS_QUERY,
+            ADRs: {
+                query: ADRS_QUERY,
             }
         },
     }

@@ -72,7 +72,7 @@
 
 <script>
     import { TRUCK_MODELS_QUERY } from '@/graphql/queries/admin';
-    import { TRUCK_BRANDS_QUERY, TRUCK_CHASSIS_QUERY, TRUCK_EMISSION_CLASSES_QUERY } from "@/graphql/queries/common";
+    import { TRUCK_BRANDS_QUERY, CHASSIS_QUERY, TRUCK_EMISSION_CLASSES_QUERY } from "@/graphql/queries/common";
     import { CREATE_TRUCK_MODEL_MUTATION, UPDATE_TRUCK_MODEL_MUTATION, DELETE_TRUCK_MODEL_MUTATION } from '@/graphql/mutations/admin';
     import { MutationModal, Pagination, DeleteModal } from "@/components";
 
@@ -96,7 +96,7 @@
                     to: 0
                 },
                 truckBrands: [],
-                truckChassis: [],
+                chassis: [],
                 truckEmissionClasses: [],
                 page: 1,
                 modalSchemaAddTruckModel: {
@@ -179,7 +179,7 @@
                         type: 'select',
                         value: '',
                         config: {
-                            options: this.truckChassis,
+                            options: this.chassis,
                             optionValue: (option) => {
                                 return option;
                             },
@@ -333,7 +333,7 @@
                         type: 'select',
                         value: truckModel.chassis,
                         config: {
-                            options: this.truckChassis,
+                            options: this.chassis,
                             optionValue: (option) => {
                                 return option;
                             },
@@ -470,8 +470,8 @@
             truckBrands: {
                 query: TRUCK_BRANDS_QUERY
             },
-            truckChassis: {
-                query: TRUCK_CHASSIS_QUERY
+            chassis: {
+                query: CHASSIS_QUERY
             },
             truckEmissionClasses: {
                 query: TRUCK_EMISSION_CLASSES_QUERY

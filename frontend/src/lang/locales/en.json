@@ -11,7 +11,8 @@
     "bankLoanTypes": "Bank loan types",
     "garageModels": "Garage models",
     "trailerModels": "Trailer models",
-    "truckModels": "Truck models"
+    "truckModels": "Truck models",
+    "cargos": "Cargos"
   },
   "routes": {
     "login": "login",
@@ -25,7 +26,8 @@
     "bankLoanTypes": "bank-loan-types",
     "garageModels": "garage-models",
     "trailerModels": "trailer-models",
-    "truckModels": "truck-models"
+    "truckModels": "truck-models",
+    "cargos": "cargos"
   },
   "navigation": {
     "staticMapData": "Map data",
@@ -172,7 +174,7 @@
       "price": "(in €)"
     }
   },
-  "trailerADRs": {
+  "ADRs": {
     "0": "No Class",
     "1": "Class 1 - Explosives",
     "2": "Class 2 - Gases",
@@ -215,5 +217,28 @@
     "4": "Euro IV",
     "5": "Euro V",
     "6": "Euro VI"
+  },
+  "cargo": {
+    "property": {
+      "name": "Name",
+      "adr": "ADR",
+      "weight": "Weight",
+      "weightUnit": "kg",
+      "engine_power": "Engine power",
+      "engine_powerUnit": "hp",
+      "chassis": "Chassis",
+      "min_price": "Min price",
+      "min_priceUnit": "€",
+      "max_price": "Max price",
+      "max_priceUnit": "€",
+      "own_trailer": "Own trailer",
+      "image": "Image"
+    },
+    "additionalLabelText": {
+      "engine_power": "(in hp)",
+      "weight": "(in kg)",
+      "min_price": "(in €)",
+      "max_price": "(in €)"
+    }
   }
 }

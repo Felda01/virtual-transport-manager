@@ -173,3 +173,28 @@ export const TRUCK_MODELS_QUERY = gql`
     }
 `;
 
+export const CARGOS_QUERY = gql`
+    query CargosQuery($limit: Int!, $page: Int!) {
+        cargos(limit: $limit, page: $page) {
+            data {
+                id
+                name
+                adr
+                engine_power
+                chassis
+                weight
+                min_price
+                max_price
+                image
+            }
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
+            has_more_pages
+        }
+    }
+`;
+

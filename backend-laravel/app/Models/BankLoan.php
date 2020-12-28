@@ -43,6 +43,6 @@ class BankLoan extends Model
      */
     public function bankLoanType()
     {
-        return $this->belongsTo(BankLoanType::class);
+        return $this->belongsTo(BankLoanType::class)->withTrashed();
     }
 }

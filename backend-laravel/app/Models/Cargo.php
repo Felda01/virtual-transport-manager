@@ -75,4 +75,12 @@ class Cargo extends Model
     {
         return $this->belongsToMany(Cargo::class, 'customer_cargo');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function markets()
+    {
+        return $this->hasMany(Market::class);
+    }
 }

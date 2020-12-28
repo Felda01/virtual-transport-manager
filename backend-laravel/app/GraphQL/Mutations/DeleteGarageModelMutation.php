@@ -44,7 +44,6 @@ class DeleteGarageModelMutation extends Mutation
                 'required',
                 'string',
                 'exists:garage_models',
-                new NotExistsRelationRule('GarageModel', 'garages')
             ]
         ];
     }

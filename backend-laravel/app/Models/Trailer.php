@@ -65,7 +65,7 @@ class Trailer extends Model
      */
     public function trailerModel()
     {
-        return $this->belongsTo(TrailerModel::class);
+        return $this->belongsTo(TrailerModel::class)->withTrashed();
     }
 
     /**

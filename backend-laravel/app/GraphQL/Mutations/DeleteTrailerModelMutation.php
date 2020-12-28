@@ -44,7 +44,6 @@ class DeleteTrailerModelMutation extends Mutation
                 'required',
                 'string',
                 'exists:trailer_models',
-                new NotExistsRelationRule('TrailerModel', 'trailers')
             ]
         ];
     }

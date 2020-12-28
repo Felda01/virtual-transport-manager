@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
-use App\Models\BankLoanType;
-use App\Rules\NotExistsRelationRule;
+use App\Models\Cargo;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Illuminate\Support\Facades\Auth;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Mutation;
+use Rebing\GraphQL\Support\SelectFields;
 
-class DeleteBankLoanTypeMutation extends Mutation
+class DeleteCargoMutation extends Mutation
 {
     protected $attributes = [
-        'name' => 'deleteBankLoanTypes',
+        'name' => 'deleteCargo',
         'description' => 'A mutation'
     ];
 
     public function type(): Type
     {
-        return GraphQL::type('BankLoanType');
+        return GraphQL::type('Cargo');
     }
 
     private function guard()
@@ -42,8 +42,8 @@ class DeleteBankLoanTypeMutation extends Mutation
             'id' => [
                 'required',
                 'string',
-                'exists:bank_loan_types',
-            ],
+                'exists:cargos',
+            ]
         ];
     }
 
@@ -59,16 +59,16 @@ class DeleteBankLoanTypeMutation extends Mutation
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
-        /** @var BankLoanType $bankLoanType */
-        $bankLoanType = BankLoanType::find($args['id']);
+        /** @var Cargo $cargo */
+        $cargo = Cargo::find($args['id']);
 
-        $deletedBankLoanType = $bankLoanType;
+        $deletedCargo = $cargo;
 
         try {
-            $bankLoanType->delete();
+            $cargo->delete();
         } catch (\Exception $e) {
         }
 
-        return $deletedBankLoanType;
+        return $deletedCargo;
     }
 }

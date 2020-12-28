@@ -10,7 +10,7 @@ use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\SelectFields;
 
-class TruckChassisQuery extends Query
+class ChassisQuery extends Query
 {
     protected $attributes = [
         'name' => 'truckChassis',

@@ -31,7 +31,7 @@
 <!--                        :link="{ name: $t('pages.constants'), icon: 'storage', path: generatePath('constants') }"-->
 <!--                ></sidebar-item>-->
                 <sidebar-item
-                        :link="{ name: $t('pages.bankLoanTypes'), icon: 'account_balance', path: generatePath('bankLoanTypes') }"
+                        :link="{ name: $t('pages.bankLoanTypes'), icon: 'euro_symbol', path: generatePath('bankLoanTypes') }"
                 ></sidebar-item>
                 <sidebar-item :link="{ name: $t('navigation.companyEquipmentData'), icon: 'local_shipping' }">
                     <sidebar-item
@@ -44,7 +44,9 @@
                             :link="{ name: $t('pages.truckModels'), path: generatePath('truckModels') }"
                     ></sidebar-item>
                 </sidebar-item>
-
+                <sidebar-item
+                        :link="{ name: $t('pages.cargos'), icon: 'business_center', path: generatePath('cargos') }"
+                ></sidebar-item>
             </template>
         </side-bar>
         <div class="main-panel">

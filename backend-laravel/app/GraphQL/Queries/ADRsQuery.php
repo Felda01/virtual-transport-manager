@@ -10,10 +10,10 @@ use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\SelectFields;
 
-class TrailerADRsQuery extends Query
+class ADRsQuery extends Query
 {
     protected $attributes = [
-        'name' => 'trailerADRs',
+        'name' => 'ADRs',
         'description' => 'A query'
     ];
 

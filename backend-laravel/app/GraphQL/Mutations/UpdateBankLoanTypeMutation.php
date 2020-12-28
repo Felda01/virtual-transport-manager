@@ -43,7 +43,8 @@ class UpdateBankLoanTypeMutation extends Mutation
         return [
             'id' => [
                 'required',
-                'exists:bank_loan_types'
+                'exists:bank_loan_types',
+                new NotExistsRelationRule('BankLoanType', 'bankLoans', 'update'),
             ],
             'value' => [
                 'required',
@@ -65,7 +66,6 @@ class UpdateBankLoanTypeMutation extends Mutation
             ],
             'general' => [
                 new UniqueBankLoanTypeRule($args, $args['id']),
-                new NotExistsRelationRule('BankLoanType', 'bankLoans', 'update'),
             ]
         ];
     }

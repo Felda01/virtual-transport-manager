@@ -108,16 +108,18 @@ return [
                 'routes' => \App\GraphQL\Queries\RoutesQuery::class,
                 'bankLoanTypes' => \App\GraphQL\Queries\BankLoanTypesQuery::class,
                 'garageModels' => \App\GraphQL\Queries\GarageModelsQuery::class,
-                'trailerModels' => \App\GraphQL\Queries\TrailerModelsQuery::class,
 
+                'trailerModels' => \App\GraphQL\Queries\TrailerModelsQuery::class,
                 'trailerTypes' => \App\GraphQL\Queries\TrailerTypesQuery::class,
-                'trailerADRs' => \App\GraphQL\Queries\TrailerADRsQuery::class,
+
+                'ADRs' => \App\GraphQL\Queries\ADRsQuery::class,
+                'chassis' => \App\GraphQL\Queries\ChassisQuery::class,
 
                 'truckModels' => \App\GraphQL\Queries\TruckModelsQuery::class,
-
                 'truckBrands' => \App\GraphQL\Queries\TruckBrandsQuery::class,
-                'truckChassis' => \App\GraphQL\Queries\TruckChassisQuery::class,
                 'truckEmissionClasses' => \App\GraphQL\Queries\TruckEmissionClassesQuery::class,
+
+                'cargos' => \App\GraphQL\Queries\CargosQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,
@@ -148,6 +150,10 @@ return [
                 'createTruckModel' => \App\GraphQL\Mutations\CreateTruckModelMutation::class,
                 'updateTruckModel' => \App\GraphQL\Mutations\UpdateTruckModelMutation::class,
                 'deleteTruckModel' => \App\GraphQL\Mutations\DeleteTruckModelMutation::class,
+
+                'createCargo' => \App\GraphQL\Mutations\CreateCargoMutation::class,
+                'updateCargo' => \App\GraphQL\Mutations\UpdateCargoMutation::class,
+                'deleteCargo' => \App\GraphQL\Mutations\DeleteCargoMutation::class,
             ],
             'middleware' => ['auth:api'],
             'method' => ['get', 'post'],

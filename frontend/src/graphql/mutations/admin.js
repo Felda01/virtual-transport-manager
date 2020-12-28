@@ -230,3 +230,30 @@ export const DELETE_TRUCK_MODEL_MUTATION = gql`
         }
     }
 `;
+
+export const CREATE_CARGO_MUTATION = gql`
+    mutation CreateCargoMutation($image: String!, $name: String!, $adr: String!, $engine_power: String!, $chassis: String!, $weight: String!, $min_price: String!, $max_price: String!) {
+        createCargo(image: $image, name: $name, adr: $adr, engine_power: $engine_power, chassis: $chassis, weight: $weight, min_price: $min_price, max_price: $max_price) {
+            id
+            name
+        }
+    }
+`;
+
+export const UPDATE_CARGO_MUTATION = gql`
+    mutation UpdateCargoMutation($id: String!, $image: String!, $name: String!, $adr: String!, $engine_power: String!, $chassis: String!, $weight: String!, $min_price: String!, $max_price: String!) {
+        updateCargo(id: $id, image: $image, name: $name, adr: $adr, engine_power: $engine_power, chassis: $chassis, weight: $weight, min_price: $min_price, max_price: $max_price) {
+            id
+            name
+        }
+    }
+`;
+
+export const DELETE_CARGO_MUTATION = gql`
+    mutation DeleteCargoMutation($id: String!) {
+        deleteCargo(id: $id) {
+            id
+            name
+        }
+    }
+`;

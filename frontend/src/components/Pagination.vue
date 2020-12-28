@@ -5,7 +5,7 @@
       :class="{ disabled: value === 1, 'no-arrows': noArrows }"
     >
       <a class="page-link" aria-label="Previous" @click="prevPage">
-        <i class="fas fa-angle-double-left"></i>
+        <md-icon>navigate_before</md-icon>
       </a>
     </li>
     <li
@@ -21,7 +21,7 @@
       :class="{ disabled: value === totalPages, 'no-arrows': noArrows }"
     >
       <a class="page-link" aria-label="Next" @click="nextPage">
-        <i class="fas fa-angle-double-right"></i>
+       <md-icon>navigate_next</md-icon>
       </a>
     </li>
   </ul>

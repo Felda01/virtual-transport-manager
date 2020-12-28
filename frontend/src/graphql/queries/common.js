@@ -26,9 +26,9 @@ export const TRAILER_TYPES_QUERY = gql`
     }
 `;
 
-export const TRAILER_ADRS_QUERY = gql`
-    query TrailerADRsQuery {
-        trailerADRs
+export const ADRS_QUERY = gql`
+    query ADRsQuery {
+        ADRs
     }
 `;
 
@@ -38,9 +38,9 @@ export const TRUCK_BRANDS_QUERY = gql`
     }
 `;
 
-export const TRUCK_CHASSIS_QUERY = gql`
-    query TruckChassisQuery {
-        truckChassis
+export const CHASSIS_QUERY = gql`
+    query ChassisQuery {
+        chassis
     }
 `;
 

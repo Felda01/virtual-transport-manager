@@ -73,7 +73,7 @@ class Garage extends Model
      */
     public function garageModel()
     {
-        return $this->belongsTo(GarageModel::class);
+        return $this->belongsTo(GarageModel::class)->withTrashed();
     }
 
     /**

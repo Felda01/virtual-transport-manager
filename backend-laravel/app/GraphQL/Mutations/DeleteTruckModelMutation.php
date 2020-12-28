@@ -44,7 +44,6 @@ class DeleteTruckModelMutation extends Mutation
                 'required',
                 'string',
                 'exists:truck_models',
-                new NotExistsRelationRule('TruckModel', 'trucks')
             ]
         ];
     }

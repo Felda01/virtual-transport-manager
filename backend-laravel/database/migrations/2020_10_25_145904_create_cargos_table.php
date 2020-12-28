@@ -22,7 +22,7 @@ class CreateCargosTable extends Migration
             $table->string('chassis');
             $table->decimal('min_price');
             $table->decimal('max_price');
-            $table->boolean('own_trailer');
+            $table->boolean('own_trailer')->default(false);
             $table->string('image');
             $table->softDeletes();
             $table->timestamps();
