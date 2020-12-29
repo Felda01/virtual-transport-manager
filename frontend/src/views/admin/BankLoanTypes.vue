@@ -22,8 +22,8 @@
                         <md-table v-model="bankLoanTypes.data" v-if="bankLoanTypes && bankLoanTypes.data">
                             <md-table-row slot="md-table-row" slot-scope="{ item, index }">
                                 <md-table-cell md-label="#">{{ index + bankLoanTypes.from }}</md-table-cell>
-                                <md-table-cell :md-label="$t('bankLoanType.property.value')">{{ item.value }} {{ $t('bankLoanType.property.valueUnit') }}</md-table-cell>
-                                <md-table-cell :md-label="$t('bankLoanType.property.payment')">{{ item.payment }} {{ $t('bankLoanType.property.paymentUnit') }}</md-table-cell>
+                                <md-table-cell :md-label="$t('bankLoanType.property.value')">{{ item.value | currency(' ', 0, { thousandsSeparator: ' ' }) }} {{ $t('bankLoanType.property.valueUnit') }}</md-table-cell>
+                                <md-table-cell :md-label="$t('bankLoanType.property.payment')">{{ item.payment | currency(' ', 0, { thousandsSeparator: ' ' })}} {{ $t('bankLoanType.property.paymentUnit') }}</md-table-cell>
                                 <md-table-cell :md-label="$t('bankLoanType.property.period')">{{ item.period }} {{ $tc('bankLoanType.property.periodUnit', item.period) }}</md-table-cell>
                                 <md-table-cell :md-label="$t('model.actions')" class="text-right">
                                     <md-button class="md-just-icon md-success md-simple" @click="updateBankLoanTypeModal(item)"><md-icon>edit</md-icon></md-button>

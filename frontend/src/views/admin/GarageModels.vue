@@ -30,9 +30,9 @@
                                 <md-table-cell :md-label="$t('garageModel.property.name')" class="td-name">{{ item.name }}</md-table-cell>
                                 <md-table-cell :md-label="$t('garageModel.property.truck_count')">{{ item.truck_count }}</md-table-cell>
                                 <md-table-cell :md-label="$t('garageModel.property.trailer_count')">{{ item.trailer_count }}</md-table-cell>
-                                <md-table-cell :md-label="$t('garageModel.property.price')">{{ item.price }} {{ $t('garageModel.property.priceUnit') }}</md-table-cell>
-                                <md-table-cell :md-label="$t('garageModel.property.insurance')">{{ item.insurance }} {{ $t('garageModel.property.insuranceUnit') }}</md-table-cell>
-                                <md-table-cell :md-label="$t('garageModel.property.tax')">{{ item.tax }} {{ $t('garageModel.property.taxUnit') }}</md-table-cell>
+                                <md-table-cell :md-label="$t('garageModel.property.price')">{{ item.price | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('garageModel.property.priceUnit') }}</md-table-cell>
+                                <md-table-cell :md-label="$t('garageModel.property.insurance')">{{ item.insurance | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('garageModel.property.insuranceUnit') }}</md-table-cell>
+                                <md-table-cell :md-label="$t('garageModel.property.tax')">{{ item.tax | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('garageModel.property.taxUnit') }}</md-table-cell>
                                 <md-table-cell :md-label="$t('model.actions')">
                                     <md-button class="md-just-icon md-success md-simple" @click="updateGarageModelModal(item)"><md-icon>edit</md-icon></md-button>
                                     <md-button class="md-just-icon md-danger md-simple" @click="deleteGarageModelModal(item)"><md-icon>close</md-icon></md-button>

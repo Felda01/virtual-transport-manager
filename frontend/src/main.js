@@ -147,10 +147,14 @@ Vue.mixin(titleMixin)
 
 import i18n from './lang/index.js';
 
+import Vue2Filters from 'vue2-filters';
+Vue.use(Vue2Filters);
+
 new Vue({
   router,
   i18n,
   store,
   apolloProvider,
+  mixins: [Vue2Filters.mixin],
   render: h => h(App)
 }).$mount('#app')

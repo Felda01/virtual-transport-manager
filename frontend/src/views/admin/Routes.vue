@@ -24,9 +24,9 @@
                                 <md-table-cell md-label="#">{{ index + routes.from }}</md-table-cell>
                                 <md-table-cell :md-label="$t('route.property.location1')">{{ item.location1.name }}</md-table-cell>
                                 <md-table-cell :md-label="$t('route.property.location2')">{{ item.location2.name }}</md-table-cell>
-                                <md-table-cell :md-label="$t('route.property.distance')">{{ item.distance }} {{ $t('route.property.distanceUnit') }}</md-table-cell>
+                                <md-table-cell :md-label="$t('route.property.distance')">{{ item.distance | currency(' ', 0, { thousandsSeparator: ' ' }) }} {{ $t('route.property.distanceUnit') }}</md-table-cell>
                                 <md-table-cell :md-label="$t('route.property.time')">{{ item.time }} {{ $t('route.property.timeUnit') }}</md-table-cell>
-                                <md-table-cell :md-label="$t('route.property.fee')">{{ item.fee }} {{ $t('route.property.feeUnit') }}</md-table-cell>
+                                <md-table-cell :md-label="$t('route.property.fee')">{{ item.fee | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('route.property.feeUnit') }}</md-table-cell>
                                 <md-table-cell :md-label="$t('route.property.type')">{{ item.type }}</md-table-cell>
                                 <md-table-cell :md-label="$t('model.actions')" class="text-right">
                                     <md-button class="md-just-icon md-success md-simple" @click="updateRouteModal(item)"><md-icon>edit</md-icon></md-button>

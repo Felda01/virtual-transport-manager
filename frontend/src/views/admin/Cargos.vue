@@ -31,9 +31,9 @@
                                 <md-table-cell :md-label="$t('cargo.property.adr')">{{ $t('ADRs.' + item.adr) }}</md-table-cell>
                                 <md-table-cell :md-label="$t('cargo.property.engine_power')">{{ item.engine_power }} {{ $t('cargo.property.engine_powerUnit') }}</md-table-cell>
                                 <md-table-cell :md-label="$t('cargo.property.chassis')">{{ item.chassis }}</md-table-cell>
-                                <md-table-cell :md-label="$t('cargo.property.weight')">{{ item.weight }} {{ $t('cargo.property.weightUnit') }}</md-table-cell>
-                                <md-table-cell :md-label="$t('cargo.property.min_price')">{{ item.min_price }} {{ $t('cargo.property.min_priceUnit') }}</md-table-cell>
-                                <md-table-cell :md-label="$t('cargo.property.max_price')">{{ item.max_price }} {{ $t('cargo.property.max_priceUnit') }}</md-table-cell>
+                                <md-table-cell :md-label="$t('cargo.property.weight')">{{ item.weight | currency(' ', 0, { thousandsSeparator: ' ' }) }} {{ $t('cargo.property.weightUnit') }}</md-table-cell>
+                                <md-table-cell :md-label="$t('cargo.property.min_price')">{{ item.min_price | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('cargo.property.min_priceUnit') }}</md-table-cell>
+                                <md-table-cell :md-label="$t('cargo.property.max_price')">{{ item.max_price | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('cargo.property.max_priceUnit') }}</md-table-cell>
                                 <md-table-cell :md-label="$t('model.actions')">
                                     <md-button class="md-just-icon md-success md-simple" @click="updateCargoModal(item)"><md-icon>edit</md-icon></md-button>
                                     <md-button class="md-just-icon md-danger md-simple" @click="deleteCargoModal(item)"><md-icon>close</md-icon></md-button>

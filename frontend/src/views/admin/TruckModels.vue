@@ -31,12 +31,12 @@
                                 <md-table-cell :md-label="$t('truckModel.property.brand')">{{ item.brand }}</md-table-cell>
                                 <md-table-cell :md-label="$t('truckModel.property.engine_power')">{{ item.engine_power }} {{ $t('truckModel.property.engine_powerUnit') }}</md-table-cell>
                                 <md-table-cell :md-label="$t('truckModel.property.chassis')">{{ item.chassis }}</md-table-cell>
-                                <md-table-cell :md-label="$t('truckModel.property.load')">{{ item.load }} {{ $t('truckModel.property.loadUnit') }}</md-table-cell>
+                                <md-table-cell :md-label="$t('truckModel.property.load')">{{ item.load | currency(' ', 0, { thousandsSeparator: ' ' }) }} {{ $t('truckModel.property.loadUnit') }}</md-table-cell>
                                 <md-table-cell :md-label="$t('truckModel.property.emission_class')">{{ $t('truckEmissionClasses.' + item.emission_class) }}</md-table-cell>
-                                <md-table-cell :md-label="$t('truckModel.property.km')">{{ item.km }} {{ $t('truckModel.property.kmUnit') }}</md-table-cell>
-                                <md-table-cell :md-label="$t('truckModel.property.price')">{{ item.price }} {{ $t('truckModel.property.priceUnit') }}</md-table-cell>
-                                <md-table-cell :md-label="$t('truckModel.property.insurance')">{{ item.insurance }} {{ $t('truckModel.property.insuranceUnit') }}</md-table-cell>
-                                <md-table-cell :md-label="$t('truckModel.property.tax')">{{ item.tax }} {{ $t('truckModel.property.taxUnit') }}</md-table-cell>
+                                <md-table-cell :md-label="$t('truckModel.property.km')">{{ item.km | currency(' ', 0, { thousandsSeparator: ' ' }) }} {{ $t('truckModel.property.kmUnit') }}</md-table-cell>
+                                <md-table-cell :md-label="$t('truckModel.property.price')">{{ item.price | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('truckModel.property.priceUnit') }}</md-table-cell>
+                                <md-table-cell :md-label="$t('truckModel.property.insurance')">{{ item.insurance | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('truckModel.property.insuranceUnit') }}</md-table-cell>
+                                <md-table-cell :md-label="$t('truckModel.property.tax')">{{ item.tax | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('truckModel.property.taxUnit') }}</md-table-cell>
                                 <md-table-cell :md-label="$t('model.actions')">
                                     <md-button class="md-just-icon md-success md-simple" @click="updateTruckModelModal(item)"><md-icon>edit</md-icon></md-button>
                                     <md-button class="md-just-icon md-danger md-simple" @click="deleteTruckModelModal(item)"><md-icon>close</md-icon></md-button>
