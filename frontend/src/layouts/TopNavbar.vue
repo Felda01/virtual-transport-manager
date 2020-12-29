@@ -51,7 +51,7 @@
               </a>
             </li>
 
-            <md-list-item href="#" @click="logout">
+            <md-list-item href="#" @click.prevent="logout">
               <md-icon class="mr-0">logout</md-icon>
             </md-list-item>
           </md-list>
@@ -78,7 +78,7 @@ export default {
       }
     },
     logout() {
-      console.log('tu');
+      this.$store.dispatch('logout', {fullPath: this.$router.currentRoute.fullPath});
     }
   }
 };

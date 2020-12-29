@@ -17,7 +17,7 @@
       </drop-down>
     </li>
     <li>
-      <a href="#" data-toggle="dropdown" class="dropdown-toggle" @click="logout">
+      <a href="#" data-toggle="dropdown" class="dropdown-toggle" @click.prevent="logout">
         <md-icon>logout</md-icon>
         <p>Log out</p>
       </a>
@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     logout() {
-      console.log('tu');
+      this.$store.dispatch('logout', {fullPath: this.$router.currentRoute.fullPath});
     }
   }
 };

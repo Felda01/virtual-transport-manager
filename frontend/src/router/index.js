@@ -81,6 +81,10 @@ function user(fullPath) {
 }
 
 router.beforeEach((to, from, next) => {
+  if (to.fullPath.slice(-1) === '/') {
+    next(to.fullPath.slice(0, -1));
+  }
+
   let currentLocale = to.params.locale;
   // setting the new locale
   i18n.locale = currentLocale;
