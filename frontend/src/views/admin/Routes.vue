@@ -65,7 +65,6 @@
     import { ROUTES_QUERY, LOCATIONS_QUERY } from '@/graphql/queries/admin';
     import { CREATE_ROUTE_MUTATION, UPDATE_ROUTE_MUTATION, DELETE_ROUTE_MUTATION } from '@/graphql/mutations/admin';
     import { MutationModal, Pagination, DeleteModal } from "@/components";
-    import { LOCALES_QUERY } from "../../graphql/queries/common";
 
     export default {
         name: "Routes",

@@ -22,23 +22,7 @@
         </md-button>
 
         <div class="md-collapse">
-          <div class="md-autocomplete">
-            <md-autocomplete
-              class="search"
-              v-model="selectedEmployee"
-              :md-options="employees"
-              :md-open-on-focus="false"
-            >
-              <label v-if="$route.meta.rtlActive">بحث...</label>
-              <label v-else>Search...</label>
-            </md-autocomplete>
-          </div>
           <md-list>
-            <md-list-item href="#/">
-              <i class="material-icons">dashboard</i>
-              <p class="hidden-lg hidden-md">Dashboard</p>
-            </md-list-item>
-
             <li class="md-list-item">
               <a
                 href="#/components/notifications"
@@ -67,9 +51,8 @@
               </a>
             </li>
 
-            <md-list-item href="#/pages/user">
-              <i class="material-icons">person</i>
-              <p class="hidden-lg hidden-md">Profile</p>
+            <md-list-item href="#" @click="logout">
+              <md-icon class="mr-0">logout</md-icon>
             </md-list-item>
           </md-list>
         </div>
@@ -82,17 +65,7 @@
 export default {
   data() {
     return {
-      selectedEmployee: "",
-      employees: [
-        "Jim Halpert",
-        "Dwight Schrute",
-        "Michael Scott",
-        "Pam Beesly",
-        "Angela Martin",
-        "Kelly Kapoor",
-        "Ryan Howard",
-        "Kevin Malone"
-      ]
+
     };
   },
   methods: {
@@ -103,6 +76,9 @@ export default {
       if (this.$sidebar) {
         this.$sidebar.toggleMinimize();
       }
+    },
+    logout() {
+      console.log('tu');
     }
   }
 };

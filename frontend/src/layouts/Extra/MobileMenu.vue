@@ -1,18 +1,6 @@
 <template>
   <ul class="nav nav-mobile-menu">
     <li>
-      <md-field>
-        <label>Search</label>
-        <md-input v-model="search" type="text"></md-input>
-      </md-field>
-    </li>
-    <li>
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        <i class="material-icons">dashboard</i>
-        <p>Stats</p></a
-      >
-    </li>
-    <li>
       <drop-down>
         <a slot="title" class="dropdown-toggle" data-toggle="dropdown">
           <i class="material-icons">notifications</i>
@@ -29,10 +17,10 @@
       </drop-down>
     </li>
     <li>
-      <a href="#" data-toggle="dropdown" class="dropdown-toggle"
-        ><i class="material-icons">person</i>
-        <p>Account</p></a
-      >
+      <a href="#" data-toggle="dropdown" class="dropdown-toggle" @click="logout">
+        <md-icon>logout</md-icon>
+        <p>Log out</p>
+      </a>
     </li>
   </ul>
 </template>
@@ -40,19 +28,13 @@
 export default {
   data() {
     return {
-      search: null,
-      selectedEmployee: null,
-      employees: [
-        "Jim Halpert",
-        "Dwight Schrute",
-        "Michael Scott",
-        "Pam Beesly",
-        "Angela Martin",
-        "Kelly Kapoor",
-        "Ryan Howard",
-        "Kevin Malone"
-      ]
+
     };
+  },
+  methods: {
+    logout() {
+      console.log('tu');
+    }
   }
 };
 </script>

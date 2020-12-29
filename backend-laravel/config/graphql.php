@@ -120,6 +120,8 @@ return [
                 'truckEmissionClasses' => \App\GraphQL\Queries\TruckEmissionClassesQuery::class,
 
                 'cargos' => \App\GraphQL\Queries\CargosQuery::class,
+
+                'adminDashboard' => \App\GraphQL\Queries\AdminDashboardQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,

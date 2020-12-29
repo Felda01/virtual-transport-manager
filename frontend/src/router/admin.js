@@ -16,7 +16,7 @@ const adminRoutes = [
                     adminOnly: true,
                     title: i18n.t('pages.adminDashboard'),
                     path: {
-                        en: enRoute.adminDashboard
+                        en: enRoute.adminDashboard + '/'
                     }
                 }
             },
@@ -29,7 +29,7 @@ const adminRoutes = [
                     adminOnly: true,
                     title: i18n.t('pages.countries'),
                     path: {
-                        en: enRoute.adminDashboard + '/' + enRoute.countries
+                        en: enRoute.adminDashboard + '/' + enRoute.countries + '/'
                     }
                 }
             },
@@ -42,7 +42,7 @@ const adminRoutes = [
                     adminOnly: true,
                     title: i18n.t('pages.locations'),
                     path: {
-                        en: enRoute.adminDashboard + '/' + enRoute.locations
+                        en: enRoute.adminDashboard + '/' + enRoute.locations + '/'
                     }
                 }
             },
@@ -55,7 +55,7 @@ const adminRoutes = [
                     adminOnly: true,
                     title: i18n.t('pages.routes'),
                     path: {
-                        en: enRoute.adminDashboard + '/' + enRoute.routes
+                        en: enRoute.adminDashboard + '/' + enRoute.routes + '/'
                     }
                 }
             },
@@ -68,7 +68,7 @@ const adminRoutes = [
                     adminOnly: true,
                     title: i18n.t('pages.bankLoanTypes'),
                     path: {
-                        en: enRoute.adminDashboard + '/' + enRoute.bankLoanTypes
+                        en: enRoute.adminDashboard + '/' + enRoute.bankLoanTypes + '/'
                     }
                 }
             },
@@ -81,7 +81,7 @@ const adminRoutes = [
                     adminOnly: true,
                     title: i18n.t('pages.garageModels'),
                     path: {
-                        en: enRoute.adminDashboard + '/' + enRoute.garageModels
+                        en: enRoute.adminDashboard + '/' + enRoute.garageModels + '/'
                     }
                 }
             },
@@ -94,7 +94,7 @@ const adminRoutes = [
                     adminOnly: true,
                     title: i18n.t('pages.trailerModels'),
                     path: {
-                        en: enRoute.adminDashboard + '/' + enRoute.trailerModels
+                        en: enRoute.adminDashboard + '/' + enRoute.trailerModels + '/'
                     }
                 }
             },
@@ -107,7 +107,7 @@ const adminRoutes = [
                     adminOnly: true,
                     title: i18n.t('pages.truckModels'),
                     path: {
-                        en: enRoute.adminDashboard + '/' + enRoute.truckModels
+                        en: enRoute.adminDashboard + '/' + enRoute.truckModels + '/'
                     }
                 }
             },
@@ -120,7 +120,7 @@ const adminRoutes = [
                     adminOnly: true,
                     title: i18n.t('pages.cargos'),
                     path: {
-                        en: enRoute.adminDashboard + '/' + enRoute.cargos
+                        en: enRoute.adminDashboard + '/' + enRoute.cargos + '/'
                     }
                 }
             }

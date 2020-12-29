@@ -240,5 +240,16 @@
       "min_price": "(in €)",
       "max_price": "(in €)"
     }
+  },
+  "adminDashboard": {
+    "countries": "Countries",
+    "locations": "Locations",
+    "routes": "Routes",
+    "constants": "Constants",
+    "bankLoanTypes": "Bank loan types",
+    "garageModels": "Garage models",
+    "trailerModels": "Trailer models",
+    "truckModels": "Truck models",
+    "cargos": "Cargos"
   }
 }

@@ -198,3 +198,9 @@ export const CARGOS_QUERY = gql`
     }
 `;
 
+export const ADMIN_DASHBOARD_QUERY = gql`
+    query AdminDashboardQuery {
+        adminDashboard
+    }
+`;
+
