@@ -57,10 +57,10 @@
         </div>
 
         <!-- Add cargo modal-->
-        <mutation-modal ref="addCargoModal" @ok="addCargo" :modalSchema="modalSchemaAddCargo" />
+        <mutation-modal ref="addCargoModal" @ok="addCargo" :modalSchema="modalSchemaAddCargo" :locales="locales"  />
 
         <!-- Update cargo modal-->
-        <mutation-modal ref="updateCargoModal" @ok="updateCargo" :modalSchema="modalSchemaUpdateCargo" />
+        <mutation-modal ref="updateCargoModal" @ok="updateCargo" :modalSchema="modalSchemaUpdateCargo" :locales="locales"  />
 
         <!-- Delete cargo modal-->
         <delete-modal ref="deleteCargoModal" @ok="deleteCargo" :modalSchema="modalSchemaDeleteCargo" />
@@ -71,7 +71,7 @@
     import { CARGOS_QUERY } from '@/graphql/queries/admin';
     import { CREATE_CARGO_MUTATION, UPDATE_CARGO_MUTATION, DELETE_CARGO_MUTATION } from '@/graphql/mutations/admin';
     import { MutationModal, Pagination, DeleteModal } from "@/components";
-    import {ADRS_QUERY, CHASSIS_QUERY} from "../../graphql/queries/common";
+    import { ADRS_QUERY, CHASSIS_QUERY, LOCALES_QUERY } from "@/graphql/queries/common";
 
     export default {
         title () {
@@ -94,6 +94,7 @@
                 },
                 chassis: [],
                 ADRs: [],
+                locales: [],
                 page: 1,
                 modalSchemaAddCargo: {
                     form: {
@@ -129,16 +130,26 @@
         },
         methods: {
             addCargoModal() {
+                let translatableNameFields = [];
+                for (let locale in this.locales) {
+                    if (this.locales.hasOwnProperty(locale)) {
+                        translatableNameFields.push({
+                            label: this.$t('cargo.property.name'),
+                            rules: 'required',
+                            name: 'name_translations',
+                            input: 'text',
+                            type: 'text',
+                            value: '',
+                            config: {
+                                translatable: true,
+                                locale: this.locales[locale]
+                            }
+                        });
+                    }
+                }
+
                 this.modalSchemaAddCargo.form.fields = [
-                    {
-                        label: this.$t('cargo.property.name'),
-                        rules: 'required',
-                        name: 'name',
-                        input: 'text',
-                        type: 'text',
-                        value: '',
-                        config: {}
-                    },
+                    ...translatableNameFields,
                     {
                         label: this.$t('cargo.property.adr'),
                         rules: 'required',
@@ -245,16 +256,27 @@
                 this.$apollo.queries.cargos.refresh();
             },
             updateCargoModal(cargo) {
+                let translatableNameFields = [];
+                let translatableNameValue = JSON.parse(cargo.name_translations);
+                for (let locale in this.locales) {
+                    if (this.locales.hasOwnProperty(locale)) {
+                        translatableNameFields.push({
+                            label: this.$t('cargo.property.name'),
+                            rules: 'required',
+                            name: 'name_translations',
+                            input: 'text',
+                            type: 'text',
+                            value: translatableNameValue[this.locales[locale]],
+                            config: {
+                                translatable: true,
+                                locale: this.locales[locale]
+                            }
+                        });
+                    }
+                }
+
                 this.modalSchemaUpdateCargo.form.fields = [
-                    {
-                        label: this.$t('cargo.property.name'),
-                        rules: 'required',
-                        name: 'name',
-                        input: 'text',
-                        type: 'text',
-                        value: cargo.name,
-                        config: {}
-                    },
+                    ...translatableNameFields,
                     {
                         label: this.$t('cargo.property.adr'),
                         rules: 'required',
@@ -393,6 +415,9 @@
             chassis: {
                 query: CHASSIS_QUERY,
             },
+            locales: {
+                query: LOCALES_QUERY,
+            }
         },
     }
 </script>

@@ -28,7 +28,7 @@
                     </template>
                 </ValidationProvider>
 
-                <form @submit.prevent="handleSubmit(submitModal)">
+                <form>
                     <template v-for="(field, index) in modalSchema.form.fields">
                         <template v-if="field.input === 'text'">
                             <ValidationProvider :name="fieldLabel(field.label, field.config)" :rules="field.rules" v-slot="{ passed, failed, errors }" tag="div">
@@ -101,8 +101,8 @@
                         </template>
                         <template v-else-if="field.input === 'image'">
                             <ValidationProvider :name="field.label" :rules="field.rules" v-slot="{ passed, failed, errors }" tag="div">
-                                <div class="file-input">
-                                    <div v-if="!form[field.name]">
+                                <div class="file-input md-field md-theme-default" :class="[{ 'md-error md-invalid': failed }, { 'md-valid': passed }]">
+                                    <div v-if="!form[field.name]" class="file-container">
                                         <div class="image-container">
                                             <img :src="imgPlaceholderSrc" />
                                         </div>
@@ -120,6 +120,9 @@
                                             <input type="file" @change="onFileChange($event, field.name)" />
                                         </md-button>
                                     </div>
+                                    <div class="button-container" v-if="failed">
+                                        <span class="md-error" v-show="failed">{{ errors[0] }}</span>
+                                    </div>
                                 </div>
                             </ValidationProvider>
                         </template>
@@ -130,7 +133,7 @@
 
         <template slot="footer">
             <md-button class="md-danger md-simple" @click="modalHide">{{ modalSchema.cancelBtnTitle }}</md-button>
-            <md-button :disabled="form.busy"  class="md-success md-simple" @click="submitModal">
+            <md-button :disabled="form.busy"  class="md-success md-simple" @click="submitModalClick">
                 <md-progress-spinner v-if="form.busy" style="margin-right: 15px;" :md-diameter="20" :md-stroke="3" md-mode="indeterminate"></md-progress-spinner>
                 {{ modalSchema.okBtnTitle }}
             </md-button>
@@ -219,6 +222,13 @@
         methods: {
             modalHide() {
                 this.showModal = false;
+            },
+            submitModalClick() {
+                this.$refs[this.formRef].validate().then(valid => {
+                    if (valid) {
+                        this.submitModal();
+                    }
+                });
             },
             submitModal() {
                 this.form.submit(this.$apollo, this.modalSchema.form.mutation)
@@ -343,5 +353,9 @@
     }
     .md-menu.md-select:not(.md-disabled) .md-icon {
         margin-right: 25px;
+    }
+    .file-container {
+        display: flex;
+        justify-content: center;
     }
 </style>

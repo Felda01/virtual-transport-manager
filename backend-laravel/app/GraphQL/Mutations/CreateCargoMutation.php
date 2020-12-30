@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\GraphQL\Mutations;
 
 use App\Models\Cargo;
+use App\Rules\UniqueTranslationRule;
 use App\Utilities\ImageUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -42,9 +43,17 @@ class CreateCargoMutation extends Mutation
     public function rules(array $args = []): array
     {
         return [
-            'name' => [
+            'name_translations.*.value' => [
                 'required',
-                'string'
+                'string',
+            ],
+            'name_translations.*.locale' => [
+                'required',
+                'string',
+                Rule::in(config('translatable.available_locales'))
+            ],
+            'name_translations.*' => [
+                new UniqueTranslationRule('cargos', 'name')
             ],
             'adr' => [
                 'required',
@@ -84,9 +93,9 @@ class CreateCargoMutation extends Mutation
     public function args(): array
     {
         return [
-            'name' => [
-                'name' => 'name',
-                'type' => Type::nonNull(Type::string()),
+            'name_translations' => [
+                'name' => 'name_translations',
+                'type' => Type::nonNull(Type::listOf(GraphQL::type('TranslationInput'))),
             ],
             'engine_power' => [
                 'name' => 'engine_power',
@@ -127,8 +136,14 @@ class CreateCargoMutation extends Mutation
             throw new \Exception(trans('mutation.image_failed'));
         }
 
+        $nameTranslations = [];
+
+        foreach ($args['name_translations'] as $nameTranslation) {
+            $nameTranslations[$nameTranslation['locale']] = $nameTranslation['value'];
+        }
+
         $cargo = Cargo::create([
-            'name' => $args['name'],
+            'name' => $nameTranslations,
             'adr' => $args['adr'],
             'weight' => $args['weight'],
             'engine_power' => $args['engine_power'],

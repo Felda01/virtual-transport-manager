@@ -6,6 +6,7 @@ namespace App\GraphQL\Mutations;
 
 use App\Models\Cargo;
 use App\Rules\NotExistsRelationRule;
+use App\Rules\UniqueTranslationRule;
 use App\Utilities\ImageUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -48,9 +49,17 @@ class UpdateCargoMutation extends Mutation
                 'exists:cargos',
                 new NotExistsRelationRule('Cargo', 'markets', 'update')
             ],
-            'name' => [
+            'name_translations.*.value' => [
                 'required',
-                'string'
+                'string',
+            ],
+            'name_translations.*.locale' => [
+                'required',
+                'string',
+                Rule::in(config('translatable.available_locales'))
+            ],
+            'name_translations.*' => [
+                new UniqueTranslationRule('cargos', 'name', $args['id'])
             ],
             'adr' => [
                 'required',
@@ -94,9 +103,9 @@ class UpdateCargoMutation extends Mutation
                 'name' => 'id',
                 'type' => Type::nonNull(Type::string()),
             ],
-            'name' => [
-                'name' => 'name',
-                'type' => Type::nonNull(Type::string()),
+            'name_translations' => [
+                'name' => 'name_translations',
+                'type' => Type::nonNull(Type::listOf(GraphQL::type('TranslationInput'))),
             ],
             'engine_power' => [
                 'name' => 'engine_power',
@@ -140,7 +149,13 @@ class UpdateCargoMutation extends Mutation
             throw new \Exception(trans('mutation.image_failed'));
         }
 
-        $cargo->name = $args['name'];
+        $nameTranslations = [];
+
+        foreach ($args['name_translations'] as $nameTranslation) {
+            $nameTranslations[$nameTranslation['locale']] = $nameTranslation['value'];
+        }
+
+        $cargo->setTranslations('name', $nameTranslations);
         $cargo->adr = $args['adr'];
         $cargo->weight = $args['weight'];
         $cargo->engine_power = $args['engine_power'];

@@ -1,5 +1,16 @@
 <?php
 
+$extendedAttributes = [];
+
+$locales = config('translatable.available_locales');
+
+
+for ($i = 0; $i < count($locales); $i++) {
+    $extendedAttributes['name_translations.' . $i . '.value'] = 'Name ' . strtoupper($locales[$i]);
+}
+$extendedAttributes['name_translations'] = 'Name';
+$extendedAttributes['short_name'] = 'Short name';
+
 return [
 
     /*
@@ -149,9 +160,6 @@ return [
     |
     */
 
-    'attributes' => [
-        'name_translations' => 'Name',
-        'short_name' => 'Short name'
-    ],
+    'attributes' => $extendedAttributes
 
 ];

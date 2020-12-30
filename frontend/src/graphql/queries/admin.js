@@ -179,6 +179,7 @@ export const CARGOS_QUERY = gql`
             data {
                 id
                 name
+                name_translations
                 adr
                 engine_power
                 chassis
