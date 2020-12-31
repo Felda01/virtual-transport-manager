@@ -55,6 +55,9 @@
     "logIn": "Log in",
     "submitBtn": "Lets Go"
   },
+  "register": {
+    "submitBtn": "Get Started"
+  },
   "model": {
     "actions": "Actions",
     "modal": {
@@ -76,7 +79,10 @@
   "user": {
     "property": {
       "email": "Email",
-      "password": "Password"
+      "password": "Password",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "company_name": "Company name"
     }
   },
   "country": {

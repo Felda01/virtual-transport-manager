@@ -80,7 +80,7 @@
       login() {
         let self = this;
         this.loading = true;
-        axios.post('https://virtual-transport-manager.ddev.site/api/login', self.form)
+        axios.post(process.env.VUE_APP_LARAVEL_ENDPOINT + '/api/login', self.form)
           .then(response => {
             let payload = {
               expiresIn: response.data.expiresIn

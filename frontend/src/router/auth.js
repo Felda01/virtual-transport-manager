@@ -23,13 +23,13 @@ const authRoutes = [
     },
     {
         path: enRoute.register,
-        alias: getAlias('login'),
+        alias: getAlias('register'),
         component: () => import('../layouts/AuthLayout.vue'),
         children: [
             {
                 path: '',
                 name: 'register',
-                component: () => import('../views/auth/Login.vue'),
+                component: () => import('../views/auth/Register.vue'),
                 meta: {
                     guest: true,
                     title: i18n.t('pages.register'),

@@ -2,10 +2,14 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Company;
+use App\Models\Role;
 use App\Models\User;
 use App\Utilities\ProxyRequest;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Http\Requests\LoginRequest;
@@ -97,6 +101,55 @@ class AuthController extends Controller
     public function username()
     {
         return 'email';
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function register(Request $request)
+    {
+        $validatedData = $request->validate([
+            'company_name' => ['required', 'string', 'unique:companies,name'],
+            'first_name' => ['required', 'string'],
+            'last_name' => ['required', 'string'],
+            'email' => ['required', 'string', 'email', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:8']
+        ]);
+
+        DB::transaction(function() use ($validatedData) {
+            $company = Company::create([
+                'name' => $validatedData['company_name'],
+                'money' => 100000
+            ]);
+
+            $user = User::create([
+                'first_name' => $validatedData['first_name'],
+                'last_name' => $validatedData['last_name'],
+                'email' => $validatedData['email'],
+                'image' => '',
+                'password' => Hash::make($validatedData['password']),
+                'salary' => 0,
+                'company_id' => $company->id
+            ]);
+
+            $roleOwner = Role::findByName('owner', 'api');
+            $user->assignRole($roleOwner);
+
+            $user->save();
+
+            if (!$user || !$company) {
+                throw new Exception(trans('validation.general_exception'));
+            }
+        });
+
+        $resp = $this->proxy->grantPasswordToken($validatedData['email'], $validatedData['password']);
+
+        return response()->json([
+            'expiresIn' => $resp->expires_in,
+            'message' => 'You have been registered.',
+        ], 200);
+
     }
 
 //    /**

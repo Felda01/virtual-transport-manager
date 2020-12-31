@@ -131,6 +131,7 @@ return [
     'uuid' => 'The :attribute must be a valid UUID.',
     'unique_translation' => 'The :attribute :LOCALE has already been taken.',
     'unique_bank_loan_type' => 'A bank loan type with these parameters already exists.',
+    'general_exception' => "Something wrong, please try it later again",
 
     /*
     |--------------------------------------------------------------------------

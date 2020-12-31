@@ -4,7 +4,7 @@ import { getAlias } from "./index";
 const adminRoutes = [
     {
         path: enRoute.adminDashboard,
-        alias: getAlias('login'),
+        alias: getAlias('adminDashboard'),
         component: () => import('../layouts/AdminLayout.vue'),
         children: [
             {
@@ -22,6 +22,7 @@ const adminRoutes = [
             },
             {
                 path: enRoute.countries,
+                alias: getAlias('countries'),
                 name: 'countries',
                 component: () => import('../views/admin/Countries.vue'),
                 meta: {
@@ -35,6 +36,7 @@ const adminRoutes = [
             },
             {
                 path: enRoute.locations,
+                alias: getAlias('locations'),
                 name: 'locations',
                 component: () => import('../views/admin/Locations.vue'),
                 meta: {
@@ -48,6 +50,7 @@ const adminRoutes = [
             },
             {
                 path: enRoute.routes,
+                alias: getAlias('routes'),
                 name: 'routes',
                 component: () => import('../views/admin/Routes.vue'),
                 meta: {
@@ -61,6 +64,7 @@ const adminRoutes = [
             },
             {
                 path: enRoute.bankLoanTypes,
+                alias: getAlias('bankLoanTypes'),
                 name: 'bankLoanTypes',
                 component: () => import('../views/admin/BankLoanTypes.vue'),
                 meta: {
@@ -74,6 +78,7 @@ const adminRoutes = [
             },
             {
                 path: enRoute.garageModels,
+                alias: getAlias('garageModels'),
                 name: 'garageModels',
                 component: () => import('../views/admin/GarageModels.vue'),
                 meta: {
@@ -87,6 +92,7 @@ const adminRoutes = [
             },
             {
                 path: enRoute.trailerModels,
+                alias: getAlias('trailerModels'),
                 name: 'trailerModels',
                 component: () => import('../views/admin/TrailerModels.vue'),
                 meta: {
@@ -100,6 +106,7 @@ const adminRoutes = [
             },
             {
                 path: enRoute.truckModels,
+                alias: getAlias('truckModels'),
                 name: 'truckModels',
                 component: () => import('../views/admin/TruckModels.vue'),
                 meta: {
@@ -113,6 +120,7 @@ const adminRoutes = [
             },
             {
                 path: enRoute.cargos,
+                alias: getAlias('cargos'),
                 name: 'cargos',
                 component: () => import('../views/admin/Cargos.vue'),
                 meta: {
