@@ -12,7 +12,8 @@
     "garageModels": "Garage models",
     "trailerModels": "Trailer models",
     "truckModels": "Truck models",
-    "cargos": "Cargos"
+    "cargos": "Cargos",
+    "users": "Users"
   },
   "routes": {
     "login": "login",
@@ -27,11 +28,17 @@
     "garageModels": "garage-models",
     "trailerModels": "trailer-models",
     "truckModels": "truck-models",
-    "cargos": "cargos"
+    "cargos": "cargos",
+    "users": "users"
   },
   "navigation": {
     "staticMapData": "Map data",
-    "companyEquipmentData": "Company equipment"
+    "companyEquipmentData": "Company equipment",
+    "shop": "Shop"
+  },
+  "search": {
+    "title": "Filters",
+    "noResults": "No results found."
   },
   "modal": {
     "btn" : {
@@ -83,7 +90,19 @@
       "first_name": "First name",
       "last_name": "Last name",
       "company_name": "Company name"
-    }
+    },
+    "searchFields": {
+      "roles": "Roles"
+    },
+    "detail": "Profile"
+  },
+  "role": {
+    "owner": "Owner",
+    "person manager": "Person manager",
+    "driver manager": "Driver manager",
+    "vehicle manager": "Vehicle manager",
+    "job manager": "Job manager",
+    "garage manager": "Garage manager"
   },
   "country": {
     "property": {

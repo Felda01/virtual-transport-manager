@@ -36,6 +36,8 @@ import SidebarPlugin from "./SidebarPlugin";
 
 import AnimatedNumber from "./AnimatedNumber";
 
+import SearchForm from "./SearchForm";
+
 export {
   IconCheckbox,
   Badge,
@@ -64,5 +66,6 @@ export {
   WizardTab,
   AnimatedNumber,
   Collapse,
-  AsyncWorldMap
+  AsyncWorldMap,
+  SearchForm
 };

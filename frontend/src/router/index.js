@@ -9,6 +9,7 @@ import store from '../store';
 
 import authRoutes from "./auth";
 import adminRoutes from "./admin";
+import userRoutes from "./user";
 
 const currentLocale = location.pathname.split("/")[1] || "en";
 i18n.locale = currentLocale;
@@ -29,23 +30,7 @@ const routes = [
     children: [
         ...authRoutes,
         ...adminRoutes,
-      {
-        path: '',
-        component: () => import('../layouts/DefaultLayout.vue'),
-        children: [
-          {
-            path: '',
-            name: 'dashboard',
-            component: () => import('../views/Dashboard.vue'),
-            meta: {
-              requiresAuth: true,
-              userOnly: true,
-              title: i18n.t('pages.dashboard'),
-            }
-          }
-        ]
-      },
-
+        ...userRoutes,
     ]
   },
   {

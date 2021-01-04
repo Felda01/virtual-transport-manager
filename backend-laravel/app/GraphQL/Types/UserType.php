@@ -29,14 +29,11 @@ class UserType extends GraphQLType
             'last_name' => [
                 'type' => Type::string(),
             ],
-            'email' => [
-                'type' => Type::string(),
-            ],
             'image' => [
                 'type' => Type::string(),
             ],
             'salary' => [
-                'type' => Type::float(),
+                'type' => Type::string(),
             ],
             'company' => [
                 'type' => GraphQL::type('Company'),

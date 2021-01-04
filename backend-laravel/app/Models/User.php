@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasUuid;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -84,6 +85,17 @@ class User extends Authenticatable
     ];
 
     /**
+     * The attributes that are searchable.
+     *
+     * @var string[]
+     */
+    public static $searchable = [
+        'first_name',
+        'last_name',
+        'roles'
+    ];
+
+    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
@@ -115,5 +127,42 @@ class User extends Authenticatable
     public function notifications()
     {
         return $this->hasMany(Notification::class);
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function searchFirstName($query, $value)
+    {
+        return $query->where('first_name', 'like', '%' . $value . '%');
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function searchLastName($query, $value)
+    {
+        return $query->where('last_name', 'like', '%' . $value . '%');
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function searchRoles($query, $value)
+    {
+        $roles = explode($value, ',');
+
+        if ($roles && count($roles) > 0) {
+            return $query->whereHas('roles', function (Builder $query) use ($value, $roles) {
+                $query->whereIn('id', $roles);
+            });
+        }
+        return $query;
     }
 }

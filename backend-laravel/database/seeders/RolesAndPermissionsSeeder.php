@@ -34,6 +34,6 @@ class RolesAndPermissionsSeeder extends Seeder
         Role::create(['name' => 'vehicle manager', 'guard_name' => 'api'])->givePermissionTo('manage vehicles');
         Role::create(['name' => 'garage manager', 'guard_name' => 'api'])->givePermissionTo('manage garages');
         Role::create(['name' => 'person manager', 'guard_name' => 'api'])->givePermissionTo('manage persons');
-        Role::create(['name' => 'jop manager', 'guard_name' => 'api'])->givePermissionTo('manage jobs');
+        Role::create(['name' => 'job manager', 'guard_name' => 'api'])->givePermissionTo('manage jobs');
     }
 }

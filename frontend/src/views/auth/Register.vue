@@ -113,6 +113,9 @@
     import axios from "axios";
 
     export default {
+        title () {
+            return this.$t('pages.register');
+        },
         name: "Register",
         components: {
             SignupCard,

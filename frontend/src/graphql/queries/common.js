@@ -49,3 +49,12 @@ export const TRUCK_EMISSION_CLASSES_QUERY = gql`
         truckEmissionClasses
     }
 `;
+
+export const ROLES_QUERY = gql`
+    query RolesQuery {
+        roles {
+            id
+            name
+        }
+    }
+`;

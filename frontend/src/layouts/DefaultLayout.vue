@@ -14,99 +14,15 @@
             <user-menu></user-menu>
             <mobile-menu></mobile-menu>
             <template slot="links">
-                <sidebar-item :link="{ name: 'Dashboard', icon: 'dashboard', path: '/dashboard' }"
+                <sidebar-item :link="{ name: 'Dashboard', icon: 'dashboard', path: generatePath('dashboard') }"
+                ></sidebar-item>
+                <sidebar-item :link="{ name: 'Users', icon: 'group', path: generatePath('users') }"
                 ></sidebar-item>
                 <sidebar-item :link="{ name: 'Pages', icon: 'image' }">
                     <sidebar-item
                             :link="{ name: 'Pricing', path: '/pricing' }"
                     ></sidebar-item>
-                    <sidebar-item
-                            :link="{ name: 'RTL Support', path: '/pages/rtl' }"
-                    ></sidebar-item>
-                    <sidebar-item
-                            :link="{ name: 'Timeline', path: '/pages/timeline' }"
-                    ></sidebar-item>
-                    <sidebar-item
-                            :link="{ name: 'Login', path: '/login' }"
-                    ></sidebar-item>
-                    <sidebar-item
-                            :link="{ name: 'Register', path: '/register' }"
-                    ></sidebar-item>
-                    <sidebar-item
-                            :link="{ name: 'Lock Screen', path: '/lock' }"
-                    ></sidebar-item>
-                    <sidebar-item
-                            :link="{ name: 'User Profile', path: '/pages/user' }"
-                    ></sidebar-item>
                 </sidebar-item>
-                <sidebar-item :link="{ name: 'Components', icon: 'apps' }">
-                    <sidebar-item
-                            :link="{ name: 'Buttons', path: '/components/buttons' }"
-                    ></sidebar-item>
-                    <sidebar-item
-                            :link="{ name: 'Grid System', path: '/components/grid-system' }"
-                    ></sidebar-item>
-                    <sidebar-item
-                            :link="{ name: 'Panels', path: '/components/panels' }"
-                    ></sidebar-item>
-                    <sidebar-item
-                            :link="{ name: 'Sweet Alert', path: '/components/sweet-alert' }"
-                    ></sidebar-item>
-                    <sidebar-item
-                            :link="{ name: 'Notifications', path: '/components/notifications' }"
-                    ></sidebar-item>
-                    <sidebar-item
-                            :link="{ name: 'Icons', path: '/components/icons' }"
-                    ></sidebar-item>
-                    <sidebar-item
-                            :link="{ name: 'Typography', path: '/components/typography' }"
-                    ></sidebar-item>
-                </sidebar-item>
-                <sidebar-item :link="{ name: 'Forms', icon: 'content_paste' }">
-                    <sidebar-item
-                            :link="{ name: 'Regular Forms', path: '/forms/regular' }"
-                    ></sidebar-item>
-                    <sidebar-item
-                            :link="{ name: 'Extended Forms', path: '/forms/extended' }"
-                    ></sidebar-item>
-                    <sidebar-item
-                            :link="{ name: 'Validation Forms', path: '/forms/validation' }"
-                    ></sidebar-item>
-                    <sidebar-item
-                            :link="{ name: 'Wizard', path: '/forms/wizard' }"
-                    ></sidebar-item>
-                </sidebar-item>
-                <sidebar-item :link="{ name: 'Tables', icon: 'grid_on' }">
-                    <sidebar-item
-                            :link="{ name: 'Regular Tables', path: '/table-list/regular' }"
-                    ></sidebar-item>
-                    <sidebar-item
-                            :link="{ name: 'Extended Tables', path: '/table-list/extended' }"
-                    ></sidebar-item>
-                    <sidebar-item
-                            :link="{ name: 'Paginated Tables', path: '/table-list/paginated' }"
-                    ></sidebar-item>
-                </sidebar-item>
-                <sidebar-item :link="{ name: 'Maps', icon: 'place' }">
-                    <sidebar-item
-                            :link="{ name: 'Google Maps', path: '/maps/google' }"
-                    ></sidebar-item>
-                    <sidebar-item
-                            :link="{ name: 'Full Screen Maps', path: '/maps/full-screen' }"
-                    ></sidebar-item>
-                    <sidebar-item
-                            :link="{ name: 'Vector Maps', path: '/maps/vector-map' }"
-                    ></sidebar-item>
-                </sidebar-item>
-                <sidebar-item
-                        :link="{ name: 'Widgets', icon: 'widgets', path: '/widgets' }"
-                ></sidebar-item>
-                <sidebar-item
-                        :link="{ name: 'Charts', icon: 'timeline', path: '/charts' }"
-                ></sidebar-item>
-                <sidebar-item
-                        :link="{ name: 'Calendar', icon: 'date_range', path: '/calendar' }"
-                ></sidebar-item>
             </template>
         </side-bar>
         <div class="main-panel">
@@ -194,6 +110,13 @@
                 if (this.$sidebar) {
                     this.$sidebar.toggleMinimize();
                 }
+            },
+            generatePath(name) {
+                let path = this.$router.resolve({
+                    name: name,
+                    params: { locale: this.$i18n.locale },
+                });
+                return path.href;
             }
         },
         updated() {

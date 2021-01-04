@@ -20,6 +20,12 @@ import VueContentPlaceholders from 'vue-content-placeholders';
 
 Vue.use(VueContentPlaceholders);
 
+import VueLodash from 'vue-lodash';
+import lodash from 'lodash';
+
+// name is optional
+Vue.use(VueLodash, { lodash: lodash })
+
 import store from './store';
 
 import { localize } from 'vee-validate';
@@ -144,6 +150,9 @@ Vue.use(DashboardPlugin);
 
 import titleMixin from './mixins/titleMixin'
 Vue.mixin(titleMixin)
+
+import processSearchMixin from './mixins/ProcessSearchMixin';
+Vue.mixin(processSearchMixin);
 
 import i18n from './lang/index.js';
 

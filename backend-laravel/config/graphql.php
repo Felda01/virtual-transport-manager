@@ -122,6 +122,9 @@ return [
                 'cargos' => \App\GraphQL\Queries\CargosQuery::class,
 
                 'adminDashboard' => \App\GraphQL\Queries\AdminDashboardQuery::class,
+
+                'users' => \App\GraphQL\Queries\UsersQuery::class,
+                'roles' => \App\GraphQL\Queries\RolesQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,
@@ -203,7 +206,8 @@ return [
         'Truck' => \App\GraphQL\Types\TruckType::class,
         'User' => \App\GraphQL\Types\UserType::class,
 
-        'TranslationInput' => \App\GraphQL\Inputs\TranslationInput::class
+        'TranslationInput' => \App\GraphQL\Inputs\TranslationInput::class,
+        'FilterInput' => \App\GraphQL\Inputs\FilterInput::class,
     ],
 
     // The types will be loaded on demand. Default is to load all types on each request

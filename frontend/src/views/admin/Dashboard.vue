@@ -29,6 +29,9 @@
     import { ADMIN_DASHBOARD_QUERY } from '@/graphql/queries/admin';
 
     export default {
+        title () {
+            return this.$t('pages.adminDashboard');
+        },
         name: "Dashboard",
         components: {
             StatsCard,
