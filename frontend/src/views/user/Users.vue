@@ -23,7 +23,7 @@
                         <md-card-content>
                             <h6 class="category text-gray">{{ rolesTitle(user.roles) }}</h6>
                             <h4 class="card-title">{{ user.first_name }} {{ user.last_name }}</h4>
-                            <md-button class="md-round md-success">
+                            <md-button :to="{ name: 'user', params: { id: user.id }}" class="md-round md-success">
                                 {{ $t('user.detail') }}
                             </md-button>
                         </md-card-content>

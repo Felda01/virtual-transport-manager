@@ -38,7 +38,7 @@ class UsersQuery extends Query
 
     public function getAuthorizationMessage(): string
     {
-        return 'You are not authorized to perform this action';
+        return trans('validation.unauthorized');
     }
 
     public function args(): array
@@ -72,6 +72,8 @@ class UsersQuery extends Query
         if ($args['limit'] === -1) {
             $args['limit'] = User::count();
         }
+
+        $query = FilterUtility::filterCompany($query, User::current());
 
         return $query->with($with)
             ->select($select)

@@ -6,6 +6,7 @@ namespace App\GraphQL\Types;
 
 use App\Models\User;
 use GraphQL\Type\Definition\Type;
+use Illuminate\Support\Facades\Auth;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Type as GraphQLType;
 
@@ -34,6 +35,9 @@ class UserType extends GraphQLType
             ],
             'salary' => [
                 'type' => Type::string(),
+                'privacy' => function(array $args): bool {
+                    return Auth::guard('api')->check() ? Auth::guard('api')->user()->hasRole('owner') : false;
+                }
             ],
             'company' => [
                 'type' => GraphQL::type('Company'),

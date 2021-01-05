@@ -125,6 +125,8 @@ return [
 
                 'users' => \App\GraphQL\Queries\UsersQuery::class,
                 'roles' => \App\GraphQL\Queries\RolesQuery::class,
+
+                'user' => \App\GraphQL\Queries\UserQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,

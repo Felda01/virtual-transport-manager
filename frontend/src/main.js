@@ -148,11 +148,14 @@ const apolloProvider = new VueApollo({
 import DashboardPlugin from "./material-dashboard";
 Vue.use(DashboardPlugin);
 
-import titleMixin from './mixins/titleMixin'
+import titleMixin from './mixins/TitleMixin'
 Vue.mixin(titleMixin)
 
 import processSearchMixin from './mixins/ProcessSearchMixin';
 Vue.mixin(processSearchMixin);
+
+import errorHandlingMixin from './mixins/ErrorHandlingMixin';
+Vue.mixin(errorHandlingMixin);
 
 import i18n from './lang/index.js';
 

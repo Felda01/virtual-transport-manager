@@ -13,7 +13,8 @@
     "trailerModels": "Trailer models",
     "truckModels": "Truck models",
     "cargos": "Cargos",
-    "users": "Users"
+    "users": "Users",
+    "user": "User"
   },
   "routes": {
     "login": "login",

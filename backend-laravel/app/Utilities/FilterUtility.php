@@ -2,6 +2,7 @@
 namespace App\Utilities;
 
 
+use App\Models\User;
 use Illuminate\Support\Str;
 
 /**
@@ -34,5 +35,14 @@ class FilterUtility
         }
 
         return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param User $user
+     */
+    public static function filterCompany($query, $user)
+    {
+        return $query->where('company_id', $user->company_id);
     }
 }

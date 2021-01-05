@@ -117,6 +117,8 @@ class AuthController extends Controller
             'password' => ['required', 'string', 'min:8']
         ]);
 
+        activity()->disableLogging();
+
         DB::transaction(function() use ($validatedData) {
             $company = Company::create([
                 'name' => $validatedData['company_name'],
@@ -142,6 +144,8 @@ class AuthController extends Controller
                 throw new Exception(trans('validation.general_exception'));
             }
         });
+
+        activity()->enableLogging();
 
         $resp = $this->proxy->grantPasswordToken($validatedData['email'], $validatedData['password']);
 

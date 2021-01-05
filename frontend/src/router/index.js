@@ -134,12 +134,16 @@ router.afterEach(to => {
   if (isLocalizable) {
     const localizedRoute = {};
     // constructing a new localized path using the previously created route meta data
-    const routeSegments = router.currentRoute.meta.path[i18n.locale];
+    let routeSegments = router.currentRoute.meta.path[i18n.locale];
+
     for (let key in to.params) {
       if (to.params.hasOwnProperty(key)) {
-        if (key !== "locale") routeSegments.replace(`:${key}`, to.params[key]);
+        if (key !== "locale") {
+          routeSegments = routeSegments.replace(`:${key}`, to.params[key]);
+        }
       }
     }
+
     localizedRoute.path = `/${i18n.locale}/${routeSegments}`;
     // appending query (if any)
     localizedRoute.query = { ...router.currentRoute.query };
@@ -151,6 +155,10 @@ router.afterEach(to => {
     if (router.currentRoute.path !== localizedRoute.path && !hasUnresolvedPath) {
       router.push(localizedRoute);
     }
+  }
+
+  if (!document.body.classList.contains("loaded")) {
+    document.body.classList.add("loaded");
   }
 });
 

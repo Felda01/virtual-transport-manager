@@ -24,3 +24,19 @@ export const USERS_QUERY = gql`
         }
     }
 `;
+
+export const USER_QUERY = gql`
+    query UserQuery($id: String!) {
+        user(id: $id) {
+            id
+            first_name
+            last_name
+            image
+            salary
+            roles {
+                id
+                name
+            }
+        }
+    }
+`;

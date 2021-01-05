@@ -197,5 +197,7 @@
 </script>
 
 <style scoped>
-
+    .md-progress-spinner.md-theme-default .md-progress-spinner-circle  {
+        stroke: white!important;
+    }
 </style>

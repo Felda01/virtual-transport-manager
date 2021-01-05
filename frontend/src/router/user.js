@@ -14,6 +14,9 @@ const userRoutes = [
                     requiresAuth: true,
                     userOnly: true,
                     title: i18n.t('pages.dashboard'),
+                    path: {
+                        en: enRoute.dashboard
+                    }
                 }
             },
             {
@@ -25,6 +28,23 @@ const userRoutes = [
                     requiresAuth: true,
                     userOnly: true,
                     title: i18n.t('pages.users'),
+                    path: {
+                        en: enRoute.users
+                    }
+                }
+            },
+            {
+                path: `${enRoute.users}/:id`,
+                alias: `${getAlias('users')}/:id`,
+                name: 'user',
+                component: () => import('../views/user/User.vue'),
+                meta: {
+                    requiresAuth: true,
+                    userOnly: true,
+                    title: i18n.t('pages.user'),
+                    path: {
+                        en: `${enRoute.users}/:id`
+                    }
                 }
             }
         ]

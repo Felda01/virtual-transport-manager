@@ -1,0 +1,60 @@
+body {
+  &.loaded {
+    #page-preloader {
+      opacity: 0;
+      transition: opacity .2s, visibility 0s .2s;
+      visibility: hidden;
+    }
+  }
+}
+
+#page-preloader {
+  $animation-speed: 1.25s;
+  $size: 72px;
+  width: $size;
+  height: $size;
+  left: 50%;
+  margin: ($size / -2) 0 0 ($size / -2);
+  opacity: 1;
+  position: fixed;
+  top: 50%;
+  transition: opacity .2s, visibility 0s;
+  visibility: visible;
+  z-index: $z-index-preloader;
+
+  &::before,
+  &::after {
+    animation: page-preloader $animation-speed linear 0s infinite;
+    backface-visibility: hidden;
+    border: 6px solid $brand-primary;
+    border-radius: 100%;
+    content: "";
+    display: block;
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    transform: scale(0) translateZ(0);
+    width: 100%;
+  }
+
+  &::before {
+    animation-delay: $animation-speed / 2;
+  }
+
+  @keyframes page-preloader {
+    0% {
+      opacity: 0;
+      transform: scale(0) translateZ(0);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(.5) translateZ(0);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(1) translateZ(0);
+    }
+  }
+}
