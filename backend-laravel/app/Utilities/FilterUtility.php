@@ -3,6 +3,8 @@ namespace App\Utilities;
 
 
 use App\Models\User;
+use Illuminate\Database\Schema\Builder;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
 /**
@@ -39,7 +41,49 @@ class FilterUtility
 
     /**
      * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $table
+     * @param $sortValue
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public static function handleSort($query, $table, $sortValue)
+    {
+        $result = explode('_', $sortValue);
+
+        if (count($result) !== 2 || !in_array($result[1], ['desc', 'asc']) || !Schema::hasColumn($table, $result[0])) {
+            return $query;
+        }
+
+        return $query->orderBy($result[0], $result[1]);
+    }
+
+    /**
+     * @param $value
+     * @return array
+     */
+    public static function getRangeValues($value)
+    {
+        $result = [];
+
+        $values = explode('_', $value);
+
+        if (count($values) !== 2) {
+            return $result;
+        }
+
+        if ($values[0] && is_numeric($values[0])) {
+            $result['min'] = $values[0];
+        }
+        if ($values[1] && is_numeric($values[1])) {
+            $result['max'] = $values[1];
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
      * @param User $user
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public static function filterCompany($query, $user)
     {

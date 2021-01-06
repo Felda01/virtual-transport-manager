@@ -123,20 +123,6 @@
             rolesTitle(roles) {
                 return roles.map(role => this.$t('role.' + role.name).toUpperCase()).join(" / ");
             },
-            applySearch() {
-                this.filters = this.processSearch(this.searchModel);
-            },
-        },
-        created() {
-            this.debounceFunction = this._.debounce(this.applySearch, 1000);
-        },
-        watch: {
-            searchModel: {
-                handler: function (val, oldVal) {
-                    this.debounceFunction();
-                },
-                deep: true
-            }
         },
         apollo: {
             users: {

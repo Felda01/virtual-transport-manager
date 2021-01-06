@@ -16,11 +16,11 @@
             <template slot="links">
                 <sidebar-item :link="{ name: 'Dashboard', icon: 'dashboard', path: generatePath('dashboard') }"
                 ></sidebar-item>
-                <sidebar-item :link="{ name: 'Users', icon: 'group', path: generatePath('users') }"
+                <sidebar-item :link="{ name: $t('pages.users'), icon: 'group', path: generatePath('users') }"
                 ></sidebar-item>
-                <sidebar-item :link="{ name: 'Pages', icon: 'image' }">
+                <sidebar-item :link="{ name: $t('navigation.shop'), icon: 'shopping_cart' }">
                     <sidebar-item
-                            :link="{ name: 'Pricing', path: '/pricing' }"
+                            :link="{ name: $t('pages.truckShop'), path: generatePath('truckShop') }"
                     ></sidebar-item>
                 </sidebar-item>
             </template>

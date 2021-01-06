@@ -14,7 +14,8 @@
     "truckModels": "Truck models",
     "cargos": "Cargos",
     "users": "Users",
-    "user": "User"
+    "user": "User",
+    "truckShop": "Truck shop"
   },
   "routes": {
     "login": "login",
@@ -30,7 +31,8 @@
     "trailerModels": "trailer-models",
     "truckModels": "truck-models",
     "cargos": "cargos",
-    "users": "users"
+    "users": "users",
+    "truckShop": "truck-shop"
   },
   "navigation": {
     "staticMapData": "Map data",
@@ -39,7 +41,9 @@
   },
   "search": {
     "title": "Filters",
-    "noResults": "No results found."
+    "noResults": "No results found.",
+    "from": "from",
+    "to": "to"
   },
   "modal": {
     "btn" : {
@@ -48,6 +52,9 @@
       "cancel": "Cancel",
       "delete": "Delete"
     }
+  },
+  "shop": {
+    "buy": "Buy"
   },
   "pagination": {
     "display": "Showing {from} to {to} of {total} entries"

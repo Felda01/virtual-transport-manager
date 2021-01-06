@@ -46,7 +46,21 @@ const userRoutes = [
                         en: `${enRoute.users}/:id`
                     }
                 }
-            }
+            },
+            {
+                path: enRoute.truckShop,
+                alias: getAlias('truckShop'),
+                name: 'truckShop',
+                component: () => import('../views/user/TruckModels.vue'),
+                meta: {
+                    requiresAuth: true,
+                    userOnly: true,
+                    title: i18n.t('pages.truckShop'),
+                    path: {
+                        en: enRoute.truckShop
+                    }
+                }
+            },
         ]
     },
 ];

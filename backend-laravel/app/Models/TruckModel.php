@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Traits\HasUuid;
+use App\Utilities\FilterUtility;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -55,10 +57,126 @@ class TruckModel extends Model
     protected $guarded = [];
 
     /**
+     * The attributes that are searchable.
+     *
+     * @var string[]
+     */
+    public static $searchable = [
+        'brand',
+        'engine_power',
+        'chassis',
+        'load',
+        'price',
+        'emission_class',
+    ];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function trucks()
     {
         return $this->hasMany(Truck::class);
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchBrand($query, $value)
+    {
+        $brands = explode(',', $value);
+
+        if ($brands && count($brands) > 0) {
+            return $query->whereIn('brand', $brands);
+        }
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchChassis($query, $value)
+    {
+        $chassis = explode(',', $value);
+
+        if ($chassis && count($chassis) > 0) {
+            return $query->whereIn('chassis', $chassis);
+        }
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchEmissionClass($query, $value)
+    {
+        $emissionClasses = explode(',', $value);
+
+        if ($emissionClasses && count($emissionClasses) > 0) {
+            return $query->whereIn('emission_class', $emissionClasses);
+        }
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchEnginePower($query, $value)
+    {
+        $values = FilterUtility::getRangeValues($value);
+
+        if (array_key_exists('min', $values)) {
+            $query = $query->where('engine_power', '>=', $values['min']);
+        }
+        if (array_key_exists('max', $values)) {
+            $query = $query->where('engine_power', '<=', $values['max']);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchLoad($query, $value)
+    {
+        $values = FilterUtility::getRangeValues($value);
+
+        if (array_key_exists('min', $values)) {
+            $query = $query->where('load', '>=', $values['min']);
+        }
+        if (array_key_exists('max', $values)) {
+            $query = $query->where('load', '<=', $values['max']);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchPrice($query, $value)
+    {
+        $values = FilterUtility::getRangeValues($value);
+
+        if (array_key_exists('min', $values)) {
+            $query = $query->where('price', '>=', $values['min']);
+        }
+        if (array_key_exists('max', $values)) {
+            $query = $query->where('price', '<=', $values['max']);
+        }
+
+        return $query;
     }
 }

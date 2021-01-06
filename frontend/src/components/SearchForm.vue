@@ -15,18 +15,34 @@
                 <div class="md-layout" v-for="(group, rowindex) in searchSchema.groups" :key="'group-' + rowindex" :class="group.class">
                     <div class="md-layout-item" v-for="(field, colindex) in group.fields" :key="'field-' + rowindex + '-' + colindex" :class="field.class">
                         <template v-if="field.input === 'text'">
-                            <md-field>
+                            <md-field :mdClearable="true">
                                 <label>{{ field.label }}</label>
                                 <md-input v-model="value[field.name]" :type="field.type"></md-input>
                             </md-field>
                         </template>
                         <template v-else-if="field.input === 'select'">
-                            <md-field>
+                            <md-field :mdClearable="true">
                                 <label>{{ field.label }}</label>
                                 <md-select v-model="value[field.name]" :name="field.label" :multiple="field.config.multiple ? field.config.multiple : false">
                                     <md-option :value="field.config.optionValue(option)" v-for="option in field.config.options" :key="field.config.optionValue(option)">{{ field.config.translatableLabel ? $t(field.config.translatableLabel + field.config.optionLabel(option)) : field.config.optionLabel(option) }}</md-option>
                                 </md-select>
                             </md-field>
+                        </template>
+                        <template v-else-if="field.input === 'range'">
+                            <div class="md-layout md-gutter">
+                                <div class="md-layout-item md-size-50">
+                                    <md-field :mdClearable="true">
+                                        <label>{{ field.labelFrom }}</label>
+                                        <md-input v-model="value[field.name]['min']" :type="field.type"></md-input>
+                                    </md-field>
+                                </div>
+                                <div class="md-layout-item md-size-50">
+                                    <md-field :mdClearable="true">
+                                        <label>{{ field.labelTo }}</label>
+                                        <md-input v-model="value[field.name]['max']" :type="field.type"></md-input>
+                                    </md-field>
+                                </div>
+                            </div>
                         </template>
                     </div>
                 </div>

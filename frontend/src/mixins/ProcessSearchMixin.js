@@ -1,4 +1,10 @@
 export default {
+    data() {
+        return {
+            searchModel: null,
+            filters: [],
+        }
+    },
     methods: {
         processSearch(searchModel) {
             let result = [];
@@ -11,8 +17,10 @@ export default {
                         });
 
                         value = searchModel[key].join(',');
+                    } else if (searchModel[key] instanceof Object && searchModel[key]['type'] === 'range') {
+                        value = searchModel[key]['min'] + '_' + searchModel[key]['max'];
                     } else {
-                        value = searchModel[key]
+                        value = searchModel[key];
                     }
                     if (value) {
                         result.push({column: key, value: value});
@@ -20,6 +28,20 @@ export default {
                 }
             }
             return result;
+        },
+        applySearch() {
+            this.filters = this.processSearch(this.searchModel);
+        },
+    },
+    created() {
+        this.debounceFunction = this._.debounce(this.applySearch, 1000);
+    },
+    watch: {
+        searchModel: {
+            handler: function (val, oldVal) {
+                this.debounceFunction();
+            },
+            deep: true
         }
-    }
+    },
 }

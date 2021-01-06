@@ -168,7 +168,7 @@ class User extends Authenticatable
      */
     public function searchRoles($query, $value)
     {
-        $roles = explode($value, ',');
+        $roles = explode(',', $value);
 
         if ($roles && count($roles) > 0) {
             return $query->whereHas('roles', function (Builder $query) use ($value, $roles) {
