@@ -5,9 +5,9 @@
                 <content-placeholders-heading />
                 <content-placeholders-text :lines="2" />
             </content-placeholders>
-            <content-placeholders class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25" v-for="index in 8" :key="index">
+            <content-placeholders class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-33" v-for="index in 6" :key="index">
                 <content-placeholders-heading />
-                <content-placeholders-text :lines="4" />
+                <content-placeholders-text :lines="10" />
             </content-placeholders>
         </template>
         <template v-else>
@@ -22,7 +22,7 @@
                             {{ garageModel.name }}
                         </h4>
                         <div slot="description" class="card-description">
-                            <div class="md-layout md-gutter md-alignment-center-space-between">
+                            <div class="md-layout md-alignment-center-space-between">
                                 <div class="md-layout-item md-size-50 text-left">{{ $t('garageModel.property.truck_count') }}</div>
                                 <div class="md-layout-item md-size-50 text-right">{{ garageModel.truck_count }}</div>
 
@@ -30,17 +30,17 @@
                                 <div class="md-layout-item md-size-50 text-right">{{ garageModel.trailer_count }}</div>
 
                                 <div class="md-layout-item md-size-50 text-left">{{ $t('garageModel.property.insurance') }}</div>
-                                <div class="md-layout-item md-size-50 text-right">{{ garageModel.insurance }} {{ $t('garageModel.property.insuranceUnit') }}</div>
+                                <div class="md-layout-item md-size-50 text-right">{{ garageModel.insurance | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('garageModel.property.insuranceUnit') }}</div>
 
                                 <div class="md-layout-item md-size-50 text-left">{{ $t('garageModel.property.tax') }}</div>
-                                <div class="md-layout-item md-size-50 text-right">{{ garageModel.tax }} {{ $t('garageModel.property.taxUnit') }}</div>
+                                <div class="md-layout-item md-size-50 text-right">{{ garageModel.tax | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('garageModel.property.taxUnit') }}</div>
                             </div>
                         </div>
                         <template slot="footer">
                             <div class="price">
                                 <h4>{{ garageModel.price | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('garageModel.property.priceUnit') }}</h4>
                             </div>
-                            <md-button class="md-primary md-simple" @click="buyGarage"><md-icon>add</md-icon>{{ $t('shop.buy') }}</md-button>
+                            <md-button class="md-primary md-simple" @click="addGarageModal(garageModel)"><md-icon>add</md-icon>{{ $t('shop.buy') }}</md-button>
                         </template>
                     </product-card>
                 </div>
@@ -61,12 +61,15 @@
                 </div>
             </template>
         </template>
+
+        <!-- Add garage modal-->
+        <mutation-modal ref="addGarageModal" @ok="addGarage" :modalSchema="modalSchemaAddGarage" />
     </div>
 </template>
 
 <script>
-    import { SearchForm, ProductCard, Pagination } from "@/components";
-    import { GARAGE_MODELS_QUERY } from "@/graphql/queries/common";
+    import { SearchForm, ProductCard, Pagination, MutationModal } from "@/components";
+    import { GARAGE_MODELS_QUERY, AVAILABLE_LOCATIONS_QUERY } from "@/graphql/queries/common";
 
     export default {
         title () {
@@ -76,7 +79,8 @@
         components: {
             ProductCard,
             SearchForm,
-            Pagination
+            Pagination,
+            MutationModal
         },
         data() {
             return {
@@ -86,6 +90,9 @@
                     current_page: 1,
                     from: 0,
                     to: 0
+                },
+                availableLocations: {
+                    data: [],
                 },
                 page: 1,
                 searchModel: {
@@ -175,10 +182,54 @@
                         }
                     ]
                 },
+                modalSchemaAddGarage: {
+                    form: {
+                        //mutation: CREATE_GARAGE_MUTATION,
+                        fields: [],
+                        hiddenFields: [],
+                    },
+                    modalTitle: this.$t('model.modal.title.add.garage'),
+                    okBtnTitle: this.$t('modal.btn.buy'),
+                    cancelBtnTitle: this.$t('modal.btn.cancel')
+                },
             }
         },
         methods: {
-            buyGarage() {
+            addGarageModal(garageModel) {
+                this.modalSchemaAddGarage.form.fields = [
+                    {
+                        input: 'staticText',
+                        text: this.$t('garageModel.model') + ' ' + garageModel.name,
+                        class: 'text-left mb-4'
+                    },
+                    {
+                        label: this.$t('garage.property.location'),
+                        rules: 'required',
+                        name: 'location',
+                        input: 'select',
+                        type: 'select',
+                        value: '',
+                        config: {
+                            options: this.availableLocations.data,
+                            optionValue: (option) => {
+                                return option.id;
+                            },
+                            groupBy: 'country.name',
+                            optionLabel: (option) => {
+                                return option.name;
+                            }
+                        }
+                    },
+                    {
+                        input: 'staticText',
+                        text: this.$options.filters.currency(garageModel.price, ' ', 2, { thousandsSeparator: ' ' }) + ' €',
+                        class: 'text-right md-title'
+                    },
+                ];
+
+                this.$refs['addGarageModal'].openModal();
+            },
+            addGarage() {
 
             },
         },
@@ -189,6 +240,12 @@
                     return {page: this.page, limit: this.garageModels.per_page, filter: this.filters, sort: this.sort}
                 }
             },
+            availableLocations: {
+                query: AVAILABLE_LOCATIONS_QUERY,
+                variables() {
+                    return {page: 1, limit: -1}
+                }
+            }
         }
     }
 </script>

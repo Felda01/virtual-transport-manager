@@ -85,7 +85,14 @@
                                 <md-field :class="[{ 'md-error md-invalid': failed }, { 'md-valid': passed }]">
                                     <label>{{ field.label }}{{ fieldAdditionalLabelText(field.config) }}{{ field.rules.includes('required') ? ' *' : '' }}</label>
                                     <md-select v-model="form[field.name]" :name="field.label">
-                                        <md-option :value="field.config.optionValue(option)" v-for="option in field.config.options" :key="field.config.optionValue(option)">{{ field.config.translatableLabel ? $t(field.config.translatableLabel + field.config.optionLabel(option)) : field.config.optionLabel(option) }}</md-option>
+                                        <template v-if="field.config.groupBy">
+                                            <md-optgroup v-for="(groups, groupIndex) in _.groupBy(field.config.options, field.config.groupBy)" :label="groups[0].country.name" :key="field.name + '-group-' + groupIndex">
+                                                <md-option :value="field.config.optionValue(option)" v-for="option in groups" :key="field.config.optionValue(option)">{{ field.config.translatableLabel ? $t(field.config.translatableLabel + field.config.optionLabel(option)) : field.config.optionLabel(option) }}</md-option>
+                                            </md-optgroup>
+                                        </template>
+                                        <template v-else>
+                                            <md-option :value="field.config.optionValue(option)" v-for="option in field.config.options" :key="field.config.optionValue(option)">{{ field.config.translatableLabel ? $t(field.config.translatableLabel + field.config.optionLabel(option)) : field.config.optionLabel(option) }}</md-option>
+                                        </template>
                                     </md-select>
 
                                     <span class="md-error" v-show="failed">{{ errors[0] }}</span>
@@ -128,6 +135,11 @@
                                     </div>
                                 </div>
                             </ValidationProvider>
+                        </template>
+                        <template v-else-if="field.input === 'staticText'">
+                            <div :class="field.class">
+                                {{ field.text }}
+                            </div>
                         </template>
                     </template>
                 </form>

@@ -5,9 +5,9 @@
                 <content-placeholders-heading />
                 <content-placeholders-text :lines="2" />
             </content-placeholders>
-            <content-placeholders class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25" v-for="index in 8" :key="index">
+            <content-placeholders class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-33" v-for="index in 6" :key="index">
                 <content-placeholders-heading />
-                <content-placeholders-text :lines="4" />
+                <content-placeholders-text :lines="10" />
             </content-placeholders>
         </template>
         <template v-else>
@@ -22,7 +22,7 @@
                             {{ trailerModel.name }}
                         </h4>
                         <div slot="description" class="card-description">
-                            <div class="md-layout md-gutter md-alignment-center-space-between">
+                            <div class="md-layout md-alignment-center-space-between">
                                 <div class="md-layout-item md-size-50 text-left">{{ $t('trailerModel.property.type') }}</div>
                                 <div class="md-layout-item md-size-50 text-right">{{ trailerModel.type }}</div>
 
@@ -36,10 +36,10 @@
                                 <div class="md-layout-item md-size-50 text-right">{{ trailerModel.km }} {{ $t('trailerModel.property.kmUnit') }}</div>
 
                                 <div class="md-layout-item md-size-50 text-left">{{ $t('trailerModel.property.insurance') }}</div>
-                                <div class="md-layout-item md-size-50 text-right">{{ trailerModel.insurance }} {{ $t('trailerModel.property.insuranceUnit') }}</div>
+                                <div class="md-layout-item md-size-50 text-right">{{ trailerModel.insurance | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('trailerModel.property.insuranceUnit') }}</div>
 
                                 <div class="md-layout-item md-size-50 text-left">{{ $t('trailerModel.property.tax') }}</div>
-                                <div class="md-layout-item md-size-50 text-right">{{ trailerModel.tax }} {{ $t('trailerModel.property.taxUnit') }}</div>
+                                <div class="md-layout-item md-size-50 text-right">{{ trailerModel.tax | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('trailerModel.property.taxUnit') }}</div>
                             </div>
                         </div>
                         <template slot="footer">

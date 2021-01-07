@@ -88,7 +88,7 @@
                         fields: [],
                         hiddenFields: [],
                     },
-                    modalTitle: this.$t('model.modal.title.add', {model: 'bank loan type'}),
+                    modalTitle: this.$t('model.modal.title.add.bankLoanType'),
                     okBtnTitle: this.$t('modal.btn.add'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
@@ -99,12 +99,12 @@
                         hiddenFields: [],
                         idField: null
                     },
-                    modalTitle: this.$t('model.modal.title.update', {model: 'bank loan type'}),
+                    modalTitle: this.$t('model.modal.title.update.bankLoanType'),
                     okBtnTitle: this.$t('modal.btn.update'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
                 modalSchemaDeleteBankLoanType: {
-                    message: this.$t('model.modal.message', {model: 'bank loan type'}),
+                    message: this.$t('model.modal.title.delete.bankLoanType'),
                     form: {
                         mutation: DELETE_BANK_LOAN_TYPE_MUTATION,
                         idField: null,
@@ -158,7 +158,7 @@
                 let bankLoanType = response.data.createBankLoanType;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('model.response.success.created', { model: 'bank loan type', modelName: bankLoanType.value + "€" }),
+                    message: this.$t('model.response.success.created.bankLoanType', { modelName: bankLoanType.value + "€" } ),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',
@@ -211,7 +211,7 @@
                 let bankLoanType = response.data.updateBankLoanType;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('model.response.success.updated', { model: 'bank loan type', modelName: bankLoanType.value + "€" }),
+                    message: this.$t('model.response.success.updated.bankLoanType', { modelName: bankLoanType.value + "€" }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',
@@ -228,7 +228,7 @@
                 let bankLoanType = response.data.deleteBankLoanType;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('model.response.success.deleted', { model: 'bank loan type', modelName: bankLoanType.value + "€" }),
+                    message: this.$t('model.response.success.deleted.bankLoanType', { modelName: bankLoanType.value + "€" }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',

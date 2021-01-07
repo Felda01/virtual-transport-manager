@@ -97,7 +97,7 @@
                         fields: [],
                         hiddenFields: [],
                     },
-                    modalTitle: this.$t('model.modal.title.add', { model: 'garage model' }),
+                    modalTitle: this.$t('model.modal.title.add.garageModel'),
                     okBtnTitle: this.$t('modal.btn.add'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
@@ -108,12 +108,12 @@
                         hiddenFields: [],
                         idField: null
                     },
-                    modalTitle: this.$t('model.modal.title.update', { model: 'garage model' }),
+                    modalTitle: this.$t('model.modal.title.update.garageModel'),
                     okBtnTitle: this.$t('modal.btn.update'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
                 modalSchemaDeleteGarageModel: {
-                    message: this.$t('model.modal.message', { model: 'garage model' }),
+                    message: this.$t('model.modal.title.delete.garageModel'),
                     form: {
                         mutation: DELETE_GARAGE_MODEL_MUTATION,
                         idField: null,
@@ -207,7 +207,7 @@
                 let garageModel = response.data.createGarageModel;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('model.response.success.created', { model: 'garage model', modelName: garageModel.name }),
+                    message: this.$t('model.response.success.created.garageModel', { modelName: garageModel.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',
@@ -296,7 +296,7 @@
                 let garageModel = response.data.updateGarageModel;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('model.response.success.updated', { model: 'garage model', modelName: garageModel.name }),
+                    message: this.$t('model.response.success.updated.garageModel', { modelName: garageModel.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',
@@ -313,7 +313,7 @@
                 let garageModel = response.data.deleteGarageModel;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('model.response.success.deleted', { model: 'garage model', modelName: garageModel.name }),
+                    message: this.$t('model.response.success.deleted.garageModel', { modelName: garageModel.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',

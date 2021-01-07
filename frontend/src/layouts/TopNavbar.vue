@@ -23,6 +23,11 @@
 
         <div class="md-collapse">
           <md-list>
+            <li class="md-list-item" v-if="user && money !== null">
+              <div class="md-list-item-content">
+                <animated-number :currency="true" :duration="1200" class="md-list-item-container" :value="money"></animated-number>
+              </div>
+            </li>
             <li class="md-list-item">
               <a
                 href="#/components/notifications"
@@ -62,24 +67,36 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
+  import { mapGetters } from 'vuex';
+  import { AnimatedNumber } from "@/components";
 
-    };
-  },
-  methods: {
-    toggleSidebar() {
-      this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
+  export default {
+    data() {
+      return {
+
+      };
     },
-    minimizeSidebar() {
-      if (this.$sidebar) {
-        this.$sidebar.toggleMinimize();
+    computed: {
+      ...mapGetters([
+        'user',
+        'money',
+      ]),
+    },
+    components: {
+      AnimatedNumber
+    },
+    methods: {
+      toggleSidebar() {
+        this.$sidebar.displaySidebar(!this.$sidebar.showSidebar);
+      },
+      minimizeSidebar() {
+        if (this.$sidebar) {
+          this.$sidebar.toggleMinimize();
+        }
+      },
+      logout() {
+        this.$store.dispatch('logout', {fullPath: this.$router.currentRoute.fullPath});
       }
-    },
-    logout() {
-      this.$store.dispatch('logout', {fullPath: this.$router.currentRoute.fullPath});
     }
-  }
-};
+  };
 </script>

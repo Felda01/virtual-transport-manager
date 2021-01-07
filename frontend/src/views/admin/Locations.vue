@@ -93,7 +93,7 @@
                         fields: [],
                         hiddenFields: [],
                     },
-                    modalTitle: this.$t('model.modal.title.add', { model: 'location' }),
+                    modalTitle: this.$t('model.modal.title.add.location'),
                     okBtnTitle: this.$t('modal.btn.add'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
@@ -104,12 +104,12 @@
                         hiddenFields: [],
                         idField: null
                     },
-                    modalTitle: this.$t('model.modal.title.update', { model: 'location' }),
+                    modalTitle: this.$t('model.modal.title.update.location'),
                     okBtnTitle: this.$t('modal.btn.update'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
                 modalSchemaDeleteLocation: {
-                    message: this.$t('model.modal.message', { model: 'location' }),
+                    message: this.$t('model.modal.title.delete.location'),
                     form: {
                         mutation: DELETE_LOCATION_MUTATION,
                         idField: null,
@@ -193,7 +193,7 @@
                 let location = response.data.createLocation;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('model.response.success.created', { model: 'location', modelName: location.name }),
+                    message: this.$t('model.response.success.created.location', { modelName: location.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',
@@ -277,7 +277,7 @@
                 let location = response.data.updateLocation;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('model.response.success.updated', { model: 'location', modelName: location.name }),
+                    message: this.$t('model.response.success.updated.location', { modelName: location.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',
@@ -294,7 +294,7 @@
                 let location = response.data.deleteLocation;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('model.response.success.deleted', { model: 'location', modelName: location.name }),
+                    message: this.$t('model.response.success.deleted.location', { modelName: location.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',

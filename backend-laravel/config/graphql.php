@@ -105,6 +105,7 @@ return [
                 'locales' => \App\GraphQL\Queries\LocalesQuery::class,
                 'countries' => \App\GraphQL\Queries\CountriesQuery::class,
                 'locations' => \App\GraphQL\Queries\LocationsQuery::class,
+                'availableLocations' => \App\GraphQL\Queries\AvailableLocationsQuery::class,
                 'routes' => \App\GraphQL\Queries\RoutesQuery::class,
                 'bankLoanTypes' => \App\GraphQL\Queries\BankLoanTypesQuery::class,
                 'garageModels' => \App\GraphQL\Queries\GarageModelsQuery::class,

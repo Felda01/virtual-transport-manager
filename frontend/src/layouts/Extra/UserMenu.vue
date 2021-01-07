@@ -3,7 +3,7 @@
     <div class="photo" v-if="user.image">
       <img :src="user.image" :alt="name + ' avatar'" />
     </div>
-    <div class="photo photo-letters">
+    <div class="photo photo-letters" v-else>
       <span class="sidebar-mini">{{ letters }}</span>
     </div>
     <div class="user-info">
@@ -51,7 +51,6 @@
 <script>
   import { CollapseTransition } from "vue2-transitions";
   import { mapGetters } from 'vuex';
-  import { ME_QUERY } from "../../graphql/queries/common";
 
   export default {
     components: {

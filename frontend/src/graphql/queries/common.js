@@ -136,3 +136,25 @@ export const TRUCK_MODELS_QUERY = gql`
         }
     }
 `;
+
+export const AVAILABLE_LOCATIONS_QUERY = gql`
+    query AvailableLocationsQuery($limit: Int!, $page: Int!) {
+        availableLocations(limit: $limit, page: $page) {
+            data {
+                id
+                name
+                country {
+                    id
+                    name
+                }
+            }
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
+            has_more_pages
+        }
+    }
+`;

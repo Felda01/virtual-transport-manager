@@ -32,6 +32,8 @@ class Role extends \Spatie\Permission\Models\Role
 {
     use HasFactory, HasUuid;
 
+    const ADMIN = 'admin';
+
     /**
      * @return \Illuminate\Database\Eloquent\Builder
      */

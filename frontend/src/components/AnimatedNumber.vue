@@ -12,6 +12,10 @@ export default {
     duration: {
       type: Number,
       default: 800
+    },
+    currency: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -33,7 +37,11 @@ export default {
         .easing(TWEEN.Easing.Quadratic.Out)
         .to({ tweeningNumber: newValue }, this.duration)
         .onUpdate(function(object) {
-          vm.animatedNumber = object.tweeningNumber.toFixed(0);
+          if (vm.currency) {
+            vm.animatedNumber = vm.$options.filters.currency(object.tweeningNumber, ' ', 2, { thousandsSeparator: ' ' }) + ' €';
+          } else {
+            vm.animatedNumber = object.tweeningNumber.toFixed(0);
+          }
         })
         .start();
 

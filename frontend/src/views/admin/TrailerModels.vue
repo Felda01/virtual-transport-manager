@@ -101,7 +101,7 @@
                         fields: [],
                         hiddenFields: [],
                     },
-                    modalTitle: this.$t('model.modal.title.add', { model: 'trailer model' }),
+                    modalTitle: this.$t('model.modal.title.add.trailerModel'),
                     okBtnTitle: this.$t('modal.btn.add'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
@@ -112,12 +112,12 @@
                         hiddenFields: [],
                         idField: null
                     },
-                    modalTitle: this.$t('model.modal.title.update', { model: 'trailer model' }),
+                    modalTitle: this.$t('model.modal.title.update.trailerModel'),
                     okBtnTitle: this.$t('modal.btn.update'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
                 modalSchemaDeleteTrailerModel: {
-                    message: this.$t('model.modal.message', { model: 'trailer model' }),
+                    message: this.$t('model.modal.title.delete.trailerModel'),
                     form: {
                         mutation: DELETE_TRAILER_MODEL_MUTATION,
                         idField: null,
@@ -246,7 +246,7 @@
                 let trailerModel = response.data.createTrailerModel;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('model.response.success.created', { model: 'trailer model', modelName: trailerModel.name }),
+                    message: this.$t('model.response.success.created.trailerModel', { modelName: trailerModel.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',
@@ -374,7 +374,7 @@
                 let trailerModel = response.data.updateTrailerModel;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('model.response.success.updated', { model: 'trailer model', modelName: trailerModel.name }),
+                    message: this.$t('model.response.success.updated.trailerModel', { modelName: trailerModel.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',
@@ -391,7 +391,7 @@
                 let trailerModel = response.data.deleteTrailerModel;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('model.response.success.deleted', { model: 'trailer model', modelName: trailerModel.name }),
+                    message: this.$t('model.response.success.deleted.trailerModel', { modelName: trailerModel.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',

@@ -88,7 +88,7 @@
                         fields: [],
                         hiddenFields: [],
                     },
-                    modalTitle: this.$t('model.modal.title.add', { model: 'country' }),
+                    modalTitle: this.$t('model.modal.title.add.country'),
                     okBtnTitle: this.$t('modal.btn.add'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
@@ -99,12 +99,12 @@
                         hiddenFields: [],
                         idField: null
                     },
-                    modalTitle: this.$t('model.modal.title.update', { model: 'country' }),
+                    modalTitle: this.$t('model.modal.title.update.country'),
                     okBtnTitle: this.$t('modal.btn.update'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
                 modalSchemaDeleteCountry: {
-                    message: this.$t('model.modal.message', { model: 'country' }),
+                    message: this.$t('model.modal.title.delete.country'),
                     form: {
                         mutation: DELETE_COUNTRY_MUTATION,
                         idField: null,
@@ -153,7 +153,7 @@
                 let country = response.data.createCountry;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('model.response.success.created', { model: 'country', modelName: country.name }),
+                    message: this.$t('model.response.success.created.country', { modelName: country.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',
@@ -202,7 +202,7 @@
                 let country = response.data.updateCountry;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('model.response.success.updated', { model: 'country', modelName: country.name }),
+                    message: this.$t('model.response.success.updated.country', { modelName: country.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',
@@ -219,7 +219,7 @@
                 let country = response.data.deleteCountry;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('model.response.success.deleted', { model: 'country', modelName: country.name }),
+                    message: this.$t('model.response.success.deleted.country', { modelName: country.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',

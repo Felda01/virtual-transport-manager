@@ -15,6 +15,7 @@ export default new Vuex.Store({
     getters: {
         loading: state => state.loading,
         user: state => state.user,
+        money: state => state.user && state.user.company ? parseFloat(state.user.company.money) : null
     },
     mutations: {
         SET_LOADING(state, loading) {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
         },
         SET_USER(state, user) {
             state.user = user
+        },
+        SET_MONEY(state, money) {
+            state.user.company.money = money;
         }
     },
     actions: {
@@ -57,6 +61,10 @@ export default new Vuex.Store({
 
         setUser({commit}, {user}) {
             commit('SET_USER', user);
+        },
+
+        setMoney({commit}, {money}) {
+            commit('SET_MONEY', money);
         },
 
         getUser({dispatch}, {fullPath}) {

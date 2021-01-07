@@ -90,7 +90,7 @@
                         fields: [],
                         hiddenFields: [],
                     },
-                    modalTitle: this.$t('model.modal.title.add', { model: 'route' }),
+                    modalTitle: this.$t('model.modal.title.add.route'),
                     okBtnTitle: this.$t('modal.btn.add'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
@@ -101,12 +101,12 @@
                         hiddenFields: [],
                         idField: null
                     },
-                    modalTitle: this.$t('model.modal.title.update', { model: 'route' }),
+                    modalTitle: this.$t('model.modal.title.update.route'),
                     okBtnTitle: this.$t('modal.btn.update'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
                 modalSchemaDeleteRoute: {
-                    message: this.$t('model.modal.message', { model: 'route' }),
+                    message: this.$t('model.modal.title.delete.route'),
                     form: {
                         mutation: DELETE_ROUTE_MUTATION,
                         idField: null,
@@ -194,7 +194,7 @@
                 let route = response.data.createRoute;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('model.response.success.created', { model: 'route', modelName: route.location1.name + ' - ' +  route.location2.name }),
+                    message: this.$t('model.response.success.created.route', { modelName: route.location1.name + ' - ' +  route.location2.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',
@@ -267,7 +267,7 @@
                 let route = response.data.updateRoute;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('model.response.success.updated', { model: 'route', modelName: route.location1.name + ' - ' +  route.location2.name }),
+                    message: this.$t('model.response.success.updated.route', { modelName: route.location1.name + ' - ' +  route.location2.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',
@@ -284,7 +284,7 @@
                 let route = response.data.deleteRoute;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('model.response.success.deleted', { model: 'route', modelName: route.location1.name + ' - ' +  route.location2.name }),
+                    message: this.$t('model.response.success.deleted.route', { modelName: route.location1.name + ' - ' +  route.location2.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',

@@ -102,7 +102,7 @@
                         fields: [],
                         hiddenFields: [],
                     },
-                    modalTitle: this.$t('model.modal.title.add', { model: 'cargo' }),
+                    modalTitle: this.$t('model.modal.title.add.cargo'),
                     okBtnTitle: this.$t('modal.btn.add'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
@@ -113,12 +113,12 @@
                         hiddenFields: [],
                         idField: null
                     },
-                    modalTitle: this.$t('model.modal.title.update', { model: 'cargo' }),
+                    modalTitle: this.$t('model.modal.title.update.cargo'),
                     okBtnTitle: this.$t('modal.btn.update'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
                 modalSchemaDeleteCargo: {
-                    message: this.$t('model.modal.message', { model: 'cargo' }),
+                    message: this.$t('model.modal.title.delete.cargo'),
                     form: {
                         mutation: DELETE_CARGO_MUTATION,
                         idField: null,
@@ -247,7 +247,7 @@
                 let cargo = response.data.createCargo;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('model.response.success.created', { model: 'cargo', modelName: cargo.name }),
+                    message: this.$t('model.response.success.created.cargo', { modelName: cargo.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',
@@ -376,7 +376,7 @@
                 let cargo = response.data.updateCargo;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('model.response.success.updated', { model: 'cargo', modelName: cargo.name }),
+                    message: this.$t('model.response.success.updated.cargo', { modelName: cargo.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',
@@ -393,7 +393,7 @@
                 let cargo = response.data.deleteCargo;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('model.response.success.deleted', { model: 'cargo', modelName: cargo.name }),
+                    message: this.$t('model.response.success.deleted.cargo', { modelName: cargo.name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',
