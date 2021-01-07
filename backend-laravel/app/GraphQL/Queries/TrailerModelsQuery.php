@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\GraphQL\Queries;
 
 use App\Models\TrailerModel;
+use App\Utilities\FilterUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -32,12 +33,12 @@ class TrailerModelsQuery extends Query
 
     public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
-        return $this->guard()->check() ? $this->guard()->user()->hasRole('admin') : false;
+        return $this->guard()->check();
     }
 
     public function getAuthorizationMessage(): string
     {
-        return 'You are not authorized to perform this action';
+        return trans('validation.unauthorized');
     }
 
     public function args(): array
@@ -51,6 +52,14 @@ class TrailerModelsQuery extends Query
                 'type' => Type::int(),
                 'defaultValue' => 1,
             ],
+            'filter' => [
+                'type' => Type::listOf(GraphQL::type('FilterInput')),
+                'defaultValue' => [],
+            ],
+            'sort' => [
+                'type' => Type::string(),
+                'defaultValue' => ''
+            ]
         ];
     }
 
@@ -61,13 +70,24 @@ class TrailerModelsQuery extends Query
         $select = $fields->getSelect();
         $with = $fields->getRelations();
 
+        $query = TrailerModel::query();
+
+        if ($args['filter'] && count($args['filter']) > 0) {
+            $query = FilterUtility::handleFilter($query, new TrailerModel, TrailerModel::$searchable, $args['filter']);
+        }
+
         if ($args['limit'] === -1) {
             $args['limit'] = TrailerModel::count();
         }
 
-        return TrailerModel::with($with)
+        if ($args['sort']) {
+            $query = FilterUtility::handleSort($query, (new TrailerModel)->getTable(), $args['sort']);
+        } else {
+            $query = $query->orderBy('price');
+        }
+
+        return $query->with($with)
             ->select($select)
-            ->orderBy('price')
             ->paginate($args['limit'], ['*'], 'page', $args['page']);
     }
 }

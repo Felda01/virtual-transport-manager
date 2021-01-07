@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\GraphQL\Queries;
 
 use App\Models\GarageModel;
+use App\Utilities\FilterUtility;
 use App\Utilities\ImageUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -33,12 +34,12 @@ class GarageModelsQuery extends Query
 
     public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
-        return $this->guard()->check() ? $this->guard()->user()->hasRole('admin') : false;
+        return $this->guard()->check();
     }
 
     public function getAuthorizationMessage(): string
     {
-        return 'You are not authorized to perform this action';
+        return trans('validation.unauthorized');
     }
 
     public function args(): array
@@ -52,6 +53,14 @@ class GarageModelsQuery extends Query
                 'type' => Type::int(),
                 'defaultValue' => 1,
             ],
+            'filter' => [
+                'type' => Type::listOf(GraphQL::type('FilterInput')),
+                'defaultValue' => [],
+            ],
+            'sort' => [
+                'type' => Type::string(),
+                'defaultValue' => ''
+            ]
         ];
     }
 
@@ -62,13 +71,24 @@ class GarageModelsQuery extends Query
         $select = $fields->getSelect();
         $with = $fields->getRelations();
 
+        $query = GarageModel::query();
+
+        if ($args['filter'] && count($args['filter']) > 0) {
+            $query = FilterUtility::handleFilter($query, new GarageModel, GarageModel::$searchable, $args['filter']);
+        }
+
         if ($args['limit'] === -1) {
             $args['limit'] = GarageModel::count();
         }
 
-        return GarageModel::with($with)
+        if ($args['sort']) {
+            $query = FilterUtility::handleSort($query, (new GarageModel)->getTable(), $args['sort']);
+        } else {
+            $query = $query->orderBy('price');
+        }
+
+        return $query->with($with)
             ->select($select)
-            ->orderBy('truck_count')
             ->paginate($args['limit'], ['*'], 'page', $args['page']);
     }
 }

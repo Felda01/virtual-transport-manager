@@ -22,7 +22,7 @@ class CreateDriversTable extends Migration
             $table->string('image');
             $table->uuid('company_id');
             $table->foreign('company_id')->references('id')->on('companies');
-            $table->uuid('truck_id');
+            $table->uuid('truck_id')->nullable();
             $table->foreign('truck_id')->references('id')->on('trucks');
             $table->uuid('location_id');
             $table->foreign('location_id')->references('id')->on('locations');

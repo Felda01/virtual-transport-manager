@@ -20,7 +20,13 @@
                 ></sidebar-item>
                 <sidebar-item :link="{ name: $t('navigation.shop'), icon: 'shopping_cart' }">
                     <sidebar-item
+                            :link="{ name: $t('pages.garageShop'), path: generatePath('garageShop') }"
+                    ></sidebar-item>
+                    <sidebar-item
                             :link="{ name: $t('pages.truckShop'), path: generatePath('truckShop') }"
+                    ></sidebar-item>
+                    <sidebar-item
+                            :link="{ name: $t('pages.trailerShop'), path: generatePath('trailerShop') }"
                     ></sidebar-item>
                 </sidebar-item>
             </template>

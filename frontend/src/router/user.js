@@ -61,6 +61,34 @@ const userRoutes = [
                     }
                 }
             },
+            {
+                path: enRoute.garageShop,
+                alias: getAlias('garageShop'),
+                name: 'garageShop',
+                component: () => import('../views/user/GarageModels.vue'),
+                meta: {
+                    requiresAuth: true,
+                    userOnly: true,
+                    title: i18n.t('pages.garageShop'),
+                    path: {
+                        en: enRoute.garageShop
+                    }
+                }
+            },
+            {
+                path: enRoute.trailerShop,
+                alias: getAlias('trailerShop'),
+                name: 'trailerShop',
+                component: () => import('../views/user/TrailerModels.vue'),
+                meta: {
+                    requiresAuth: true,
+                    userOnly: true,
+                    title: i18n.t('pages.trailerShop'),
+                    path: {
+                        en: enRoute.trailerShop
+                    }
+                }
+            },
         ]
     },
 ];

@@ -53,7 +53,7 @@ class UpdateGarageModelMutation extends Mutation
             'name' => [
                 'required',
                 'string',
-                Rule::unique('garage_models', 'name')->ignore($args['id'])
+                Rule::unique('garage_models', 'name')->ignore($args['id'])->whereNull('deleted_at')
             ],
             'truck_count' => [
                 'required',

@@ -3,6 +3,7 @@ export default {
         return {
             searchModel: null,
             filters: [],
+            sort: '',
         }
     },
     methods: {
@@ -31,6 +32,9 @@ export default {
         },
         applySearch() {
             this.filters = this.processSearch(this.searchModel);
+            if (this.searchModel.hasOwnProperty('sort')) {
+                this.sort = this.searchModel['sort'];
+            }
         },
     },
     created() {

@@ -81,7 +81,7 @@ class TruckModelsQuery extends Query
         }
 
         if ($args['sort']) {
-            $query = FilterUtility::handleSort($query, 'truck_models', $args['sort']);
+            $query = FilterUtility::handleSort($query, (new TruckModel)->getTable(), $args['sort']);
         } else {
             $query = $query->orderBy('price');
         }

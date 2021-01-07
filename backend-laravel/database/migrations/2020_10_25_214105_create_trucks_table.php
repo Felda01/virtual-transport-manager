@@ -19,7 +19,7 @@ class CreateTrucksTable extends Migration
             $table->foreign('truck_model_id')->references('id')->on('truck_models');
             $table->uuid('company_id');
             $table->foreign('company_id')->references('id')->on('companies');
-            $table->uuid('trailer_id');
+            $table->uuid('trailer_id')->nullable();
             $table->foreign('trailer_id')->references('id')->on('trailers');
             $table->uuid('garage_id');
             $table->foreign('garage_id')->references('id')->on('garages');

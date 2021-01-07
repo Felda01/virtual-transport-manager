@@ -58,3 +58,81 @@ export const ROLES_QUERY = gql`
         }
     }
 `;
+
+export const GARAGE_MODELS_QUERY = gql`
+    query GarageModelsQuery($limit: Int!, $page: Int!, $filter: [FilterInput], $sort: String) {
+        garageModels(limit: $limit, page: $page, filter: $filter, sort: $sort) {
+            data {
+                id
+                name
+                truck_count
+                trailer_count
+                insurance
+                tax
+                image
+                price
+            }
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
+            has_more_pages
+        }
+    }
+`;
+
+export const TRAILER_MODELS_QUERY = gql`
+    query TrailerModelsQuery($limit: Int!, $page: Int!, $filter: [FilterInput], $sort: String) {
+        trailerModels(limit: $limit, page: $page, filter: $filter, sort: $sort) {
+            data {
+                id
+                name
+                type
+                load
+                adr
+                km
+                insurance
+                tax
+                image
+                price
+            }
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
+            has_more_pages
+        }
+    }
+`;
+
+export const TRUCK_MODELS_QUERY = gql`
+    query TruckModelsQuery($limit: Int!, $page: Int!, $filter: [FilterInput], $sort: String) {
+        truckModels(limit: $limit, page: $page, filter: $filter, sort: $sort) {
+            data {
+                id
+                name
+                brand
+                engine_power
+                chassis
+                load
+                emission_class
+                km
+                insurance
+                tax
+                image
+                price
+            }
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
+            has_more_pages
+        }
+    }
+`;

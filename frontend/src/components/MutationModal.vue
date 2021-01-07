@@ -107,10 +107,12 @@
                                             <img :src="imgPlaceholderSrc" />
                                         </div>
                                     </div>
-                                    <div class="image-container" v-else>
-                                        <img :src="form[field.name]" />
+                                    <div class="file-container" v-else>
+                                        <div class="image-container">
+                                            <img :src="form[field.name]" />
+                                        </div>
                                     </div>
-                                    <div class="button-container">
+                                    <div class="button-container mb-2">
                                         <md-button class="md-danger md-round" @click="removeImage(field.name)" v-if="form[field.name]">
                                             <md-icon>close</md-icon>Remove
                                         </md-button>
@@ -118,6 +120,7 @@
                                             <template v-if="!form[field.name]">Select image</template>
                                             <template v-else>Change</template>
                                             <input type="file" @change="onFileChange($event, field.name)" />
+                                            <input type="hidden" v-model="form[field.name]">
                                         </md-button>
                                     </div>
                                     <div class="button-container" v-if="failed">

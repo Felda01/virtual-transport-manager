@@ -44,7 +44,7 @@ class CreateGarageModelMutation extends Mutation
             'name' => [
                 'required',
                 'string',
-                'unique:garage_models,name'
+                'unique:garage_models,name,NULL,id,deleted_at,NULL'
             ],
             'truck_count' => [
                 'required',

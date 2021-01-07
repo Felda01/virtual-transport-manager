@@ -71,8 +71,7 @@
 </template>
 
 <script>
-    import { TRUCK_MODELS_QUERY } from '@/graphql/queries/admin';
-    import { TRUCK_BRANDS_QUERY, CHASSIS_QUERY, TRUCK_EMISSION_CLASSES_QUERY } from "@/graphql/queries/common";
+    import { TRUCK_MODELS_QUERY, TRUCK_BRANDS_QUERY, CHASSIS_QUERY, TRUCK_EMISSION_CLASSES_QUERY } from "@/graphql/queries/common";
     import { CREATE_TRUCK_MODEL_MUTATION, UPDATE_TRUCK_MODEL_MUTATION, DELETE_TRUCK_MODEL_MUTATION } from '@/graphql/mutations/admin';
     import { MutationModal, Pagination, DeleteModal } from "@/components";
 

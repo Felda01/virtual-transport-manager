@@ -15,7 +15,9 @@
     "cargos": "Cargos",
     "users": "Users",
     "user": "User",
-    "truckShop": "Truck shop"
+    "truckShop": "Truck shop",
+    "garageShop": "Garage shop",
+    "trailerShop": "Trailer shop"
   },
   "routes": {
     "login": "login",
@@ -32,7 +34,9 @@
     "truckModels": "truck-models",
     "cargos": "cargos",
     "users": "users",
-    "truckShop": "truck-shop"
+    "truckShop": "truck-shop",
+    "garageShop": "garage-shop",
+    "trailerShop": "trailer-shop"
   },
   "navigation": {
     "staticMapData": "Map data",
@@ -43,7 +47,8 @@
     "title": "Filters",
     "noResults": "No results found.",
     "from": "from",
-    "to": "to"
+    "to": "to",
+    "sortBy": "Sort by"
   },
   "modal": {
     "btn" : {
@@ -180,6 +185,10 @@
       "insurance": "(€ per month)",
       "tax": "(€ per month)",
       "price": "(in €)"
+    },
+    "searchFields": {
+      "price_asc": "Price Low to High",
+      "price_desc": "Price High to Low"
     }
   },
   "trailerModel": {
@@ -205,6 +214,12 @@
       "insurance": "(€ per month)",
       "tax": "(€ per month)",
       "price": "(in €)"
+    },
+    "searchFields": {
+      "price_asc": "Price Low to High",
+      "price_desc": "Price High to Low",
+      "adr_asc": "ADR class Low to High",
+      "adr_desc": "ADR class High to Low"
     }
   },
   "ADRs": {
@@ -243,6 +258,12 @@
       "insurance": "(€ per month)",
       "tax": "(€ per month)",
       "price": "(in €)"
+    },
+    "searchFields": {
+      "price_asc": "Price Low to High",
+      "price_desc": "Price High to Low",
+      "engine_power_asc": "Engine power Low to High",
+      "engine_power_desc": "Engine power High to Low"
     }
   },
   "truckEmissionClasses": {

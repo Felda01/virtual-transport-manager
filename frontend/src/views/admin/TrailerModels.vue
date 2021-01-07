@@ -69,8 +69,7 @@
 </template>
 
 <script>
-    import { TRAILER_MODELS_QUERY } from '@/graphql/queries/admin';
-    import { TRAILER_TYPES_QUERY, ADRS_QUERY } from "@/graphql/queries/common";
+    import { TRAILER_MODELS_QUERY, TRAILER_TYPES_QUERY, ADRS_QUERY } from "@/graphql/queries/common";
     import { CREATE_TRAILER_MODEL_MUTATION, UPDATE_TRAILER_MODEL_MUTATION, DELETE_TRAILER_MODEL_MUTATION } from '@/graphql/mutations/admin';
     import { MutationModal, Pagination, DeleteModal } from "@/components";
 

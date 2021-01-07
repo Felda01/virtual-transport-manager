@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Traits\HasUuid;
+use App\Utilities\FilterUtility;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -53,6 +55,18 @@ class TrailerModel extends Model
     protected $guarded = [];
 
     /**
+     * The attributes that are searchable.
+     *
+     * @var string[]
+     */
+    public static $searchable = [
+        'type',
+        'load',
+        'adr',
+        'price',
+    ];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function cargos()
@@ -66,5 +80,73 @@ class TrailerModel extends Model
     public function trailers()
     {
         return $this->hasMany(Trailer::class);
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchType($query, $value)
+    {
+        $types = explode(',', $value);
+
+        if ($types && count($types) > 0) {
+            return $query->whereIn('type', $types);
+        }
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchAdr($query, $value)
+    {
+        $adr = explode(',', $value);
+
+        if ($adr && count($adr) > 0) {
+            return $query->whereIn('adr', $adr);
+        }
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchLoad($query, $value)
+    {
+        $values = FilterUtility::getRangeValues($value);
+
+        if (array_key_exists('min', $values)) {
+            $query = $query->where('load', '>=', $values['min']);
+        }
+        if (array_key_exists('max', $values)) {
+            $query = $query->where('load', '<=', $values['max']);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchPrice($query, $value)
+    {
+        $values = FilterUtility::getRangeValues($value);
+
+        if (array_key_exists('min', $values)) {
+            $query = $query->where('price', '>=', $values['min']);
+        }
+        if (array_key_exists('max', $values)) {
+            $query = $query->where('price', '<=', $values['max']);
+        }
+
+        return $query;
     }
 }

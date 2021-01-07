@@ -50,6 +50,15 @@
                         </template>
                     </product-card>
                 </div>
+                <div class="md-layout-item md-size-100 d-flex justify-space-between">
+                    <p>
+                        {{ $t('pagination.display', {from: truckModels.from, to: truckModels.to, total: truckModels.total}) }}
+                    </p>
+                    <pagination class="pagination-no-border pagination-success"
+                                v-model="page"
+                                :per-page="truckModels.per_page"
+                                :total="truckModels.total"></pagination>
+                </div>
             </template>
             <template v-else>
                 <div class="md-layout-item md-size-100 mb-5">
@@ -61,10 +70,8 @@
 </template>
 
 <script>
-    import { SearchForm } from "@/components";
-    import { ProductCard } from "@/components";
-    import { TRUCK_MODELS_QUERY } from '@/graphql/queries/user';
-    import { TRUCK_BRANDS_QUERY, CHASSIS_QUERY, TRUCK_EMISSION_CLASSES_QUERY } from "@/graphql/queries/common";
+    import { SearchForm, ProductCard, Pagination } from "@/components";
+    import { TRUCK_MODELS_QUERY, TRUCK_BRANDS_QUERY, CHASSIS_QUERY, TRUCK_EMISSION_CLASSES_QUERY } from "@/graphql/queries/common";
 
     export default {
         title () {
@@ -73,13 +80,14 @@
         name: "TruckModels",
         components: {
             ProductCard,
-            SearchForm
+            SearchForm,
+            Pagination
         },
         data() {
             return {
                 truckModels: {
                     data: [],
-                    per_page: 10,
+                    per_page: 6,
                     current_page: 1,
                     from: 0,
                     to: 0
@@ -87,8 +95,6 @@
                 truckBrands: [],
                 chassis: [],
                 truckEmissionClasses: [],
-                filters: [],
-                sort: '',
                 page: 1,
                 searchModel: {
                     brand: [''],
@@ -109,6 +115,7 @@
                         min: '',
                         max: ''
                     },
+                    sort: ''
                 },
                 chassisOptions: [],
                 truckBrandsOptions: [],
@@ -211,7 +218,34 @@
                                 }
                             ],
                         },
-                    ]
+                        {
+                            class: ['mt-2'],
+                            fields: [
+                                {
+                                    class: ['md-medium-size-50', 'md-xsmall-size-100' ,'md-size-33'],
+                                    type: 'select',
+                                    input: 'select',
+                                    name: 'sort',
+                                    label: this.$t('search.sortBy'),
+                                    value: '',
+                                    config: {
+                                        options: [
+                                            { id: 'price_asc', name: this.$t('truckModel.searchFields.price_asc') },
+                                            { id: 'price_desc', name: this.$t('truckModel.searchFields.price_desc') },
+                                            { id: 'engine_power_asc', name: this.$t('truckModel.searchFields.engine_power_asc') },
+                                            { id: 'engine_power_desc', name: this.$t('truckModel.searchFields.engine_power_desc') },
+                                        ],
+                                        optionValue: (option) => {
+                                            return option.id;
+                                        },
+                                        optionLabel: (option) => {
+                                            return option.name;
+                                        },
+                                    }
+                                },
+                            ]
+                        }
+                    ],
                 }
             }
         },

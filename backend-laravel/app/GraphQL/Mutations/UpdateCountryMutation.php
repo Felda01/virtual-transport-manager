@@ -47,7 +47,7 @@ class UpdateCountryMutation extends Mutation
             ],
             'short_name' => [
                 'string',
-                'unique:countries,short_name,'.$args['id']
+                Rule::unique('countries', 'short_name')->ignore($args['id'])->whereNull('deleted_at')
             ],
             'name_translations.*.value' => [
                 'required',

@@ -70,21 +70,42 @@ export default new Vuex.Store({
         },
 
         logout({commit}, {fullPath}) {
-            Cookies.remove('x-access-token');
-            commit('SET_USER', null);
+            return Vue.axios.post(process.env.VUE_APP_LARAVEL_ENDPOINT + '/api/logout')
+                .then(response => {
+                    Cookies.remove('x-access-token');
+                    commit('SET_USER', null);
 
-            if (fullPath) {
-                router.push({
-                    name: 'login',
-                    query: { redirect: fullPath },
-                    params: { locale: i18n.locale }
+                    if (fullPath) {
+                        router.push({
+                            name: 'login',
+                            query: { redirect: fullPath },
+                            params: { locale: i18n.locale }
+                        });
+                    } else {
+                        router.push({
+                            name: 'login',
+                            params: { locale: i18n.locale }
+                        });
+                    }
+                })
+                .catch(error => {
+                    Cookies.remove('x-access-token');
+                    commit('SET_USER', null);
+
+                    if (fullPath) {
+                        router.push({
+                            name: 'login',
+                            query: { redirect: fullPath },
+                            params: { locale: i18n.locale }
+                        });
+                    } else {
+                        router.push({
+                            name: 'login',
+                            params: { locale: i18n.locale }
+                        });
+                    }
                 });
-            } else {
-                router.push({
-                    name: 'login',
-                    params: { locale: i18n.locale }
-                });
-            }
+
         },
 
         setLoading({commit}, {loading}) {

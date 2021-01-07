@@ -29,6 +29,15 @@
                         </md-card-content>
                     </md-card>
                 </div>
+                <div class="md-layout-item md-size-100 d-flex justify-space-between">
+                    <p>
+                        {{ $t('pagination.display', {from: users.from, to: users.to, total: users.total}) }}
+                    </p>
+                    <pagination class="pagination-no-border pagination-success"
+                                v-model="page"
+                                :per-page="users.per_page"
+                                :total="users.total"></pagination>
+                </div>
             </template>
             <template v-else>
                 <div class="md-layout-item md-size-100 mb-5">
@@ -41,7 +50,7 @@
 
 <script>
     import { USERS_QUERY } from "@/graphql/queries/user";
-    import { SearchForm } from "@/components";
+    import { SearchForm, Pagination } from "@/components";
     import { ROLES_QUERY } from "@/graphql/queries/common";
 
     export default {
@@ -50,7 +59,8 @@
         },
         name: "Users",
         components: {
-            SearchForm
+            SearchForm,
+            Pagination
         },
         data() {
             return {
@@ -77,7 +87,7 @@
                             class: [''],
                             fields: [
                                 {
-                                    class: ['md-medium-size-50', 'md-xsmall-size-100' ,'md-size-25'],
+                                    class: ['md-medium-size-50', 'md-xsmall-size-100' ,'md-size-33'],
                                     type: 'text',
                                     input: 'text',
                                     name: 'first_name',
@@ -86,7 +96,7 @@
                                     config: {}
                                 },
                                 {
-                                    class: ['md-medium-size-50', 'md-xsmall-size-100' ,'md-size-25'],
+                                    class: ['md-medium-size-50', 'md-xsmall-size-100' ,'md-size-33'],
                                     type: 'text',
                                     input: 'text',
                                     name: 'last_name',
@@ -95,7 +105,7 @@
                                     config: {}
                                 },
                                 {
-                                    class: ['md-medium-size-50', 'md-xsmall-size-100' ,'md-size-25'],
+                                    class: ['md-medium-size-50', 'md-xsmall-size-100' ,'md-size-33'],
                                     type: 'select',
                                     input: 'select',
                                     name: 'roles',

@@ -54,7 +54,7 @@ class CreateCountryMutation extends Mutation
             ],
             'short_name' => [
                 'string',
-                'unique:countries,short_name'
+                'unique:countries,short_name,NULL,id,deleted_at,NULL'
             ]
         ];
     }

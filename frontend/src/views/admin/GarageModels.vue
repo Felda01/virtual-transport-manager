@@ -67,7 +67,7 @@
 </template>
 
 <script>
-    import { GARAGE_MODELS_QUERY } from '@/graphql/queries/admin';
+    import { GARAGE_MODELS_QUERY } from '@/graphql/queries/common';
     import { CREATE_GARAGE_MODEL_MUTATION, UPDATE_GARAGE_MODEL_MUTATION, DELETE_GARAGE_MODEL_MUTATION } from '@/graphql/mutations/admin';
     import { MutationModal, Pagination, DeleteModal } from "@/components";
 
