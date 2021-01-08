@@ -42,7 +42,7 @@ class DeleteLocationMutation extends Mutation
             'id' => [
                 'required',
                 'string',
-                'exists:locations',
+                'exists:locations,id,deleted_at,NULL',
                 new NotExistsRelationRule('Location', 'routesLocation1'),
                 new NotExistsRelationRule('Location', 'routesLocation2'),
             ],

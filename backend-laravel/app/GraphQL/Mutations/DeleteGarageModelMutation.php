@@ -43,7 +43,7 @@ class DeleteGarageModelMutation extends Mutation
             'id' => [
                 'required',
                 'string',
-                'exists:garage_models',
+                'exists:garage_models,id,deleted_at,NULL',
             ]
         ];
     }

@@ -42,7 +42,7 @@ class UpdateRouteMutation extends Mutation
         return [
             'id' => [
                 'required',
-                'exists:routes'
+                'exists:routes,id,deleted_at,NULL'
             ],
             'time' => [
                 'required',

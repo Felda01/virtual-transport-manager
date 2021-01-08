@@ -42,7 +42,7 @@ class DeleteRouteMutation extends Mutation
             'id' => [
                 'required',
                 'string',
-                'exists:routes'
+                'exists:routes,id,deleted_at,NULL'
             ]
         ];
     }

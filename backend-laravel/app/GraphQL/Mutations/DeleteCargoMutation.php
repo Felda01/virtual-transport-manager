@@ -42,7 +42,7 @@ class DeleteCargoMutation extends Mutation
             'id' => [
                 'required',
                 'string',
-                'exists:cargos',
+                'exists:cargos,id,deleted_at,NULL',
             ]
         ];
     }

@@ -47,7 +47,7 @@ class UpdateGarageModelMutation extends Mutation
             'id' => [
                 'required',
                 'string',
-                'exists:garage_models',
+                'exists:garage_models,id,deleted_at,NULL',
                 new NotExistsRelationRule('GarageModel', 'garages', 'update')
             ],
             'name' => [

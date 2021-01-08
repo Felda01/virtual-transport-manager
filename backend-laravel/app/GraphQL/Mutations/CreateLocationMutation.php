@@ -68,7 +68,7 @@ class CreateLocationMutation extends Mutation
             ],
             'country' => [
                 'required',
-                'exists:countries,id'
+                'exists:countries,id,deleted_at,NULL'
             ]
         ];
     }

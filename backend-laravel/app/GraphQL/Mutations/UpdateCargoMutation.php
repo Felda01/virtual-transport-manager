@@ -46,7 +46,7 @@ class UpdateCargoMutation extends Mutation
             'id' => [
                 'required',
                 'string',
-                'exists:cargos',
+                'exists:cargos,id,deleted_at,NULL',
                 new NotExistsRelationRule('Cargo', 'markets', 'update')
             ],
             'name_translations.*.value' => [

@@ -43,13 +43,13 @@ class CreateRouteMutation extends Mutation
         return [
             'location1' => [
                 'string',
-                'exists:locations,id',
+                'exists:locations,id,deleted_at,NULL',
                 'different:location2',
                 new UniqueLocationsRule($args['location2'])
             ],
             'location2' => [
                 'string',
-                'exists:locations,id',
+                'exists:locations,id,deleted_at,NULL',
                 'different:location1',
                 new UniqueLocationsRule($args['location1'])
             ],

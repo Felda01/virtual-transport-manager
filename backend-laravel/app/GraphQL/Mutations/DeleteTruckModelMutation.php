@@ -43,7 +43,7 @@ class DeleteTruckModelMutation extends Mutation
             'id' => [
                 'required',
                 'string',
-                'exists:truck_models',
+                'exists:truck_models,id,deleted_at,NULL',
             ]
         ];
     }

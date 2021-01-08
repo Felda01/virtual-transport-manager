@@ -45,7 +45,7 @@ class UpdateTrailerModelMutation extends Mutation
             'id' => [
                 'required',
                 'string',
-                'exists:trailer_models',
+                'exists:trailer_models,id,deleted_at,NULL',
                 new NotExistsRelationRule('TrailerModel', 'trailers', 'update')
             ],
             'name' => [

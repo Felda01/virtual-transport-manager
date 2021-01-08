@@ -43,7 +43,7 @@ class UpdateCountryMutation extends Mutation
             'id' => [
                 'required',
                 'string',
-                'exists:countries'
+                'exists:countries,id,deleted_at,NULL'
             ],
             'short_name' => [
                 'string',

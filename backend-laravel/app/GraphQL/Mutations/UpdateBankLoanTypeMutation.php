@@ -43,7 +43,7 @@ class UpdateBankLoanTypeMutation extends Mutation
         return [
             'id' => [
                 'required',
-                'exists:bank_loan_types',
+                'exists:bank_loan_types,id,deleted_at,NULL',
                 new NotExistsRelationRule('BankLoanType', 'bankLoans', 'update'),
             ],
             'value' => [

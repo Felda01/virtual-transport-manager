@@ -42,7 +42,7 @@ class DeleteCountryMutation extends Mutation
             'id' => [
                 'required',
                 'string',
-                'exists:countries',
+                'exists:countries,id,deleted_at,NULL',
                 new NotExistsRelationRule('Country', 'locations'),
             ],
         ];

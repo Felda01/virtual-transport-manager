@@ -42,7 +42,7 @@ class DeleteBankLoanTypeMutation extends Mutation
             'id' => [
                 'required',
                 'string',
-                'exists:bank_loan_types',
+                'exists:bank_loan_types,id,deleted_at,NULL',
             ],
         ];
     }

@@ -42,7 +42,7 @@ class UpdateLocationMutation extends Mutation
         return [
             'id' => [
                 'required',
-                'exists:locations'
+                'exists:locations,id,deleted_at,NULL'
             ],
             'name_translations.*.value' => [
                 'required',
@@ -75,7 +75,7 @@ class UpdateLocationMutation extends Mutation
             ],
             'country' => [
                 'required',
-                'exists:countries,id'
+                'exists:countries,id,deleted_at,NULL'
             ],
         ];
     }
