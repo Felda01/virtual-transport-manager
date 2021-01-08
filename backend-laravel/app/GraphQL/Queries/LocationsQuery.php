@@ -32,12 +32,12 @@ class LocationsQuery extends Query
 
     public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
-        return $this->guard()->check() ? $this->guard()->user()->hasRole('admin') : false;
+        return $this->guard()->check();
     }
 
     public function getAuthorizationMessage(): string
     {
-        return 'You are not authorized to perform this action';
+        return trans('validation.unauthorized');
     }
 
     public function args(): array

@@ -34,4 +34,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Permission extends \Spatie\Permission\Models\Permission
 {
     use HasFactory, HasUuid;
+
+    const MANAGE_STATIC = 'manage static';
+    const MANAGE_DRIVERS = 'manage drivers';
+    const MANAGE_VEHICLES = 'manage vehicles';
+    const MANAGE_GARAGES = 'manage garages';
+    const MANAGE_PERSONS = 'manage persons';
+    const MANAGE_JOBS = 'manage jobs';
+    const MANAGE_SALARY = 'manage salary';
+    const GUARD = 'api';
 }

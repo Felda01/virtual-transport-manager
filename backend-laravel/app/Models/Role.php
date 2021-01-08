@@ -33,6 +33,12 @@ class Role extends \Spatie\Permission\Models\Role
     use HasFactory, HasUuid;
 
     const ADMIN = 'admin';
+    const OWNER = 'owner';
+    const DRIVER_MANAGER = 'driver manager';
+    const VEHICLE_MANAGER = 'vehicle manager';
+    const GARAGE_MANAGER = 'garage manager';
+    const PERSON_MANAGER = 'person manager';
+    const JOB_MANAGER = 'job manager';
 
     /**
      * @return \Illuminate\Database\Eloquent\Builder

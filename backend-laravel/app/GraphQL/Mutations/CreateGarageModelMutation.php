@@ -35,7 +35,7 @@ class CreateGarageModelMutation extends Mutation
     public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
         // true, if logged in
-        return $this->guard()->check() && $this->guard()->user()->hasRole('admin');
+        return $this->guard()->check() && $this->guard()->user()->hasPermissionTo(\App\Models\Permission::MANAGE_STATIC, \App\Models\Permission::GUARD);
     }
 
     public function rules(array $args = []): array
