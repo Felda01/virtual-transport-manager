@@ -47,6 +47,11 @@ class DeleteRouteMutation extends Mutation
         ];
     }
 
+    public function getAuthorizationMessage(): string
+    {
+        return trans('validation.unauthorized');
+    }
+
     public function args(): array
     {
         return [
