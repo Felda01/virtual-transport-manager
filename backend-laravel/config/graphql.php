@@ -128,6 +128,8 @@ return [
                 'roles' => \App\GraphQL\Queries\RolesQuery::class,
 
                 'user' => \App\GraphQL\Queries\UserQuery::class,
+
+                'availableGarages' => \App\GraphQL\Queries\AvailableGaragesQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,
@@ -168,6 +170,8 @@ return [
 //                'deleteUser' => \App\GraphQL\Mutations\DeleteUserMutation::class,
 
                 'createGarage' => \App\GraphQL\Mutations\CreateGarageMutation::class,
+
+                'createTruck' => \App\GraphQL\Mutations\CreateTruckMutation::class,
             ],
             'middleware' => ['auth:api'],
             'method' => ['get', 'post'],

@@ -6,8 +6,10 @@ namespace App\GraphQL\Mutations;
 
 use App\Events\ProcessTransaction;
 use App\Models\Company;
-use App\Models\Garage;
-use App\Rules\AvailableLocationRule;
+use App\Models\Truck;
+use App\Models\TruckModel;
+use App\Rules\AvailableGarageSpotRule;
+use App\Rules\ModelFromCompanyRule;
 use App\Rules\MoneyCheckRule;
 use App\Utilities\BroadcastUtility;
 use App\Utilities\TransactionUtility;
@@ -20,16 +22,16 @@ use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Mutation;
 use Rebing\GraphQL\Support\SelectFields;
 
-class CreateGarageMutation extends Mutation
+class CreateTruckMutation extends Mutation
 {
     protected $attributes = [
-        'name' => 'createGarage',
+        'name' => 'createTruck',
         'description' => 'A mutation'
     ];
 
     public function type(): Type
     {
-        return GraphQL::type('Garage');
+        return GraphQL::type('Truck');
     }
 
     private function guard()
@@ -40,23 +42,24 @@ class CreateGarageMutation extends Mutation
     public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
         // true, if logged in
-        return $this->guard()->check() && $this->guard()->user()->hasPermissionTo(\App\Models\Permission::MANAGE_GARAGES, \App\Models\Permission::GUARD);
+        return $this->guard()->check() && $this->guard()->user()->hasPermissionTo(\App\Models\Permission::MANAGE_VEHICLES, \App\Models\Permission::GUARD);
     }
 
     public function rules(array $args = []): array
     {
         return [
-            'garage_model' => [
+            'truck_model' => [
                 'required',
-                'exists:garage_models,id,deleted_at,NULL',
+                'exists:truck_models,id,deleted_at,NULL',
             ],
-            'location' => [
+            'garage' => [
                 'required',
-                'exists:locations,id,deleted_at,NULL',
-                new AvailableLocationRule(),
+                'exists:garages,id,deleted_at,NULL',
+                new ModelFromCompanyRule('Garage'),
+                new AvailableGarageSpotRule('truck')
             ],
             'general' => [
-                new MoneyCheckRule('GarageModel', $args['garage_model'])
+                new MoneyCheckRule('TruckModel', $args['truck_model'])
             ]
         ];
     }
@@ -69,12 +72,12 @@ class CreateGarageMutation extends Mutation
     public function args(): array
     {
         return [
-            'garage_model' => [
-                'name' => 'garage_model',
+            'truck_model' => [
+                'name' => 'truck_model',
                 'type' => Type::nonNull(Type::string()),
             ],
-            'location' => [
-                'name' => 'location',
+            'garage' => [
+                'name' => 'garage',
                 'type' => Type::nonNull(Type::string()),
             ],
         ];
@@ -85,33 +88,38 @@ class CreateGarageMutation extends Mutation
         $company = Company::currentCompany();
 
         $result = DB::transaction(function () use ($args, $company) {
-            /** @var Garage $garage */
-            $garage = Garage::create([
-                'location_id' => $args['location'],
-                'garage_model_id' => $args['garage_model'],
-                'company_id' => $company->id
+            /** @var TruckModel $truckModel */
+            $truckModel = TruckModel::find($args['truck_model']);
+
+            /** @var Truck $truck */
+            $truck = Truck::create([
+                'trailer_id' => null,
+                'truck_model_id' => $args['truck_model'],
+                'company_id' => $company->id,
+                'garage_id' => $args['garage'],
+                'km' => $truckModel->km,
             ]);
 
-            $price = $garage->garageModel->price;
+            $price = $truckModel->price;
 
-            $transaction = TransactionUtility::create($company, $garage, -1 * $price, 'create');
+            $transaction = TransactionUtility::create($company, $truck, -1 * $price, 'create');
 
             $oldMoney = $company->money;
 
             $company->decrement('money', $price);
             $company->save();
 
-            if (!$garage || !$transaction || $company->money !== ($oldMoney - $price)) {
+            if (!$truck || !$transaction || $company->money !== ($oldMoney - $price)) {
                 throw new \Exception(trans('validation.general_exception'));
             }
 
             return [
-                'garage' => $garage,
+                'truck' => $truck,
                 'transaction' => $transaction
             ];
         });
 
         BroadcastUtility::broadcast(new ProcessTransaction($result['transaction']));
-        return $result['garage'];
+        return $result['truck'];
     }
 }

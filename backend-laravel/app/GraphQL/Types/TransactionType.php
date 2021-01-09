@@ -32,14 +32,18 @@ class TransactionType extends GraphQLType
             'activity' => [
                 'type' => Type::string(),
             ],
-            'operation' => [
-                'type' => Type::int(),
-            ],
             'productable' => [
                 'type' => GraphQL::type('Productable'),
             ],
             'user' => [
                 'type' => GraphQL::type('User'),
+            ],
+            'created_at' => [
+                'type' => Type::string(),
+                'resolve' => function($root, $args) {
+                    /** @var Transaction $root  */
+                    return $root->created_at->format('d.m.Y H:i');
+                }
             ]
         ];
     }

@@ -38,9 +38,6 @@ class TrailerType extends GraphQLType
             'km' => [
                 'type' => Type::int(),
             ],
-            'next_service' => [
-                'type' => Type::int(),
-            ],
         ];
     }
 

@@ -22,7 +22,6 @@ class CreateTrailersTable extends Migration
             $table->uuid('garage_id');
             $table->foreign('garage_id')->references('id')->on('garages');
             $table->integer('km');
-            $table->timestamp('next_service')->useCurrent();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -6,6 +6,7 @@ use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * App\Models\Trailer
@@ -15,7 +16,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $company_id
  * @property string $garage_id
  * @property int $km
- * @property \Illuminate\Support\Carbon $next_service
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -33,7 +33,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Trailer whereGarageId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Trailer whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Trailer whereKm($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Trailer whereNextService($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Trailer whereTrailerModelId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Trailer whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Trailer withTrashed()
@@ -42,7 +41,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Trailer extends Model
 {
-    use HasFactory, HasUuid, SoftDeletes;
+    use HasFactory, HasUuid, SoftDeletes, LogsActivity;
 
     /**
      * The attributes that aren't mass assignable.
@@ -52,13 +51,14 @@ class Trailer extends Model
     protected $guarded = [];
 
     /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
+     * @var bool
      */
-    protected $casts = [
-        'next_service' => 'datetime',
-    ];
+    protected static $logUnguarded = true;
+
+    /**
+     * @var bool
+     */
+    protected static $logOnlyDirty = true;
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

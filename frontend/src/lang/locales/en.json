@@ -93,8 +93,8 @@
           "truckModel": "Create new truck model",
           "garageModel": "Create new garage model",
           "garage": "Buy new garage",
-          "truck": "Buy new garage",
-          "trailer": "Buy new garage"
+          "truck": "Buy new truck",
+          "trailer": "Buy new trailer"
         },
         "update": {
           "bankLoanType": "Update this bank loan type",
@@ -130,7 +130,8 @@
           "trailerModel": "The trailer model {modelName} was successfully created.",
           "truckModel": "The truck model {modelName} was successfully created.",
           "garageModel": "The garage model {modelName} was successfully created.",
-          "garage": "The {modelName} garage was successfully bought in {location}."
+          "garage": "The {modelName} garage was successfully bought in {location}.",
+          "truck": "The truck {modelName} was successfully bought in {location}."
         },
         "updated": {
           "bankLoanType": "The bank loan type {modelName} was successfully updated.",
@@ -252,6 +253,7 @@
     }
   },
   "trailerModel": {
+    "model": "Trailer model",
     "property": {
       "name": "Name",
       "type": "Type",
@@ -292,6 +294,7 @@
     "6": "Class 8 - Corrosive substances"
   },
   "truckModel": {
+    "model": "Truck model",
     "property": {
       "name": "Name",
       "brand": "Brand",
@@ -369,6 +372,11 @@
   "garage": {
     "property": {
       "location": "Location"
+    }
+  },
+  "truck": {
+    "property": {
+      "garage": "Garage"
     }
   }
 }

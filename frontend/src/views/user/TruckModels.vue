@@ -1,6 +1,6 @@
 <template>
     <div class="md-layout">
-        <template v-if="$apollo.queries.truckModels.loading">
+        <template v-if="$apollo.queries.truckModels.loading && firstLoad">
             <content-placeholders class="md-layout-item md-size-100">
                 <content-placeholders-heading />
                 <content-placeholders-text :lines="2" />
@@ -46,7 +46,7 @@
                             <div class="price">
                                 <h4>{{ truckModel.price | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('truckModel.property.priceUnit') }}</h4>
                             </div>
-                            <md-button class="md-primary md-simple" @click="buyTruck"><md-icon>add</md-icon>{{ $t('shop.buy') }}</md-button>
+                            <md-button class="md-primary md-simple" @click="addTruckModal(truckModel)"><md-icon>add</md-icon>{{ $t('shop.buy') }}</md-button>
                         </template>
                     </product-card>
                 </div>
@@ -66,12 +66,17 @@
                 </div>
             </template>
         </template>
+
+        <!-- Add truck modal-->
+        <mutation-modal ref="addTruckModal" @ok="addTruck" :modalSchema="modalSchemaAddTruck" />
     </div>
 </template>
 
 <script>
-    import { SearchForm, ProductCard, Pagination } from "@/components";
+    import { SearchForm, ProductCard, Pagination, MutationModal } from "@/components";
     import { TRUCK_MODELS_QUERY, TRUCK_BRANDS_QUERY, CHASSIS_QUERY, TRUCK_EMISSION_CLASSES_QUERY } from "@/graphql/queries/common";
+    import { CREATE_TRUCK_MUTATION } from "@/graphql/mutations/user";
+    import { AVAILABLE_GARAGES_QUERY } from "@/graphql/queries/user";
 
     export default {
         title () {
@@ -81,7 +86,8 @@
         components: {
             ProductCard,
             SearchForm,
-            Pagination
+            Pagination,
+            MutationModal
         },
         data() {
             return {
@@ -92,6 +98,10 @@
                     from: 0,
                     to: 0
                 },
+                availableGarages: {
+                    data: [],
+                },
+                firstLoad: true,
                 truckBrands: [],
                 chassis: [],
                 truckEmissionClasses: [],
@@ -246,12 +256,74 @@
                             ]
                         }
                     ],
-                }
+                },
+                modalSchemaAddTruck: {
+                    form: {
+                        mutation: CREATE_TRUCK_MUTATION,
+                        fields: [],
+                        hiddenFields: [],
+                    },
+                    modalTitle: this.$t('model.modal.title.add.truck'),
+                    okBtnTitle: this.$t('modal.btn.buy'),
+                    cancelBtnTitle: this.$t('modal.btn.cancel')
+                },
             }
         },
         methods: {
-            buyTruck() {
+            addTruckModal(truckModel) {
+                this.modalSchemaAddTruck.form.fields = [
+                    {
+                        input: 'staticText',
+                        text: this.$t('truckModel.model') + ' ' + truckModel.brand + ' ' + truckModel.name,
+                        class: 'text-left mb-4'
+                    },
+                    {
+                        label: this.$t('truck.property.garage'),
+                        rules: 'required',
+                        name: 'garage',
+                        input: 'select',
+                        type: 'select',
+                        value: '',
+                        config: {
+                            options: this.availableGarages.data,
+                            optionValue: (option) => {
+                                return option.id;
+                            },
+                            groupBy: 'location.country.name',
+                            optgroupLabel: (optgroup) => {
+                                return optgroup.location.country.name;
+                            },
+                            optionLabel: (option) => {
+                                return option.location.name + ' - ' + option.garageModel.name;
+                            }
+                        }
+                    },
+                    {
+                        input: 'staticText',
+                        text: this.$options.filters.currency(truckModel.price, ' ', 2, { thousandsSeparator: ' ' }) + ' €',
+                        class: 'text-right md-title'
+                    },
+                ];
 
+                this.modalSchemaAddTruck.form.hiddenFields = [
+                    {
+                        name: 'truck_model',
+                        value: truckModel.id
+                    }
+                ];
+
+                this.$refs['addTruckModal'].openModal();
+            },
+            addTruck(response) {
+                let truck = response.data.createTruck;
+                this.$notify({
+                    timeout: 5000,
+                    message: this.$t('model.response.success.created.truck', { modelName: truck.truckModel.brand + ' ' + truck.truckModel.name, location: truck.garage.location.name }),
+                    icon: "add_alert",
+                    horizontalAlign: 'right',
+                    verticalAlign: 'top',
+                    type: 'success'
+                });
             },
         },
         apollo: {
@@ -259,6 +331,9 @@
                 query: TRUCK_MODELS_QUERY,
                 variables() {
                     return { page: this.page, limit: this.truckModels.per_page, filter: this.filters, sort: this.sort}
+                },
+                result({ data, loading, networkStatus }) {
+                    this.firstLoad = false;
                 }
             },
             truckBrands: {
@@ -286,6 +361,12 @@
                     this.$nextTick( () => {
                         this.$set(this.searchSchema.groups[0].fields[2].config, 'options', this.truckEmissionClassesOptions);
                     });
+                },
+            },
+            availableGarages: {
+                query: AVAILABLE_GARAGES_QUERY,
+                variables() {
+                    return { page: 1, limit: -1, type: 'truck' }
                 },
             }
         }

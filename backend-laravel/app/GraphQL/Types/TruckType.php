@@ -41,9 +41,6 @@ class TruckType extends GraphQLType
             'km' => [
                 'type' => Type::int(),
             ],
-            'next_service' => [
-                'type' => Type::int(),
-            ],
         ];
     }
 

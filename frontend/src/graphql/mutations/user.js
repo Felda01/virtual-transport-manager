@@ -15,3 +15,23 @@ export const CREATE_GARAGE_MUTATION = gql`
         }
     }
 `;
+
+export const CREATE_TRUCK_MUTATION = gql`
+    mutation CreateTruckMutation($truck_model: String!, $garage: String!) {
+        createTruck(truck_model: $truck_model, garage: $garage) {
+            id
+            truckModel {
+                id
+                name
+                brand
+            }
+            garage {
+                id
+                location {
+                    id
+                    name
+                }
+            }
+        }
+    }
+`;

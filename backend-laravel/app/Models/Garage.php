@@ -6,6 +6,7 @@ use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * App\Models\Garage
@@ -43,7 +44,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Garage extends Model
 {
-    use HasFactory, HasUuid, SoftDeletes;
+    use HasFactory, HasUuid, SoftDeletes, LogsActivity;
 
     /**
      * The attributes that aren't mass assignable.
@@ -51,6 +52,16 @@ class Garage extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * @var bool
+     */
+    protected static $logUnguarded = true;
+
+    /**
+     * @var bool
+     */
+    protected static $logOnlyDirty = true;
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

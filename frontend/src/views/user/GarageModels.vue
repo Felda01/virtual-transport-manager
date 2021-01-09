@@ -217,6 +217,9 @@
                                 return option.id;
                             },
                             groupBy: 'country.name',
+                            optgroupLabel: (optgroup) => {
+                                return optgroup.country.name;
+                            },
                             optionLabel: (option) => {
                                 return option.name;
                             }

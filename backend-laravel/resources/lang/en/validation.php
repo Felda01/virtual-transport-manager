@@ -135,6 +135,8 @@ return [
     'unauthorized' => "You are not authorized to perform this action.",
     'available_location' => "You already own a garage in this location.",
     'not_enough_money' => "Your company does not have enough money.",
+    'model_from_company' => "You do not have permission to work with this object.",
+    'available_garage_spot' => "There is not enough space in this garage.",
 
     /*
     |--------------------------------------------------------------------------

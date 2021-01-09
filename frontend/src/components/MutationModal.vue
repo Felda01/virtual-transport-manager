@@ -86,7 +86,7 @@
                                     <label>{{ field.label }}{{ fieldAdditionalLabelText(field.config) }}{{ field.rules.includes('required') ? ' *' : '' }}</label>
                                     <md-select v-model="form[field.name]" :name="field.label">
                                         <template v-if="field.config.groupBy">
-                                            <md-optgroup v-for="(groups, groupIndex) in _.groupBy(field.config.options, field.config.groupBy)" :label="groups[0].country.name" :key="field.name + '-group-' + groupIndex">
+                                            <md-optgroup v-for="(groups, groupIndex) in _.groupBy(field.config.options, field.config.groupBy)" :label="field.config.optgroupLabel(groups[0])" :key="field.name + '-group-' + groupIndex">
                                                 <md-option :value="field.config.optionValue(option)" v-for="option in groups" :key="field.config.optionValue(option)">{{ field.config.translatableLabel ? $t(field.config.translatableLabel + field.config.optionLabel(option)) : field.config.optionLabel(option) }}</md-option>
                                             </md-optgroup>
                                         </template>
