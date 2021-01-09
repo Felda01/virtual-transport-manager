@@ -129,7 +129,8 @@
           "route": "The route {modelName} was successfully created.",
           "trailerModel": "The trailer model {modelName} was successfully created.",
           "truckModel": "The truck model {modelName} was successfully created.",
-          "garageModel": "The garage model {modelName} was successfully created."
+          "garageModel": "The garage model {modelName} was successfully created.",
+          "garage": "The {modelName} garage was successfully bought in {location}."
         },
         "updated": {
           "bankLoanType": "The bank loan type {modelName} was successfully updated.",

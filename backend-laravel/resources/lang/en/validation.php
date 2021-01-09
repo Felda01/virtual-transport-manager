@@ -133,6 +133,8 @@ return [
     'unique_bank_loan_type' => 'A bank loan type with these parameters already exists.',
     'general_exception' => "Something wrong, please try it later again",
     'unauthorized' => "You are not authorized to perform this action.",
+    'available_location' => "You already own a garage in this location.",
+    'not_enough_money' => "Your company does not have enough money.",
 
     /*
     |--------------------------------------------------------------------------

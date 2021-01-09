@@ -16,7 +16,7 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name')->unique();
-            $table->decimal('money');
+            $table->decimal('money', 60, 2);
             $table->timestamps();
         });
     }

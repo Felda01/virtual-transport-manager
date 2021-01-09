@@ -162,6 +162,12 @@ return [
                 'createCargo' => \App\GraphQL\Mutations\CreateCargoMutation::class,
                 'updateCargo' => \App\GraphQL\Mutations\UpdateCargoMutation::class,
                 'deleteCargo' => \App\GraphQL\Mutations\DeleteCargoMutation::class,
+
+//                'createUser' => \App\GraphQL\Mutations\CreateUserMutation::class,
+//                'updateUser' => \App\GraphQL\Mutations\UpdateUserMutation::class,
+//                'deleteUser' => \App\GraphQL\Mutations\DeleteUserMutation::class,
+
+                'createGarage' => \App\GraphQL\Mutations\CreateGarageMutation::class,
             ],
             'middleware' => ['auth:api'],
             'method' => ['get', 'post'],

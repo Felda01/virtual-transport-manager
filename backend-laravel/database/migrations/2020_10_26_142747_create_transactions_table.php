@@ -17,10 +17,11 @@ class CreateTransactionsTable extends Migration
             $table->uuid('id')->primary();
             $table->uuid('company_id');
             $table->foreign('company_id')->references('id')->on('companies');
-            $table->decimal('value');
+            $table->decimal('value', 60, 2);
             $table->nullableUuidMorphs('productable');
             $table->string('activity');
-            $table->integer('operation');
+            $table->uuid('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

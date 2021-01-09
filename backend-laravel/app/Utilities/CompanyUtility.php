@@ -7,6 +7,10 @@ namespace App\Utilities;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class CompanyUtility
+ * @package App\Utilities
+ */
 class CompanyUtility
 {
     /**

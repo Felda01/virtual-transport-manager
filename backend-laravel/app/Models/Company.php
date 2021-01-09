@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * App\Models\Company
@@ -133,5 +134,16 @@ class Company extends Model
     public function bankLoans()
     {
         return $this->hasMany(BankLoan::class);
+    }
+
+    /**
+     * @return Company |null
+     */
+    public static function currentCompany()
+    {
+        if (Auth::guard('api')->check()) {
+            return Company::find(Auth::guard('api')->user()->company_id);
+        }
+        return null;
     }
 }

@@ -1,6 +1,6 @@
 <template>
     <div class="md-layout">
-        <template v-if="$apollo.queries.garageModels.loading">
+        <template v-if="$apollo.queries.garageModels.loading && firstLoad">
             <content-placeholders class="md-layout-item md-size-100">
                 <content-placeholders-heading />
                 <content-placeholders-text :lines="2" />
@@ -70,6 +70,7 @@
 <script>
     import { SearchForm, ProductCard, Pagination, MutationModal } from "@/components";
     import { GARAGE_MODELS_QUERY, AVAILABLE_LOCATIONS_QUERY } from "@/graphql/queries/common";
+    import { CREATE_GARAGE_MUTATION } from "@/graphql/mutations/user";
 
     export default {
         title () {
@@ -91,6 +92,7 @@
                     from: 0,
                     to: 0
                 },
+                firstLoad: true,
                 availableLocations: {
                     data: [],
                 },
@@ -184,7 +186,7 @@
                 },
                 modalSchemaAddGarage: {
                     form: {
-                        //mutation: CREATE_GARAGE_MUTATION,
+                        mutation: CREATE_GARAGE_MUTATION,
                         fields: [],
                         hiddenFields: [],
                     },
@@ -227,10 +229,25 @@
                     },
                 ];
 
+                this.modalSchemaAddGarage.form.hiddenFields = [
+                    {
+                        name: 'garage_model',
+                        value: garageModel.id
+                    }
+                ];
+
                 this.$refs['addGarageModal'].openModal();
             },
-            addGarage() {
-
+            addGarage(response) {
+                let garage = response.data.createGarage;
+                this.$notify({
+                    timeout: 5000,
+                    message: this.$t('model.response.success.created.garage', { modelName: garage.garageModel.name, location: garage.location.name }),
+                    icon: "add_alert",
+                    horizontalAlign: 'right',
+                    verticalAlign: 'top',
+                    type: 'success'
+                });
             },
         },
         apollo: {
@@ -238,6 +255,9 @@
                 query: GARAGE_MODELS_QUERY,
                 variables() {
                     return {page: this.page, limit: this.garageModels.per_page, filter: this.filters, sort: this.sort}
+                },
+                result({ data, loading, networkStatus }) {
+                    this.firstLoad = false;
                 }
             },
             availableLocations: {

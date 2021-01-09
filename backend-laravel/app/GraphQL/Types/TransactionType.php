@@ -37,6 +37,9 @@ class TransactionType extends GraphQLType
             ],
             'productable' => [
                 'type' => GraphQL::type('Productable'),
+            ],
+            'user' => [
+                'type' => GraphQL::type('User'),
             ]
         ];
     }
