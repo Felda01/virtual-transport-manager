@@ -1,0 +1,14 @@
+version: '3.6'
+# recent ddev requires docker-compose file version 3.6
+services:
+  node:
+    container_name: ddev-${DDEV_SITENAME}-node
+    image: node:10.6
+    restart: "no"
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    volumes:
+      - "../:/var/www/html:cached"
+    working_dir: /var/www/html
+    command: ["tail", "-f", "/dev/null"]
