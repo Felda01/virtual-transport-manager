@@ -15,6 +15,7 @@ class CreateTrailersTable extends Migration
     {
         Schema::create('trailers', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->integer('status');
             $table->uuid('trailer_model_id');
             $table->foreign('trailer_model_id')->references('id')->on('trailer_models');
             $table->uuid('company_id');

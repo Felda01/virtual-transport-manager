@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Queries;
 
-use App\Models\Driver;
+use App\Models\Country;
 use App\Models\Garage;
-use App\Models\GarageModel;
-use App\Models\Trailer;
-use App\Models\Truck;
+use App\Models\Location;
 use App\Models\User;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -18,16 +16,16 @@ use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\SelectFields;
 
-class AvailableGaragesQuery extends Query
+class CountriesWithGaragesQuery extends Query
 {
     protected $attributes = [
-        'name' => 'availableGarages',
+        'name' => 'countriesWithGarages',
         'description' => 'A query'
     ];
 
     public function type(): Type
     {
-        return GraphQL::paginate('Garage');
+        return GraphQL::paginate('Country');
     }
 
     private function guard()
@@ -56,9 +54,6 @@ class AvailableGaragesQuery extends Query
                 'type' => Type::int(),
                 'defaultValue' => 1,
             ],
-            'type' => [
-                'type' => Type::string()
-            ],
         ];
     }
 
@@ -69,41 +64,27 @@ class AvailableGaragesQuery extends Query
         $select = $fields->getSelect();
         $with = $fields->getRelations();
 
-        $query = Garage::query();
+        $query = Country::query();
 
         /** @var User $user */
         $user = User::find($this->guard()->id());
-
-        $table = null;
-        $column = null;
-
+        $locationTable = (new Location)->getTable();
         $garageTable = (new Garage)->getTable();
-        $garageModelTable = (new GarageModel)->getTable();
 
-        if ($args['type'] === 'truck') {
-            $table = (new Truck)->getTable();
-            $column = 'truck_count';
-        } else if ($args['type'] === 'trailer') {
-            $table = (new Trailer)->getTable();
-            $column = 'trailer_count';
-        } else if ($args['type'] === 'driver') {
-            $table = (new Driver())->getTable();
-            $column = 'truck_count';
-        }
-
-        if ($table) {
-            $query = $query->whereIn('id', function ($q) use ($user, $table, $column, $garageTable, $garageModelTable) {
-                return Garage::freeSpotQuery($q, $user, $table, $column, $garageTable, $garageModelTable)->get();
-            });
-        }
+        $query = $query->whereIn('id', function ($q) use ($user, $locationTable, $garageTable) {
+            $q->select('country_id')
+                ->from($locationTable)
+                ->rightjoin($garageTable, $garageTable . '.location_id', '=', $locationTable . '.id')
+                ->where('company_id', $user->company_id)
+                ->get();
+        });
 
         if ($args['limit'] === -1) {
-            $args['limit'] = Garage::count();
+            $args['limit'] = Country::count();
         }
 
         return $query->with($with)
             ->select($select)
             ->paginate($args['limit'], ['*'], 'page', $args['page']);
-
     }
 }

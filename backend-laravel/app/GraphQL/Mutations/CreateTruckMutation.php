@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\GraphQL\Mutations;
 
 use App\Events\ProcessTransaction;
+use App\Jobs\UpdateModelStatus;
 use App\Models\Company;
 use App\Models\Truck;
 use App\Models\TruckModel;
@@ -12,6 +13,8 @@ use App\Rules\AvailableGarageSpotRule;
 use App\Rules\ModelFromCompanyRule;
 use App\Rules\MoneyCheckRule;
 use App\Utilities\BroadcastUtility;
+use App\Utilities\QueueJobUtility;
+use App\Utilities\StatusUtility;
 use App\Utilities\TransactionUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -98,6 +101,7 @@ class CreateTruckMutation extends Mutation
                 'company_id' => $company->id,
                 'garage_id' => $args['garage'],
                 'km' => $truckModel->km,
+                'status' => StatusUtility::DELIVERY_FROM_SHOP
             ]);
 
             $price = $truckModel->price;
@@ -120,6 +124,7 @@ class CreateTruckMutation extends Mutation
         });
 
         BroadcastUtility::broadcast(new ProcessTransaction($result['transaction']));
+        QueueJobUtility::dispatch(new UpdateModelStatus($result['truck'], StatusUtility::AVAILABLE), 60 * 6);
         return $result['truck'];
     }
 }

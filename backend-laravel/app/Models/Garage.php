@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasUuid;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -64,6 +65,18 @@ class Garage extends Model
     protected static $logOnlyDirty = true;
 
     /**
+     * The attributes that are searchable.
+     *
+     * @var string[]
+     */
+    public static $searchable = [
+        'garage_model',
+        'country',
+        'available_truck_spot',
+        'available_trailer_spot',
+    ];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function location()
@@ -109,5 +122,105 @@ class Garage extends Model
     public function trailers()
     {
         return $this->hasMany(Trailer::class);
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchGarageModel($query, $value)
+    {
+        $garageModels = explode(',', $value);
+
+        if ($garageModels && count($garageModels) > 0) {
+            return $query->whereHas('garageModel', function (Builder $query) use ($garageModels) {
+                $query->whereIn('id', $garageModels);
+            });
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchCountry($query, $value)
+    {
+        $countries = explode(',', $value);
+
+        if ($countries && count($countries) > 0) {
+            return $query->whereHas('location', function (Builder $query) use ($countries) {
+                $query->whereHas('country', function (Builder $query) use ($countries) {
+                    $query->whereIn('id', $countries);
+                });
+            });
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchAvailableTruckSpot($query, $value)
+    {
+        $user = User::current();
+        $table = (new Truck)->getTable();
+        $column = 'truck_count';
+        $garageTable = (new Garage)->getTable();
+        $garageModelTable = (new GarageModel)->getTable();
+
+        if ($value) {
+            return $query->whereIn('id', function ($q) use ($user, $table, $column, $garageTable, $garageModelTable) {
+                return self::freeSpotQuery($q, $user, $table, $column, $garageTable, $garageModelTable)->get();
+            });
+        }
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchAvailableTrailerSpot($query, $value)
+    {
+        $user = User::current();
+        $table = (new Truck)->getTable();
+        $column = 'trailer_count';
+        $garageTable = (new Garage)->getTable();
+        $garageModelTable = (new GarageModel)->getTable();
+
+        if ($value) {
+            return $query->whereIn('id', function ($q) use ($user, $table, $column, $garageTable, $garageModelTable) {
+                return self::freeSpotQuery($q, $user, $table, $column, $garageTable, $garageModelTable)->get();
+            });
+        }
+        return $query;
+    }
+
+    /**
+     * @param Builder $query
+     * @param $user
+     * @param $table
+     * @param $column
+     * @param $garageTable
+     * @param $garageModelTable
+     * @return Builder
+     */
+    public static function freeSpotQuery($query, $user, $table, $column, $garageTable, $garageModelTable)
+    {
+        return $query->select($garageTable . '.id')
+            ->from($garageTable)
+            ->leftjoin($garageModelTable, $garageTable . '.garage_model_id', '=', $garageModelTable . '.id')
+            ->leftjoin($table, $table . '.garage_id', '=', $garageTable . '.id')
+            ->where($garageTable . '.company_id', $user->company_id)
+            ->groupBy($garageTable . '.id', $garageModelTable . '.' . $column)
+            ->havingRaw('COUNT(DISTINCT `' . $table . '`.`id`) < `' . $garageModelTable . '`.`' . $column . '`');
     }
 }

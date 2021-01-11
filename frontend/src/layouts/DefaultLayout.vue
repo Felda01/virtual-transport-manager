@@ -29,6 +29,10 @@
                             :link="{ name: $t('pages.trailerShop'), path: generatePath('trailerShop') }"
                     ></sidebar-item>
                 </sidebar-item>
+                <sidebar-item :link="{ name: $t('navigation.companyEquipmentData'), icon: 'local_shipping' }">
+                    <sidebar-item :link="{ name: $t('pages.garages'), path: generatePath('garages') }"
+                    ></sidebar-item>
+                </sidebar-item>
             </template>
         </side-bar>
         <div class="main-panel">

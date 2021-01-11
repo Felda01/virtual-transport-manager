@@ -15,6 +15,7 @@ class CreateTrucksTable extends Migration
     {
         Schema::create('trucks', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->integer('status');
             $table->uuid('truck_model_id');
             $table->foreign('truck_model_id')->references('id')->on('truck_models');
             $table->uuid('company_id');

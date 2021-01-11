@@ -3,6 +3,8 @@
 
 namespace App\Utilities;
 
+use Carbon\Carbon;
+
 /**
  * Class QueueJobUtility
  * @package App\Utilities
@@ -15,6 +17,6 @@ class QueueJobUtility
      */
     public static function dispatch($job, $delay)
     {
-
+        dispatch($job)->delay(Carbon::now()->addMinutes(1));
     }
 }

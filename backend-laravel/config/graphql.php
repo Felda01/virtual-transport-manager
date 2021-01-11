@@ -127,6 +127,9 @@ return [
                 'me' => \App\GraphQL\Queries\MeQuery::class,
 
                 'availableGarages' => \App\GraphQL\Queries\AvailableGaragesQuery::class,
+                'countriesWithGarages' => \App\GraphQL\Queries\CountriesWithGaragesQuery::class,
+
+                'garages' => \App\GraphQL\Queries\GaragesQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,

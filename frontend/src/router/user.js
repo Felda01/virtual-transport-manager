@@ -89,6 +89,20 @@ const userRoutes = [
                     }
                 }
             },
+            {
+                path: enRoute.garages,
+                alias: getAlias('garages'),
+                name: 'garages',
+                component: () => import('../views/user/Garages.vue'),
+                meta: {
+                    requiresAuth: true,
+                    userOnly: true,
+                    title: i18n.t('pages.garages'),
+                    path: {
+                        en: enRoute.garages
+                    }
+                }
+            },
         ]
     },
 ];

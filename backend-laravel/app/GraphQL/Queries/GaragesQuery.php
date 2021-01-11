@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Queries;
 
-use App\Models\Driver;
 use App\Models\Garage;
 use App\Models\GarageModel;
-use App\Models\Trailer;
-use App\Models\Truck;
-use App\Models\User;
+use App\Utilities\FilterUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -18,10 +15,10 @@ use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\SelectFields;
 
-class AvailableGaragesQuery extends Query
+class GaragesQuery extends Query
 {
     protected $attributes = [
-        'name' => 'availableGarages',
+        'name' => 'garages',
         'description' => 'A query'
     ];
 
@@ -56,8 +53,9 @@ class AvailableGaragesQuery extends Query
                 'type' => Type::int(),
                 'defaultValue' => 1,
             ],
-            'type' => [
-                'type' => Type::string()
+            'filter' => [
+                'type' => Type::listOf(GraphQL::type('FilterInput')),
+                'defaultValue' => [],
             ],
         ];
     }
@@ -71,30 +69,8 @@ class AvailableGaragesQuery extends Query
 
         $query = Garage::query();
 
-        /** @var User $user */
-        $user = User::find($this->guard()->id());
-
-        $table = null;
-        $column = null;
-
-        $garageTable = (new Garage)->getTable();
-        $garageModelTable = (new GarageModel)->getTable();
-
-        if ($args['type'] === 'truck') {
-            $table = (new Truck)->getTable();
-            $column = 'truck_count';
-        } else if ($args['type'] === 'trailer') {
-            $table = (new Trailer)->getTable();
-            $column = 'trailer_count';
-        } else if ($args['type'] === 'driver') {
-            $table = (new Driver())->getTable();
-            $column = 'truck_count';
-        }
-
-        if ($table) {
-            $query = $query->whereIn('id', function ($q) use ($user, $table, $column, $garageTable, $garageModelTable) {
-                return Garage::freeSpotQuery($q, $user, $table, $column, $garageTable, $garageModelTable)->get();
-            });
+        if ($args['filter'] && count($args['filter']) > 0) {
+            $query = FilterUtility::handleFilter($query, new Garage, Garage::$searchable, $args['filter']);
         }
 
         if ($args['limit'] === -1) {
@@ -104,6 +80,5 @@ class AvailableGaragesQuery extends Query
         return $query->with($with)
             ->select($select)
             ->paginate($args['limit'], ['*'], 'page', $args['page']);
-
     }
 }

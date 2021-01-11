@@ -18,7 +18,7 @@ class CreateDriversTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->boolean('gender');
-            $table->string('status');
+            $table->integer('status');
             $table->string('image');
             $table->uuid('company_id');
             $table->foreign('company_id')->references('id')->on('companies');

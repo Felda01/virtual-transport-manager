@@ -17,7 +17,8 @@
     "user": "User",
     "truckShop": "Truck shop",
     "garageShop": "Garage shop",
-    "trailerShop": "Trailer shop"
+    "trailerShop": "Trailer shop",
+    "garages": "Garages"
   },
   "routes": {
     "login": "login",
@@ -36,7 +37,8 @@
     "users": "users",
     "truckShop": "truck-shop",
     "garageShop": "garage-shop",
-    "trailerShop": "trailer-shop"
+    "trailerShop": "trailer-shop",
+    "garages": "garages"
   },
   "navigation": {
     "staticMapData": "Map data",
@@ -371,7 +373,16 @@
   },
   "garage": {
     "property": {
-      "location": "Location"
+      "location": "Location",
+      "garage_model": "Garage model",
+      "trucks": "Trucks",
+      "trailers": "Trailers",
+      "drivers": "Drivers"
+    },
+    "searchFields": {
+      "country": "Country",
+      "available_truck_spot": "At least one available truck spot",
+      "available_trailer_spot": "At least one available trailer spot"
     }
   },
   "truck": {
