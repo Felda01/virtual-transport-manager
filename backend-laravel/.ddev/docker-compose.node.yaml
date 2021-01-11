@@ -8,6 +8,9 @@ services:
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: $DDEV_APPROOT
+    environment:
+      - VIRTUAL_HOST=$DDEV_HOSTNAME
+      - HTTPS_EXPOSE=6001
     volumes:
       - "../:/var/www/html:cached"
     working_dir: /var/www/html

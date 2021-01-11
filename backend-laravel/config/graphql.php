@@ -2,11 +2,6 @@
 
 declare(strict_types=1);
 
-use example\Mutation\ExampleMutation;
-use example\Query\ExampleQuery;
-use example\Type\ExampleRelationType;
-use example\Type\ExampleType;
-
 return [
 
     // The prefix for routes
@@ -128,6 +123,8 @@ return [
                 'roles' => \App\GraphQL\Queries\RolesQuery::class,
 
                 'user' => \App\GraphQL\Queries\UserQuery::class,
+                'company' => \App\GraphQL\Queries\CompanyQuery::class,
+                'me' => \App\GraphQL\Queries\MeQuery::class,
 
                 'availableGarages' => \App\GraphQL\Queries\AvailableGaragesQuery::class,
             ],

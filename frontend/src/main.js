@@ -42,6 +42,15 @@ Vue.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 Vue.axios.defaults.headers.common['Accept'] = 'application/json';
 Vue.axios.defaults.withCredentials = true;
 
+Vue.axios.interceptors.response.use(function (response) {
+    return response
+  }, function (error) {
+    if (error.response.status === 401) {
+      store.dispatch('logout', { fullPath: router.currentRoute.fullPath });
+    }
+    return Promise.reject(error)
+  });
+
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
@@ -49,12 +58,8 @@ import { BatchHttpLink } from 'apollo-link-batch-http'
 import { onError } from 'apollo-link-error';
 import { from } from 'apollo-link';
 
-import { setContext } from "apollo-link-context";
-
-const HTTP_END_POINT = 'https://virtual-transport-manager.ddev.site/api/graphql'
-
 const batchLink = new BatchHttpLink({
-  uri: HTTP_END_POINT,
+  uri: process.env.VUE_APP_GRAPHQL_ENDPOINT,
   headers: {
     'Accept': 'application/json',
     'X-Requested-With': 'XMLHttpRequest'
@@ -65,7 +70,7 @@ const batchLink = new BatchHttpLink({
 // HTTP connection to the API
 const httpLinkDefault = createHttpLink({
   // You should use an absolute URL here
-  uri: HTTP_END_POINT,
+  uri: process.env.VUE_APP_GRAPHQL_ENDPOINT,
   headers: {
     'Accept': 'application/json',
     'X-Requested-With': 'XMLHttpRequest'
@@ -105,28 +110,19 @@ const defaultOptions = {
 }
 
 // Create the apollo client default
-const apolloClientDefault = new ApolloClient({
+const apolloClientDefault =  new ApolloClient({
   link: from([
     onError(errorHandler => {
       if (errorHandler && errorHandler.networkError && errorHandler.networkError.statusCode === 401) {
         store.dispatch('logout', { fullPath: router.currentRoute.fullPath });
       }
-     }),
+    }),
     // httpLinkDefault,
     batchLink,
   ]),
   cache,
   defaultOptions: defaultOptions,
 });
-
-Vue.axios.interceptors.response.use(function (response) {
-    return response
-  }, function (error) {
-    if (error.response.status === 401) {
-      store.dispatch('logout', { fullPath: router.currentRoute.fullPath });
-    }
-    return Promise.reject(error)
-  });
 
 // Create the apollo client auth
 // const apolloClientAuth = new ApolloClient({
@@ -135,6 +131,8 @@ Vue.axios.interceptors.response.use(function (response) {
 //   defaultOptions: defaultOptions,
 //   connectToDevTools: true
 // })
+
+export const apolloClient = apolloClientDefault;
 
 const apolloProvider = new VueApollo({
   // clients: {
@@ -161,6 +159,21 @@ import i18n from './lang/index.js';
 
 import Vue2Filters from 'vue2-filters';
 Vue.use(Vue2Filters);
+
+// import Echo from 'laravel-echo';
+// window.io = require('socket.io-client');
+//
+// if (typeof io !== 'undefined') {
+//   const echo_instance = new Echo({
+//     broadcaster: 'socket.io',
+//     host: process.env.VUE_APP_LARAVEL_ENDPOINT + ':6001',
+//     transports: ['websocket', 'polling', 'flashsocket'],
+//   });
+//
+//   window.Echo = echo_instance;
+//   Vue.prototype.$echo = echo_instance;
+// }
+
 
 new Vue({
   router,

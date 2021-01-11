@@ -3,6 +3,8 @@ import Vuex from 'vuex';
 import Cookies from 'js-cookie';
 import router from '../router'
 import i18n from "../lang";
+import { apolloClient } from "../main";
+import { COMPANY_QUERY, ME_QUERY } from '../graphql/queries/common';
 
 
 Vue.use(Vuex);
@@ -10,22 +12,19 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         loading: false,
-        user: null
+        user: null,
+        company: null
     },
     getters: {
-        loading: state => state.loading,
         user: state => state.user,
-        money: state => state.user && state.user.company ? parseFloat(state.user.company.money) : null
+        money: state => state.company && state.company ? parseFloat(state.company.money) : null
     },
     mutations: {
-        SET_LOADING(state, loading) {
-            state.loading = loading;
-        },
         SET_USER(state, user) {
             state.user = user
         },
-        SET_MONEY(state, money) {
-            state.user.company.money = money;
+        SET_COMPANY(state, company) {
+            state.company = company;
         }
     },
     actions: {
@@ -63,18 +62,23 @@ export default new Vuex.Store({
             commit('SET_USER', user);
         },
 
-        setMoney({commit}, {money}) {
-            commit('SET_MONEY', money);
+        getUser({dispatch}, {fullPath}) {
+            return apolloClient.query({
+                query: ME_QUERY,
+            }).then(response => {
+                dispatch('setUser', {user: response.data.me});
+                dispatch('getCompany');
+            }).catch(error => {
+                dispatch('logout', {fullPath: fullPath});
+            });
         },
 
-        getUser({dispatch}, {fullPath}) {
-            return Vue.axios.get('https://virtual-transport-manager.ddev.site/api/user')
-                .then(response => {
-                    dispatch('setUser', {user: response.data.user});
-                })
-                .catch(error => {
-                    dispatch('logout', {fullPath: fullPath});
-                })
+        getCompany({commit}) {
+            return apolloClient.query({
+                query: COMPANY_QUERY,
+            }).then(response => {
+                commit('SET_COMPANY', response.data.company);
+            });
         },
 
         logout({commit}, {fullPath}) {
@@ -114,10 +118,6 @@ export default new Vuex.Store({
                     }
                 });
 
-        },
-
-        setLoading({commit}, {loading}) {
-            commit('SET_LOADING', loading);
         },
 
         setLanguageCookie({commit}, {locale}) {

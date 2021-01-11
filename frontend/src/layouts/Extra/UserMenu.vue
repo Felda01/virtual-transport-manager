@@ -3,8 +3,8 @@
     <div class="photo" v-if="user.image">
       <img :src="user.image" :alt="name + ' avatar'" />
     </div>
-    <div class="photo photo-letters" v-else>
-      <span class="sidebar-mini">{{ letters }}</span>
+    <div class="photo" v-else>
+      <img :src="avatarPlaceholder" :alt="name + ' avatar'" />
     </div>
     <div class="user-info">
       <a
@@ -76,6 +76,7 @@
     data() {
       return {
         isClosed: true,
+        avatarPlaceholder: "/img/default-avatar.png",
       };
     },
     methods: {
