@@ -71,7 +71,7 @@
     import { CARGOS_QUERY } from '@/graphql/queries/admin';
     import { CREATE_CARGO_MUTATION, UPDATE_CARGO_MUTATION, DELETE_CARGO_MUTATION } from '@/graphql/mutations/admin';
     import { MutationModal, Pagination, DeleteModal } from "@/components";
-    import { ADRS_QUERY, CHASSIS_QUERY, LOCALES_QUERY } from "@/graphql/queries/common";
+    import { ADRS_QUERY, CHASSIS_QUERY, LOCALES_QUERY, TRAILER_MODELS_SELECT_QUERY } from "@/graphql/queries/common";
 
     export default {
         title () {
@@ -95,6 +95,7 @@
                 chassis: [],
                 ADRs: [],
                 locales: [],
+                trailerModels: [],
                 page: 1,
                 modalSchemaAddCargo: {
                     form: {
@@ -229,7 +230,24 @@
                             labelAdditionalText: this.$t('cargo.additionalLabelText.max_price')
                         }
                     },
-
+                    {
+                        label: this.$t('cargo.relations.trailerModels'),
+                        rules: 'required',
+                        name: 'trailerModels',
+                        input: 'select',
+                        type: 'select',
+                        value: [],
+                        config: {
+                            options: this.trailerModels.data,
+                            optionValue: (option) => {
+                                return option.id;
+                            },
+                            optionLabel: (option) => {
+                                return option.name;
+                            },
+                            multiple: true
+                        }
+                    },
                     {
                         label: this.$t('cargo.property.image'),
                         rules: 'required',
@@ -356,7 +374,24 @@
                             labelAdditionalText: this.$t('cargo.additionalLabelText.max_price')
                         }
                     },
-
+                    {
+                        label: this.$t('cargo.relations.trailerModels'),
+                        rules: 'required',
+                        name: 'trailerModels',
+                        input: 'select',
+                        type: 'select',
+                        value: this._.map(cargo.trailerModels, 'id'),
+                        config: {
+                            options: this.trailerModels.data,
+                            optionValue: (option) => {
+                                return option.id;
+                            },
+                            optionLabel: (option) => {
+                                return option.name;
+                            },
+                            multiple: true
+                        }
+                    },
                     {
                         label: this.$t('cargo.property.image'),
                         rules: 'required',
@@ -417,6 +452,12 @@
             },
             locales: {
                 query: LOCALES_QUERY,
+            },
+            trailerModels: {
+                query: TRAILER_MODELS_SELECT_QUERY,
+                variables() {
+                    return { page: 1, limit: -1 }
+                }
             }
         },
     }

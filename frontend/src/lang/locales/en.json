@@ -358,6 +358,9 @@
       "weight": "(in kg)",
       "min_price": "(in €)",
       "max_price": "(in €)"
+    },
+    "relations": {
+      "trailerModels": "Trailer models"
     }
   },
   "adminDashboard": {

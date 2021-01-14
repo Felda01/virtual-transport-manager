@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\GraphQL\Mutations;
 
 use App\Models\Cargo;
+use App\Rules\ExistsAllRule;
 use App\Rules\NotExistsRelationRule;
 use App\Rules\UniqueTranslationRule;
 use App\Utilities\ImageUtility;
@@ -93,6 +94,11 @@ class UpdateCargoMutation extends Mutation
                 'string',
                 'regex:/'.ImageUtility::getBase64ImageOrUrlImageRegex().'/i'
             ],
+            'trailerModels' => [
+                'required',
+                'string',
+                new ExistsAllRule('TrailerModel')
+            ]
         ];
     }
 
@@ -140,6 +146,10 @@ class UpdateCargoMutation extends Mutation
                 'name' => 'image',
                 'type' => Type::nonNull(Type::string()),
             ],
+            'trailerModels' => [
+                'name' => 'trailerModels',
+                'type' => Type::nonNull(Type::string()),
+            ],
         ];
     }
 
@@ -168,6 +178,8 @@ class UpdateCargoMutation extends Mutation
         $cargo->min_price = $args['min_price'];
         $cargo->max_price = $args['max_price'];
         $cargo->image = $fileName;
+
+        $cargo->trailerModels()->sync(explode(',', $args['trailerModels']));
 
         $cargo->save();
 

@@ -84,7 +84,7 @@
                             <ValidationProvider :name="field.label" :rules="field.rules" v-slot="{ passed, failed, errors }" tag="div">
                                 <md-field :class="[{ 'md-error md-invalid': failed }, { 'md-valid': passed }]">
                                     <label>{{ field.label }}{{ fieldAdditionalLabelText(field.config) }}{{ field.rules.includes('required') ? ' *' : '' }}</label>
-                                    <md-select v-model="form[field.name]" :name="field.label">
+                                    <md-select v-model="form[field.name]" :name="field.label" :multiple="field.config.multiple ? field.config.multiple : false">
                                         <template v-if="field.config.groupBy">
                                             <md-optgroup v-for="(groups, groupIndex) in _.groupBy(field.config.options, field.config.groupBy)" :label="field.config.optgroupLabel(groups[0])" :key="field.name + '-group-' + groupIndex">
                                                 <md-option :value="field.config.optionValue(option)" v-for="option in groups" :key="field.config.optionValue(option)">{{ field.config.translatableLabel ? $t(field.config.translatableLabel + field.config.optionLabel(option)) : field.config.optionLabel(option) }}</md-option>

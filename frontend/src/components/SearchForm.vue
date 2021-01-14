@@ -24,7 +24,14 @@
                             <md-field :mdClearable="true">
                                 <label>{{ field.label }}</label>
                                 <md-select v-model="value[field.name]" :name="field.label" :multiple="field.config.multiple ? field.config.multiple : false">
-                                    <md-option :value="field.config.optionValue(option)" v-for="option in field.config.options" :key="field.config.optionValue(option)">{{ field.config.translatableLabel ? $t(field.config.translatableLabel + field.config.optionLabel(option)) : field.config.optionLabel(option) }}</md-option>
+                                    <template v-if="field.config.groupBy">
+                                        <md-optgroup v-for="(groups, groupIndex) in _.groupBy(field.config.options, field.config.groupBy)" :label="field.config.optgroupLabel(groups[0])" :key="field.name + '-group-' + groupIndex">
+                                            <md-option :value="field.config.optionValue(option)" v-for="option in groups" :key="field.config.optionValue(option)">{{ field.config.translatableLabel ? $t(field.config.translatableLabel + field.config.optionLabel(option)) : field.config.optionLabel(option) }}</md-option>
+                                        </md-optgroup>
+                                    </template>
+                                    <template v-else>
+                                        <md-option :value="field.config.optionValue(option)" v-for="option in field.config.options" :key="field.config.optionValue(option)">{{ field.config.translatableLabel ? $t(field.config.translatableLabel + field.config.optionLabel(option)) : field.config.optionLabel(option) }}</md-option>
+                                    </template>
                                 </md-select>
                             </md-field>
                         </template>

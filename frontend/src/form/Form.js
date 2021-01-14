@@ -45,7 +45,15 @@ class Form {
         for (let key in data) {
             if (data.hasOwnProperty(key)) {
                 if (key !== TRANSLATABLE_KEY) {
-                    result[key] = data[key];
+                    if (data[key] instanceof Array) {
+                        data[key] = data[key].filter((item) => {
+                            return item !== "";
+                        })
+                        result[key] = data[key].join(',');
+                    } else {
+                        result[key] = data[key];
+                    }
+
                 } else {
                     for (let translatableProperty in data[key]) {
                         if (data[key].hasOwnProperty(translatableProperty)) {

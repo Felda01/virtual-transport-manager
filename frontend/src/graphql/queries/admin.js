@@ -109,6 +109,10 @@ export const CARGOS_QUERY = gql`
                 min_price
                 max_price
                 image
+                trailerModels {
+                    id
+                    name
+                }
             }
             total
             per_page

@@ -85,8 +85,8 @@ class CargoType extends GraphQLType
             'customers' => [
                 'type' => Type::listOf(GraphQL::type('Customer')),
             ],
-            'trailers' => [
-                'type' => Type::listOf(GraphQL::type('Trailer')),
+            'trailerModels' => [
+                'type' => Type::listOf(GraphQL::type('TrailerModel')),
             ],
         ];
     }

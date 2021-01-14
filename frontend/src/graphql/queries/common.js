@@ -119,6 +119,17 @@ export const TRAILER_MODELS_QUERY = gql`
     }
 `;
 
+export const TRAILER_MODELS_SELECT_QUERY = gql`
+    query TrailerModelsQuery($limit: Int!, $page: Int!, $filter: [FilterInput], $sort: String) {
+        trailerModels(limit: $limit, page: $page, filter: $filter, sort: $sort) {
+            data {
+                id
+                name
+            }
+        }
+    }
+`;
+
 export const TRUCK_MODELS_QUERY = gql`
     query TruckModelsQuery($limit: Int!, $page: Int!, $filter: [FilterInput], $sort: String) {
         truckModels(limit: $limit, page: $page, filter: $filter, sort: $sort) {
