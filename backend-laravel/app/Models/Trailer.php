@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasUuid;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -61,6 +62,17 @@ class Trailer extends Model
     protected static $logOnlyDirty = true;
 
     /**
+     * The attributes that are searchable.
+     *
+     * @var string[]
+     */
+    public static $searchable = [
+        'trailerModel',
+        'status',
+        'garage'
+    ];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function trailerModel()
@@ -90,5 +102,56 @@ class Trailer extends Model
     public function garage()
     {
         return $this->belongsTo(Garage::class);
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchTrailerModel($query, $value)
+    {
+        $brands = explode(',', $value);
+
+        if ($brands && count($brands) > 0) {
+            return $query->whereHas('trailerModel', function (Builder $query) use ($brands) {
+                $query->whereIn('id', $brands);
+            });
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchStatus($query, $value)
+    {
+        $statuses = explode(',', $value);
+
+        if ($statuses && count($statuses) > 0) {
+            return $query->whereIn('status', $statuses);
+        }
+
+        return $query;
+    }
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchGarage($query, $value)
+    {
+        $garages = explode(',', $value);
+
+        if ($garages && count($garages) > 0) {
+            return $query->whereHas('garage', function (Builder $query) use ($garages) {
+                $query->whereIn('id', $garages);
+            });
+        }
+
+        return $query;
     }
 }

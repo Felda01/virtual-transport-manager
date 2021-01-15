@@ -5,7 +5,7 @@
                 <content-placeholders-heading />
                 <content-placeholders-text :lines="2" />
             </content-placeholders>
-            <content-placeholders class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-33" v-for="index in 6" :key="index">
+            <content-placeholders class="md-layout-item md-size-100">
                 <content-placeholders-heading />
                 <content-placeholders-text :lines="10" />
             </content-placeholders>

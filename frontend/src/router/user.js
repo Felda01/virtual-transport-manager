@@ -145,6 +145,34 @@ const userRoutes = [
                     }
                 }
             },
+            {
+                path: enRoute.trailers,
+                alias: getAlias('trailers'),
+                name: 'trailers',
+                component: () => import('../views/user/Trailers.vue'),
+                meta: {
+                    requiresAuth: true,
+                    userOnly: true,
+                    title: i18n.t('pages.trailers'),
+                    path: {
+                        en: enRoute.trailers
+                    }
+                }
+            },
+            {
+                path: `${enRoute.trailers}/:id`,
+                alias: `${getAlias('trailers')}/:id`,
+                name: 'trailers',
+                component: () => import('../views/user/Trailer.vue'),
+                meta: {
+                    requiresAuth: true,
+                    userOnly: true,
+                    title: i18n.t('pages.trailers'),
+                    path: {
+                        en: `${enRoute.trailers}/:id`
+                    }
+                }
+            },
         ]
     },
 ];

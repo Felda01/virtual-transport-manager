@@ -204,3 +204,50 @@ export const TRUCKS_QUERY = gql`
     }
 `;
 
+export const TRAILERS_QUERY = gql`
+    query TrailersQuery($limit: Int!, $page: Int!, $filter: [FilterInput]) {
+        trailers(limit: $limit, page: $page, filter: $filter) {
+            data {
+                id
+                status
+                trailerModel {
+                    id
+                    name
+                    type
+                    image
+                }
+                truck {
+                    id
+                    truckModel {
+                        id
+                        name
+                        brand
+                    }
+                }
+                garage {
+                    id
+                    garageModel {
+                        id
+                        name
+                    }
+                    location {
+                        id
+                        name
+                        country {
+                            id
+                            short_name
+                        }
+                    }
+                }
+            }
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
+            has_more_pages
+        }
+    }
+`;
+

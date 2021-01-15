@@ -23,6 +23,9 @@ class TrailerType extends GraphQLType
             'id' => [
                 'type' => Type::nonNull(Type::string()),
             ],
+            'status' => [
+                'type' => Type::int(),
+            ],
             'trailerModel' => [
                 'type' => GraphQL::type('TrailerModel')
             ],

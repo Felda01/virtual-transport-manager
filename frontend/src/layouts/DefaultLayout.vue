@@ -32,6 +32,10 @@
                 <sidebar-item :link="{ name: $t('navigation.companyEquipmentData'), icon: 'local_shipping' }">
                     <sidebar-item :link="{ name: $t('pages.garages'), path: generatePath('garages') }"
                     ></sidebar-item>
+                    <sidebar-item :link="{ name: $t('pages.trucks'), path: generatePath('trucks') }"
+                    ></sidebar-item>
+                    <sidebar-item :link="{ name: $t('pages.trailers'), path: generatePath('trailers') }"
+                    ></sidebar-item>
                 </sidebar-item>
             </template>
         </side-bar>

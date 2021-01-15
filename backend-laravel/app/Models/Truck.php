@@ -70,7 +70,7 @@ class Truck extends Model
      * @var string[]
      */
     public static $searchable = [
-        'brand',
+        'truckModel',
         'status',
         'garage'
     ];
@@ -120,7 +120,7 @@ class Truck extends Model
      * @param $value
      * @return Builder
      */
-    public function searchBrand($query, $value)
+    public function searchTruckModel($query, $value)
     {
         $brands = explode(',', $value);
 

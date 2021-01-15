@@ -1,6 +1,6 @@
 <template>
     <div class="md-layout">
-        <template v-if="$apollo.queries.trucks.loading && firstLoad">
+        <template v-if="$apollo.queries.trailers.loading && firstLoad">
             <content-placeholders class="md-layout-item md-size-100">
                 <content-placeholders-heading />
                 <content-placeholders-text :lines="2" />
@@ -14,36 +14,35 @@
             <div class="md-layout-item md-size-100 mb-3">
                 <search-form :search-schema="searchSchema" v-model="searchModel"></search-form>
             </div>
-            <template v-if="trucks.data && trucks.data.length > 0">
+            <template v-if="trailers.data && trailers.data.length > 0">
                 <div class="md-layout-item md-size-100">
                     <md-card>
                         <md-card-content class="pb-0">
-                            <md-table v-model="trucks.data" v-if="trucks && trucks.data">
+                            <md-table v-model="trailers.data" v-if="trailers && trailers.data">
                                 <md-table-row slot="md-table-row" slot-scope="{ item, index }" @click.native="clickTableRow(item)" class="cursor-pointer-hover">
-                                    <md-table-cell md-label="#">{{ index + trucks.from }}</md-table-cell>
+                                    <md-table-cell md-label="#">{{ index + trailers.from }}</md-table-cell>
                                     <md-table-cell md-label="">
                                         <div class="img-container">
-                                            <img :src="item.truckModel.image" :alt="item.truckModel.brand + ' ' +item.truckModel.name" />
+                                            <img :src="item.trailerModel.image" :alt="item.trailerModel.name" />
                                         </div>
                                     </md-table-cell>
-                                    <md-table-cell :md-label="$t('truckModel.model')" class="td-name">{{ item.truckModel.brand }} {{ item.truckModel.name }}</md-table-cell>
-                                    <md-table-cell :md-label="$t('truck.property.status')">{{ $t('status.' + item.status) }}</md-table-cell>
-                                    <md-table-cell :md-label="$t('truck.property.garage')">{{ item.garage.garageModel.name }} - {{ item.garage.location.name }} ({{ item.garage.location.country.short_name | uppercase }})</md-table-cell>
-                                    <md-table-cell :md-label="$t('truck.relations.drivers')"><template v-if="item.drivers && item.drivers.length > 0">{{ drivers(item.drivers) }}</template><template v-else>{{ $t('truck.relations.no_driver') }}</template></md-table-cell>
-                                    <md-table-cell :md-label="$t('truck.relations.trailer')"><template v-if="item.trailer">{{ item.trailerModel.name }}</template><template v-else>{{ $t('truck.relations.no_trailer') }}</template></md-table-cell>
+                                    <md-table-cell :md-label="$t('trailer.relations.trailerModel')" class="td-name">{{ item.trailerModel.name }}</md-table-cell>
+                                    <md-table-cell :md-label="$t('trailer.property.status')">{{ $t('status.' + item.status) }}</md-table-cell>
+                                    <md-table-cell :md-label="$t('trailer.property.garage')">{{ item.garage.garageModel.name }} - {{ item.garage.location.name }} ({{ item.garage.location.country.short_name | uppercase }})</md-table-cell>
+                                    <md-table-cell :md-label="$t('trailer.relations.truck')"><template v-if="item.truck">{{ item.truckModel.brand }} {{ item.truckModel.name }}</template><template v-else>{{ $t('trailer.relations.no_truck') }}</template></md-table-cell>
                                 </md-table-row>
                             </md-table>
                         </md-card-content>
                         <md-card-actions md-alignment="space-between">
                             <div class="">
                                 <p class="card-category">
-                                    {{ $t('pagination.display', {from: trucks.from, to: trucks.to, total: trucks.total}) }}
+                                    {{ $t('pagination.display', {from: trailers.from, to: trailers.to, total: trailers.total}) }}
                                 </p>
                             </div>
                             <pagination class="pagination-no-border pagination-success"
                                         v-model="page"
-                                        :per-page="trucks.per_page"
-                                        :total="trucks.total"></pagination>
+                                        :per-page="trailers.per_page"
+                                        :total="trailers.total"></pagination>
                         </md-card-actions>
                     </md-card>
                 </div>
@@ -58,22 +57,22 @@
 </template>
 
 <script>
-    import { TRUCKS_QUERY, GARAGES_SELECT_QUERY } from '@/graphql/queries/user';
-    import { TRUCK_MODELS_SELECT_QUERY, STATUSES_QUERY } from "@/graphql/queries/common";
+    import { TRAILERS_QUERY, GARAGES_SELECT_QUERY } from '@/graphql/queries/user';
+    import { TRAILER_MODELS_SELECT_QUERY, STATUSES_QUERY } from "@/graphql/queries/common";
     import { Pagination, SearchForm } from "@/components";
 
     export default {
         title () {
-            return this.$t('pages.trucks');
+            return this.$t('pages.trailers');
         },
-        name: "Trucks",
+        name: "Trailers",
         components: {
             Pagination,
             SearchForm
         },
         data() {
             return {
-                trucks: {
+                trailers: {
                     data: [],
                     per_page: 10,
                     current_page: 1,
@@ -82,15 +81,15 @@
                 },
                 page: 1,
                 firstLoad: true,
-                truckModelsOptions: [],
-                truckModels: [],
+                trailerModelsOptions: [],
+                trailerModels: [],
                 garagesOptions: [],
                 garages: [],
                 statuses: [],
                 statusesOptions: [],
                 searchModel: {
                     status: [],
-                    truckModel: [],
+                    trailerModel: [],
                     garage: [],
                 },
                 searchSchema: {
@@ -103,7 +102,7 @@
                                     type: 'select',
                                     input: 'select',
                                     name: 'status',
-                                    label: this.$t('truck.property.status'),
+                                    label: this.$t('trailer.property.status'),
                                     value: [],
                                     config: {
                                         options: [],
@@ -121,20 +120,20 @@
                                     class: ['md-medium-size-50', 'md-xsmall-size-100' ,'md-size-33'],
                                     type: 'select',
                                     input: 'select',
-                                    name: 'truckModel',
-                                    label: this.$t('truck.relations.truckModel'),
+                                    name: 'trailerModel',
+                                    label: this.$t('trailer.relations.trailerModel'),
                                     value: [],
                                     config: {
                                         options: [],
                                         optionValue: (option) => {
                                             return option.id;
                                         },
-                                        groupBy: 'brand',
+                                        groupBy: 'type',
                                         optgroupLabel: (optgroup) => {
-                                            return optgroup.brand;
+                                            return optgroup.type;
                                         },
                                         optionLabel: (option) => {
-                                            return option.brand + ' ' + option.name;
+                                            return option.name;
                                         },
                                         multiple: true
                                     }
@@ -144,7 +143,7 @@
                                     type: 'select',
                                     input: 'select',
                                     name: 'garage',
-                                    label: this.$t('truck.property.garage'),
+                                    label: this.$t('trailer.property.garage'),
                                     value: [],
                                     config: {
                                         options: [],
@@ -168,27 +167,18 @@
             }
         },
         methods: {
-            drivers(drivers) {
-                let result = [];
-
-                for (let driver of drivers) {
-                    result.push(driver.first_name.charAt(0) + '. ' + driver.last_name)
-                }
-
-                return result.join(', ');
-            },
             clickTableRow(item) {
                 this.$router.push({
-                    name: 'truck',
+                    name: 'trailer',
                     params: {id: item.id}
                 });
             }
         },
         apollo: {
-            trucks: {
-                query: TRUCKS_QUERY,
+            trailers: {
+                query: TRAILERS_QUERY,
                 variables() {
-                    return {page: this.page, limit: this.trucks.per_page, filter: this.filters}
+                    return {page: this.page, limit: this.trailers.per_page, filter: this.filters}
                 },
                 result({data, loading, networkStatus}) {
                     this.firstLoad = false;
@@ -197,7 +187,7 @@
             statuses: {
                 query: STATUSES_QUERY,
                 variables() {
-                    return { model: 'truck'}
+                    return { model: 'trailer'}
                 },
                 result({ data, loading, networkStatus }) {
                     this.statusesOptions = data.statuses;
@@ -206,15 +196,15 @@
                     });
                 }
             },
-            truckModels: {
-                query: TRUCK_MODELS_SELECT_QUERY,
+            trailerModels: {
+                query: TRAILER_MODELS_SELECT_QUERY,
                 variables() {
                     return { page: 1, limit: -1}
                 },
                 result({ data, loading, networkStatus }) {
-                    this.truckModelsOptions = data.truckModels.data;
+                    this.trailerModelsOptions = data.trailerModels.data;
                     this.$nextTick( () => {
-                        this.$set(this.searchSchema.groups[0].fields[1].config, 'options', this.truckModelsOptions);
+                        this.$set(this.searchSchema.groups[0].fields[1].config, 'options', this.trailerModelsOptions);
                     });
                 }
             },

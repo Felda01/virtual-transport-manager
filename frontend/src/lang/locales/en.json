@@ -408,7 +408,13 @@
   },
   "trailer": {
     "property": {
-      "garage": "Garage"
+      "garage": "Garage",
+      "status": "Status"
+    },
+    "relations": {
+      "trailerModel": "Trailer model",
+      "truck": "Truck",
+      "no_truck": "No truck"
     }
   },
   "driver": {

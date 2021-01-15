@@ -31,6 +31,19 @@ class StatusUtility
     /**
      * @return int[]
      */
+    public static function trailer()
+    {
+        return [
+            self::DELIVERY_FROM_SHOP,
+            self::AVAILABLE,
+            self::ASSIGNED,
+            self::ON_ROAD,
+        ];
+    }
+
+    /**
+     * @return int[]
+     */
     public static function all()
     {
         return [

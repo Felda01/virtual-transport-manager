@@ -126,6 +126,7 @@ export const TRAILER_MODELS_SELECT_QUERY = gql`
             data {
                 id
                 name
+                type
             }
         }
     }
