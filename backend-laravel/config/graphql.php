@@ -176,6 +176,8 @@ return [
                 'createGarage' => \App\GraphQL\Mutations\CreateGarageMutation::class,
 
                 'createTruck' => \App\GraphQL\Mutations\CreateTruckMutation::class,
+
+                'createTrailer' => \App\GraphQL\Mutations\CreateTrailerMutation::class,
             ],
             'middleware' => ['auth:api'],
             'method' => ['get', 'post'],

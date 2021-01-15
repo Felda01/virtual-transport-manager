@@ -46,7 +46,7 @@
                             <div class="price">
                                 <h4>{{ trailerModel.price | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('trailerModel.property.priceUnit') }}</h4>
                             </div>
-                            <md-button class="md-primary md-simple" @click="buyTrailer"><md-icon>add</md-icon>{{ $t('shop.buy') }}</md-button>
+                            <md-button class="md-primary md-simple" @click="addTrailerModal(trailerModel)"><md-icon>add</md-icon>{{ $t('shop.buy') }}</md-button>
                         </template>
                     </product-card>
                 </div>
@@ -66,12 +66,17 @@
                 </div>
             </template>
         </template>
+
+        <!-- Add trailer modal-->
+        <mutation-modal ref="addTrailerModal" @ok="addTrailer" :modalSchema="modalSchemaAddTrailer" />
     </div>
 </template>
 
 <script>
-    import { SearchForm, ProductCard, Pagination } from "@/components";
+    import { SearchForm, ProductCard, Pagination, MutationModal } from "@/components";
     import { TRAILER_MODELS_QUERY, TRAILER_TYPES_QUERY, ADRS_QUERY } from "@/graphql/queries/common";
+    import { CREATE_TRAILER_MUTATION } from "@/graphql/mutations/user";
+    import { AVAILABLE_GARAGES_QUERY } from "@/graphql/queries/user";
 
     export default {
         title () {
@@ -81,7 +86,8 @@
         components: {
             ProductCard,
             SearchForm,
-            Pagination
+            Pagination,
+            MutationModal
         },
         data() {
             return {
@@ -96,8 +102,8 @@
                 trailerTypes: [],
                 page: 1,
                 searchModel: {
-                    type: [''],
-                    adr: [''],
+                    type: [],
+                    adr: [],
                     load: {
                         type: 'range',
                         min: '',
@@ -123,7 +129,7 @@
                                     input: 'select',
                                     name: 'type',
                                     label: this.$t('trailerModel.property.type'),
-                                    value: [''],
+                                    value: [],
                                     config: {
                                         options: [],
                                         optionValue: (option) => {
@@ -141,7 +147,7 @@
                                     input: 'select',
                                     name: 'adr',
                                     label: this.$t('trailerModel.property.adr'),
-                                    value: [''],
+                                    value: [],
                                     config: {
                                         options: [],
                                         optionValue: (option) => {
@@ -208,12 +214,74 @@
                             ]
                         }
                     ]
-                }
+                },
+                modalSchemaAddTrailer: {
+                    form: {
+                        mutation: CREATE_TRAILER_MUTATION,
+                        fields: [],
+                        hiddenFields: [],
+                    },
+                    modalTitle: this.$t('model.modal.title.add.trailer'),
+                    okBtnTitle: this.$t('modal.btn.buy'),
+                    cancelBtnTitle: this.$t('modal.btn.cancel')
+                },
             }
         },
         methods: {
-            buyTrailer() {
+            addTrailerModal(trailerModel) {
+                this.modalSchemaAddTrailer.form.fields = [
+                    {
+                        input: 'staticText',
+                        text: this.$t('trailerModel.model') + ' ' + trailerModel.name,
+                        class: 'text-left mb-4'
+                    },
+                    {
+                        label: this.$t('trailer.property.garage'),
+                        rules: 'required',
+                        name: 'garage',
+                        input: 'select',
+                        type: 'select',
+                        value: '',
+                        config: {
+                            options: this.availableGarages.data,
+                            optionValue: (option) => {
+                                return option.id;
+                            },
+                            groupBy: 'location.country.name',
+                            optgroupLabel: (optgroup) => {
+                                return optgroup.location.country.name;
+                            },
+                            optionLabel: (option) => {
+                                return option.location.name + ' - ' + option.garageModel.name;
+                            }
+                        }
+                    },
+                    {
+                        input: 'staticText',
+                        text: this.$options.filters.currency(trailerModel.price, ' ', 2, { thousandsSeparator: ' ' }) + ' €',
+                        class: 'text-right md-title'
+                    },
+                ];
 
+                this.modalSchemaAddTrailer.form.hiddenFields = [
+                    {
+                        name: 'trailer_model',
+                        value: trailerModel.id
+                    }
+                ];
+
+                this.$refs['addTrailerModal'].openModal();
+            },
+            addTrailer(response) {
+                let trailer = response.data.createTrailer;
+                this.$notify({
+                    timeout: 5000,
+                    message: this.$t('model.response.success.created.trailer', { modelName: trailer.trailerModel.name, location: trailer.garage.location.name }),
+                    icon: "add_alert",
+                    horizontalAlign: 'right',
+                    verticalAlign: 'top',
+                    type: 'success'
+                });
             },
         },
         apollo: {
@@ -239,6 +307,12 @@
                     this.$nextTick( () => {
                         this.$set(this.searchSchema.groups[0].fields[1].config, 'options', this.ADRsOptions);
                     });
+                },
+            },
+            availableGarages: {
+                query: AVAILABLE_GARAGES_QUERY,
+                variables() {
+                    return { page: 1, limit: -1, type: 'trailer' }
                 },
             }
         },

@@ -35,3 +35,22 @@ export const CREATE_TRUCK_MUTATION = gql`
         }
     }
 `;
+
+export const CREATE_TRAILER_MUTATION = gql`
+    mutation CreateTrailerMutation($trailer_model: String!, $garage: String!) {
+        createTrailer(trailer_model: $trailer_model, garage: $garage) {
+            id
+            trailerModel {
+                id
+                name
+            }
+            garage {
+                id
+                location {
+                    id
+                    name
+                }
+            }
+        }
+    }
+`;
