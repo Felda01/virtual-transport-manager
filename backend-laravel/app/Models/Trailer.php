@@ -77,11 +77,11 @@ class Trailer extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function truck()
     {
-        return $this->belongsTo(Truck::class);
+        return $this->hasOne(Truck::class);
     }
 
     /**

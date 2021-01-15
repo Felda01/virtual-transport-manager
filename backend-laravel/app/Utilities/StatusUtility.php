@@ -13,4 +13,31 @@ class StatusUtility
     const AVAILABLE = 1;
     const ON_ROAD = 2;
     const ASSIGNED = 3;
+
+
+    /**
+     * @return int[]
+     */
+    public static function truck()
+    {
+        return [
+            self::DELIVERY_FROM_SHOP,
+            self::AVAILABLE,
+            self::ASSIGNED,
+            self::ON_ROAD,
+        ];
+    }
+
+    /**
+     * @return int[]
+     */
+    public static function all()
+    {
+        return [
+            self::DELIVERY_FROM_SHOP,
+            self::AVAILABLE,
+            self::ASSIGNED,
+            self::ON_ROAD,
+        ];
+    }
 }

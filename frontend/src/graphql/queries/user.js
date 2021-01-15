@@ -111,6 +111,28 @@ export const GARAGES_QUERY = gql`
     }
 `;
 
+export const GARAGES_SELECT_QUERY = gql`
+    query GaragesQuery($limit: Int!, $page: Int!, $filter: [FilterInput]) {
+        garages(limit: $limit, page: $page, filter: $filter) {
+            data {
+                id
+                garageModel {
+                    id
+                    name
+                }
+                location {
+                    id
+                    name
+                    country {
+                        id
+                        name
+                    }
+                }
+            }
+        }
+    }
+`;
+
 export const COUNTRIES_WITH_GARAGE_QUERY = gql`
     query CountriesWithGarages($limit: Int!, $page: Int!) {
         countriesWithGarages(limit: $limit, page: $page) {
@@ -118,6 +140,58 @@ export const COUNTRIES_WITH_GARAGE_QUERY = gql`
                 id
                 name
                 short_name
+            }
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
+            has_more_pages
+        }
+    }
+`;
+
+export const TRUCKS_QUERY = gql`
+    query TrucksQuery($limit: Int!, $page: Int!, $filter: [FilterInput]) {
+        trucks(limit: $limit, page: $page, filter: $filter) {
+            data {
+                id
+                status
+                truckModel {
+                    id
+                    name
+                    brand
+                    image
+                }
+                trailer {
+                    id
+                    trailerModel {
+                        id
+                        name
+                    }
+                }
+                garage {
+                    id
+                    garageModel {
+                        id
+                        name
+                    }
+                    location {
+                        id
+                        name
+                        country {
+                            id
+                            short_name
+                        }
+                    }
+                }
+                drivers {
+                    id
+                    first_name
+                    last_name
+                    image
+                }
             }
             total
             per_page

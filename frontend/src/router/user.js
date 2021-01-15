@@ -103,6 +103,48 @@ const userRoutes = [
                     }
                 }
             },
+            {
+                path: `${enRoute.garages}/:id`,
+                alias: `${getAlias('garages')}/:id`,
+                name: 'garage',
+                component: () => import('../views/user/Garage.vue'),
+                meta: {
+                    requiresAuth: true,
+                    userOnly: true,
+                    title: i18n.t('pages.garage'),
+                    path: {
+                        en: `${enRoute.garages}/:id`
+                    }
+                }
+            },
+            {
+                path: enRoute.trucks,
+                alias: getAlias('trucks'),
+                name: 'trucks',
+                component: () => import('../views/user/Trucks.vue'),
+                meta: {
+                    requiresAuth: true,
+                    userOnly: true,
+                    title: i18n.t('pages.trucks'),
+                    path: {
+                        en: enRoute.trucks
+                    }
+                }
+            },
+            {
+                path: `${enRoute.trucks}/:id`,
+                alias: `${getAlias('trucks')}/:id`,
+                name: 'truck',
+                component: () => import('../views/user/Truck.vue'),
+                meta: {
+                    requiresAuth: true,
+                    userOnly: true,
+                    title: i18n.t('pages.truck'),
+                    path: {
+                        en: `${enRoute.trucks}/:id`
+                    }
+                }
+            },
         ]
     },
 ];

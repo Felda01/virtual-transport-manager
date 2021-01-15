@@ -18,7 +18,9 @@
     "truckShop": "Truck shop",
     "garageShop": "Garage shop",
     "trailerShop": "Trailer shop",
-    "garages": "Garages"
+    "garages": "Garages",
+    "trucks": "Trucks",
+    "trailers": "Trailers"
   },
   "routes": {
     "login": "login",
@@ -38,7 +40,9 @@
     "truckShop": "truck-shop",
     "garageShop": "garage-shop",
     "trailerShop": "trailer-shop",
-    "garages": "garages"
+    "garages": "garages",
+    "trucks": "trucks",
+    "trailers": "trailers"
   },
   "navigation": {
     "staticMapData": "Map data",
@@ -132,8 +136,9 @@
           "trailerModel": "The trailer model {modelName} was successfully created.",
           "truckModel": "The truck model {modelName} was successfully created.",
           "garageModel": "The garage model {modelName} was successfully created.",
-          "garage": "The {modelName} garage was successfully bought in {location}.",
-          "truck": "The truck {modelName} was successfully bought in {location}."
+          "garage": "The {modelName} garage was successfully purchased in {location}.",
+          "truck": "The truck {modelName} was successfully purchased and is being transported to {location}.",
+          "trailer": "The trailer {modelName} was successfully purchased and is being transported to {location}."
         },
         "updated": {
           "bankLoanType": "The bank loan type {modelName} was successfully updated.",
@@ -390,7 +395,29 @@
   },
   "truck": {
     "property": {
+      "garage": "Garage",
+      "status": "Status"
+    },
+    "relations": {
+      "drivers": "Driver",
+      "no_driver": "No driver",
+      "trailer": "Trailer",
+      "no_trailer": "No trailer",
+      "truckModel": "Truck model"
+    }
+  },
+  "trailer": {
+    "property": {
       "garage": "Garage"
     }
+  },
+  "driver": {
+    "model": "Drivers"
+  },
+  "status": {
+    "0": "Delivering from shop",
+    "1": "Available",
+    "2": "On road",
+    "3": "Assigned"
   }
 }

@@ -130,6 +130,10 @@ return [
                 'countriesWithGarages' => \App\GraphQL\Queries\CountriesWithGaragesQuery::class,
 
                 'garages' => \App\GraphQL\Queries\GaragesQuery::class,
+                'trucks' => \App\GraphQL\Queries\TrucksQuery::class,
+                'trailers' => \App\GraphQL\Queries\TrailersQuery::class,
+
+                'statuses' => \App\GraphQL\Queries\StatusesQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,

@@ -107,9 +107,9 @@
                 truckEmissionClasses: [],
                 page: 1,
                 searchModel: {
-                    brand: [''],
-                    chassis: [''],
-                    emission_class: [''],
+                    brand: [],
+                    chassis: [],
+                    emission_class: [],
                     engine_power: {
                         type: 'range',
                         min: '',
@@ -141,7 +141,7 @@
                                     input: 'select',
                                     name: 'brand',
                                     label: this.$t('truckModel.property.brand'),
-                                    value: [''],
+                                    value: [],
                                     config: {
                                         options: [],
                                         optionValue: (option) => {
@@ -159,7 +159,7 @@
                                     input: 'select',
                                     name: 'chassis',
                                     label: this.$t('truckModel.property.chassis'),
-                                    value: [''],
+                                    value: [],
                                     config: {
                                         options: [],
                                         optionValue: (option) => {
@@ -177,7 +177,7 @@
                                     input: 'select',
                                     name: 'emission_class',
                                     label: this.$t('truckModel.property.emission_class'),
-                                    value: [''],
+                                    value: [],
                                     config: {
                                         options: [],
                                         optionValue: (option) => {

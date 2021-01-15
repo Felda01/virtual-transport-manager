@@ -93,6 +93,7 @@ export const GARAGE_MODELS_QUERY = gql`
     }
 `;
 
+
 export const TRAILER_MODELS_QUERY = gql`
     query TrailerModelsQuery($limit: Int!, $page: Int!, $filter: [FilterInput], $sort: String) {
         trailerModels(limit: $limit, page: $page, filter: $filter, sort: $sort) {
@@ -158,6 +159,18 @@ export const TRUCK_MODELS_QUERY = gql`
     }
 `;
 
+export const TRUCK_MODELS_SELECT_QUERY = gql`
+    query TruckModelsQuery($limit: Int!, $page: Int!, $filter: [FilterInput], $sort: String) {
+        truckModels(limit: $limit, page: $page, filter: $filter, sort: $sort) {
+            data {
+                id
+                name
+                brand
+            }
+        }
+    }
+`;
+
 export const AVAILABLE_LOCATIONS_QUERY = gql`
     query AvailableLocationsQuery($limit: Int!, $page: Int!) {
         availableLocations(limit: $limit, page: $page) {
@@ -177,5 +190,11 @@ export const AVAILABLE_LOCATIONS_QUERY = gql`
             last_page
             has_more_pages
         }
+    }
+`;
+
+export const STATUSES_QUERY = gql`
+    query StatusesQuery($model: String) {
+        statuses(model: $model)
     }
 `;

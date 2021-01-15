@@ -19,7 +19,7 @@
                     <md-card>
                         <md-card-content class="pb-0">
                             <md-table v-model="garages.data" v-if="garages && garages.data">
-                                <md-table-row slot="md-table-row" slot-scope="{ item, index }">
+                                <md-table-row slot="md-table-row" slot-scope="{ item, index }" @click.native="clickTableRow(item)" class="cursor-pointer-hover">
                                     <md-table-cell md-label="#">{{ index + garages.from }}</md-table-cell>
                                     <md-table-cell md-label="">
                                         <div class="img-container">
@@ -133,7 +133,7 @@
                                     }
                                 },
                                 {
-                                    class: ['md-medium-size-50', 'md-xsmall-size-100' ,'md-size-33'],
+                                    class: ['md-medium-size-50', 'md-xsmall-size-100' ,'md-size-25'],
                                     type: 'switch',
                                     input: 'switch',
                                     name: 'available_truck_spot',
@@ -141,7 +141,7 @@
                                     value: false
                                 },
                                 {
-                                    class: ['md-medium-size-50', 'md-xsmall-size-100' ,'md-size-33'],
+                                    class: ['md-medium-size-50', 'md-xsmall-size-100' ,'md-size-25'],
                                     type: 'switch',
                                     input: 'switch',
                                     name: 'available_trailer_spot',
@@ -152,6 +152,14 @@
                         },
                     ]
                 },
+            }
+        },
+        methods: {
+            clickTableRow(item) {
+                this.$router.push({
+                    name: 'garage',
+                    params: {id: item.id}
+                });
             }
         },
         apollo: {

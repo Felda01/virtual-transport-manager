@@ -23,6 +23,9 @@ class TruckType extends GraphQLType
             'id' => [
                 'type' => Type::nonNull(Type::string()),
             ],
+            'status' => [
+                'type' => Type::int(),
+            ],
             'truckModel' => [
                 'type' => GraphQL::type('TruckModel'),
             ],
@@ -32,8 +35,8 @@ class TruckType extends GraphQLType
             'trailer' => [
                 'type' => GraphQL::type('Trailer'),
             ],
-            'driver' => [
-                'type' => GraphQL::type('Driver'),
+            'drivers' => [
+                'type' => Type::listOf(GraphQL::type('Driver')),
             ],
             'garage' => [
                 'type' => GraphQL::type('Garage'),

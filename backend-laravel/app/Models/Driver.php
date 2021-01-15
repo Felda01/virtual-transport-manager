@@ -95,11 +95,11 @@ class Driver extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function truck()
     {
-        return $this->hasOne(Truck::class);
+        return $this->belongsTo(Truck::class);
     }
 
     /**
