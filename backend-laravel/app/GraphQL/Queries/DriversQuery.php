@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Queries;
 
-use App\Models\Trailer;
+use App\Models\Driver;
 use App\Models\User;
 use App\Utilities\FilterUtility;
 use Closure;
@@ -15,16 +15,16 @@ use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\SelectFields;
 
-class TrailersQuery extends Query
+class DriversQuery extends Query
 {
     protected $attributes = [
-        'name' => 'trailers',
+        'name' => 'drivers',
         'description' => 'A query'
     ];
 
     public function type(): Type
     {
-        return GraphQL::paginate('Trailer');
+        return GraphQL::paginate('Driver');
     }
 
     private function guard()
@@ -67,16 +67,16 @@ class TrailersQuery extends Query
         $select = $fields->getSelect();
         $with = $fields->getRelations();
 
-        $query = Trailer::query();
+        $query = Driver::query();
 
         if ($args['filter'] && count($args['filter']) > 0) {
-            $query = FilterUtility::handleFilter($query, new Trailer, Trailer::$searchable, $args['filter']);
+            $query = FilterUtility::handleFilter($query, new Driver, Driver::$searchable, $args['filter']);
         }
 
         $query = FilterUtility::filterCompany($query, User::current());
 
         if ($args['limit'] === -1) {
-            $args['limit'] = Trailer::count();
+            $args['limit'] = Driver::count();
         }
 
         return $query->with($with)

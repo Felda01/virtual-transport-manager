@@ -21,7 +21,8 @@
     "garages": "Garages",
     "trucks": "Trucks",
     "trailers": "Trailers",
-    "recruitmentAgencyDrivers": "Recruitment agency"
+    "recruitmentAgencyDrivers": "Recruitment agency",
+    "drivers": "Drivers"
   },
   "routes": {
     "login": "login",
@@ -44,7 +45,8 @@
     "garages": "garages",
     "trucks": "trucks",
     "trailers": "trailers",
-    "recruitmentAgencyDrivers": "recruitment-agency"
+    "recruitmentAgencyDrivers": "recruitment-agency",
+    "drivers": "drivers"
   },
   "navigation": {
     "staticMapData": "Map data",
@@ -436,6 +438,7 @@
   "driver": {
     "model": "Drivers",
     "property": {
+      "full_name": "Name",
       "first_name": "First name",
       "last_name": "Last name",
       "gender": "Gender",
@@ -443,6 +446,7 @@
       "salary": "Salary",
       "salaryUnit": "€/month",
       "satisfaction": "Satisfaction",
+      "satisfactionUnit": "%",
       "preferred_road_trips": "Preferred road trips",
       "last_in_garage_at": "Days on road",
       "adr": "ADR class",
@@ -454,6 +458,12 @@
       "salary_desc": "Salary High to Low",
       "adr_asc": "ADR class Low to High",
       "adr_desc": "ADR class High to Low"
+    },
+    "relations": {
+      "truck": "Truck",
+      "no_truck": "No truck",
+      "trailer": "Trailer",
+      "no_trailer": "No trailer"
     }
   },
   "status": {

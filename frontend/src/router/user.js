@@ -162,7 +162,7 @@ const userRoutes = [
             {
                 path: `${enRoute.trailers}/:id`,
                 alias: `${getAlias('trailers')}/:id`,
-                name: 'trailers',
+                name: 'trailer',
                 component: () => import('../views/user/Trailer.vue'),
                 meta: {
                     requiresAuth: true,
@@ -184,6 +184,34 @@ const userRoutes = [
                     title: i18n.t('pages.recruitmentAgencyDrivers'),
                     path: {
                         en: enRoute.recruitmentAgencyDrivers
+                    }
+                }
+            },
+            {
+                path: enRoute.drivers,
+                alias: getAlias('drivers'),
+                name: 'drivers',
+                component: () => import('../views/user/Drivers.vue'),
+                meta: {
+                    requiresAuth: true,
+                    userOnly: true,
+                    title: i18n.t('pages.drivers'),
+                    path: {
+                        en: enRoute.drivers
+                    }
+                }
+            },
+            {
+                path: `${enRoute.drivers}/:id`,
+                alias: `${getAlias('drivers')}/:id`,
+                name: 'driver',
+                component: () => import('../views/user/Driver.vue'),
+                meta: {
+                    requiresAuth: true,
+                    userOnly: true,
+                    title: i18n.t('pages.drivers'),
+                    path: {
+                        en: `${enRoute.drivers}/:id`
                     }
                 }
             },

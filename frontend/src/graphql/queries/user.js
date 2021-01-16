@@ -274,3 +274,66 @@ export const RECRUITMENT_AGENCY_DRIVERS_QUERY = gql`
     }
 `;
 
+export const DRIVERS_QUERY = gql`
+    query DriversQuery($limit: Int!, $page: Int!, $filter: [FilterInput]) {
+        drivers(limit: $limit, page: $page, filter: $filter) {
+            data {
+                id
+                first_name
+                last_name
+                image
+                salary
+                preferred_road_trips
+                adr
+                satisfaction
+                status
+                truck {
+                    id
+                    truckModel {
+                        id
+                        name
+                        brand
+                    }
+                    trailer {
+                        id
+                        trailerModel {
+                            id
+                            name
+                        }
+                    }
+                }
+                garage {
+                    id
+                    garageModel {
+                        id
+                        name
+                    }
+                    location {
+                        id
+                        name
+                        country {
+                            id
+                            short_name
+                        }
+                    }
+                }
+                location {
+                    id
+                    name
+                    country {
+                        id
+                        short_name
+                    }
+                }
+            }
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
+            has_more_pages
+        }
+    }
+`;
+

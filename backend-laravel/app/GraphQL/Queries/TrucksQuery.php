@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\GraphQL\Queries;
 
 use App\Models\Truck;
+use App\Models\User;
 use App\Utilities\FilterUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -71,6 +72,8 @@ class TrucksQuery extends Query
         if ($args['filter'] && count($args['filter']) > 0) {
             $query = FilterUtility::handleFilter($query, new Truck, Truck::$searchable, $args['filter']);
         }
+
+        $query = FilterUtility::filterCompany($query, User::current());
 
         if ($args['limit'] === -1) {
             $args['limit'] = Truck::count();

@@ -132,6 +132,7 @@ return [
                 'garages' => \App\GraphQL\Queries\GaragesQuery::class,
                 'trucks' => \App\GraphQL\Queries\TrucksQuery::class,
                 'trailers' => \App\GraphQL\Queries\TrailersQuery::class,
+                'drivers' => \App\GraphQL\Queries\DriversQuery::class,
 
                 'statuses' => \App\GraphQL\Queries\StatusesQuery::class,
 

@@ -19,6 +19,8 @@
                 <sidebar-item :link="{ name: $t('navigation.companyEmployees'), icon: 'group' }">
                     <sidebar-item :link="{ name: $t('pages.users'), path: generatePath('users') }"
                     ></sidebar-item>
+                    <sidebar-item :link="{ name: $t('pages.drivers'), path: generatePath('drivers') }"
+                    ></sidebar-item>
                 </sidebar-item>
                 <sidebar-item :link="{ name: $t('navigation.companyEquipmentData'), icon: 'local_shipping' }">
                     <sidebar-item :link="{ name: $t('pages.garages'), path: generatePath('garages') }"

@@ -6,6 +6,7 @@ namespace App\GraphQL\Queries;
 
 use App\Models\Garage;
 use App\Models\GarageModel;
+use App\Models\User;
 use App\Utilities\FilterUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -72,6 +73,8 @@ class GaragesQuery extends Query
         if ($args['filter'] && count($args['filter']) > 0) {
             $query = FilterUtility::handleFilter($query, new Garage, Garage::$searchable, $args['filter']);
         }
+
+        $query = FilterUtility::filterCompany($query, User::current());
 
         if ($args['limit'] === -1) {
             $args['limit'] = Garage::count();

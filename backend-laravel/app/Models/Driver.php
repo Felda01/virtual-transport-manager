@@ -96,6 +96,8 @@ class Driver extends Model
         'salary',
         'adr',
         'preferred_road_trips',
+        'garage',
+        'status'
     ];
 
     /**
@@ -186,6 +188,40 @@ class Driver extends Model
 
         if ($preferredRoadTrips && count($preferredRoadTrips) > 0) {
             return  $query->whereIn('preferred_road_trips', $preferredRoadTrips);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchStatus($query, $value)
+    {
+        $statuses = explode(',', $value);
+
+        if ($statuses && count($statuses) > 0) {
+            return $query->whereIn('status', $statuses);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchGarage($query, $value)
+    {
+        $garages = explode(',', $value);
+
+        if ($garages && count($garages) > 0) {
+            return $query->whereHas('garage', function (Builder $query) use ($garages) {
+                $query->whereIn('id', $garages);
+            });
         }
 
         return $query;
