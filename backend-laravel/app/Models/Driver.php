@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use App\Traits\HasUuid;
+use App\Utilities\FilterUtility;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * App\Models\Driver
@@ -14,7 +17,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $first_name
  * @property string $last_name
  * @property int $gender
- * @property string $status
+ * @property int $adr
+ * @property integer $status
  * @property string $image
  * @property string $company_id
  * @property string $truck_id
@@ -23,7 +27,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int $salary
  * @property int $satisfaction
  * @property string $preferred_road_trips
- * @property int $days_on_road
+ * @property \Illuminate\Support\Carbon|null $last_in_garage_at
  * @property \Illuminate\Support\Carbon $expires_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -38,14 +42,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|Driver query()
  * @method static \Illuminate\Database\Eloquent\Builder|Driver whereCompanyId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Driver whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Driver whereDaysOnRoad($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Driver whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Driver whereExpiresAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Driver whereFirstName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Driver whereGarageId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Driver whereGender($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Driver whereAdr($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Driver whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Driver whereImage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Driver whereLastInGarageAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Driver whereLastName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Driver whereLocationId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Driver wherePreferredRoadTrips($value)
@@ -60,7 +65,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Driver extends Model
 {
-    use HasFactory, HasUuid, SoftDeletes;
+    use HasFactory, HasUuid, SoftDeletes, LogsActivity;
+
+    const GENDER_MALE = 0;
+    const GENDER_FEMALE = 1;
 
     /**
      * The attributes that aren't mass assignable.
@@ -70,12 +78,34 @@ class Driver extends Model
     protected $guarded = [];
 
     /**
+     * @var bool
+     */
+    protected static $logUnguarded = true;
+
+    /**
+     * @var bool
+     */
+    protected static $logOnlyDirty = true;
+
+    /**
+     * The attributes that are searchable.
+     *
+     * @var string[]
+     */
+    public static $searchable = [
+        'salary',
+        'adr',
+        'preferred_road_trips',
+    ];
+
+    /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
     protected $casts = [
         'expires_at' => 'datetime',
+        'last_in_garage_at' => 'datetime'
     ];
 
     /**
@@ -108,5 +138,56 @@ class Driver extends Model
     public function garage()
     {
         return $this->belongsTo(Garage::class);
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchAdr($query, $value)
+    {
+        $adrs = explode(',', $value);
+
+        if ($adrs && count($adrs) > 0) {
+            return  $query->whereIn('adr', $adrs);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchSalary($query, $value)
+    {
+        $values = FilterUtility::getRangeValues($value);
+
+        if (array_key_exists('min', $values)) {
+            $query = $query->where('salary', '>=', $values['min']);
+        }
+        if (array_key_exists('max', $values)) {
+            $query = $query->where('salary', '<=', $values['max']);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchPreferredRoadTrips($query, $value)
+    {
+        $preferredRoadTrips = explode(',', $value);
+
+        if ($preferredRoadTrips && count($preferredRoadTrips) > 0) {
+            return  $query->whereIn('preferred_road_trips', $preferredRoadTrips);
+        }
+
+        return $query;
     }
 }

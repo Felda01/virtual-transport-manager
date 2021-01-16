@@ -64,7 +64,7 @@ class UpdateTrailerModelMutation extends Mutation
             'adr' => [
                 'required',
                 'string',
-                Rule::in(config('constants.trailer_adr'))
+                Rule::in(config('constants.adr'))
             ],
             'km' => [
                 'required',

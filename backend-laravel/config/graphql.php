@@ -134,6 +134,9 @@ return [
                 'trailers' => \App\GraphQL\Queries\TrailersQuery::class,
 
                 'statuses' => \App\GraphQL\Queries\StatusesQuery::class,
+
+                'recruitmentAgencyDrivers' => \App\GraphQL\Queries\RecruitmentAgencyDriversQuery::class,
+                'preferredRoadTrips' => \App\GraphQL\Queries\PreferredRoadTripsQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,
@@ -178,6 +181,8 @@ return [
                 'createTruck' => \App\GraphQL\Mutations\CreateTruckMutation::class,
 
                 'createTrailer' => \App\GraphQL\Mutations\CreateTrailerMutation::class,
+
+                'createDriver' => \App\GraphQL\Mutations\CreateDriverMutation::class,
             ],
             'middleware' => ['auth:api'],
             'method' => ['get', 'post'],

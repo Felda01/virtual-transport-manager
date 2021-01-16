@@ -173,6 +173,20 @@ const userRoutes = [
                     }
                 }
             },
+            {
+                path: enRoute.recruitmentAgencyDrivers,
+                alias: getAlias('recruitmentAgencyDrivers'),
+                name: 'recruitmentAgencyDrivers',
+                component: () => import('../views/user/RecruitmentAgencyDrivers.vue'),
+                meta: {
+                    requiresAuth: true,
+                    userOnly: true,
+                    title: i18n.t('pages.recruitmentAgencyDrivers'),
+                    path: {
+                        en: enRoute.recruitmentAgencyDrivers
+                    }
+                }
+            },
         ]
     },
 ];

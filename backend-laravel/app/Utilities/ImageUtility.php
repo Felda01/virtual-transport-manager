@@ -89,4 +89,18 @@ class ImageUtility
     {
         return '^(' . self::BASE64_IMAGE_REGEX . '|' . self::getUrlImageRegex() . '(?:[A-Za-z0-9]{20})\.(?:gif|png|jpeg|bmp|webp))$';
     }
+
+    /**
+     * @param $imageData
+     * @param $extension
+     * @return string
+     */
+    static public function saveImage($imageData, $extension)
+    {
+        $fileName = Str::random(10) . time() . "." . $extension;
+
+        Storage::disk('public')->put(ImageUtility::IMAGES_FOLDER . $fileName, $imageData);
+
+        return $fileName;
+    }
 }

@@ -2,7 +2,7 @@
 
 return [
 
-    'trailer_adr' => [
+    'adr' => [
         0,
         1,
         2,
@@ -44,6 +44,12 @@ return [
         4,
         5,
         6,
+    ],
+
+    'road_trips' => [
+        \App\Models\RoadTrip::SHORT,
+        \App\Models\RoadTrip::MEDIUM,
+        \App\Models\RoadTrip::LONG
     ]
 
 ];

@@ -66,7 +66,7 @@
             return {
                 users: {
                     data: [],
-                    per_page: 10,
+                    per_page: 8,
                     current_page: 1,
                     from: 0,
                     to: 0
@@ -79,7 +79,7 @@
                 searchModel: {
                     first_name: '',
                     last_name: '',
-                    roles: [''],
+                    roles: [],
                 },
                 searchSchema: {
                     groups: [
@@ -110,7 +110,7 @@
                                     input: 'select',
                                     name: 'roles',
                                     label: this.$t('user.searchFields.roles'),
-                                    value: [''],
+                                    value: [],
                                     config: {
                                         options: [],
                                         optionValue: (option) => {

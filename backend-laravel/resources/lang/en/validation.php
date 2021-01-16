@@ -137,6 +137,7 @@ return [
     'not_enough_money' => "Your company does not have enough money.",
     'model_from_company' => "You do not have permission to work with this object.",
     'available_garage_spot' => "There is not enough space in this garage.",
+    'available_driver_recruitment_agency' => "The driver was hired by another company.",
 
     /*
     |--------------------------------------------------------------------------

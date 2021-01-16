@@ -11,16 +11,16 @@ use Illuminate\Support\Facades\Auth;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\SelectFields;
 
-class ADRsQuery extends Query
+class PreferredRoadTripsQuery extends Query
 {
     protected $attributes = [
-        'name' => 'ADRs',
+        'name' => 'preferredRoadTrips',
         'description' => 'A query'
     ];
 
     public function type(): Type
     {
-        return Type::listOf(Type::string());
+        return Type::listOf(Type::int());
     }
 
     private function guard()
@@ -45,6 +45,6 @@ class ADRsQuery extends Query
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
-        return config('constants.adr');
+        return config('constants.road_trips');
     }
 }

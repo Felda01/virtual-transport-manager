@@ -54,3 +54,20 @@ export const CREATE_TRAILER_MUTATION = gql`
         }
     }
 `;
+
+export const CREATE_DRIVER_MUTATION = gql`
+    mutation CreateDriverMutation($driver: String!, $garage: String!) {
+        createDriver(driver: $driver, garage: $garage) {
+            id
+            first_name
+            last_name
+            garage {
+                id
+                location {
+                    id
+                    name
+                }
+            }
+        }
+    }
+`;

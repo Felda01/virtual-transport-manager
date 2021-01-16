@@ -16,8 +16,18 @@
             <template slot="links">
                 <sidebar-item :link="{ name: 'Dashboard', icon: 'dashboard', path: generatePath('dashboard') }"
                 ></sidebar-item>
-                <sidebar-item :link="{ name: $t('pages.users'), icon: 'group', path: generatePath('users') }"
-                ></sidebar-item>
+                <sidebar-item :link="{ name: $t('navigation.companyEmployees'), icon: 'group' }">
+                    <sidebar-item :link="{ name: $t('pages.users'), path: generatePath('users') }"
+                    ></sidebar-item>
+                </sidebar-item>
+                <sidebar-item :link="{ name: $t('navigation.companyEquipmentData'), icon: 'local_shipping' }">
+                    <sidebar-item :link="{ name: $t('pages.garages'), path: generatePath('garages') }"
+                    ></sidebar-item>
+                    <sidebar-item :link="{ name: $t('pages.trucks'), path: generatePath('trucks') }"
+                    ></sidebar-item>
+                    <sidebar-item :link="{ name: $t('pages.trailers'), path: generatePath('trailers') }"
+                    ></sidebar-item>
+                </sidebar-item>
                 <sidebar-item :link="{ name: $t('navigation.shop'), icon: 'shopping_cart' }">
                     <sidebar-item
                             :link="{ name: $t('pages.garageShop'), path: generatePath('garageShop') }"
@@ -28,13 +38,7 @@
                     <sidebar-item
                             :link="{ name: $t('pages.trailerShop'), path: generatePath('trailerShop') }"
                     ></sidebar-item>
-                </sidebar-item>
-                <sidebar-item :link="{ name: $t('navigation.companyEquipmentData'), icon: 'local_shipping' }">
-                    <sidebar-item :link="{ name: $t('pages.garages'), path: generatePath('garages') }"
-                    ></sidebar-item>
-                    <sidebar-item :link="{ name: $t('pages.trucks'), path: generatePath('trucks') }"
-                    ></sidebar-item>
-                    <sidebar-item :link="{ name: $t('pages.trailers'), path: generatePath('trailers') }"
+                    <sidebar-item :link="{ name: $t('pages.recruitmentAgencyDrivers'), path: generatePath('recruitmentAgencyDrivers') }"
                     ></sidebar-item>
                 </sidebar-item>
             </template>

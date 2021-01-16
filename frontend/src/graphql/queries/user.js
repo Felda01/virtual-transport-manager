@@ -251,3 +251,26 @@ export const TRAILERS_QUERY = gql`
     }
 `;
 
+export const RECRUITMENT_AGENCY_DRIVERS_QUERY = gql`
+    query RecruitmentAgencyDriversQuery($limit: Int!, $page: Int!, $filter: [FilterInput], $sort: String) {
+        recruitmentAgencyDrivers(limit: $limit, page: $page, filter: $filter, sort: $sort) {
+            data {
+                id
+                first_name
+                last_name
+                image
+                salary
+                preferred_road_trips
+                adr
+            }
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
+            has_more_pages
+        }
+    }
+`;
+

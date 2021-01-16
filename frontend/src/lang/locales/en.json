@@ -20,7 +20,8 @@
     "trailerShop": "Trailer shop",
     "garages": "Garages",
     "trucks": "Trucks",
-    "trailers": "Trailers"
+    "trailers": "Trailers",
+    "recruitmentAgencyDrivers": "Recruitment agency"
   },
   "routes": {
     "login": "login",
@@ -42,12 +43,14 @@
     "trailerShop": "trailer-shop",
     "garages": "garages",
     "trucks": "trucks",
-    "trailers": "trailers"
+    "trailers": "trailers",
+    "recruitmentAgencyDrivers": "recruitment-agency"
   },
   "navigation": {
     "staticMapData": "Map data",
     "companyEquipmentData": "Company equipment",
-    "shop": "Shop"
+    "shop": "Shop / Agency",
+    "companyEmployees": "Company employees"
   },
   "search": {
     "title": "Filters",
@@ -62,11 +65,13 @@
       "update": "Update",
       "cancel": "Cancel",
       "delete": "Delete",
-      "buy": "Buy"
+      "buy": "Buy",
+      "hire": "Hire"
     }
   },
   "shop": {
-    "buy": "Buy now"
+    "buy": "Buy now",
+    "hire": "Hire now"
   },
   "pagination": {
     "display": "Showing {from} to {to} of {total} entries"
@@ -100,7 +105,8 @@
           "garageModel": "Create new garage model",
           "garage": "Buy new garage",
           "truck": "Buy new truck",
-          "trailer": "Buy new trailer"
+          "trailer": "Buy new trailer",
+          "driver": "Hire new driver"
         },
         "update": {
           "bankLoanType": "Update this bank loan type",
@@ -138,7 +144,8 @@
           "garageModel": "The garage model {modelName} was successfully created.",
           "garage": "The {modelName} garage was successfully purchased in {location}.",
           "truck": "The truck {modelName} was successfully purchased and is being transported to {location}.",
-          "trailer": "The trailer {modelName} was successfully purchased and is being transported to {location}."
+          "trailer": "The trailer {modelName} was successfully purchased and is being transported to {location}.",
+          "driver": "The driver {modelName} was successfully hired and is being traveled to {location}."
         },
         "updated": {
           "bankLoanType": "The bank loan type {modelName} was successfully updated.",
@@ -266,7 +273,7 @@
       "type": "Type",
       "load": "Load",
       "loadUnit": "Kg",
-      "adr": "ADR",
+      "adr": "ADR class",
       "km": "Km",
       "kmUnit": "km",
       "image": "Image",
@@ -299,6 +306,15 @@
     "4": "Class 4 - Flammable solids",
     "5": "Class 6 - Toxic substances",
     "6": "Class 8 - Corrosive substances"
+  },
+  "ADRsShort": {
+    "0": "No Class",
+    "1": "Class 1",
+    "2": "Class 2",
+    "3": "Class 3",
+    "4": "Class 4",
+    "5": "Class 6",
+    "6": "Class 8"
   },
   "truckModel": {
     "model": "Truck model",
@@ -345,7 +361,7 @@
   "cargo": {
     "property": {
       "name": "Name",
-      "adr": "ADR",
+      "adr": "ADR class",
       "weight": "Weight",
       "weightUnit": "kg",
       "engine_power": "Engine power",
@@ -418,12 +434,37 @@
     }
   },
   "driver": {
-    "model": "Drivers"
+    "model": "Drivers",
+    "property": {
+      "first_name": "First name",
+      "last_name": "Last name",
+      "gender": "Gender",
+      "status": "Status",
+      "salary": "Salary",
+      "salaryUnit": "€/month",
+      "satisfaction": "Satisfaction",
+      "preferred_road_trips": "Preferred road trips",
+      "last_in_garage_at": "Days on road",
+      "adr": "ADR class",
+      "location": "Location",
+      "garage": "Garage"
+    },
+    "searchFields": {
+      "salary_asc": "Salary Low to High",
+      "salary_desc": "Salary High to Low",
+      "adr_asc": "ADR class Low to High",
+      "adr_desc": "ADR class High to Low"
+    }
   },
   "status": {
     "0": "Delivering from shop",
     "1": "Available",
     "2": "On road",
     "3": "Assigned"
+  },
+  "preferred_road_trips": {
+    "0": "Short",
+    "1": "Medium",
+    "2": "Long"
   }
 }

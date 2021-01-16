@@ -65,7 +65,7 @@ class UpdateCargoMutation extends Mutation
             'adr' => [
                 'required',
                 'string',
-                Rule::in(config('constants.trailer_adr'))
+                Rule::in(config('constants.adr'))
             ],
             "engine_power" => [
                 'required',
