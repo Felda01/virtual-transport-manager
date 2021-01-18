@@ -91,11 +91,13 @@ export default {
   computed: {
     setBgImage() {
       let images = {
-        Login: "/img/login.jpg",
-        Register: "/img/register.jpg",
+        login: "/img/login.jpg",
+        register: "/img/register.jpg",
+        forgotPassword: '/img/forgot-password.jpg',
+        resetPassword: '/img/reset-password.jpg',
       };
       return {
-        backgroundImage: `url(${images[this.$route.meta.title]})`
+        backgroundImage: `url(${images[this.$route.meta.image]})`
       };
     },
     setPageClass() {

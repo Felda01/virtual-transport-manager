@@ -18,8 +18,8 @@ Route::middleware('guest')->group(function () {
     Route::post('register', [AuthController::class, 'register'])->name('register');
     Route::post('login', [AuthController::class, 'login'])->name('login');
     Route::post('refresh-token', [AuthController::class, 'refreshToken'])->name('refreshToken');
-    Route::post('password/email', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
-    Route::post('password/reset', [AuthController::class, 'reset'])->name('password.reset');
+    Route::post('forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+    Route::post('reset-password', [AuthController::class, 'reset'])->name('password.reset');
 });
 
 Route::middleware('auth:api')->group(function () {

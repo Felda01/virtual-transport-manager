@@ -2,6 +2,8 @@
   "pages": {
     "login": "Login",
     "register": "Register",
+    "forgotPassword": "Forgot password",
+    "resetPassword": "Reset password",
     "countries": "Countries",
     "locations": "Locations",
     "routes": "Routes",
@@ -27,6 +29,8 @@
   "routes": {
     "login": "login",
     "register": "register",
+    "forgotPassword": "forgot-password",
+    "resetPassword": "reset-password",
     "countries": "countries",
     "locations": "locations",
     "routes": "routes",
@@ -83,14 +87,24 @@
     "longitude": "The Longitude format is invalid.",
     "autocomplete": "No {model} matching \"{term}\" were found.",
     "different": "The {attribute} and {other} must be different.",
-    "min_integer": "The {attribute} must be at least {min}."
+    "min_integer": "The {attribute} must be at least {min}.",
+    "password": "The {attribute} confirmation does not match."
   },
   "login": {
     "logIn": "Log in",
-    "submitBtn": "Lets Go"
+    "submitBtn": "Lets Go",
+    "forgot_password": "Forgot Your Password?"
   },
   "register": {
     "submitBtn": "Get Started"
+  },
+  "forgotPassword": {
+    "title": "Forgot password",
+    "submitBtn": "Send Password Reset Link"
+  },
+  "resetPassword": {
+    "title": "Reset password",
+    "submitBtn": "Reset password"
   },
   "model": {
     "actions": "Actions",
@@ -176,6 +190,7 @@
     "property": {
       "email": "Email",
       "password": "Password",
+      "password_confirmation": "Password Confirmation",
       "first_name": "First name",
       "last_name": "Last name",
       "company_name": "Company name"

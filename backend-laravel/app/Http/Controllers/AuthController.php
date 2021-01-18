@@ -2,15 +2,20 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Requests\ResetLinkEmailRequest;
+use App\Http\Requests\ResetRequest;
 use App\Models\Company;
 use App\Models\Role;
 use App\Models\User;
 use App\Utilities\ProxyRequest;
 use Exception;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Laravel\Fortify\Http\Requests\LoginRequest;
 
@@ -156,59 +161,57 @@ class AuthController extends Controller
 
     }
 
-//    /**
-//     * @param ResetLinkEmailRequest $request
-//     * @return \Illuminate\Http\JsonResponse
-//     */
-//    public function sendResetLinkEmail(ResetLinkEmailRequest $request)
-//    {
-//        $response = $this->broker()->sendResetLink(
-//            $request->only('email')
-//        );
-//
-//        if ($response == Password::RESET_LINK_SENT) {
-//            return response()->json([
-//                'status' => trans($response)
-//            ]);
-//        } else {
-//            return response()->json([
-//                'email' => trans($response)
-//            ], 422);
-//        }
-//    }
-//
-//    /**
-//     * @param ResetRequest $request
-//     * @return \Illuminate\Http\JsonResponse
-//     */
-//    public function reset(ResetRequest $request)
-//    {
-//        $response = $this->broker()->reset(
-//            $request->only(['email', 'password', 'password_confirmation', 'token']), function ($user, $password) {
-//                $user->password = Hash::make($password);
-//                $user->setRememberToken(Str::random(60));
-//                $user->save();
-//            }
-//        );
-//
-//        if ($response == Password::PASSWORD_RESET) {
-//            return response()->json([
-//                'status' => trans($response)
-//            ]);
-//        } else {
-//            return response()->json([
-//                'email' => trans($response)
-//            ], 422);
-//        }
-//    }
-//
-//    /**
-//     * Get the broker to be used during password reset.
-//     *
-//     * @return \Illuminate\Contracts\Auth\PasswordBroker
-//     */
-//    public function broker()
-//    {
-//        return Password::broker();
-//    }
+    /**
+     * @param ResetLinkEmailRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function sendResetLinkEmail(ResetLinkEmailRequest $request)
+    {
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        if ($status === Password::RESET_LINK_SENT) {
+            return response()->json([
+                'status' => trans($status)
+            ]);
+        } else {
+            return response()->json([
+                'errors' => [
+                    'email' => trans($status)
+                ]
+            ], 422);
+        }
+    }
+
+    /**
+     * @param ResetRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function reset(ResetRequest $request)
+    {
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) use ($request) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ])->save();
+
+                $user->setRememberToken(Str::random(60));
+            }
+        );
+
+        if ($status == Password::PASSWORD_RESET) {
+            return response()->json([
+                'status' => trans($status),
+            ]);
+        } else {
+            return response()->json([
+                'errors' => [
+                    'email' => trans($status)
+                ]
+            ], 422);
+        }
+    }
+
 }
