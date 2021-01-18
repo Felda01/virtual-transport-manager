@@ -15,8 +15,11 @@ const currentLocale = location.pathname.split("/")[1] || "en";
 i18n.locale = currentLocale;
 
 function getTranslatedAlias(name) {
-  const translation = i18n.t(`routes.${name}`);
-  return translation !== name ? translation : undefined;
+  let translation = '';
+  if (i18n.locale !== 'en') {
+    translation = i18n.t(`routes.${name}`);
+  }
+  return translation;
 }
 
 const routes = [
@@ -114,10 +117,12 @@ router.beforeEach((to, from, next) => {
     else {
       if (store.state.user && store.state.user.roles.some(record => record.name === 'admin')) {
         next(redirectRouteByRole['admin']);
-      } else {
+      } else if (store.state.user){
         next(redirectRouteByRole['user']);
       }
+      next();
     }
+    next();
   } else {
     next()
   }

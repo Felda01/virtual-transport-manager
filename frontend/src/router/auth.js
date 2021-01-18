@@ -64,7 +64,7 @@ const authRoutes = [
     },
     {
         path: `${enRoute.resetPassword}/:token/:email`,
-        alias: `${getAlias('resetPassword')}/:token/:email`,
+        alias: getAlias('resetPassword') ? `${getAlias('resetPassword')}/:token/:email` : '',
         component: () => import('../layouts/AuthLayout.vue'),
         children: [
             {
