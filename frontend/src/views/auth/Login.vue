@@ -6,7 +6,7 @@
           <login-card header-color="green">
             <h2 slot="title" class="title">{{ $t('login.logIn') }}</h2>
             <template slot="inputs">
-              <ValidationProvider name="email" rules="required" v-slot="{ passed, failed, errors }">
+              <ValidationProvider name="email" rules="required|email" v-slot="{ passed, failed, errors }">
                 <md-field class="md-form-group" :class="[{ 'md-error md-invalid': failed }, { 'md-valid': passed }]">
                   <md-icon>email</md-icon>
                   <label>{{ $t('user.property.email') }}...</label>
@@ -37,6 +37,10 @@
                   </slide-y-down-transition>
                 </md-field>
               </ValidationProvider>
+
+              <router-link :to="{ name: 'forgotPassword' }" class="small ml-auto my-auto">
+                {{ $t('login.forgot_password') }}
+              </router-link>
             </template>
             <md-button slot="footer" class="md-simple md-success md-lg" @click="login">
               <md-progress-spinner v-if="loading" style="margin-right: 15px;" :md-diameter="20" :md-stroke="3" md-mode="indeterminate"></md-progress-spinner> {{ $t('login.submitBtn') }}
@@ -54,6 +58,7 @@
   import { SlideYDownTransition } from "vue2-transitions";
   import { extend } from "vee-validate";
   import { required, email, min } from "vee-validate/dist/rules";
+  import i18n from "../../lang";
 
   extend("email", email);
   extend("required", required);
@@ -87,7 +92,7 @@
             };
 
             this.$store.dispatch('setToken', payload).then(() => {
-              let nextRoute = { name: 'dashboard' };
+              let nextRoute = { name: 'dashboard', params: { locale: i18n.locale }};
 
               if (this.$route.query.redirect) {
                 nextRoute = this.$route.query.redirect;
