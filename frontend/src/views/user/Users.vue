@@ -1,6 +1,6 @@
 <template>
     <div class="md-layout">
-        <template v-if="$apollo.queries.users.loading">
+        <template v-if="$apollo.queries.users.loading  && firstLoad">
             <content-placeholders class="md-layout-item md-size-100">
                 <content-placeholders-heading />
                 <content-placeholders-text :lines="2" />
@@ -85,6 +85,7 @@
                 rolesOptions: [],
                 filters: [],
                 page: 1,
+                firstLoad: true,
                 avatarPlaceholder: "/img/default-avatar.png",
                 modalSchemaAddUser: {
                     form: {
@@ -223,6 +224,9 @@
                 query: USERS_QUERY,
                 variables() {
                     return { page: this.page, limit: this.users.per_page, filter: this.filters }
+                },
+                result({data, loading, networkStatus}) {
+                    this.firstLoad = false;
                 }
             },
             roles: {

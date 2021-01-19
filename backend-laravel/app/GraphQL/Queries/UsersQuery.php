@@ -80,6 +80,7 @@ class UsersQuery extends Query
             ->whereHas('roles', function($q){
                 $q->where('name', '!=', 'admin');
             })
+            ->orderBy('last_name')
             ->paginate($args['limit'], ['*'], 'page', $args['page']);
     }
 }
