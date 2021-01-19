@@ -11,8 +11,13 @@
             </content-placeholders>
         </template>
         <template v-else>
-            <div class="md-layout-item md-size-100 mb-5">
+            <div class="md-layout-item md-size-100 mb-3">
                 <search-form :search-schema="searchSchema" v-model="searchModel"></search-form>
+            </div>
+            <div class="md-layout-item md-size-100 mb-5">
+                <md-button @click="addUserModal" class="md-success">
+                    <md-icon>add</md-icon> {{ $t('user.register') }}
+                </md-button>
             </div>
             <template v-if="users.data && users.data.length > 0">
                 <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25 mb-4" v-for="(user, index) in users.data" :key="index">
@@ -45,13 +50,17 @@
                 </div>
             </template>
         </template>
+
+        <!-- Add user modal-->
+        <mutation-modal ref="addUserModal" @ok="addUser" :modalSchema="modalSchemaAddUser" />
     </div>
 </template>
 
 <script>
     import { USERS_QUERY } from "@/graphql/queries/user";
-    import { SearchForm, Pagination } from "@/components";
+    import { SearchForm, Pagination, MutationModal } from "@/components";
     import { ROLES_QUERY } from "@/graphql/queries/common";
+    import { CREATE_USER_MUTATION } from "@/graphql/mutations/user"
 
     export default {
         title () {
@@ -60,7 +69,8 @@
         name: "Users",
         components: {
             SearchForm,
-            Pagination
+            Pagination,
+            MutationModal
         },
         data() {
             return {
@@ -76,6 +86,16 @@
                 filters: [],
                 page: 1,
                 avatarPlaceholder: "/img/default-avatar.png",
+                modalSchemaAddUser: {
+                    form: {
+                        mutation: CREATE_USER_MUTATION,
+                        fields: [],
+                        hiddenFields: [],
+                    },
+                    modalTitle: this.$t('model.modal.title.add.user'),
+                    okBtnTitle: this.$t('modal.btn.register'),
+                    cancelBtnTitle: this.$t('modal.btn.cancel')
+                },
                 searchModel: {
                     first_name: '',
                     last_name: '',
@@ -133,6 +153,70 @@
             rolesTitle(roles) {
                 return roles.map(role => this.$t('role.' + role.name).toUpperCase()).join(" / ");
             },
+            addUserModal() {
+                this.modalSchemaAddUser.form.fields = [
+                    {
+                        label: this.$t('user.property.first_name'),
+                        rules: 'required',
+                        name: 'first_name',
+                        input: 'text',
+                        type: 'text',
+                        value: '',
+                        config: {}
+                    },
+                    {
+                        label: this.$t('user.property.last_name'),
+                        rules: 'required',
+                        name: 'last_name',
+                        input: 'text',
+                        type: 'text',
+                        value: '',
+                        config: {}
+                    },
+                    {
+                        label: this.$t('user.property.email'),
+                        rules: 'required|email',
+                        name: 'email',
+                        input: 'text',
+                        type: 'text',
+                        value: '',
+                        config: {}
+                    },
+                    {
+                        label: this.$t('user.searchFields.roles'),
+                        rules: 'required',
+                        name: 'roles',
+                        input: 'select',
+                        type: 'select',
+                        value: [],
+                        config: {
+                            options: this.rolesOptions,
+                            optionValue: (option) => {
+                                return option.id;
+                            },
+                            translatableLabel: 'role.',
+                            optionLabel: (option) => {
+                                return option.name;
+                            },
+                            multiple: true
+                        }
+                    },
+                ];
+
+                this.$refs['addUserModal'].openModal();
+            },
+            addUser(response) {
+                let user = response.data.createUser;
+                this.$notify({
+                    timeout: 5000,
+                    message: this.$t('model.response.success.created.user', { modelName: user.first_name + ' ' + user.last_name }),
+                    icon: "add_alert",
+                    horizontalAlign: 'right',
+                    verticalAlign: 'top',
+                    type: 'success'
+                });
+                this.$apollo.queries.users.refresh();
+            },
         },
         apollo: {
             users: {
@@ -153,3 +237,9 @@
         }
     }
 </script>
+
+<style scoped>
+    .category {
+        height: 36px;
+    }
+</style>

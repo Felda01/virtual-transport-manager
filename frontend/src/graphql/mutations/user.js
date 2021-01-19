@@ -71,3 +71,13 @@ export const CREATE_DRIVER_MUTATION = gql`
         }
     }
 `;
+
+export const CREATE_USER_MUTATION = gql`
+    mutation CreateUserMutation($first_name: String!, $last_name: String!, $email: String!, $roles: String!) {
+        createUser(first_name: $first_name, last_name: $last_name, email: $email, roles: $roles) {
+            id
+            first_name
+            last_name
+        }
+    }
+`;

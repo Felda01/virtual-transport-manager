@@ -173,7 +173,7 @@ return [
                 'updateCargo' => \App\GraphQL\Mutations\UpdateCargoMutation::class,
                 'deleteCargo' => \App\GraphQL\Mutations\DeleteCargoMutation::class,
 
-//                'createUser' => \App\GraphQL\Mutations\CreateUserMutation::class,
+                'createUser' => \App\GraphQL\Mutations\CreateUserMutation::class,
 //                'updateUser' => \App\GraphQL\Mutations\UpdateUserMutation::class,
 //                'deleteUser' => \App\GraphQL\Mutations\DeleteUserMutation::class,
 
