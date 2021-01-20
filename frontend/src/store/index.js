@@ -88,16 +88,20 @@ export default new Vuex.Store({
                     commit('SET_USER', null);
 
                     if (fullPath) {
-                        router.push({
-                            name: 'login',
-                            query: { redirect: fullPath },
-                            params: { locale: i18n.locale }
-                        });
+                        if (router.currentRoute.name !== 'login') {
+                            router.push({
+                                name: 'login',
+                                query: {redirect: fullPath},
+                                params: {locale: i18n.locale}
+                            });
+                        }
                     } else {
-                        router.push({
-                            name: 'login',
-                            params: { locale: i18n.locale }
-                        });
+                        if (router.currentRoute.name !== 'login') {
+                            router.push({
+                                name: 'login',
+                                params: {locale: i18n.locale}
+                            });
+                        }
                     }
                 })
                 .catch(error => {
@@ -105,16 +109,20 @@ export default new Vuex.Store({
                     commit('SET_USER', null);
 
                     if (fullPath) {
-                        router.push({
-                            name: 'login',
-                            query: { redirect: fullPath },
-                            params: { locale: i18n.locale }
-                        });
+                        if (router.currentRoute.name !== 'login') {
+                            router.push({
+                                name: 'login',
+                                query: { redirect: fullPath },
+                                params: { locale: i18n.locale }
+                            });
+                        }
                     } else {
-                        router.push({
-                            name: 'login',
-                            params: { locale: i18n.locale }
-                        });
+                        if (router.currentRoute.name !== 'login') {
+                            router.push({
+                                name: 'login',
+                                params: {locale: i18n.locale}
+                            });
+                        }
                     }
                 });
 

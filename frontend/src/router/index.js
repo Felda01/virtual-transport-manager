@@ -71,64 +71,71 @@ function user(fullPath) {
 router.beforeEach((to, from, next) => {
   if (to.fullPath.slice(-1) === '/') {
     next(to.fullPath.slice(0, -1));
-  }
+  } else {
+    let currentLocale = to.params.locale;
+    // setting the new locale
+    i18n.locale = currentLocale;
+    store.dispatch('setLanguageCookie', {locale: currentLocale});
 
-  let currentLocale = to.params.locale;
-  // setting the new locale
-  i18n.locale = currentLocale;
-  store.dispatch('setLanguageCookie', {locale: currentLocale});
+    if (!from.params.locale) {
+      from.params.locale = currentLocale;
+    }
 
-  if (!from.params.locale) {
-    from.params.locale = currentLocale;
-  }
+    const redirectRouteByRole = {
+      admin: { name: 'adminDashboard', params: { locale: i18n.locale } },
+      user: { name: 'dashboard', params: { locale: i18n.locale } },
+    }
 
-  const redirectRouteByRole = {
-    admin: { name: 'adminDashboard', params: { locale: i18n.locale } },
-    user: { name: 'dashboard', params: { locale: i18n.locale } },
-  }
-
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!Cookies.get('x-access-token')) {
-      store.dispatch('logout', { fullPath: to.fullPath });
-    } else {
-      user(to.fullPath).then(() => {
-        if (to.matched.some(record => record.meta.adminOnly)) {
-          if (store.state.user && store.state.user.roles.some(record => record.name === 'admin')) {
-            next();
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+      if (!Cookies.get('x-access-token')) {
+        store.dispatch('logout', { fullPath: to.fullPath });
+      } else {
+        user(to.fullPath).then(() => {
+          if (to.matched.some(record => record.meta.adminOnly)) {
+            if (store.state.user && store.state.user.roles.some(record => record.name === 'admin')) {
+              next();
+            } else {
+              if (to.name !== redirectRouteByRole['user']['name']) {
+                next(redirectRouteByRole['user']);
+              }
+            }
+          } else if (to.matched.some(record => record.meta.userOnly)) {
+            if (store.state.user && store.state.user.roles.some(record => record.name === 'admin')) {
+              if (to.name !== redirectRouteByRole['admin']['name']) {
+                next(redirectRouteByRole['admin']);
+              }
+            } else {
+              next();
+            }
           } else {
+            next();
+          }
+        });
+      }
+    } else if (to.matched.some(record => record.meta.guest)) {
+      if (!Cookies.get('x-access-token')) {
+        next()
+      }
+      else {
+        if (store.state.user && store.state.user.roles.some(record => record.name === 'admin')) {
+          if (to.name !== redirectRouteByRole['admin']['name']) {
+            next(redirectRouteByRole['admin']);
+          }
+        } else if (store.state.user){
+          if (to.name !== redirectRouteByRole['user']['name']) {
             next(redirectRouteByRole['user']);
           }
+        } else {
+          next();
         }
-
-        if (to.matched.some(record => record.meta.userOnly)) {
-          if (store.state.user && store.state.user.roles.some(record => record.name === 'admin')) {
-            next(redirectRouteByRole['admin']);
-          } else {
-            next();
-          }
-        }
-        next()
-      });
-    }
-  } else if (to.matched.some(record => record.meta.guest)) {
-    if (!Cookies.get('x-access-token')) {
+      }
+    } else {
       next()
     }
-    else {
-      if (store.state.user && store.state.user.roles.some(record => record.name === 'admin')) {
-        next(redirectRouteByRole['admin']);
-      } else if (store.state.user){
-        next(redirectRouteByRole['user']);
-      }
-      next();
-    }
-    next();
-  } else {
-    next()
-  }
 
-  if (to.params.locale !== from.params.locale) {
-    router.go();
+    if (to.params.locale !== from.params.locale) {
+      router.go();
+    }
   }
 });
 

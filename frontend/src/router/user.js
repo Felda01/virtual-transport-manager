@@ -21,7 +21,7 @@ const userRoutes = [
             },
             {
                 path: enRoute.users,
-                alias: getAlias('users'),
+                ...(getAlias('users')) && { alias: getAlias('users') },
                 name: 'users',
                 component: () => import('../views/user/Users.vue'),
                 meta: {
@@ -35,7 +35,7 @@ const userRoutes = [
             },
             {
                 path: `${enRoute.users}/:id`,
-                alias: getAlias('users') ? `${getAlias('users')}/:id` : '',
+                ...(getAlias('users')) && { alias: `${getAlias('users')}/:id` },
                 name: 'user',
                 component: () => import('../views/user/User.vue'),
                 meta: {
@@ -49,7 +49,7 @@ const userRoutes = [
             },
             {
                 path: enRoute.truckShop,
-                alias: getAlias('truckShop'),
+                ...(getAlias('truckShop')) && { alias: getAlias('truckShop') },
                 name: 'truckShop',
                 component: () => import('../views/user/TruckModels.vue'),
                 meta: {
@@ -63,7 +63,7 @@ const userRoutes = [
             },
             {
                 path: enRoute.garageShop,
-                alias: getAlias('garageShop'),
+                ...(getAlias('garageShop')) && { alias: getAlias('garageShop') },
                 name: 'garageShop',
                 component: () => import('../views/user/GarageModels.vue'),
                 meta: {
@@ -77,7 +77,7 @@ const userRoutes = [
             },
             {
                 path: enRoute.trailerShop,
-                alias: getAlias('trailerShop'),
+                ...(getAlias('trailerShop')) && { alias: getAlias('trailerShop') },
                 name: 'trailerShop',
                 component: () => import('../views/user/TrailerModels.vue'),
                 meta: {
@@ -91,7 +91,7 @@ const userRoutes = [
             },
             {
                 path: enRoute.garages,
-                alias: getAlias('garages'),
+                ...(getAlias('garages')) && { alias: getAlias('garages') },
                 name: 'garages',
                 component: () => import('../views/user/Garages.vue'),
                 meta: {
@@ -105,7 +105,7 @@ const userRoutes = [
             },
             {
                 path: `${enRoute.garages}/:id`,
-                alias: getAlias('garages') ? `${getAlias('garages')}/:id` : '',
+                ...(getAlias('garages')) && { alias: `${getAlias('garages')}/:id` },
                 name: 'garage',
                 component: () => import('../views/user/Garage.vue'),
                 meta: {
@@ -119,7 +119,7 @@ const userRoutes = [
             },
             {
                 path: enRoute.trucks,
-                alias: getAlias('trucks'),
+                ...(getAlias('trucks')) && { alias: getAlias('trucks') },
                 name: 'trucks',
                 component: () => import('../views/user/Trucks.vue'),
                 meta: {
@@ -133,7 +133,7 @@ const userRoutes = [
             },
             {
                 path: `${enRoute.trucks}/:id`,
-                alias: getAlias('trucks') ? `${getAlias('trucks')}/:id` : '',
+                ...(getAlias('trucks')) && { alias: `${getAlias('trucks')}/:id` },
                 name: 'truck',
                 component: () => import('../views/user/Truck.vue'),
                 meta: {
@@ -147,7 +147,7 @@ const userRoutes = [
             },
             {
                 path: enRoute.trailers,
-                alias: getAlias('trailers'),
+                ...(getAlias('trailers')) && { alias: getAlias('trailers') },
                 name: 'trailers',
                 component: () => import('../views/user/Trailers.vue'),
                 meta: {
@@ -161,7 +161,7 @@ const userRoutes = [
             },
             {
                 path: `${enRoute.trailers}/:id`,
-                alias: getAlias('trailers') ? `${getAlias('trailers')}/:id` : '',
+                ...(getAlias('trailers')) && { alias: `${getAlias('trailers')}/:id` },
                 name: 'trailer',
                 component: () => import('../views/user/Trailer.vue'),
                 meta: {
@@ -175,7 +175,7 @@ const userRoutes = [
             },
             {
                 path: enRoute.recruitmentAgencyDrivers,
-                alias: getAlias('recruitmentAgencyDrivers'),
+                ...(getAlias('recruitmentAgencyDrivers')) && { alias: getAlias('recruitmentAgencyDrivers') },
                 name: 'recruitmentAgencyDrivers',
                 component: () => import('../views/user/RecruitmentAgencyDrivers.vue'),
                 meta: {
@@ -189,7 +189,7 @@ const userRoutes = [
             },
             {
                 path: enRoute.drivers,
-                alias: getAlias('drivers'),
+                ...(getAlias('drivers')) && { alias: getAlias('drivers') },
                 name: 'drivers',
                 component: () => import('../views/user/Drivers.vue'),
                 meta: {
@@ -203,7 +203,7 @@ const userRoutes = [
             },
             {
                 path: `${enRoute.drivers}/:id`,
-                alias: getAlias('drivers') ? `${getAlias('drivers')}/:id` : '',
+                ...(getAlias('drivers')) && { alias: `${getAlias('drivers')}/:id` },
                 name: 'driver',
                 component: () => import('../views/user/Driver.vue'),
                 meta: {

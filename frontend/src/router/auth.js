@@ -4,7 +4,7 @@ import { getAlias } from "./index";
 const authRoutes = [
     {
         path: enRoute.login,
-        alias: getAlias('login'),
+        ...(getAlias('login')) && { alias: getAlias('login') },
         component: () => import('../layouts/AuthLayout.vue'),
         children: [
             {
@@ -24,7 +24,7 @@ const authRoutes = [
     },
     {
         path: enRoute.register,
-        alias: getAlias('register'),
+        ...(getAlias('register')) && { alias: getAlias('register') },
         component: () => import('../layouts/AuthLayout.vue'),
         children: [
             {
@@ -44,7 +44,7 @@ const authRoutes = [
     },
     {
         path: enRoute.forgotPassword,
-        alias: getAlias('forgotPassword'),
+        ...(getAlias('forgotPassword')) && { alias: getAlias('forgotPassword') },
         component: () => import('../layouts/AuthLayout.vue'),
         children: [
             {
@@ -64,7 +64,7 @@ const authRoutes = [
     },
     {
         path: `${enRoute.resetPassword}/:token/:email`,
-        alias: getAlias('resetPassword') ? `${getAlias('resetPassword')}/:token/:email` : '',
+        ...(getAlias('forgotPassword')) && { alias: `${getAlias('resetPassword')}/:token/:email` },
         component: () => import('../layouts/AuthLayout.vue'),
         children: [
             {

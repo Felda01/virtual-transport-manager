@@ -92,12 +92,11 @@
             };
 
             this.$store.dispatch('setToken', payload).then(() => {
-              let nextRoute = { name: 'dashboard', params: { locale: i18n.locale }};
-
               if (this.$route.query.redirect) {
-                nextRoute = this.$route.query.redirect;
+                this.$router.push(this.$route.query.redirect);
+              } else {
+                this.$router.push({ name: 'dashboard'});
               }
-              this.$router.push(nextRoute);
             });
           })
           .catch(error => {
