@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
  *
  * @property string $id
  * @property string $name
- * @property string $money
+ * @property float $money
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\BankLoan[] $bankLoans

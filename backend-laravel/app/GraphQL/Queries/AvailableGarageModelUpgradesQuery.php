@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace App\GraphQL\Queries;
 
 use App\Models\Garage;
-use App\Models\Location;
-use App\Models\Role;
-use App\Models\User;
+use App\Models\GarageModel;
+use App\Utilities\CompanyUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -16,16 +15,16 @@ use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\SelectFields;
 
-class AvailableLocationsQuery extends Query
+class AvailableGarageModelUpgradesQuery extends Query
 {
     protected $attributes = [
-        'name' => 'availableLocations',
+        'name' => 'availableGarageUpgrades',
         'description' => 'A query'
     ];
 
     public function type(): Type
     {
-        return GraphQL::paginate('Location');
+        return GraphQL::paginate('GarageModel');
     }
 
     private function guard()
@@ -35,7 +34,9 @@ class AvailableLocationsQuery extends Query
 
     public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
-        return $this->guard()->check();
+        $model = Garage::find($args['id']);
+
+        return $this->guard()->check() && CompanyUtility::can($model, $this->guard()->id());
     }
 
     public function getAuthorizationMessage(): string
@@ -43,9 +44,23 @@ class AvailableLocationsQuery extends Query
         return trans('validation.unauthorized');
     }
 
+    public function rules(array $args = []): array
+    {
+        return [
+            'id' => [
+                'required',
+                'string',
+                'exists:garages,id,deleted_at,NULL'
+            ],
+        ];
+    }
+
     public function args(): array
     {
         return [
+            'id' => [
+                'type' => Type::string(),
+            ],
             'limit' => [
                 'type' => Type::int(),
                 'defaultValue' => 50,
@@ -64,28 +79,23 @@ class AvailableLocationsQuery extends Query
         $select = $fields->getSelect();
         $with = $fields->getRelations();
 
-        $query = Location::query();
+        /** @var Garage $currentGarage */
+        $currentGarage = Garage::find($args['id']);
 
-        /** @var User $user */
-        $user = User::find($this->guard()->id());
+        $currentGarageModel = $currentGarage->garageModel;
 
-        if (!$user->hasRole([Role::ADMIN])) {
-            $query = $query->whereNotIn('id', function ($q) use ($user) {
-                $q->select('location_id')
-                    ->from((new Garage)->getTable())
-                    ->where('company_id', $user->company_id)
-                    ->where('deleted_at', null)
-                    ->get();
-            });
-        }
+        $query = GarageModel::query();
 
         if ($args['limit'] === -1) {
-            $args['limit'] = Location::count();
+            $args['limit'] = GarageModel::count();
         }
+
+        $query->where('truck_count', '>=', $currentGarageModel->truck_count)
+            ->where('trailer_count', '>=', $currentGarageModel->trailer_count)
+            ->where('id', '!=', $currentGarageModel->id);
 
         return $query->with($with)
             ->select($select)
-            ->orderBy('name')
             ->paginate($args['limit'], ['*'], 'page', $args['page']);
     }
 }

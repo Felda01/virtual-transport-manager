@@ -35,8 +35,19 @@
                                 </div>
                             </div>
                             <template slot="footer">
-                                <md-button class="md-primary md-simple" @click="updateGarageModal"><md-icon>edit</md-icon>{{ $t('detail.btn.upgrade') }}</md-button>
-                                <md-button class="md-danger md-simple" @click="deleteGarageModal"><md-icon>close</md-icon>{{ $t('detail.btn.sell') }}</md-button>
+                                <template v-if="canUpdateGarage">
+                                    <md-button class="md-primary md-simple" @click="updateGarageModal"><md-icon>edit</md-icon>{{ $t('detail.btn.upgrade') }}</md-button>
+                                </template>
+                                <template v-else>
+                                    <p>{{ $t('garage.no_upgrades') }}</p>
+                                </template>
+
+                                <template v-if="canDeleteGarage">
+                                    <md-button class="md-danger md-simple" @click="deleteGarageModal"><md-icon>close</md-icon>{{ $t('detail.btn.sell') }}</md-button>
+                                </template>
+                                <template v-else>
+                                    <p>{{ $t('garage.can_not_sell') }}</p>
+                                </template>
                             </template>
                         </product-card>
                     </div>
@@ -91,6 +102,9 @@
                                         <md-table-cell :md-label="$t('driver.property.location')">{{ item.location.name }} ({{ item.location.country.short_name | uppercase }})</md-table-cell>
                                         <md-table-cell :md-label="$t('driver.property.adr')">{{ $t('ADRsShort.' + item.adr) }}</md-table-cell>
                                     </md-table-row>
+                                    <md-table-empty-state>
+                                        {{ $t('garage.relations.no_drivers') }}
+                                    </md-table-empty-state>
                                 </md-table>
                             </md-card-content>
                         </md-card>
@@ -114,6 +128,9 @@
                                         <md-table-cell :md-label="$t('truck.relations.drivers')"><template v-if="item.drivers && item.drivers.length > 0">{{ drivers(findDrivers(item.drivers)) }}</template><template v-else>{{ $t('truck.relations.no_driver') }}</template></md-table-cell>
                                         <md-table-cell :md-label="$t('truck.relations.trailer')"><template v-if="item.trailer">{{ findTrailer(item.trailer).trailerModel.name }}</template><template v-else>{{ $t('truck.relations.no_trailer') }}</template></md-table-cell>
                                     </md-table-row>
+                                    <md-table-empty-state>
+                                        {{ $t('garage.relations.no_trucks') }}
+                                    </md-table-empty-state>
                                 </md-table>
                             </md-card-content>
                         </md-card>
@@ -137,34 +154,28 @@
                                         <md-table-cell :md-label="$t('trailer.relations.truck')"><template v-if="item.truck">{{ findTruck(item.truck).truckModel.brand }} {{ findTruck(item.truck).truckModel.name }}</template><template v-else>{{ $t('trailer.relations.no_truck') }}</template></md-table-cell>
                                         <md-table-cell :md-label="$t('trailer.property.adr')">{{ $t('ADRs.' + item.trailerModel.adr) }}</md-table-cell>
                                     </md-table-row>
+                                    <md-table-empty-state>
+                                        {{ $t('garage.relations.no_trailers') }}
+                                    </md-table-empty-state>
                                 </md-table>
-                            </md-card-content>
-                        </md-card>
-                    </template>
-                    <template slot="tab-pane-4">
-                        <md-card>
-                            <md-card-header>
-                                <h4 class="title">Help center</h4>
-                                <p class="category">More information here</p>
-                            </md-card-header>
-
-                            <md-card-content>
-                                Completely synergize resource taxing relationships via premier
-                                niche markets. Professionally cultivate one-to-one customer
-                                service with robust ideas. Dynamically innovate resource-leveling
-                                customer service for state of the art customer service.
                             </md-card-content>
                         </md-card>
                     </template>
                 </tabs>
             </div>
         </template>
+        <!-- Update garage modal-->
+        <mutation-modal ref="updateGarageModal" @ok="updateGarage" :modalSchema="modalSchemaUpdateGarage" />
+
+        <!-- Delete garage modal-->
+        <delete-modal ref="deleteGarageModal" @ok="deleteGarage" :modalSchema="modalSchemaDeleteGarage" />
     </div>
 </template>
 
 <script>
-    import { GARAGE_QUERY } from '@/graphql/queries/user';
-    import { Tabs, ProductCard, ChartCard } from "@/components";
+    import { GARAGE_QUERY, AVAILABLE_GARAGE_MODEL_UPGRADES_QUERY } from '@/graphql/queries/user';
+    import { UPDATE_GARAGE_MUTATION, DELETE_GARAGE_MUTATION } from '@/graphql/mutations/user';
+    import { Tabs, ProductCard, ChartCard, MutationModal, DeleteModal } from "@/components";
 
     export default {
         title () {
@@ -174,13 +185,47 @@
         components: {
             Tabs,
             ProductCard,
-            ChartCard
+            ChartCard,
+            MutationModal,
+            DeleteModal
+        },
+        computed: {
+            canUpdateGarage() {
+                return this.availableGarageModelUpgrades && this.availableGarageModelUpgrades.data && this.availableGarageModelUpgrades.data.length > 0;
+            },
+            canDeleteGarage() {
+                return this.garage ? this.garage.drivers.length === 0 && this.garage.trucks.length === 0 && this.garage.trailers.length === 0 : false;
+            },
+            garageSellPrice() {
+                return this.garage ? this.garage.garageModel.price / 2 : 0;
+            }
         },
         data() {
             return {
                 garage: null,
                 id: this.$route.params.id,
                 firstLoad: true,
+                availableGarageModelUpgrades: [],
+                modalSchemaUpdateGarage: {
+                    form: {
+                        mutation: UPDATE_GARAGE_MUTATION,
+                        fields: [],
+                        hiddenFields: [],
+                        idField: null
+                    },
+                    modalTitle: this.$t('model.modal.title.update.garage'),
+                    okBtnTitle: this.$t('modal.btn.upgrade'),
+                    cancelBtnTitle: this.$t('modal.btn.cancel')
+                },
+                modalSchemaDeleteGarage: {
+                    message: '',
+                    form: {
+                        mutation: DELETE_GARAGE_MUTATION,
+                        idField: null,
+                    },
+                    okBtnTitle: this.$t('modal.btn.sell'),
+                    cancelBtnTitle: this.$t('modal.btn.cancel')
+                },
                 roundedLineChart: {
                     data: {
                         labels: ["M", "T", "W", "T", "F", "S", "S"],
@@ -244,10 +289,65 @@
                 return driver.first_name.charAt(0) + '. ' + driver.last_name
             },
             updateGarageModal() {
+                this.modalSchemaUpdateGarage.form.fields = [
+                    {
+                        label: this.$t('garage.property.garage_model'),
+                        rules: 'required',
+                        name: 'garage_model',
+                        input: 'select',
+                        type: 'select',
+                        value: '',
+                        config: {
+                            options: this.availableGarageModelUpgrades.data,
+                            optionValue: (option) => {
+                                return option.id;
+                            },
+                            optionLabel: (option) => {
+                                let price = option.price - this.garage.garageModel.price;
+                                return option.name
+                                    + " (" + this.$t('garageModel.selectOptions.slots', {trucks: option.truck_count, trailers: option.trailer_count}) + ")"
+                                    + " - " +  this.$options.filters.currency(price, ' ', 2, { thousandsSeparator: ' ' }) + " €";
+                            }
+                        }
+                    },
+                ];
 
+                this.modalSchemaUpdateGarage.form.idField = this.id;
+
+                this.$refs['updateGarageModal'].openModal();
+            },
+            updateGarage(response) {
+                let garage = response.data.updateGarage;
+                this.$notify({
+                    timeout: 5000,
+                    message: this.$t('model.response.success.updated.garage', { modelName: garage.garageModel.name, location: garage.location.name }),
+                    icon: "add_alert",
+                    horizontalAlign: 'right',
+                    verticalAlign: 'top',
+                    type: 'success'
+                });
+
+                this.$apollo.queries.garage.refresh();
             },
             deleteGarageModal() {
+                this.modalSchemaDeleteGarage.form.idField = this.id;
 
+                this.$refs['deleteGarageModal'].openModal();
+            },
+            deleteGarage(response) {
+                let garage = response.data.deleteGarage;
+                this.$notify({
+                    timeout: 5000,
+                    message: this.$t('model.response.success.deleted.garageModel', { modelName: garage.garageModel.name, location: garage.location.name }),
+                    icon: "add_alert",
+                    horizontalAlign: 'right',
+                    verticalAlign: 'top',
+                    type: 'success'
+                });
+                this.$router.push({
+                    name: 'garages',
+                    params: {locale: this.$i18n.locale}
+                });
             }
         },
         apollo: {
@@ -258,8 +358,16 @@
                 },
                 result({data, loading, networkStatus}) {
                     this.firstLoad = false;
+                    let price = this.$options.filters.currency(data.garage.garageModel.price / 2, ' ', 2, { thousandsSeparator: ' ' })
+                    this.modalSchemaDeleteGarage.message = this.$t('model.modal.title.delete.garage', {price: price});
                 }
             },
+            availableGarageModelUpgrades: {
+                query: AVAILABLE_GARAGE_MODEL_UPGRADES_QUERY,
+                variables() {
+                    return {id: this.id, page: 1, limit: -1}
+                }
+            }
         }
     }
 </script>

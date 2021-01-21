@@ -81,3 +81,43 @@ export const CREATE_USER_MUTATION = gql`
         }
     }
 `;
+
+export const UPDATE_GARAGE_MUTATION = gql`
+    mutation UpdateGarageMutation($id: String!, $garage_model: String!) {
+        updateGarage(id: $id, garage_model: $garage_model) {
+            id
+            garageModel {
+                id
+                name
+            }
+            location {
+                id
+                name
+                country {
+                    id
+                    short_name
+                }
+            }
+        }
+    }
+`;
+
+export const DELETE_GARAGE_MUTATION = gql`
+    mutation DeleteGarageMutation($id: String!) {
+        deleteGarage(id: $id) {
+            id
+            garageModel {
+                id
+                name
+            }
+            location {
+                id
+                name
+                country {
+                    id
+                    short_name
+                }
+            }
+        }
+    }
+`;

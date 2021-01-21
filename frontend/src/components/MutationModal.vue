@@ -85,13 +85,18 @@
                                 <md-field :class="[{ 'md-error md-invalid': failed }, { 'md-valid': passed }]">
                                     <label>{{ field.label }}{{ fieldAdditionalLabelText(field.config) }}{{ field.rules.includes('required') ? ' *' : '' }}</label>
                                     <md-select v-model="form[field.name]" :name="field.label" :multiple="field.config.multiple ? field.config.multiple : false">
-                                        <template v-if="field.config.groupBy">
-                                            <md-optgroup v-for="(groups, groupIndex) in _.groupBy(field.config.options, field.config.groupBy)" :label="field.config.optgroupLabel(groups[0])" :key="field.name + '-group-' + groupIndex">
-                                                <md-option :value="field.config.optionValue(option)" v-for="option in groups" :key="field.config.optionValue(option)">{{ field.config.translatableLabel ? $t(field.config.translatableLabel + field.config.optionLabel(option)) : field.config.optionLabel(option) }}</md-option>
-                                            </md-optgroup>
+                                        <template v-if="field.config.options && field.config.options.length > 0">
+                                            <template v-if="field.config.groupBy">
+                                                <md-optgroup v-for="(groups, groupIndex) in _.groupBy(field.config.options, field.config.groupBy)" :label="field.config.optgroupLabel(groups[0])" :key="field.name + '-group-' + groupIndex">
+                                                    <md-option :value="field.config.optionValue(option)" v-for="option in groups" :key="field.config.optionValue(option)">{{ field.config.translatableLabel ? $t(field.config.translatableLabel + field.config.optionLabel(option)) : field.config.optionLabel(option) }}</md-option>
+                                                </md-optgroup>
+                                            </template>
+                                            <template v-else>
+                                                <md-option :value="field.config.optionValue(option)" v-for="option in field.config.options" :key="field.config.optionValue(option)">{{ field.config.translatableLabel ? $t(field.config.translatableLabel + field.config.optionLabel(option)) : field.config.optionLabel(option) }}</md-option>
+                                            </template>
                                         </template>
                                         <template v-else>
-                                            <md-option :value="field.config.optionValue(option)" v-for="option in field.config.options" :key="field.config.optionValue(option)">{{ field.config.translatableLabel ? $t(field.config.translatableLabel + field.config.optionLabel(option)) : field.config.optionLabel(option) }}</md-option>
+                                            <md-option :value="null" disabled><template v-if="field.config.emptyOption">{{ field.config.emptyOption }}</template><template v-else>{{ $t('modal.select.emptyOption') }}</template></md-option>
                                         </template>
                                     </md-select>
 
@@ -365,6 +370,9 @@
     .md-menu-content,
     .md-select-menu {
         z-index: 10000!important;
+    }
+    .md-menu-content {
+        max-width: 360px!important;
     }
     .md-menu.md-select:not(.md-disabled) .md-icon {
         margin-right: 25px;

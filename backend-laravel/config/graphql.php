@@ -128,6 +128,7 @@ return [
 
                 'availableGarages' => \App\GraphQL\Queries\AvailableGaragesQuery::class,
                 'countriesWithGarages' => \App\GraphQL\Queries\CountriesWithGaragesQuery::class,
+                'availableGarageModelUpgrades' => \App\GraphQL\Queries\AvailableGarageModelUpgradesQuery::class,
 
                 'garages' => \App\GraphQL\Queries\GaragesQuery::class,
                 'trucks' => \App\GraphQL\Queries\TrucksQuery::class,
@@ -180,6 +181,8 @@ return [
 //                'deleteUser' => \App\GraphQL\Mutations\DeleteUserMutation::class,
 
                 'createGarage' => \App\GraphQL\Mutations\CreateGarageMutation::class,
+                'updateGarage' => \App\GraphQL\Mutations\UpdateGarageMutation::class,
+                'deleteGarage' => \App\GraphQL\Mutations\DeleteGarageMutation::class,
 
                 'createTruck' => \App\GraphQL\Mutations\CreateTruckMutation::class,
 

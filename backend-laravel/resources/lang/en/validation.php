@@ -10,6 +10,7 @@ for ($i = 0; $i < count($locales); $i++) {
 }
 $extendedAttributes['name_translations'] = 'Name';
 $extendedAttributes['short_name'] = 'Short name';
+$extendedAttributes['garage_model'] = 'Garage model';
 
 return [
 
@@ -139,6 +140,7 @@ return [
     'available_garage_spot' => "There is not enough space in this garage.",
     'available_driver_recruitment_agency' => "The driver was hired by another company.",
     'exists_all' => "The selected :attribute is invalid.",
+    'available_garage_model_upgrade' => "The selected :attribute is invalid.",
 
     /*
     |--------------------------------------------------------------------------

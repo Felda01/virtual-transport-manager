@@ -74,7 +74,12 @@
       "delete": "Delete",
       "buy": "Buy",
       "hire": "Hire",
-      "register": "Register"
+      "register": "Register",
+      "upgrade": "Upgrade",
+      "sell": "Sell"
+    },
+    "select": {
+      "emptyOption": "No available options"
     }
   },
   "shop": {
@@ -142,7 +147,8 @@
           "route": "Update this route",
           "trailerModel": "Update this trailer model",
           "truckModel": "Update this truck model",
-          "garageModel": "Update this garage model"
+          "garageModel": "Update this garage model",
+          "garage": "Upgrade this garage"
         },
         "delete": {
           "bankLoanType": "Are you sure you want to delete this bank loan type",
@@ -152,7 +158,8 @@
           "route": "Are you sure you want to delete this route",
           "trailerModel": "Are you sure you want to delete this trailer model",
           "truckModel": "Are you sure you want to delete this truck model",
-          "garageModel": "Are you sure you want to delete this garage model"
+          "garageModel": "Are you sure you want to delete this garage model",
+          "garage": "Are you sure you want to sell this garage for {price} €"
         }
       }
     },
@@ -182,7 +189,8 @@
           "route": "The route {modelName} was successfully updated.",
           "trailerModel": "The trailer model {modelName} was successfully updated.",
           "truckModel": "The truck model {modelName} was successfully updated.",
-          "garageModel": "The garage model {modelName} was successfully updated."
+          "garageModel": "The garage model {modelName} was successfully updated.",
+          "garage": "The garage in {location} was successfully upgraded to {modelName}."
         },
         "deleted": {
           "bankLoanType": "The bank loan type {modelName} was successfully deleted.",
@@ -192,7 +200,8 @@
           "route": "The route {modelName} was successfully deleted.",
           "trailerModel": "The trailer model {modelName} was successfully deleted.",
           "truckModel": "The truck model {modelName} was successfully deleted.",
-          "garageModel": "The garage model {modelName} was successfully deleted."
+          "garageModel": "The garage model {modelName} was successfully deleted.",
+          "garage": "The {modelName} garage in {location} was successfully sold."
         }
       }
     }
@@ -293,6 +302,9 @@
     "searchFields": {
       "price_asc": "Price Low to High",
       "price_desc": "Price High to Low"
+    },
+    "selectOptions": {
+      "slots": "Slots: {trucks} trucks, {trailers} trailer"
     }
   },
   "trailerModel": {
@@ -441,7 +453,14 @@
       "drivers": "Drivers",
       "trucks": "Trucks",
       "trailers": "Trailers"
-    }
+    },
+    "relations": {
+      "no_drivers": "No drivers",
+      "no_trucks": "No trucks",
+      "no_trailers": "No trailers"
+    },
+    "no_upgrades": "Fully upgraded.",
+    "can_not_sell": "Only empty garage can be sold."
   },
   "truck": {
     "property": {

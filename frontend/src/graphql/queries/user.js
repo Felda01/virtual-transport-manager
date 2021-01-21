@@ -348,6 +348,7 @@ export const GARAGE_QUERY = gql`
                 truck_count
                 trailer_count
                 image
+                price
                 tax
                 insurance
             }
@@ -410,6 +411,20 @@ export const GARAGE_QUERY = gql`
                         short_name
                     }
                 }
+            }
+        }
+    }
+`;
+
+export const AVAILABLE_GARAGE_MODEL_UPGRADES_QUERY = gql`
+    query AvailableGarageModelUpgradesQuery($id: String!, $limit: Int!, $page: Int!) {
+        availableGarageModelUpgrades(id: $id, limit: $limit, page: $page) {
+            data {
+                id
+                name
+                price
+                truck_count
+                trailer_count
             }
         }
     }
