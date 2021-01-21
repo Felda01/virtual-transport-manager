@@ -138,6 +138,8 @@ return [
 
                 'recruitmentAgencyDrivers' => \App\GraphQL\Queries\RecruitmentAgencyDriversQuery::class,
                 'preferredRoadTrips' => \App\GraphQL\Queries\PreferredRoadTripsQuery::class,
+
+                'garage' => \App\GraphQL\Queries\GarageQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,

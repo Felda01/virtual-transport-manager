@@ -30,7 +30,7 @@
         <div class="tab-content">
           <template v-for="(item, index) in tabName">
             <template v-if="isActivePanel(tabName[index])">
-              <div :class="getTabContent(index + 1)" :key="item">
+              <div :class="getTabContentClass(index + 1)" :key="item">
                 <slot :name="getTabContent(index + 1)">
                   This is the default text!
                 </slot>
@@ -51,6 +51,8 @@ export default {
     plain: Boolean,
     tabName: Array,
     tabIcon: Array,
+    tabContentCenter: Boolean,
+    tabContentFullWidth: Boolean,
     colorButton: {
       type: String,
       default: ""
@@ -71,8 +73,18 @@ export default {
     getColorButton: function(colorButton) {
       return "md-" + colorButton + "";
     },
-    getTabContent: function(index) {
+    getTabContent(index) {
       return "tab-pane-" + index + "";
+    },
+    getTabContentClass(index) {
+      let className = "";
+      if (this.tabContentCenter) {
+        className += " mx-auto";
+      }
+      if (this.tabContentFullWidth) {
+        className += " width-full";
+      }
+      return "tab-pane-" + index + "" + className;
     }
   }
 };

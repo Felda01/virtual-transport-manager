@@ -24,7 +24,8 @@
     "trucks": "Trucks",
     "trailers": "Trailers",
     "recruitmentAgencyDrivers": "Recruitment agency",
-    "drivers": "Drivers"
+    "drivers": "Drivers",
+    "garage": "Garage"
   },
   "routes": {
     "login": "login",
@@ -79,6 +80,13 @@
   "shop": {
     "buy": "Buy now",
     "hire": "Hire now"
+  },
+  "detail": {
+    "btn": {
+      "update": "Update",
+      "upgrade": "Upgrade",
+      "sell": "Sell"
+    }
   },
   "pagination": {
     "display": "Showing {from} to {to} of {total} entries"
@@ -428,6 +436,11 @@
       "country": "Country",
       "available_truck_spot": "At least one available truck spot",
       "available_trailer_spot": "At least one available trailer spot"
+    },
+    "subNav": {
+      "drivers": "Drivers",
+      "trucks": "Trucks",
+      "trailers": "Trailers"
     }
   },
   "truck": {
@@ -446,7 +459,8 @@
   "trailer": {
     "property": {
       "garage": "Garage",
-      "status": "Status"
+      "status": "Status",
+      "adr": "ADR class"
     },
     "relations": {
       "trailerModel": "Trailer model",

@@ -22,7 +22,7 @@
                                 <md-table-row slot="md-table-row" slot-scope="{ item, index }" @click.native="clickTableRow(item)" class="cursor-pointer-hover">
                                     <md-table-cell md-label="#">{{ index + drivers.from }}</md-table-cell>
                                     <md-table-cell md-label="">
-                                        <div class="img-container profile">
+                                        <div class="img-container table-profile-image">
                                             <img :src="item.image" :alt="item.first_name + ' ' + item.last_name" />
                                         </div>
                                     </md-table-cell>
@@ -228,8 +228,5 @@
 </script>
 
 <style scoped>
-    .profile {
-        width: 50px;
-        border-radius: 50%;
-    }
+
 </style>

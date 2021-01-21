@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Queries;
 
-use App\Models\User;
+use App\Models\Garage;
 use App\Utilities\CompanyUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -14,16 +14,16 @@ use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\SelectFields;
 
-class UserQuery extends Query
+class GarageQuery extends Query
 {
     protected $attributes = [
-        'name' => 'user',
+        'name' => 'garage',
         'description' => 'A query'
     ];
 
     public function type(): Type
     {
-        return GraphQL::type('User');
+        return GraphQL::type('Garage');
     }
 
     private function guard()
@@ -33,7 +33,7 @@ class UserQuery extends Query
 
     public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
-        $model = User::find($args['id']);
+        $model = Garage::find($args['id']);
 
         return $this->guard()->check() && CompanyUtility::can($model, $this->guard()->id());
     }
@@ -49,7 +49,7 @@ class UserQuery extends Query
             'id' => [
                 'required',
                 'string',
-                'exists:users,id,deleted_at,NULL'
+                'exists:garages,id,deleted_at,NULL'
             ],
         ];
     }
@@ -65,6 +65,6 @@ class UserQuery extends Query
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
-        return User::find($args['id']);
+        return Garage::find($args['id']);
     }
 }

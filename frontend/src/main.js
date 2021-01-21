@@ -32,6 +32,9 @@ import { localize } from 'vee-validate';
 import en from 'vee-validate/dist/locale/en.json';
 import sk from 'vee-validate/dist/locale/sk.json';
 
+import Chartist from "chartist";
+Vue.prototype.$Chartist = Chartist;
+
 // Install English and Slovak locales.
 localize({
   en,

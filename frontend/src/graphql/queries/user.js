@@ -215,6 +215,7 @@ export const TRAILERS_QUERY = gql`
                     name
                     type
                     image
+                    adr
                 }
                 truck {
                     id
@@ -333,6 +334,83 @@ export const DRIVERS_QUERY = gql`
             to
             last_page
             has_more_pages
+        }
+    }
+`;
+
+export const GARAGE_QUERY = gql`
+    query GarageQuery($id: String!) {
+        garage(id: $id) {
+            id
+            garageModel {
+                id
+                name
+                truck_count
+                trailer_count
+                image
+                tax
+                insurance
+            }
+            location {
+                id
+                name
+                country {
+                    id
+                    short_name
+                }
+            }
+            trucks {
+                id
+                status
+                truckModel {
+                    id
+                    name
+                    brand
+                    image
+                }
+                trailer {
+                    id
+                }
+                drivers {
+                    id
+                }
+            }
+            trailers {
+                id
+                status
+                trailerModel {
+                    id
+                    name
+                    type
+                    image
+                    adr
+                }
+                truck {
+                    id
+                }
+            }
+            drivers {
+                id
+                first_name
+                last_name
+                image         
+                adr
+                status
+                truck {
+                    id
+                    trailer {
+                        id
+                    }
+                }
+                location {
+                    id
+                    name
+                    country {
+                        id
+                        short_name
+                    }
+                }
+            }
         }
     }
 `;
