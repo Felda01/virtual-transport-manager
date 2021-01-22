@@ -13,6 +13,7 @@ class StatusUtility
     const AVAILABLE = 1;
     const ON_ROAD = 2;
     const ASSIGNED = 3;
+    const FINISHED = 4;
 
 
     /**
@@ -44,6 +45,17 @@ class StatusUtility
     /**
      * @return int[]
      */
+    public static function order()
+    {
+        return [
+            self::ON_ROAD,
+            self::FINISHED
+        ];
+    }
+
+    /**
+     * @return int[]
+     */
     public static function all()
     {
         return [
@@ -51,6 +63,7 @@ class StatusUtility
             self::AVAILABLE,
             self::ASSIGNED,
             self::ON_ROAD,
+            self::FINISHED,
         ];
     }
 }

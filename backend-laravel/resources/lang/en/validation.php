@@ -141,6 +141,7 @@ return [
     'available_driver_recruitment_agency' => "The driver was hired by another company.",
     'exists_all' => "The selected :attribute is invalid.",
     'available_garage_model_upgrade' => "The selected :attribute is invalid.",
+    'free_driver' => "The selected driver is not available at this moment.",
 
     /*
     |--------------------------------------------------------------------------

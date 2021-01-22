@@ -23,7 +23,7 @@
                                 <h4 class="title">{{ $t('garage.subNav.info') }}</h4>
                             </md-card-header>
                             <md-card-content class="pb-0">
-                                <md-table v-model="garageTable" v-if="garage">
+                                <md-table v-model="garageTable" v-if="garageTable">
                                     <md-table-row slot="md-table-row" slot-scope="{ item, index }">
                                         <md-table-cell md-label="">
                                             <div class="img-container table-detail-image">
@@ -35,6 +35,8 @@
                                         <md-table-cell :md-label="$t('garage.property.trucks')">{{ item.trucks.length }} / {{ item.garageModel.truck_count }}</md-table-cell>
                                         <md-table-cell :md-label="$t('garage.property.trailers')">{{ item.trailers.length }} / {{ item.garageModel.trailer_count }}</md-table-cell>
                                         <md-table-cell :md-label="$t('garage.property.location')">{{ item.location.name }} ({{ item.location.country.short_name | uppercase }})</md-table-cell>
+                                        <md-table-cell :md-label="$t('garageModel.property.insurance')">{{ item.garageModel.insurance | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('garageModel.property.insuranceUnit') }}</md-table-cell>
+                                        <md-table-cell :md-label="$t('garageModel.property.tax')">{{ item.garageModel.tax | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('garageModel.property.taxUnit') }}</md-table-cell>
                                     </md-table-row>
                                 </md-table>
                             </md-card-content>
@@ -71,7 +73,7 @@
                                         </md-table-cell>
                                         <md-table-cell :md-label="$t('driver.property.full_name')" class="td-name">{{ driver(item) }}</md-table-cell>
                                         <md-table-cell :md-label="$t('driver.property.status')">{{ $t('status.' + item.status) }}</md-table-cell>
-                                        <md-table-cell :md-label="$t('driver.relations.truck')"><template v-if="item.truck">{{ findTruck(item.truck.id).truckModel.brand }} {{ findTruck(item.truck.id).truckModel.name }}</template><template v-else>{{ $t('driver.relations.no_trailer') }}</template></md-table-cell>
+                                        <md-table-cell :md-label="$t('driver.relations.truck')"><template v-if="item.truck">{{ findTruck(item.truck.id).truckModel.brand }} {{ findTruck(item.truck.id).truckModel.name }}</template><template v-else>{{ $t('driver.relations.no_truck') }}</template></md-table-cell>
                                         <md-table-cell :md-label="$t('driver.relations.trailer')"><template v-if="item.truck && item.truck.trailer">{{ findTruck(item.truck.trailer.id).trailerModel.name }}</template><template v-else>{{ $t('driver.relations.no_trailer') }}</template></md-table-cell>
                                         <md-table-cell :md-label="$t('driver.property.location')">{{ item.location.name }} ({{ item.location.country.short_name | uppercase }})</md-table-cell>
                                         <md-table-cell :md-label="$t('driver.property.adr')">{{ $t('ADRsShort.' + item.adr) }}</md-table-cell>
@@ -99,7 +101,7 @@
                                         </md-table-cell>
                                         <md-table-cell :md-label="$t('truckModel.model')" class="td-name">{{ item.truckModel.brand }} {{ item.truckModel.name }}</md-table-cell>
                                         <md-table-cell :md-label="$t('truck.property.status')">{{ $t('status.' + item.status) }}</md-table-cell>
-                                        <md-table-cell :md-label="$t('truck.relations.drivers')"><template v-if="item.drivers && item.drivers.length > 0">{{ drivers(findDrivers(item.drivers)) }}</template><template v-else>{{ $t('truck.relations.no_driver') }}</template></md-table-cell>
+                                        <md-table-cell :md-label="$t('truck.relations.drivers')"><template v-if="item.drivers && item.drivers.length > 0">{{ drivers(findDrivers(item.drivers)) }}</template><template v-else>{{ $t('truck.relations.no_drivers') }}</template></md-table-cell>
                                         <md-table-cell :md-label="$t('truck.relations.trailer')"><template v-if="item.trailer">{{ findTrailer(item.trailer).trailerModel.name }}</template><template v-else>{{ $t('truck.relations.no_trailer') }}</template></md-table-cell>
                                     </md-table-row>
                                     <md-table-empty-state>
@@ -147,8 +149,8 @@
 </template>
 
 <script>
-    import { GARAGE_QUERY, AVAILABLE_GARAGE_MODEL_UPGRADES_QUERY } from '@/graphql/queries/user';
-    import { UPDATE_GARAGE_MUTATION, DELETE_GARAGE_MUTATION } from '@/graphql/mutations/user';
+    import { GARAGE_QUERY, AVAILABLE_GARAGE_MODEL_UPGRADES_QUERY, AVAILABLE_DRIVERS_FOR_ASSIGN_TO_GARAGE_QUERY } from '@/graphql/queries/user';
+    import { UPDATE_GARAGE_MUTATION, DELETE_GARAGE_MUTATION, ASSIGN_DRIVER_TO_GARAGE_MUTATION } from '@/graphql/mutations/user';
     import { Tabs, ProductCard, ChartCard, MutationModal, DeleteModal } from "@/components";
 
     export default {
@@ -284,6 +286,9 @@
                 this.$apollo.queries.garage.refresh();
             },
             deleteGarageModal() {
+                let price = this.$options.filters.currency(this.garage.garageModel.price / 2, ' ', 2, { thousandsSeparator: ' ' })
+                this.modalSchemaDeleteGarage.message = this.$t('model.modal.title.delete.garage', {price: price});
+
                 this.modalSchemaDeleteGarage.form.idField = this.id;
 
                 this.$refs['deleteGarageModal'].openModal();
@@ -302,7 +307,7 @@
                     name: 'garages',
                     params: {locale: this.$i18n.locale}
                 });
-            }
+            },
         },
         apollo: {
             garage: {
@@ -312,8 +317,6 @@
                 },
                 result({data, loading, networkStatus}) {
                     this.firstLoad = false;
-                    let price = this.$options.filters.currency(data.garage.garageModel.price / 2, ' ', 2, { thousandsSeparator: ' ' })
-                    this.modalSchemaDeleteGarage.message = this.$t('model.modal.title.delete.garage', {price: price});
                 }
             },
             availableGarageModelUpgrades: {
@@ -321,7 +324,7 @@
                 variables() {
                     return {id: this.id, page: 1, limit: -1}
                 }
-            }
+            },
         }
     }
 </script>

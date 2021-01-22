@@ -430,3 +430,81 @@ export const AVAILABLE_GARAGE_MODEL_UPGRADES_QUERY = gql`
     }
 `;
 
+export const TRUCK_QUERY = gql`
+    query TruckQuery($id: String!) {
+        truck(id: $id) {
+            id
+            status
+            truckModel {
+                id
+                name
+                brand
+                engine_power
+                chassis
+                load
+                emission_class
+                km
+                image
+                price
+                tax
+                insurance
+            }
+            km
+            trailer {
+                id
+                status
+                trailerModel {
+                    id
+                    name
+                    type
+                    image
+                    adr
+                }
+            }
+            drivers {
+                id
+                first_name
+                last_name
+                image         
+                adr
+                status
+                location {
+                    id
+                    name
+                    country {
+                        id
+                        short_name
+                    }
+                }
+            }
+            garage {
+                id
+                garageModel {
+                    id
+                    name
+                    truck_count
+                    trailer_count
+                    image
+                }
+                location {
+                    id
+                    name
+                    country {
+                        id
+                        short_name
+                    }
+                }
+                trucks {
+                    id
+                }
+                trailers {
+                    id
+                }
+                drivers {
+                    id
+                }
+            }
+        }
+    }
+`;
+

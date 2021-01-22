@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\HasUuid;
 use App\Utilities\FilterUtility;
+use App\Utilities\StatusUtility;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -140,6 +141,24 @@ class Driver extends Model
     public function garage()
     {
         return $this->belongsTo(Garage::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /**
+     * @return Builder|\Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function activeOrder()
+    {
+        return $this->orders()->whereHas('roadTrip', function (Builder $query) {
+            $query->where('status', '!=', StatusUtility::FINISHED);
+        });
     }
 
     /**

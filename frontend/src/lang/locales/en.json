@@ -92,7 +92,8 @@
     "btn": {
       "update": "Update",
       "upgrade": "Upgrade",
-      "sell": "Sell"
+      "sell": "Sell",
+      "assign": "Assign"
     }
   },
   "pagination": {
@@ -471,15 +472,20 @@
       "status": "Status"
     },
     "relations": {
-      "drivers": "Driver",
-      "no_driver": "No driver",
+      "drivers": "Drivers",
+      "no_drivers": "No drivers",
       "trailer": "Trailer",
       "no_trailer": "No trailer",
-      "truckModel": "Truck model"
+      "truckModel": "Truck model",
+      "location": "Location"
     },
-    "detail": {
-      "info": "Truck info"
-    }
+    "subNav": {
+      "info": "Truck info",
+      "drivers": "Drivers",
+      "trailer": "Trailer",
+      "garage": "Garage"
+    },
+    "can_not_sell": "Only truck in the garage can be sold."
   },
   "trailer": {
     "property": {

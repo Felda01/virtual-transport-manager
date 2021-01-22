@@ -141,6 +141,7 @@ return [
                 'preferredRoadTrips' => \App\GraphQL\Queries\PreferredRoadTripsQuery::class,
 
                 'garage' => \App\GraphQL\Queries\GarageQuery::class,
+                'truck' => \App\GraphQL\Queries\TruckQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,
