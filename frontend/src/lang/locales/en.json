@@ -25,7 +25,9 @@
     "trailers": "Trailers",
     "recruitmentAgencyDrivers": "Recruitment agency",
     "drivers": "Drivers",
-    "garage": "Garage"
+    "garage": "Garage",
+    "truck": "Truck",
+    "trailer": "Trailer"
   },
   "routes": {
     "login": "login",
@@ -450,6 +452,7 @@
       "available_trailer_spot": "At least one available trailer spot"
     },
     "subNav": {
+      "info": "Garage info",
       "drivers": "Drivers",
       "trucks": "Trucks",
       "trailers": "Trailers"
@@ -473,6 +476,9 @@
       "trailer": "Trailer",
       "no_trailer": "No trailer",
       "truckModel": "Truck model"
+    },
+    "detail": {
+      "info": "Truck info"
     }
   },
   "trailer": {

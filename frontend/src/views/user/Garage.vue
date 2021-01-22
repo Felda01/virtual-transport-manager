@@ -1,40 +1,44 @@
 <template>
     <div class="md-layout">
         <template v-if="$apollo.queries.garage.loading && firstLoad">
-            <content-placeholders class="md-layout-item md-medium-size-100 md-size-33">
-                <content-placeholders-heading />
-                <content-placeholders-text :lines="15" />
-            </content-placeholders>
-            <content-placeholders class="md-layout-item md-medium-size-100 md-size-66">
+            <content-placeholders class="md-layout-item md-size-100">
                 <content-placeholders-heading />
                 <content-placeholders-text :lines="15" />
             </content-placeholders>
         </template>
         <template v-else>
-            <div class="md-layout-item md-medium-size-100 md-size-33">
-                <div class="md-layout">
-                    <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-100">
-                        <product-card header-animation="false" class="mb-4">
-                            <img class="img" slot="imageHeader" :src="garage.garageModel.image" />
-                            <h4 slot="title" class="title mt-2 mb-2">
-                                {{ garage.garageModel.name }}
-                            </h4>
-                            <div slot="description" class="card-description">
-                                <div class="md-layout md-alignment-center-space-between">
-                                    <div class="md-layout-item md-size-50 text-left">{{ $t('garageModel.property.truck_count') }}</div>
-                                    <div class="md-layout-item md-size-50 text-right">{{ garage.garageModel.truck_count }}</div>
-
-                                    <div class="md-layout-item md-size-50 text-left">{{ $t('garageModel.property.trailer_count') }}</div>
-                                    <div class="md-layout-item md-size-50 text-right">{{ garage.garageModel.trailer_count }}</div>
-
-                                    <div class="md-layout-item md-size-50 text-left">{{ $t('garageModel.property.insurance') }}</div>
-                                    <div class="md-layout-item md-size-50 text-right">{{ garage.garageModel.insurance | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('garageModel.property.insuranceUnit') }}</div>
-
-                                    <div class="md-layout-item md-size-50 text-left">{{ $t('garageModel.property.tax') }}</div>
-                                    <div class="md-layout-item md-size-50 text-right">{{ garage.garageModel.tax | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('garageModel.property.taxUnit') }}</div>
-                                </div>
-                            </div>
-                            <template slot="footer">
+            <div class="md-layout-item md-size-100">
+                <tabs
+                        :tab-name="[$t('garage.subNav.info'), $t('garage.subNav.drivers'), $t('garage.subNav.trucks'), $t('garage.subNav.trailers')]"
+                        class="page-subcategories"
+                        plain
+                        :tab-content-center="true"
+                        :tab-content-full-width="true"
+                        color-button="success"
+                >
+                    <!-- here you can add your content for tab-content -->
+                    <template slot="tab-pane-1">
+                        <md-card>
+                            <md-card-header>
+                                <h4 class="title">{{ $t('garage.subNav.info') }}</h4>
+                            </md-card-header>
+                            <md-card-content class="pb-0">
+                                <md-table v-model="garageTable" v-if="garage">
+                                    <md-table-row slot="md-table-row" slot-scope="{ item, index }">
+                                        <md-table-cell md-label="">
+                                            <div class="img-container table-detail-image">
+                                                <img :src="item.garageModel.image" :alt="item.garageModel.name" />
+                                            </div>
+                                        </md-table-cell>
+                                        <md-table-cell :md-label="$t('garageModel.property.name')" class="td-name">{{ item.garageModel.name }}</md-table-cell>
+                                        <md-table-cell :md-label="$t('garage.property.drivers')">{{ item.drivers.length }} / {{ item.garageModel.truck_count }}</md-table-cell>
+                                        <md-table-cell :md-label="$t('garage.property.trucks')">{{ item.trucks.length }} / {{ item.garageModel.truck_count }}</md-table-cell>
+                                        <md-table-cell :md-label="$t('garage.property.trailers')">{{ item.trailers.length }} / {{ item.garageModel.trailer_count }}</md-table-cell>
+                                        <md-table-cell :md-label="$t('garage.property.location')">{{ item.location.name }} ({{ item.location.country.short_name | uppercase }})</md-table-cell>
+                                    </md-table-row>
+                                </md-table>
+                            </md-card-content>
+                            <md-card-actions md-alignment="space-between">
                                 <template v-if="canUpdateGarage">
                                     <md-button class="md-primary md-simple" @click="updateGarageModal"><md-icon>edit</md-icon>{{ $t('detail.btn.upgrade') }}</md-button>
                                 </template>
@@ -48,40 +52,10 @@
                                 <template v-else>
                                     <p>{{ $t('garage.can_not_sell') }}</p>
                                 </template>
-                            </template>
-                        </product-card>
-                    </div>
-<!--                    <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-100">-->
-<!--                        <chart-card-->
-<!--                                header-animation="false"-->
-<!--                                :chart-data="roundedLineChart.data"-->
-<!--                                :chart-options="roundedLineChart.options"-->
-<!--                                chart-type="Line"-->
-<!--                                chart-inside-header-->
-<!--                                no-footer-->
-<!--                                background-color="green"-->
-<!--                        >-->
-<!--                            <template slot="content">-->
-<!--                                <h4 class="title">Rounded Line Chart</h4>-->
-<!--                                <p class="category">-->
-<!--                                    Line Chart-->
-<!--                                </p>-->
-<!--                            </template>-->
-<!--                        </chart-card>-->
-<!--                    </div>-->
-                </div>
-            </div>
-            <div class="md-layout-item md-size-66 mx-auto md-medium-size-100">
-                <tabs
-                        :tab-name="[$t('garage.subNav.drivers'), $t('garage.subNav.trucks'), $t('garage.subNav.trailers')]"
-                        class="page-subcategories"
-                        plain
-                        :tab-content-center="true"
-                        :tab-content-full-width="true"
-                        color-button="success"
-                >
-                    <!-- here you can add your content for tab-content -->
-                    <template slot="tab-pane-1">
+                            </md-card-actions>
+                        </md-card>
+                    </template>
+                    <template slot="tab-pane-2">
                         <md-card>
                             <md-card-header>
                                 <h4 class="title">{{ $t('garage.subNav.drivers') }} {{ garage.drivers.length }} / {{ garage.garageModel.truck_count }}</h4>
@@ -109,7 +83,7 @@
                             </md-card-content>
                         </md-card>
                     </template>
-                    <template slot="tab-pane-2">
+                    <template slot="tab-pane-3">
                         <md-card>
                             <md-card-header>
                                 <h4 class="title">{{ $t('garage.subNav.trucks') }} {{ garage.trucks.length }} / {{ garage.garageModel.truck_count }}</h4>
@@ -135,7 +109,7 @@
                             </md-card-content>
                         </md-card>
                     </template>
-                    <template slot="tab-pane-3">
+                    <template slot="tab-pane-4">
                         <md-card>
                             <md-card-header>
                                 <h4 class="title">{{ $t('garage.subNav.trailers') }} {{ garage.trailers.length }} / {{ garage.garageModel.trailer_count }}</h4>
@@ -198,6 +172,9 @@
             },
             garageSellPrice() {
                 return this.garage ? this.garage.garageModel.price / 2 : 0;
+            },
+            garageTable() {
+                return this.garage ? [this.garage] : [];
             }
         },
         data() {
@@ -225,29 +202,6 @@
                     },
                     okBtnTitle: this.$t('modal.btn.sell'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
-                },
-                roundedLineChart: {
-                    data: {
-                        labels: ["M", "T", "W", "T", "F", "S", "S"],
-                        series: [[12, 17, 7, 17, 23, 18, 38]]
-                    },
-                    options: {
-                        lineSmooth: this.$Chartist.Interpolation.cardinal({
-                            tension: 10
-                        }),
-                        axisX: {
-                            showGrid: false
-                        },
-                        low: 0,
-                        high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-                        chartPadding: {
-                            top: 0,
-                            right: 0,
-                            bottom: 0,
-                            left: 0
-                        },
-                        showPoint: false
-                    }
                 },
             }
         },
