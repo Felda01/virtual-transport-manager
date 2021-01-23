@@ -31,7 +31,7 @@
                                             </div>
                                         </md-table-cell>
                                         <md-table-cell :md-label="$t('garageModel.property.name')" class="td-name">{{ item.garageModel.name }}</md-table-cell>
-                                        <md-table-cell :md-label="$t('garage.property.drivers')">{{ item.drivers.length }} / {{ item.garageModel.truck_count }}</md-table-cell>
+                                        <md-table-cell :md-label="$t('garage.property.drivers')">{{ item.drivers.length }} / {{ item.garageModel.truck_count * 2 }}</md-table-cell>
                                         <md-table-cell :md-label="$t('garage.property.trucks')">{{ item.trucks.length }} / {{ item.garageModel.truck_count }}</md-table-cell>
                                         <md-table-cell :md-label="$t('garage.property.trailers')">{{ item.trailers.length }} / {{ item.garageModel.trailer_count }}</md-table-cell>
                                         <md-table-cell :md-label="$t('garage.property.location')">{{ item.location.name }} ({{ item.location.country.short_name | uppercase }})</md-table-cell>
@@ -60,7 +60,7 @@
                     <template slot="tab-pane-2">
                         <md-card>
                             <md-card-header>
-                                <h4 class="title">{{ $t('garage.subNav.drivers') }} {{ garage.drivers.length }} / {{ garage.garageModel.truck_count }}</h4>
+                                <h4 class="title">{{ $t('garage.subNav.drivers') }} {{ garage.drivers.length }} / {{ garage.garageModel.truck_count * 2 }}</h4>
                             </md-card-header>
                             <md-card-content>
                                 <md-table v-model="garage.drivers" v-if="garage.drivers">

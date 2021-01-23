@@ -209,7 +209,7 @@ const userRoutes = [
                 meta: {
                     requiresAuth: true,
                     userOnly: true,
-                    title: i18n.t('pages.drivers'),
+                    title: i18n.t('pages.driver'),
                     path: {
                         en: `${enRoute.drivers}/:id`
                     }

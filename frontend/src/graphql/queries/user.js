@@ -508,3 +508,146 @@ export const TRUCK_QUERY = gql`
     }
 `;
 
+export const TRAILER_QUERY = gql`
+    query TrailerQuery($id: String!) {
+        trailer(id: $id) {
+            id
+            status
+            km
+            trailerModel {
+                id
+                name
+                type
+                load
+                adr
+                km
+                insurance
+                tax
+                image
+                price
+            }
+            truck {
+                id
+                status
+                truckModel {
+                    id
+                    name
+                    brand
+                    image
+                }
+                drivers {
+                    id
+                    first_name
+                    last_name
+                    image         
+                    adr
+                    status
+                    location {
+                        id
+                        name
+                        country {
+                            id
+                            short_name
+                        }
+                    }
+                }
+            }
+            garage {
+                id
+                garageModel {
+                    id
+                    name
+                    truck_count
+                    trailer_count
+                    image
+                }
+                location {
+                    id
+                    name
+                    country {
+                        id
+                        short_name
+                    }
+                }
+                trucks {
+                    id
+                }
+                trailers {
+                    id
+                }
+                drivers {
+                    id
+                }
+            }
+        }
+    }
+`;
+
+export const DRIVER_QUERY = gql`
+    query DriverQuery($id: String!) {
+        driver(id: $id) {
+            id
+            first_name
+            last_name
+            image
+            salary
+            preferred_road_trips
+            adr
+            satisfaction
+            status
+            location {
+                id
+                name
+                country {
+                    id
+                    short_name
+                }
+            }
+            truck {
+                id
+                status
+                truckModel {
+                    id
+                    name
+                    brand
+                    image
+                }
+                trailer {
+                    id
+                    trailerModel {
+                        id
+                        name
+                    }
+                }
+            }
+            garage {
+                id
+                garageModel {
+                    id
+                    name
+                    truck_count
+                    trailer_count
+                    image
+                }
+                location {
+                    id
+                    name
+                    country {
+                        id
+                        short_name
+                    }
+                }
+                trucks {
+                    id
+                }
+                trailers {
+                    id
+                }
+                drivers {
+                    id
+                }
+            }
+        }
+    }
+`;
+

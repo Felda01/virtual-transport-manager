@@ -77,7 +77,6 @@
                                     </md-table-row>
                                     <md-table-empty-state>
                                         {{ $t('truck.relations.no_drivers') }}
-                                        <md-button class="md-success md-simple" @click="assignDriverModal"><md-icon>add</md-icon>{{ $t('detail.btn.assign') }}</md-button>
                                     </md-table-empty-state>
                                 </md-table>
                             </md-card-content>
@@ -103,7 +102,6 @@
                                     </md-table-row>
                                     <md-table-empty-state>
                                         {{ $t('truck.relations.no_trailer') }}
-                                        <md-button class="md-success md-simple" @click="assignTrailerModal"><md-icon>add</md-icon>{{ $t('detail.btn.assign') }}</md-button>
                                     </md-table-empty-state>
                                 </md-table>
                             </md-card-content>
@@ -116,14 +114,14 @@
                             </md-card-header>
                             <md-card-content>
                                 <md-table v-model="garageTable" v-if="garageTable">
-                                    <md-table-row slot="md-table-row" slot-scope="{ item, index }">
+                                    <md-table-row slot="md-table-row" slot-scope="{ item, index }" @click.native="clickTableRow(item, 'garage')" class="cursor-pointer-hover">
                                         <md-table-cell md-label="">
                                             <div class="img-container">
                                                 <img :src="item.garageModel.image" :alt="item.garageModel.name" />
                                             </div>
                                         </md-table-cell>
                                         <md-table-cell :md-label="$t('garageModel.property.name')" class="td-name">{{ item.garageModel.name }}</md-table-cell>
-                                        <md-table-cell :md-label="$t('garage.property.drivers')">{{ item.drivers.length }} / {{ item.garageModel.truck_count }}</md-table-cell>
+                                        <md-table-cell :md-label="$t('garage.property.drivers')">{{ item.drivers.length }} / {{ item.garageModel.truck_count * 2 }}</md-table-cell>
                                         <md-table-cell :md-label="$t('garage.property.trucks')">{{ item.trucks.length }} / {{ item.garageModel.truck_count }}</md-table-cell>
                                         <md-table-cell :md-label="$t('garage.property.trailers')">{{ item.trailers.length }} / {{ item.garageModel.trailer_count }}</md-table-cell>
                                         <md-table-cell :md-label="$t('garage.property.location')">{{ item.location.name }} ({{ item.location.country.short_name | uppercase }})</md-table-cell>
@@ -175,17 +173,6 @@
                 truck: null,
                 id: this.$route.params.id,
                 firstLoad: true,
-                modalSchemaUpdateTruck: {
-                    form: {
-                        mutation: UPDATE_TRUCK_MUTATION,
-                        fields: [],
-                        hiddenFields: [],
-                        idField: null
-                    },
-                    modalTitle: this.$t('model.modal.title.update.truck'),
-                    okBtnTitle: this.$t('modal.btn.upgrade'),
-                    cancelBtnTitle: this.$t('modal.btn.cancel')
-                },
                 modalSchemaDeleteTruck: {
                     message: '',
                     form: {
@@ -213,18 +200,6 @@
             deleteTruck(response) {
 
             },
-            assignDriverModal() {
-
-            },
-            assignDriver() {
-
-            },
-            assignTrailerModal() {
-
-            },
-            assignTrailer() {
-
-            }
         },
         apollo: {
             truck: {
@@ -234,8 +209,6 @@
                 },
                 result({data, loading, networkStatus}) {
                     this.firstLoad = false;
-                    // let price = this.$options.filters.currency(data.garage.garageModel.price / 2, ' ', 2, {thousandsSeparator: ' '})
-                    // this.modalSchemaDeleteGarage.message = this.$t('model.modal.title.delete.garage', {price: price});
                 }
             },
         }

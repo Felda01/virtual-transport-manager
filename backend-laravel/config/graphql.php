@@ -142,6 +142,8 @@ return [
 
                 'garage' => \App\GraphQL\Queries\GarageQuery::class,
                 'truck' => \App\GraphQL\Queries\TruckQuery::class,
+                'trailer' => \App\GraphQL\Queries\TrailerQuery::class,
+                'driver' => \App\GraphQL\Queries\DriverQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,

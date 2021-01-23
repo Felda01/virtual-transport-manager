@@ -27,7 +27,8 @@
     "drivers": "Drivers",
     "garage": "Garage",
     "truck": "Truck",
-    "trailer": "Trailer"
+    "trailer": "Trailer",
+    "driver": "Driver"
   },
   "routes": {
     "login": "login",
@@ -93,7 +94,8 @@
       "update": "Update",
       "upgrade": "Upgrade",
       "sell": "Sell",
-      "assign": "Assign"
+      "assign": "Assign",
+      "fire": "Fire"
     }
   },
   "pagination": {
@@ -496,7 +498,13 @@
     "relations": {
       "trailerModel": "Trailer model",
       "truck": "Truck",
-      "no_truck": "No truck"
+      "no_truck": "No truck",
+      "location": "Location"
+    },
+    "subNav": {
+      "info": "Trailer info",
+      "truck": "Truck",
+      "garage": "Garage"
     }
   },
   "driver": {
@@ -528,7 +536,13 @@
       "no_truck": "No truck",
       "trailer": "Trailer",
       "no_trailer": "No trailer"
-    }
+    },
+    "subNav": {
+      "info": "Driver info",
+      "truck": "Truck",
+      "garage": "Garage"
+    },
+    "can_not_fire": "Can not fire"
   },
   "status": {
     "0": "Delivering from shop",
