@@ -87,8 +87,13 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
-        $token = $request->user()->token();
-        $token->revoke();
+        if ($request->user()) {
+            $token = $request->user()->token();
+
+            if ($token ) {
+                $token->revoke();
+            }
+        }
 
         cookie()->queue(cookie()->forget('refresh_token'));
         cookie()->queue(cookie()->forget('access_token'));

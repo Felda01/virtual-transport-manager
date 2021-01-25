@@ -81,15 +81,15 @@ class ProxyRequest
     }
 
     /**
-     * @param string $refreshToken
+     * @param string $token
      * @param string $cookieName
      * @param int $time
      */
-    protected function setHttpOnlyCookie(string $refreshToken, string $cookieName, int $time)
+    protected function setHttpOnlyCookie(string $token, string $cookieName, int $time)
     {
         cookie()->queue(
-            $cookieName,                        // name
-            $refreshToken,                                  // value
+            $cookieName,                         // name
+            $token,                                         // value
             $time,                                          // minutes
             null,                                           // path
             config('services.frontend.cookie_domain'), // domain

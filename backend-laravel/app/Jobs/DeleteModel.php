@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Driver;
+use App\Models\Market;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Model;
@@ -36,6 +37,9 @@ class DeleteModel implements ShouldQueue
     public function handle()
     {
         if ($this->model instanceof Driver && $this->model->company_id !== null) {
+            return;
+        }
+        if ($this->model instanceof Market && $this->model->company_id !== null) {
             return;
         }
 

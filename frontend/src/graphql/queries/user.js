@@ -583,6 +583,32 @@ export const TRAILER_QUERY = gql`
     }
 `;
 
+export const AVAILABLE_DRIVERS_IN_GARAGE_QUERY = gql`
+    query AvailableDriversInGarageQuery($garage: String!, $limit: Int!, $page: Int!) {
+        availableDriversInGarage(garage: $garage, limit: $limit, page: $page) {
+            data {
+                id
+                first_name
+                last_name
+            }
+        }
+    }
+`;
+
+export const AVAILABLE_TRAILERS_IN_GARAGE_QUERY = gql`
+    query AvailableTrailersInGarageQuery($garage: String!, $limit: Int!, $page: Int!) {
+        availableTrailersInGarage(garage: $garage, limit: $limit, page: $page) {
+            data {
+                id
+                trailerModel {
+                    id
+                    name
+                }
+            }
+        }
+    }
+`;
+
 export const DRIVER_QUERY = gql`
     query DriverQuery($id: String!) {
         driver(id: $id) {
@@ -650,4 +676,5 @@ export const DRIVER_QUERY = gql`
         }
     }
 `;
+
 

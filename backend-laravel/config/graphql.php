@@ -130,6 +130,9 @@ return [
                 'countriesWithGarages' => \App\GraphQL\Queries\CountriesWithGaragesQuery::class,
                 'availableGarageModelUpgrades' => \App\GraphQL\Queries\AvailableGarageModelUpgradesQuery::class,
 
+                'availableDriversInGarage' => \App\GraphQL\Queries\AvailableDriversInGarageQuery::class,
+                'availableTrailersInGarage' => \App\GraphQL\Queries\AvailableTrailersInGarageQuery::class,
+
                 'garages' => \App\GraphQL\Queries\GaragesQuery::class,
                 'trucks' => \App\GraphQL\Queries\TrucksQuery::class,
                 'trailers' => \App\GraphQL\Queries\TrailersQuery::class,
@@ -192,6 +195,9 @@ return [
                 'createTrailer' => \App\GraphQL\Mutations\CreateTrailerMutation::class,
 
                 'createDriver' => \App\GraphQL\Mutations\CreateDriverMutation::class,
+
+                'assignDriverToTruck' => \App\GraphQL\Mutations\AssignDriverToTruckMutation::class,
+                'assignTrailerToTruck' => \App\GraphQL\Mutations\AssignTrailerToTruckMutation::class,
             ],
             'middleware' => ['auth:api'],
             'method' => ['get', 'post'],

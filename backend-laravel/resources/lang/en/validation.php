@@ -130,6 +130,7 @@ return [
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',
+
     'unique_translation' => 'The :attribute :LOCALE has already been taken.',
     'unique_bank_loan_type' => 'A bank loan type with these parameters already exists.',
     'general_exception' => "Something wrong, please try it later again",
@@ -142,6 +143,8 @@ return [
     'exists_all' => "The selected :attribute is invalid.",
     'available_garage_model_upgrade' => "The selected :attribute is invalid.",
     'free_driver' => "The selected driver is not available at this moment.",
+    'model_in_garage' => "The selected :model and :compareModel are not in the right garage.",
+    'available_model' => "The selected :attribute is not available at the moment.",
 
     /*
     |--------------------------------------------------------------------------

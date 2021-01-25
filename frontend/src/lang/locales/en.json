@@ -79,7 +79,9 @@
       "hire": "Hire",
       "register": "Register",
       "upgrade": "Upgrade",
-      "sell": "Sell"
+      "sell": "Sell",
+      "assign": "Assign",
+      "unassign": "Unassign"
     },
     "select": {
       "emptyOption": "No available options"
@@ -95,7 +97,8 @@
       "upgrade": "Upgrade",
       "sell": "Sell",
       "assign": "Assign",
-      "fire": "Fire"
+      "fire": "Fire",
+      "unassign": "Unassign"
     }
   },
   "pagination": {
@@ -165,6 +168,10 @@
           "truckModel": "Are you sure you want to delete this truck model",
           "garageModel": "Are you sure you want to delete this garage model",
           "garage": "Are you sure you want to sell this garage for {price} €"
+        },
+        "assign": {
+          "driverToTruck": "Assign driver to truck",
+          "trailerToTruck": "Assign trailer to truck"
         }
       }
     },
@@ -207,6 +214,10 @@
           "truckModel": "The truck model {modelName} was successfully deleted.",
           "garageModel": "The garage model {modelName} was successfully deleted.",
           "garage": "The {modelName} garage in {location} was successfully sold."
+        },
+        "assigned": {
+          "driverToTruck": "The driver {modelName} was successfully assigned to the truck {truck}.",
+          "trailerToTruck": "The trailer {modelName} was successfully assigned to the truck {truck}."
         }
       }
     }
@@ -479,7 +490,11 @@
       "trailer": "Trailer",
       "no_trailer": "No trailer",
       "truckModel": "Truck model",
-      "location": "Location"
+      "location": "Location",
+      "drivers_from_same_garage": "Drivers from garage",
+      "no_available_drivers": "No available drivers in the garage to assign",
+      "trailers_from_same_garage": "Trailers from garage",
+      "no_available_trailers": "No available trailers in the garage to assign"
     },
     "subNav": {
       "info": "Truck info",

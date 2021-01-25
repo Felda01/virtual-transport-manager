@@ -121,3 +121,41 @@ export const DELETE_GARAGE_MUTATION = gql`
         }
     }
 `;
+
+export const ASSIGN_DRIVER_TO_TRUCK_MUTATION = gql`
+    mutation AssignDriverToTruckMutation($driver: String!, $truck: String!) {
+        assignDriverToTruck(driver: $driver, truck: $truck) {
+            id
+            first_name
+            last_name
+            truck {
+                id
+                truckModel {
+                    id
+                    brand
+                    name
+                }
+            }
+        }
+    }
+`;
+
+export const ASSIGN_TRAILER_TO_TRUCK_MUTATION = gql`
+    mutation AssignTrailerToTruckMutation($trailer: String!, $truck: String!) {
+        assignTrailerToTruck(trailer: $trailer, truck: $truck) {
+            id
+            trailerModel {
+                id
+                name
+            }
+            truck {
+                id
+                truckModel {
+                    id
+                    brand
+                    name
+                }
+            }
+        }
+    }
+`;

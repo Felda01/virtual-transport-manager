@@ -40,7 +40,7 @@ class AvailableGarageSpotRule implements Rule
         }
 
         if ($this->spotType === 'driver') {
-            return $garage->drivers()->count() < $garage->garageModel->truck_count;
+            return $garage->drivers()->count() < $garage->garageModel->truck_count * 2;
         }
 
         return false;

@@ -74,11 +74,22 @@
                                         <md-table-cell :md-label="$t('driver.property.status')">{{ $t('status.' + item.status) }}</md-table-cell>
                                         <md-table-cell :md-label="$t('driver.property.location')">{{ item.location.name }} ({{ item.location.country.short_name | uppercase }})</md-table-cell>
                                         <md-table-cell :md-label="$t('driver.property.adr')">{{ $t('ADRsShort.' + item.adr) }}</md-table-cell>
+                                        <md-table-cell md-label="">
+                                            <md-button class="md-danger md-simple md-full-text" @click.native.stop="unassignDriverFromTruckModal(item)"><md-icon>close</md-icon>{{ $t('detail.btn.unassign')}}</md-button>
+                                        </md-table-cell>
                                     </md-table-row>
                                     <md-table-empty-state>
                                         {{ $t('truck.relations.no_drivers') }}
                                     </md-table-empty-state>
                                 </md-table>
+                                <div class="text-center mt-3" v-if="!truck.drivers || truck.drivers.length < 2">
+                                    <template v-if="this.availableDriversInGarage && this.availableDriversInGarage.data && this.availableDriversInGarage.data.length > 0">
+                                        <md-button class="md-success md-simple" @click="assignDriverToTruckModal"><md-icon>add</md-icon>{{ $t('detail.btn.assign') }}</md-button>
+                                    </template>
+                                    <template v-else>
+                                        {{ $t('truck.relations.no_available_drivers') }}
+                                    </template>
+                                </div>
                             </md-card-content>
                         </md-card>
                     </template>
@@ -104,6 +115,14 @@
                                         {{ $t('truck.relations.no_trailer') }}
                                     </md-table-empty-state>
                                 </md-table>
+                                <div class="text-center mt-3" v-if="!truck.trailer">
+                                    <template v-if="this.availableTrailersInGarage && this.availableTrailersInGarage.data && this.availableTrailersInGarage.data.length > 0">
+                                        <md-button class="md-success md-simple" @click="assignTrailerToTruckModal"><md-icon>add</md-icon>{{ $t('detail.btn.assign') }}</md-button>
+                                    </template>
+                                    <template v-else>
+                                        {{ $t('truck.relations.no_available_trailers') }}
+                                    </template>
+                                </div>
                             </md-card-content>
                         </md-card>
                     </template>
@@ -133,12 +152,18 @@
                 </tabs>
             </div>
         </template>
+
+        <!-- Assign driver to truck modal-->
+        <mutation-modal ref="assignDriverToTruckModal" @ok="assignDriverToTruck" :modalSchema="modalSchemaAssignDriverToTruck" />
+
+        <!-- Assign trailer to truck modal-->
+        <mutation-modal ref="assignTrailerToTruckModal" @ok="assignTrailerToTruck" :modalSchema="modalSchemaAssignTrailerToTruck" />
     </div>
 </template>
 
 <script>
-    import { TRUCK_QUERY } from '@/graphql/queries/user';
-    import { UPDATE_TRUCK_MUTATION, DELETE_TRUCK_MUTATION } from '@/graphql/mutations/user';
+    import { TRUCK_QUERY, AVAILABLE_DRIVERS_IN_GARAGE_QUERY, AVAILABLE_TRAILERS_IN_GARAGE_QUERY } from '@/graphql/queries/user';
+    import { ASSIGN_DRIVER_TO_TRUCK_MUTATION, ASSIGN_TRAILER_TO_TRUCK_MUTATION, DELETE_TRUCK_MUTATION } from '@/graphql/mutations/user';
     import { Tabs, ProductCard, ChartCard, MutationModal, DeleteModal } from "@/components";
     import constants from "../../constants";
 
@@ -173,6 +198,8 @@
                 truck: null,
                 id: this.$route.params.id,
                 firstLoad: true,
+                availableDriversInGarage: [],
+                availableTrailersInGarage: [],
                 modalSchemaDeleteTruck: {
                     message: '',
                     form: {
@@ -180,6 +207,28 @@
                         idField: null,
                     },
                     okBtnTitle: this.$t('modal.btn.sell'),
+                    cancelBtnTitle: this.$t('modal.btn.cancel')
+                },
+                modalSchemaAssignDriverToTruck: {
+                    form: {
+                        mutation: ASSIGN_DRIVER_TO_TRUCK_MUTATION,
+                        fields: [],
+                        hiddenFields: [],
+                        idField: null
+                    },
+                    modalTitle: this.$t('model.modal.title.assign.driverToTruck'),
+                    okBtnTitle: this.$t('modal.btn.assign'),
+                    cancelBtnTitle: this.$t('modal.btn.cancel')
+                },
+                modalSchemaAssignTrailerToTruck: {
+                    form: {
+                        mutation: ASSIGN_TRAILER_TO_TRUCK_MUTATION,
+                        fields: [],
+                        hiddenFields: [],
+                        idField: null
+                    },
+                    modalTitle: this.$t('model.modal.title.assign.trailerToTruck'),
+                    okBtnTitle: this.$t('modal.btn.assign'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
             }
@@ -200,6 +249,100 @@
             deleteTruck(response) {
 
             },
+            assignDriverToTruckModal() {
+                this.modalSchemaAssignDriverToTruck.form.fields = [
+                    {
+                        label: this.$t('truck.relations.drivers_from_same_garage'),
+                        rules: 'required',
+                        name: 'driver',
+                        input: 'select',
+                        type: 'select',
+                        value: '',
+                        config: {
+                            options: this.availableDriversInGarage.data,
+                            optionValue: (option) => {
+                                return option.id;
+                            },
+                            optionLabel: (option) => {
+                                return option.first_name + " " + option.last_name;
+                            }
+                        }
+                    },
+                ];
+
+                this.modalSchemaAssignDriverToTruck.form.hiddenFields = [
+                    {
+                        name: 'truck',
+                        value: this.id
+                    }
+                ];
+
+                this.$refs['assignDriverToTruckModal'].openModal();
+            },
+            assignDriverToTruck(response) {
+                let driver = response.data.assignDriverToTruck;
+                this.$notify({
+                    timeout: 5000,
+                    message: this.$t('model.response.success.assigned.driverToTruck', { modelName: driver.first_name + ' ' + driver.last_name, truck: driver.truck.truckModel.brand + " " + driver.truck.truckModel.name }),
+                    icon: "add_alert",
+                    horizontalAlign: 'right',
+                    verticalAlign: 'top',
+                    type: 'success'
+                });
+
+                this.$apollo.queries.truck.refresh();
+                this.$apollo.queries.availableDriversInGarage.refresh();
+            },
+            assignTrailerToTruckModal() {
+                this.modalSchemaAssignTrailerToTruck.form.fields = [
+                    {
+                        label: this.$t('truck.relations.trailers_from_same_garage'),
+                        rules: 'required',
+                        name: 'trailer',
+                        input: 'select',
+                        type: 'select',
+                        value: '',
+                        config: {
+                            options: this.availableTrailersInGarage.data,
+                            optionValue: (option) => {
+                                return option.id;
+                            },
+                            optionLabel: (option) => {
+                                return option.trailerModel.name;
+                            }
+                        }
+                    },
+                ];
+
+                this.modalSchemaAssignTrailerToTruck.form.hiddenFields = [
+                    {
+                        name: 'truck',
+                        value: this.id
+                    }
+                ];
+
+                this.$refs['assignTrailerToTruckModal'].openModal();
+            },
+            assignTrailerToTruck(response) {
+                let trailer = response.data.assignTrailerToTruck;
+                this.$notify({
+                    timeout: 5000,
+                    message: this.$t('model.response.success.assigned.trailerToTruck', { modelName: trailer.trailerModel.name, truck: trailer.truck.truckModel.brand + " " + trailer.truck.truckModel.name }),
+                    icon: "add_alert",
+                    horizontalAlign: 'right',
+                    verticalAlign: 'top',
+                    type: 'success'
+                });
+
+                this.$apollo.queries.truck.refresh();
+                this.$apollo.queries.availableTrailersInGarage.refresh();
+            },
+            unassignDriverFromTruckModal(driver) {
+                console.log('tu');
+            },
+            unassignDriverFromTruck(response) {
+
+            }
         },
         apollo: {
             truck: {
@@ -211,6 +354,24 @@
                     this.firstLoad = false;
                 }
             },
+            availableDriversInGarage: {
+                query: AVAILABLE_DRIVERS_IN_GARAGE_QUERY,
+                variables() {
+                    return {garage: this.truck.garage.id, limit: -1, page: 1}
+                },
+                skip () {
+                    return !this.truck;
+                },
+            },
+            availableTrailersInGarage: {
+                query: AVAILABLE_TRAILERS_IN_GARAGE_QUERY,
+                variables() {
+                    return {garage: this.truck.garage.id, limit: -1, page: 1}
+                },
+                skip () {
+                    return !this.truck;
+                },
+            }
         }
     }
 </script>
