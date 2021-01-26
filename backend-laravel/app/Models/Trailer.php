@@ -17,6 +17,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string $company_id
  * @property string $garage_id
  * @property int $km
+ * @property integer $status
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -34,6 +35,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder|Trailer whereGarageId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Trailer whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Trailer whereKm($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Driver whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Trailer whereTrailerModelId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Trailer whereUpdatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|Trailer withTrashed()

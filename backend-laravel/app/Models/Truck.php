@@ -18,6 +18,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string $trailer_id
  * @property string $garage_id
  * @property int $km
+ * @property integer $status
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -36,6 +37,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @method static \Illuminate\Database\Eloquent\Builder|Truck whereGarageId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Truck whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Truck whereKm($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Driver whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Truck whereTrailerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Truck whereTruckModelId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Truck whereUpdatedAt($value)
@@ -46,6 +48,8 @@ use Spatie\Activitylog\Traits\LogsActivity;
 class Truck extends Model
 {
     use HasFactory, HasUuid, SoftDeletes, LogsActivity;
+
+    const MAX_DRIVERS_COUNT = 2;
 
     /**
      * The attributes that aren't mass assignable.

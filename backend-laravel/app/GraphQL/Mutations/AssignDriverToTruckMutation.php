@@ -6,16 +6,19 @@ namespace App\GraphQL\Mutations;
 
 use App\Models\Driver;
 use App\Models\Truck;
-use App\Rules\AvailableModelRule;
+use App\Rules\DriverEmptyTruckSpotRule;
+use App\Rules\ModelStatusRule;
 use App\Rules\ModelFromCompanyRule;
 use App\Rules\ModelInGarageRule;
+use App\Rules\TruckFreeDriverSpotRule;
+use App\Utilities\StatusUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Mutation;
-use Rebing\GraphQL\Support\SelectFields;
 
 class AssignDriverToTruckMutation extends Mutation
 {
@@ -48,14 +51,16 @@ class AssignDriverToTruckMutation extends Mutation
                 'string',
                 'exists:drivers,id,deleted_at,NULL',
                 new ModelFromCompanyRule('Driver'),
-                new AvailableModelRule('Driver'),
+                new ModelStatusRule('Driver', [StatusUtility::IDLE]),
+                new DriverEmptyTruckSpotRule(),
             ],
             'truck' => [
                 'required',
                 'string',
                 'exists:trucks,id,deleted_at,NULL',
                 new ModelFromCompanyRule('Truck'),
-                new AvailableModelRule('Truck'),
+                new ModelStatusRule('Truck', [StatusUtility::IDLE, StatusUtility::ON_DUTY]),
+                new TruckFreeDriverSpotRule(),
             ],
             'general' => [
                 new ModelInGarageRule('Driver', $args['driver'], 'Truck', $args['truck']),
@@ -84,15 +89,29 @@ class AssignDriverToTruckMutation extends Mutation
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
-        /** @var Driver $driver */
-        $driver = Driver::find($args['driver']);
+        $result = DB::transaction(function () use($args) {
+            /** @var Driver $driver */
+            $driver = Driver::find($args['driver']);
 
-        /** @var Truck $truck */
-        $truck = Truck::find($args['truck']);
+            /** @var Truck $truck */
+            $truck = Truck::find($args['truck']);
 
-        $driver->truck()->associate($truck);
-        $driver->save();
+            $driver->truck()->associate($truck);
+            $driverSaved = $driver->save();
 
-        return $driver;
+            $truck->status = StatusUtility::ON_DUTY;
+            $truckSaved = $truck->save();
+
+            if (!$driverSaved || !$truckSaved) {
+                throw new \Exception(trans('validation.general_exception'));
+            }
+
+            return [
+                'driver' => $driver
+            ];
+        });
+
+
+        return $result['driver'];
     }
 }

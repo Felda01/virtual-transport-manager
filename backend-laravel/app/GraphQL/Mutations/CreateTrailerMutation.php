@@ -123,7 +123,7 @@ class CreateTrailerMutation extends Mutation
         });
 
         BroadcastUtility::broadcast(new ProcessTransaction($result['transaction']));
-        QueueJobUtility::dispatch(new UpdateModelStatus($result['trailer'], StatusUtility::AVAILABLE), 60 * 6);
+        QueueJobUtility::dispatch(new UpdateModelStatus($result['trailer'], StatusUtility::IDLE), 60 * 6);
         return $result['trailer'];
     }
 }

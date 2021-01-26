@@ -2,23 +2,19 @@
 
 namespace App\Rules;
 
-use App\Utilities\StatusUtility;
+use App\Models\Trailer;
 use Illuminate\Contracts\Validation\Rule;
-use Illuminate\Database\Eloquent\Model;
 
-class AvailableModelRule implements Rule
+class TrailerEmptyTruckSpotRule implements Rule
 {
-    public $model;
-
     /**
      * Create a new rule instance.
      *
-     * @param $model
+     * @return void
      */
-    public function __construct($model)
+    public function __construct()
     {
-        /** @var Model model */
-        $this->model = "App\\Models\\{$model}";
+        //
     }
 
     /**
@@ -30,10 +26,10 @@ class AvailableModelRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        /** @var Model $model */
-        $model = $this->model::find($value);
+        /** @var Trailer $trailer */
+        $trailer = Trailer::find($value);
 
-        return StatusUtility::AVAILABLE === $model->status;
+        return !$trailer->truck()->exists();
     }
 
     /**
@@ -43,6 +39,6 @@ class AvailableModelRule implements Rule
      */
     public function message()
     {
-        return trans('validation.available_model');
+        return trans('validation.trailerEmptyTruckSpot');
     }
 }

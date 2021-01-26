@@ -124,7 +124,7 @@ class CreateTruckMutation extends Mutation
         });
 
         BroadcastUtility::broadcast(new ProcessTransaction($result['transaction']));
-        QueueJobUtility::dispatch(new UpdateModelStatus($result['truck'], StatusUtility::AVAILABLE), 60 * 6);
+        QueueJobUtility::dispatch(new UpdateModelStatus($result['truck'], StatusUtility::IDLE), 60 * 6);
         return $result['truck'];
     }
 }

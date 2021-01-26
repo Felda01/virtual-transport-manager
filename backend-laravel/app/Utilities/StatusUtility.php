@@ -10,10 +10,13 @@ namespace App\Utilities;
 class StatusUtility
 {
     const DELIVERY_FROM_SHOP = 0;
-    const AVAILABLE = 1;
+    const IDLE = 1;
     const ON_ROAD = 2;
-    const ASSIGNED = 3;
+    const ON_DUTY = 3;
     const FINISHED = 4;
+    const READY = 5;
+    const SLEEP = 6;
+    const TRAVEL = 7;
 
 
     /**
@@ -23,9 +26,8 @@ class StatusUtility
     {
         return [
             self::DELIVERY_FROM_SHOP,
-            self::AVAILABLE,
-            self::ASSIGNED,
-            self::ON_ROAD,
+            self::IDLE,
+            self::ON_DUTY,
         ];
     }
 
@@ -36,9 +38,19 @@ class StatusUtility
     {
         return [
             self::DELIVERY_FROM_SHOP,
-            self::AVAILABLE,
-            self::ASSIGNED,
+            self::IDLE,
+            self::ON_DUTY,
+        ];
+    }
+
+    public static function driver()
+    {
+        return [
+            self::TRAVEL,
+            self::IDLE,
+            self::READY,
             self::ON_ROAD,
+            self::SLEEP,
         ];
     }
 
@@ -60,8 +72,8 @@ class StatusUtility
     {
         return [
             self::DELIVERY_FROM_SHOP,
-            self::AVAILABLE,
-            self::ASSIGNED,
+            self::IDLE,
+            self::ON_DUTY,
             self::ON_ROAD,
             self::FINISHED,
         ];

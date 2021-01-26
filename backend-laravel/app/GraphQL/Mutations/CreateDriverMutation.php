@@ -111,7 +111,7 @@ class CreateDriverMutation extends Mutation
             ];
         });
 
-        QueueJobUtility::dispatch(new UpdateModelStatus($result['driver'], StatusUtility::AVAILABLE), 60 * 6);
+        QueueJobUtility::dispatch(new UpdateModelStatus($result['driver'], StatusUtility::IDLE), 60 * 6);
         return $result['driver'];
     }
 }

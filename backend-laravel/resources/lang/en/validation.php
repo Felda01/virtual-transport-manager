@@ -144,7 +144,11 @@ return [
     'available_garage_model_upgrade' => "The selected :attribute is invalid.",
     'free_driver' => "The selected driver is not available at this moment.",
     'model_in_garage' => "The selected :model and :compareModel are not in the right garage.",
-    'available_model' => "The selected :attribute is not available at the moment.",
+    'model_status' => "The selected :attribute is not available for this action.",
+    'driverEmptyTruckSpot' => "The selected driver already has assign truck",
+    'trailerEmptyTruckSpot' => "The selected trailer already has assign truck",
+    'truckFreeDriverSpot' => "The selected truck has the maximum count of assigned drivers.",
+    'truckFreeTrailerSpot' => "The selected truck already has assign trailer.",
 
     /*
     |--------------------------------------------------------------------------
