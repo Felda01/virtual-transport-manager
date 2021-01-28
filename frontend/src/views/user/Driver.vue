@@ -242,7 +242,7 @@
                 let driver = response.data.assignDriverToTruck;
                 this.$notify({
                     timeout: 5000,
-                    message: this.$t('model.response.success.assigned.driverToTruck', { modelName: driver.first_name + ' ' + driver.last_name, truck: driver.truck.truckModel.brand + " " + driver.truck.truckModel.name }),
+                    message: this.$t('model.response.success.assigned.truckToDriver'),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',

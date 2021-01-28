@@ -95,9 +95,10 @@ class AvailableTrucksInGarageQuery extends Query
             $query->where('id', $args['garage']);
         });
 
+
         if ($args['relation'] === 'driver') {
             $query = $query->has('drivers', '<', 2)->whereIn('status', [StatusUtility::IDLE, StatusUtility::ON_DUTY]);
-        } elseif ($args['relation' === 'trailer']) {
+        } elseif ($args['relation'] === 'trailer') {
             $query = $query->whereDoesntHave('trailer')->whereIn('status', [StatusUtility::IDLE, StatusUtility::ON_DUTY]);
         }
 

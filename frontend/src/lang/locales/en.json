@@ -530,7 +530,9 @@
       "trailerModel": "Trailer model",
       "truck": "Truck",
       "no_truck": "No truck",
-      "location": "Location"
+      "location": "Location",
+      "trucks_from_same_garage": "Trucks from garage",
+      "no_available_trucks": "No available trucks in the garage to assign"
     },
     "subNav": {
       "info": "Trailer info",
