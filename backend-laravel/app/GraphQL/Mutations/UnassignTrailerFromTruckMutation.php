@@ -97,6 +97,12 @@ class UnassignTrailerFromTruckMutation extends Mutation
             $truck = Truck::find($args['truck']);
 
             $truck->trailer()->dissociate();
+
+            if ($truck->drivers()->exists()) {
+                $truck->drivers()->update([
+                    'status' => StatusUtility::IDLE
+                ]);
+            }
             $truckSaved = $truck->save();
 
             $trailer->status = StatusUtility::IDLE;

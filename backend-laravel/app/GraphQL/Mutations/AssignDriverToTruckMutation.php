@@ -97,7 +97,9 @@ class AssignDriverToTruckMutation extends Mutation
             $truck = Truck::find($args['truck']);
 
             $driver->truck()->associate($truck);
-            $driver->status = StatusUtility::READY;
+            if ($truck->trailer()->exists()) {
+                $driver->status = StatusUtility::READY;
+            }
             $driverSaved = $driver->save();
 
             $truck->status = StatusUtility::ON_DUTY;

@@ -193,7 +193,7 @@
             statuses: {
                 query: STATUSES_QUERY,
                 variables() {
-                    return { model: 'truck'}
+                    return { model: 'driver'}
                 },
                 result({ data, loading, networkStatus }) {
                     this.statusesOptions = data.statuses;

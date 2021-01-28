@@ -132,6 +132,7 @@ return [
 
                 'availableDriversInGarage' => \App\GraphQL\Queries\AvailableDriversInGarageQuery::class,
                 'availableTrailersInGarage' => \App\GraphQL\Queries\AvailableTrailersInGarageQuery::class,
+                'availableTrucksInGarage' => \App\GraphQL\Queries\AvailableTrucksInGarageQuery::class,
 
                 'garages' => \App\GraphQL\Queries\GaragesQuery::class,
                 'trucks' => \App\GraphQL\Queries\TrucksQuery::class,

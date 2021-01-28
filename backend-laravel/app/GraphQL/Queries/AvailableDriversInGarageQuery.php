@@ -6,6 +6,7 @@ namespace App\GraphQL\Queries;
 
 use App\Models\Driver;
 use App\Rules\ModelFromCompanyRule;
+use App\Utilities\StatusUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -43,7 +44,7 @@ class AvailableDriversInGarageQuery extends Query
         return trans('validation.unauthorized');
     }
 
-    public function args(): array
+    public function rules(array $args = []): array
     {
         return [
             'garage' => [
@@ -51,6 +52,15 @@ class AvailableDriversInGarageQuery extends Query
                 'string',
                 'exists:garages,id,deleted_at,NULL',
                 new ModelFromCompanyRule('Garage'),
+            ],
+        ];
+    }
+
+    public function args(): array
+    {
+        return [
+            'garage' => [
+                'type' => Type::nonNull(Type::string()),
             ],
             'limit' => [
                 'type' => Type::int(),
@@ -74,7 +84,7 @@ class AvailableDriversInGarageQuery extends Query
 
         $query = $query->whereHas('garage', function(Builder $query) use ($args) {
             $query->where('id', $args['garage']);
-        })->whereDoesntHave('truck');
+        })->whereDoesntHave('truck')->where('status', StatusUtility::IDLE);
 
         if ($args['limit'] === -1) {
             $args['limit'] = Driver::count();

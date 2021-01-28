@@ -96,11 +96,17 @@ class AssignTrailerToTruckMutation extends Mutation
             /** @var Truck $truck */
             $truck = Truck::find($args['truck']);
 
-            $truck->trailer()->associate($trailer);
-            $truckSaved = $truck->save();
-
             $trailer->status = StatusUtility::ON_DUTY;
             $trailerSaved = $trailer->save();
+
+            $truck->trailer()->associate($trailer);
+
+            if ($truck->drivers()->exists()) {
+                $truck->drivers()->update([
+                    'status' => StatusUtility::READY
+                ]);
+            }
+            $truckSaved = $truck->save();
 
             if (!$trailerSaved || !$truckSaved) {
                 throw new \Exception(trans('validation.general_exception'));

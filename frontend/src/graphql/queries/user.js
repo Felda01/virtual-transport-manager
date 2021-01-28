@@ -609,6 +609,21 @@ export const AVAILABLE_TRAILERS_IN_GARAGE_QUERY = gql`
     }
 `;
 
+export const AVAILABLE_TRUCKS_IN_GARAGE_QUERY = gql`
+    query AvailableTrucksInGarageQuery($garage: String!, $relation: String!, $limit: Int!, $page: Int!) {
+        availableTrucksInGarage(garage: $garage, relation: $relation limit: $limit, page: $page) {
+            data {
+                id
+                truckModel {
+                    id
+                    name
+                    brand
+                }
+            }
+        }
+    }
+`;
+
 export const DRIVER_QUERY = gql`
     query DriverQuery($id: String!) {
         driver(id: $id) {

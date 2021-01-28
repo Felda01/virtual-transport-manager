@@ -171,11 +171,15 @@
         },
         "assign": {
           "driverToTruck": "Assign driver to truck",
-          "trailerToTruck": "Assign trailer to truck"
+          "trailerToTruck": "Assign trailer to truck",
+          "truckToDriver": "Assign truck to driver",
+          "truckToTrailer": "Assign truck to trailer"
         },
         "unassign": {
           "driverFromTruck": "Are you sure you want to unassign the selected driver from this truck?",
-          "trailerFromTruck": "Are you sure you want to unassign the selected trailer from this truck?"
+          "trailerFromTruck": "Are you sure you want to unassign the selected trailer from this truck?",
+          "truckFromDriver": "Are you sure you want to unassign the selected truck from this driver?",
+          "truckFromTrailer": "Are you sure you want to unassign the selected truck from this trailer?"
         }
       }
     },
@@ -221,11 +225,15 @@
         },
         "assigned": {
           "driverToTruck": "The driver {modelName} was successfully assigned to this truck.",
-          "trailerToTruck": "The trailer {modelName} was successfully assigned to this truck."
+          "trailerToTruck": "The trailer {modelName} was successfully assigned to this truck.",
+          "truckToDriver": "The selected truck was successfully assigned to this driver.",
+          "truckToTrailer": "The selected truck was successfully assigned to this trailer."
         },
         "unassigned": {
           "driverFromTruck": "The driver {modelName} was successfully removed from this truck.",
-          "trailerFromTruck": "The trailer {modelName} was successfully removed from this truck."
+          "trailerFromTruck": "The trailer {modelName} was successfully removed from this truck.",
+          "truckFromDriver": "The assignment between this driver and the selected truck was successfully canceled.",
+          "truckFromTrailer": "The assignment between this trailer and the selected truck was successfully canceled."
         }
       }
     }
@@ -558,7 +566,9 @@
       "truck": "Truck",
       "no_truck": "No truck",
       "trailer": "Trailer",
-      "no_trailer": "No trailer"
+      "no_trailer": "No trailer",
+      "trucks_from_same_garage": "Trucks from garage",
+      "no_available_trucks": "No available trucks in the garage to assign"
     },
     "subNav": {
       "info": "Driver info",
@@ -573,7 +583,7 @@
     "2": "On road",
     "3": "On duty",
     "4": "Finished",
-    "5": "Ready",
+    "5": "Ready to work",
     "6": "Sleeping",
     "7": "Traveling"
   },

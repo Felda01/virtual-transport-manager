@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Queries;
 
-use App\Models\Trailer;
+use App\Models\Truck;
 use App\Rules\ModelFromCompanyRule;
 use App\Utilities\StatusUtility;
 use Closure;
@@ -12,20 +12,21 @@ use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\SelectFields;
 
-class AvailableTrailersInGarageQuery extends Query
+class AvailableTrucksInGarageQuery extends Query
 {
     protected $attributes = [
-        'name' => 'availableTrailersInGarage',
+        'name' => 'availableTrucksInGarage',
         'description' => 'A query'
     ];
 
     public function type(): Type
     {
-        return GraphQL::paginate('Trailer');
+        return GraphQL::paginate('Truck');
     }
 
     private function guard()
@@ -53,6 +54,11 @@ class AvailableTrailersInGarageQuery extends Query
                 'exists:garages,id,deleted_at,NULL',
                 new ModelFromCompanyRule('Garage'),
             ],
+            'relation' => [
+                'required',
+                'string',
+                Rule::in(['driver', 'trailer'])
+            ]
         ];
     }
 
@@ -60,6 +66,9 @@ class AvailableTrailersInGarageQuery extends Query
     {
         return [
             'garage' => [
+                'type' => Type::nonNull(Type::string()),
+            ],
+            'relation' => [
                 'type' => Type::nonNull(Type::string()),
             ],
             'limit' => [
@@ -80,14 +89,20 @@ class AvailableTrailersInGarageQuery extends Query
         $select = $fields->getSelect();
         $with = $fields->getRelations();
 
-        $query = Trailer::query();
+        $query = Truck::query();
 
         $query = $query->whereHas('garage', function(Builder $query) use ($args) {
             $query->where('id', $args['garage']);
-        })->whereDoesntHave('truck')->where('status', StatusUtility::IDLE);
+        });
+
+        if ($args['relation'] === 'driver') {
+            $query = $query->has('drivers', '<', 2)->whereIn('status', [StatusUtility::IDLE, StatusUtility::ON_DUTY]);
+        } elseif ($args['relation' === 'trailer']) {
+            $query = $query->whereDoesntHave('trailer')->whereIn('status', [StatusUtility::IDLE, StatusUtility::ON_DUTY]);
+        }
 
         if ($args['limit'] === -1) {
-            $args['limit'] = Trailer::count();
+            $args['limit'] = Truck::count();
         }
 
         return $query->with($with)

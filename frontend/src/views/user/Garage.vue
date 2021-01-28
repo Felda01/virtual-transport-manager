@@ -1,4 +1,4 @@
-<template>
+        <template>
     <div class="md-layout">
         <template v-if="$apollo.queries.garage.loading && firstLoad">
             <content-placeholders class="md-layout-item md-size-100">
@@ -74,7 +74,7 @@
                                         <md-table-cell :md-label="$t('driver.property.full_name')" class="td-name">{{ driver(item) }}</md-table-cell>
                                         <md-table-cell :md-label="$t('driver.property.status')">{{ $t('status.' + item.status) }}</md-table-cell>
                                         <md-table-cell :md-label="$t('driver.relations.truck')"><template v-if="item.truck">{{ findTruck(item.truck.id).truckModel.brand }} {{ findTruck(item.truck.id).truckModel.name }}</template><template v-else>{{ $t('driver.relations.no_truck') }}</template></md-table-cell>
-                                        <md-table-cell :md-label="$t('driver.relations.trailer')"><template v-if="item.truck && item.truck.trailer">{{ findTruck(item.truck.trailer.id).trailerModel.name }}</template><template v-else>{{ $t('driver.relations.no_trailer') }}</template></md-table-cell>
+                                        <md-table-cell :md-label="$t('driver.relations.trailer')"><template v-if="item.truck && item.truck.trailer">{{ findTrailer(item.truck.trailer.id).trailerModel.name }}</template><template v-else>{{ $t('driver.relations.no_trailer') }}</template></md-table-cell>
                                         <md-table-cell :md-label="$t('driver.property.location')">{{ item.location.name }} ({{ item.location.country.short_name | uppercase }})</md-table-cell>
                                         <md-table-cell :md-label="$t('driver.property.adr')">{{ $t('ADRsShort.' + item.adr) }}</md-table-cell>
                                     </md-table-row>
@@ -101,8 +101,8 @@
                                         </md-table-cell>
                                         <md-table-cell :md-label="$t('truckModel.model')" class="td-name">{{ item.truckModel.brand }} {{ item.truckModel.name }}</md-table-cell>
                                         <md-table-cell :md-label="$t('truck.property.status')">{{ $t('status.' + item.status) }}</md-table-cell>
-                                        <md-table-cell :md-label="$t('truck.relations.drivers')"><template v-if="item.drivers && item.drivers.length > 0">{{ drivers(findDrivers(item.drivers)) }}</template><template v-else>{{ $t('truck.relations.no_drivers') }}</template></md-table-cell>
-                                        <md-table-cell :md-label="$t('truck.relations.trailer')"><template v-if="item.trailer">{{ findTrailer(item.trailer).trailerModel.name }}</template><template v-else>{{ $t('truck.relations.no_trailer') }}</template></md-table-cell>
+                                        <md-table-cell :md-label="$t('truck.relations.drivers')"><template v-if="item.drivers && item.drivers.length > 0">{{ driversString(findDrivers(item.drivers)) }}</template><template v-else>{{ $t('truck.relations.no_drivers') }}</template></md-table-cell>
+                                        <md-table-cell :md-label="$t('truck.relations.trailer')"><template v-if="item.trailer">{{ findTrailer(item.trailer.id).trailerModel.name }}</template><template v-else>{{ $t('truck.relations.no_trailer') }}</template></md-table-cell>
                                     </md-table-row>
                                     <md-table-empty-state>
                                         {{ $t('garage.relations.no_trucks') }}
@@ -127,7 +127,7 @@
                                         </md-table-cell>
                                         <md-table-cell :md-label="$t('trailer.relations.trailerModel')" class="td-name">{{ item.trailerModel.name }}</md-table-cell>
                                         <md-table-cell :md-label="$t('trailer.property.status')">{{ $t('status.' + item.status) }}</md-table-cell>
-                                        <md-table-cell :md-label="$t('trailer.relations.truck')"><template v-if="item.truck">{{ findTruck(item.truck).truckModel.brand }} {{ findTruck(item.truck).truckModel.name }}</template><template v-else>{{ $t('trailer.relations.no_truck') }}</template></md-table-cell>
+                                        <md-table-cell :md-label="$t('trailer.relations.truck')"><template v-if="item.truck">{{ findTruck(item.truck.id).truckModel.brand }} {{ findTruck(item.truck.id).truckModel.name }}</template><template v-else>{{ $t('trailer.relations.no_truck') }}</template></md-table-cell>
                                         <md-table-cell :md-label="$t('trailer.property.adr')">{{ $t('ADRs.' + item.trailerModel.adr) }}</md-table-cell>
                                     </md-table-row>
                                     <md-table-empty-state>
@@ -214,7 +214,7 @@
                     params: {id: item.id}
                 });
             },
-            drivers(drivers) {
+            driversString(drivers) {
                 let result = [];
 
                 for (let driver of drivers) {
@@ -223,21 +223,21 @@
 
                 return result.join(', ');
             },
-            findDrivers(ids) {
+            findDrivers(drivers) {
                 if (this.garage && this.garage.drivers) {
-                    return this.garage.drivers.filter(driver => ids.contains(driver.id));
+                    return this.garage.drivers.filter(driver => drivers.some(d => d.id === driver.id));
                 }
                 return null;
             },
             findTruck(id) {
                 if (this.garage && this.garage.trucks) {
-                    return this.garage.trucks.filter(truck => truck.id === id);
+                    return this.garage.trucks.find(truck => truck.id === id);
                 }
                 return null;
             },
             findTrailer(id) {
                 if (this.garage && this.garage.trailers) {
-                    return this.garage.trailers.filter(trailer => trailer.id === id);
+                    return this.garage.trailers.find(trailer => trailer.id === id);
                 }
                 return null;
             },
