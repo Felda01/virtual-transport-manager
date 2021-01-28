@@ -1,8 +1,12 @@
 export default {
     STATUS: {
         DELIVERY_FROM_SHOP: 0,
-        AVAILABLE: 1,
+        IDLE: 1,
         ON_ROAD: 2,
-        ASSIGNED: 3,
+        ON_DUTY: 3,
+        FINISHED: 4,
+        READY: 5,
+        SLEEP: 6,
+        TRAVEL: 7
     }
 }

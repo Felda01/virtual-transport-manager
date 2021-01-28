@@ -159,3 +159,25 @@ export const ASSIGN_TRAILER_TO_TRUCK_MUTATION = gql`
         }
     }
 `;
+
+export const UNASSIGN_DRIVER_FROM_TRUCK_MUTATION = gql`
+    mutation unassignDriverFromTruckMutation($driver: String!, $truck: String!) {
+        unassignDriverFromTruck(driver: $driver, truck: $truck) {
+            id
+            first_name
+            last_name
+        }
+    }
+`;
+
+export const UNASSIGN_TRAILER_FROM_TRUCK_MUTATION = gql`
+    mutation unassignTrailerFromTruckMutation($trailer: String!, $truck: String!) {
+        unassignTrailerFromTruck(trailer: $trailer, truck: $truck) {
+            id
+            trailerModel {
+                id
+                name
+            }
+        }
+    }
+`;

@@ -49,6 +49,9 @@ Vue.axios.interceptors.response.use(function (response) {
     return response
   }, function (error) {
     if (error.response.status === 401) {
+      console.log("Vue.axios.interceptors.response.use.error");
+      console.log(error.response);
+      console.log(error.config);
       store.dispatch('logout', { fullPath: router.currentRoute.fullPath });
     }
     return Promise.reject(error)

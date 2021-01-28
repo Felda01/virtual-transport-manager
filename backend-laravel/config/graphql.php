@@ -198,6 +198,9 @@ return [
 
                 'assignDriverToTruck' => \App\GraphQL\Mutations\AssignDriverToTruckMutation::class,
                 'assignTrailerToTruck' => \App\GraphQL\Mutations\AssignTrailerToTruckMutation::class,
+
+                'unassignDriverFromTruck' => \App\GraphQL\Mutations\UnassignDriverFromTruckMutation::class,
+                'unassignTrailerFromTruck' => \App\GraphQL\Mutations\UnassignTrailerFromTruckMutation::class,
             ],
             'middleware' => ['auth:api'],
             'method' => ['get', 'post'],

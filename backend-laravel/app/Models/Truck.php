@@ -23,7 +23,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Company $company
- * @property-read \App\Models\Driver $driver
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Driver[] $drivers
  * @property-read \App\Models\Garage $garage
  * @property-read \App\Models\Trailer|null $trailer
  * @property-read \App\Models\TruckModel $truckModel

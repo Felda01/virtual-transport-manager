@@ -62,8 +62,8 @@
                                 <h4 class="title">{{ $t('truck.subNav.drivers') }}</h4>
                             </md-card-header>
                             <md-card-content>
-                                <md-table v-model="truck.drivers" v-if="truck.drivers">
-                                    <md-table-row slot="md-table-row" slot-scope="{ item, index }" @click.native="clickTableRow(item, 'driver')" class="cursor-pointer-hover">
+                                <md-table v-model="truck.drivers" v-if="truck.drivers" :key="mdTableDrivers">
+                                    <md-table-row v-if="truck.drivers && truck.drivers.length > 0" slot="md-table-row" slot-scope="{ item, index }" @click.native="clickTableRow(item, 'driver')" class="cursor-pointer-hover">
                                         <md-table-cell md-label="#">{{ index + 1 }}</md-table-cell>
                                         <md-table-cell md-label="">
                                             <div class="img-container table-profile-image">
@@ -99,7 +99,7 @@
                                 <h4 class="title">{{ $t('truck.subNav.trailer') }}</h4>
                             </md-card-header>
                             <md-card-content>
-                                <md-table v-model="trailerTable" v-if="trailerTable">
+                                <md-table v-model="trailerTable" v-if="trailerTable" :key="mdTableTrailer">
                                     <md-table-row slot="md-table-row" slot-scope="{ item, index }" @click.native="clickTableRow(item, 'trailer')" class="cursor-pointer-hover">
                                         <md-table-cell md-label="#">{{ index + 1 }}</md-table-cell>
                                         <md-table-cell md-label="">
@@ -110,6 +110,9 @@
                                         <md-table-cell :md-label="$t('trailer.relations.trailerModel')" class="td-name">{{ item.trailerModel.name }}</md-table-cell>
                                         <md-table-cell :md-label="$t('trailer.property.status')">{{ $t('status.' + item.status) }}</md-table-cell>
                                         <md-table-cell :md-label="$t('trailer.property.adr')">{{ $t('ADRs.' + item.trailerModel.adr) }}</md-table-cell>
+                                        <md-table-cell md-label="">
+                                            <md-button class="md-danger md-simple md-full-text" @click.native.stop="unassignTrailerFromTruckModal(item)"><md-icon>close</md-icon>{{ $t('detail.btn.unassign')}}</md-button>
+                                        </md-table-cell>
                                     </md-table-row>
                                     <md-table-empty-state>
                                         {{ $t('truck.relations.no_trailer') }}
@@ -158,12 +161,18 @@
 
         <!-- Assign trailer to truck modal-->
         <mutation-modal ref="assignTrailerToTruckModal" @ok="assignTrailerToTruck" :modalSchema="modalSchemaAssignTrailerToTruck" />
+
+        <!-- Unassign driver from truck modal-->
+        <delete-modal ref="unassignDriverFromTruckModal" @ok="unassignDriverFromTruck" :modalSchema="modalSchemaUnassignDriverFromTruck" />
+
+        <!-- Unassign trailer from truck modal-->
+        <delete-modal ref="unassignTrailerFromTruckModal" @ok="unassignTrailerFromTruck" :modalSchema="modalSchemaUnassignTrailerFromTruck" />
     </div>
 </template>
 
 <script>
     import { TRUCK_QUERY, AVAILABLE_DRIVERS_IN_GARAGE_QUERY, AVAILABLE_TRAILERS_IN_GARAGE_QUERY } from '@/graphql/queries/user';
-    import { ASSIGN_DRIVER_TO_TRUCK_MUTATION, ASSIGN_TRAILER_TO_TRUCK_MUTATION, DELETE_TRUCK_MUTATION } from '@/graphql/mutations/user';
+    import { ASSIGN_DRIVER_TO_TRUCK_MUTATION, ASSIGN_TRAILER_TO_TRUCK_MUTATION, DELETE_TRUCK_MUTATION, UNASSIGN_DRIVER_FROM_TRUCK_MUTATION, UNASSIGN_TRAILER_FROM_TRUCK_MUTATION } from '@/graphql/mutations/user';
     import { Tabs, ProductCard, ChartCard, MutationModal, DeleteModal } from "@/components";
     import constants from "../../constants";
 
@@ -190,7 +199,7 @@
                 return this.truck && this.truck.garage ? [this.truck.garage] : [];
             },
             canDeleteTruck() {
-                return this.truck ? [constants.STATUS.ASSIGNED, constants.STATUS.AVAILABLE].includes(this.truck.status) && (this.truck.drivers.length === 0 || this.truck.drivers[0].location.id === this.truck.garage.location.id) : false;
+                return this.truck ? [constants.STATUS.IDLE].includes(this.truck.status) && this.truck.drivers.length === 0 && this.truck.trailer === null : false;
             }
         },
         data() {
@@ -200,13 +209,24 @@
                 firstLoad: true,
                 availableDriversInGarage: [],
                 availableTrailersInGarage: [],
-                modalSchemaDeleteTruck: {
-                    message: '',
+                modalSchemaUnassignDriverFromTruck: {
+                    message: this.$t('model.modal.title.unassign.driverFromTruck'),
                     form: {
-                        mutation: DELETE_TRUCK_MUTATION,
+                        mutation: UNASSIGN_DRIVER_FROM_TRUCK_MUTATION,
+                        hiddenFields: [],
                         idField: null,
                     },
-                    okBtnTitle: this.$t('modal.btn.sell'),
+                    okBtnTitle: this.$t('modal.btn.unassign'),
+                    cancelBtnTitle: this.$t('modal.btn.cancel')
+                },
+                modalSchemaUnassignTrailerFromTruck: {
+                    message: this.$t('model.modal.title.unassign.trailerFromTruck'),
+                    form: {
+                        mutation: UNASSIGN_TRAILER_FROM_TRUCK_MUTATION,
+                        hiddenFields: [],
+                        idField: null,
+                    },
+                    okBtnTitle: this.$t('modal.btn.unassign'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
                 modalSchemaAssignDriverToTruck: {
@@ -231,6 +251,8 @@
                     okBtnTitle: this.$t('modal.btn.assign'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
+                mdTableDrivers: 0,
+                mdTableTrailer: 0,
             }
         },
         methods: {
@@ -338,10 +360,60 @@
                 this.$apollo.queries.availableTrailersInGarage.refresh();
             },
             unassignDriverFromTruckModal(driver) {
-                console.log('tu');
+                this.modalSchemaUnassignDriverFromTruck.form.hiddenFields = [
+                    {
+                        name: 'driver',
+                        value: driver.id
+                    },
+                    {
+                        name: 'truck',
+                        value: this.id
+                    }
+                ];
+
+                this.$refs['unassignDriverFromTruckModal'].openModal();
             },
             unassignDriverFromTruck(response) {
+                let driver = response.data.unassignDriverFromTruck;
+                this.$notify({
+                    timeout: 5000,
+                    message: this.$t('model.response.success.unassigned.driverFromTruck', { modelName: driver.first_name + " " + driver.last_name }),
+                    icon: "add_alert",
+                    horizontalAlign: 'right',
+                    verticalAlign: 'top',
+                    type: 'success'
+                });
 
+                this.$apollo.queries.truck.refresh();
+                this.$apollo.queries.availableDriversInGarage.refresh();
+            },
+            unassignTrailerFromTruckModal(trailer) {
+                this.modalSchemaUnassignTrailerFromTruck.form.hiddenFields = [
+                    {
+                        name: 'trailer',
+                        value: trailer.id
+                    },
+                    {
+                        name: 'truck',
+                        value: this.id
+                    }
+                ];
+
+                this.$refs['unassignTrailerFromTruckModal'].openModal();
+            },
+            unassignTrailerFromTruck(response) {
+                let trailer = response.data.unassignTrailerFromTruck;
+                this.$notify({
+                    timeout: 5000,
+                    message: this.$t('model.response.success.unassigned.trailerFromTruck', { modelName: trailer.name }),
+                    icon: "add_alert",
+                    horizontalAlign: 'right',
+                    verticalAlign: 'top',
+                    type: 'success'
+                });
+
+                this.$apollo.queries.truck.refresh();
+                this.$apollo.queries.availableTrailersInGarage.refresh();
             }
         },
         apollo: {
@@ -352,6 +424,8 @@
                 },
                 result({data, loading, networkStatus}) {
                     this.firstLoad = false;
+                    this.mdTableDrivers += 1;
+                    this.mdTableTrailer += 1;
                 }
             },
             availableDriversInGarage: {

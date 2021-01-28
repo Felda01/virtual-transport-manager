@@ -6,11 +6,11 @@ namespace App\GraphQL\Mutations;
 
 use App\Models\Driver;
 use App\Models\Truck;
-use App\Rules\DriverEmptyTruckSpotRule;
-use App\Rules\ModelStatusRule;
+use App\Rules\DriverHasTruckRule;
 use App\Rules\ModelFromCompanyRule;
 use App\Rules\ModelInGarageRule;
-use App\Rules\TruckFreeDriverSpotRule;
+use App\Rules\ModelStatusRule;
+use App\Rules\TruckHasDriverRule;
 use App\Utilities\StatusUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -20,10 +20,10 @@ use Illuminate\Support\Facades\DB;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Mutation;
 
-class AssignDriverToTruckMutation extends Mutation
+class UnassignDriverFromTruckMutation extends Mutation
 {
     protected $attributes = [
-        'name' => 'assignDriverToTruck',
+        'name' => 'unassignDriverFromTruck',
         'description' => 'A mutation'
     ];
 
@@ -43,6 +43,11 @@ class AssignDriverToTruckMutation extends Mutation
         return $this->guard()->check() && $this->guard()->user()->hasPermissionTo(\App\Models\Permission::MANAGE_DRIVERS, \App\Models\Permission::GUARD) && $this->guard()->user()->hasPermissionTo(\App\Models\Permission::MANAGE_VEHICLES, \App\Models\Permission::GUARD);
     }
 
+    public function getAuthorizationMessage(): string
+    {
+        return trans('validation.unauthorized');
+    }
+
     public function rules(array $args = []): array
     {
         return [
@@ -51,26 +56,21 @@ class AssignDriverToTruckMutation extends Mutation
                 'string',
                 'exists:drivers,id,deleted_at,NULL',
                 new ModelFromCompanyRule('Driver'),
-                new ModelStatusRule('Driver', [StatusUtility::IDLE]),
-                new DriverEmptyTruckSpotRule(),
+                new ModelStatusRule('Driver', [StatusUtility::IDLE, StatusUtility::READY]),
+                new DriverHasTruckRule($args['truck'])
             ],
             'truck' => [
                 'required',
                 'string',
                 'exists:trucks,id,deleted_at,NULL',
                 new ModelFromCompanyRule('Truck'),
-                new ModelStatusRule('Truck', [StatusUtility::IDLE, StatusUtility::ON_DUTY]),
-                new TruckFreeDriverSpotRule(),
+                new ModelStatusRule('Truck', [StatusUtility::ON_DUTY]),
+                new TruckHasDriverRule($args['driver'])
             ],
             'general' => [
                 new ModelInGarageRule('Driver', $args['driver'], 'Truck', $args['truck']),
             ]
         ];
-    }
-
-    public function getAuthorizationMessage(): string
-    {
-        return trans('validation.unauthorized');
     }
 
     public function args(): array
@@ -96,12 +96,17 @@ class AssignDriverToTruckMutation extends Mutation
             /** @var Truck $truck */
             $truck = Truck::find($args['truck']);
 
-            $driver->truck()->associate($truck);
-            $driver->status = StatusUtility::READY;
-            $driverSaved = $driver->save();
+            $driversCount = $truck->drivers()->count();
 
-            $truck->status = StatusUtility::ON_DUTY;
-            $truckSaved = $truck->save();
+            $driver->truck()->dissociate();
+            $driver->status = StatusUtility::IDLE;
+            $driverSaved =$driver->save();
+
+            $truckSaved = true;
+            if ($driversCount === 1) {
+                $truck->status = StatusUtility::IDLE;
+                $truckSaved = $truck->save();
+            }
 
             if (!$driverSaved || !$truckSaved) {
                 throw new \Exception(trans('validation.general_exception'));
@@ -111,7 +116,6 @@ class AssignDriverToTruckMutation extends Mutation
                 'driver' => $driver
             ];
         });
-
 
         return $result['driver'];
     }

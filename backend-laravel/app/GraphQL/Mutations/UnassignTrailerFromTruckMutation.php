@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
-use App\Models\Driver;
+use App\Models\Trailer;
 use App\Models\Truck;
-use App\Rules\DriverEmptyTruckSpotRule;
-use App\Rules\ModelStatusRule;
 use App\Rules\ModelFromCompanyRule;
 use App\Rules\ModelInGarageRule;
-use App\Rules\TruckFreeDriverSpotRule;
+use App\Rules\ModelStatusRule;
+use App\Rules\TrailerHasTruckRule;
+use App\Rules\TruckHasTrailerRule;
 use App\Utilities\StatusUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -20,16 +20,16 @@ use Illuminate\Support\Facades\DB;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Mutation;
 
-class AssignDriverToTruckMutation extends Mutation
+class UnassignTrailerFromTruckMutation extends Mutation
 {
     protected $attributes = [
-        'name' => 'assignDriverToTruck',
+        'name' => 'unassignTrailerFromTruck',
         'description' => 'A mutation'
     ];
 
     public function type(): Type
     {
-        return GraphQL::type('Driver');
+        return GraphQL::type('Trailer');
     }
 
     private function guard()
@@ -40,32 +40,7 @@ class AssignDriverToTruckMutation extends Mutation
     public function authorize($root, array $args, $ctx, ResolveInfo $resolveInfo = null, Closure $getSelectFields = null): bool
     {
         // true, if logged in
-        return $this->guard()->check() && $this->guard()->user()->hasPermissionTo(\App\Models\Permission::MANAGE_DRIVERS, \App\Models\Permission::GUARD) && $this->guard()->user()->hasPermissionTo(\App\Models\Permission::MANAGE_VEHICLES, \App\Models\Permission::GUARD);
-    }
-
-    public function rules(array $args = []): array
-    {
-        return [
-            'driver' => [
-                'required',
-                'string',
-                'exists:drivers,id,deleted_at,NULL',
-                new ModelFromCompanyRule('Driver'),
-                new ModelStatusRule('Driver', [StatusUtility::IDLE]),
-                new DriverEmptyTruckSpotRule(),
-            ],
-            'truck' => [
-                'required',
-                'string',
-                'exists:trucks,id,deleted_at,NULL',
-                new ModelFromCompanyRule('Truck'),
-                new ModelStatusRule('Truck', [StatusUtility::IDLE, StatusUtility::ON_DUTY]),
-                new TruckFreeDriverSpotRule(),
-            ],
-            'general' => [
-                new ModelInGarageRule('Driver', $args['driver'], 'Truck', $args['truck']),
-            ]
-        ];
+        return $this->guard()->check() && $this->guard()->user()->hasPermissionTo(\App\Models\Permission::MANAGE_VEHICLES, \App\Models\Permission::GUARD);
     }
 
     public function getAuthorizationMessage(): string
@@ -73,11 +48,36 @@ class AssignDriverToTruckMutation extends Mutation
         return trans('validation.unauthorized');
     }
 
+    public function rules(array $args = []): array
+    {
+        return [
+            'trailer' => [
+                'required',
+                'string',
+                'exists:trailers,id,deleted_at,NULL',
+                new ModelFromCompanyRule('Trailer'),
+                new ModelStatusRule('Trailer', [StatusUtility::ON_DUTY]),
+                new TrailerHasTruckRule($args['truck'])
+            ],
+            'truck' => [
+                'required',
+                'string',
+                'exists:trucks,id,deleted_at,NULL',
+                new ModelFromCompanyRule('Truck'),
+                new ModelStatusRule('Truck', [StatusUtility::ON_DUTY, StatusUtility::IDLE]),
+                new TruckHasTrailerRule($args['trailer'])
+            ],
+            'general' => [
+                new ModelInGarageRule('Trailer', $args['trailer'], 'Truck', $args['truck']),
+            ]
+        ];
+    }
+
     public function args(): array
     {
         return [
-            'driver' => [
-                'name' => 'driver',
+            'trailer' => [
+                'name' => 'trailer',
                 'type' => Type::nonNull(Type::string()),
             ],
             'truck' => [
@@ -89,30 +89,28 @@ class AssignDriverToTruckMutation extends Mutation
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
-        $result = DB::transaction(function () use($args) {
-            /** @var Driver $driver */
-            $driver = Driver::find($args['driver']);
+        $result = DB::transaction(function() use($args) {
+            /** @var Trailer $trailer */
+            $trailer = Trailer::find($args['trailer']);
 
             /** @var Truck $truck */
             $truck = Truck::find($args['truck']);
 
-            $driver->truck()->associate($truck);
-            $driver->status = StatusUtility::READY;
-            $driverSaved = $driver->save();
-
-            $truck->status = StatusUtility::ON_DUTY;
+            $truck->trailer()->dissociate();
             $truckSaved = $truck->save();
 
-            if (!$driverSaved || !$truckSaved) {
+            $trailer->status = StatusUtility::IDLE;
+            $trailerSaved = $trailer->save();
+
+            if (!$trailerSaved || !$truckSaved) {
                 throw new \Exception(trans('validation.general_exception'));
             }
 
             return [
-                'driver' => $driver
+                'trailer' => $trailer
             ];
         });
 
-
-        return $result['driver'];
+        return $result['trailer'];
     }
 }

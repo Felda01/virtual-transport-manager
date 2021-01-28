@@ -82,6 +82,14 @@
             },
             openModal() {
                 let fields = {};
+                this.errorMessage = '';
+
+                if (this.modalSchema.form.hiddenFields && this.modalSchema.form.hiddenFields.length > 0) {
+                    for (let i = 0; i < this.modalSchema.form.hiddenFields.length; i++) {
+                        let field = this.modalSchema.form.hiddenFields[i];
+                        fields[field.name] = field.value;
+                    }
+                }
 
                 if (this.modalSchema.form.idField) {
                     fields['id'] = this.modalSchema.form.idField;

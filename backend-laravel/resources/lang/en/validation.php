@@ -149,6 +149,10 @@ return [
     'trailerEmptyTruckSpot' => "The selected trailer already has assign truck",
     'truckFreeDriverSpot' => "The selected truck has the maximum count of assigned drivers.",
     'truckFreeTrailerSpot' => "The selected truck already has assign trailer.",
+    'driverAssignedTruck' => "The selected truck does not belong to the selected driver.",
+    'trailerAssignedTruck' => "The selected trailer does not belong to the selected truck.",
+    'truckHasDriver' => "The selected driver does not belong to the selected truck.",
+    'truckHasTrailer' => "The selected trailer does not belong to the selected truck.",
 
     /*
     |--------------------------------------------------------------------------
