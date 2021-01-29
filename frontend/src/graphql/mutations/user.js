@@ -181,3 +181,23 @@ export const UNASSIGN_TRAILER_FROM_TRUCK_MUTATION = gql`
         }
     }
 `;
+
+export const UPDATE_DRIVER_MUTATION = gql`
+    mutation UpdateDriverMutation($id: String!) {
+        updateDriver(id: $id) {
+            id
+            first_name
+            last_name
+        }
+    }
+`;
+
+export const DELETE_DRIVER_MUTATION = gql`
+    mutation DeleteDriverMutation($id: String!) {
+        deleteDriver(id: $id) {
+            id
+            first_name
+            last_name
+        }
+    }
+`;

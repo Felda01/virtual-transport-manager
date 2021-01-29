@@ -39,6 +39,6 @@ class DriverEmptyTruckSpotRule implements Rule
      */
     public function message()
     {
-        return trans('validation.driverEmptyTruckSpot');
+        return trans('validation.driver_empty_truck_spot');
     }
 }

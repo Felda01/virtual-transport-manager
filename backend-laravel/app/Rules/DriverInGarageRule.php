@@ -5,18 +5,16 @@ namespace App\Rules;
 use App\Models\Driver;
 use Illuminate\Contracts\Validation\Rule;
 
-class DriverHasTruckRule implements Rule
+class DriverInGarageRule implements Rule
 {
-    public $truckId;
-
     /**
      * Create a new rule instance.
      *
-     * @param $truckId
+     * @return void
      */
-    public function __construct($truckId)
+    public function __construct()
     {
-        $this->truckId = $truckId;
+        //
     }
 
     /**
@@ -31,7 +29,7 @@ class DriverHasTruckRule implements Rule
         /** @var Driver $driver */
         $driver = Driver::find($value);
 
-        return $driver->truck_id === $this->truckId;
+        return $driver->location_id === $driver->garage->location_id;
     }
 
     /**
@@ -41,6 +39,6 @@ class DriverHasTruckRule implements Rule
      */
     public function message()
     {
-        return trans('validation.driver_assigned_truck');
+        return trans('validation.driver_in_garage');
     }
 }

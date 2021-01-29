@@ -36,7 +36,7 @@ class UserType extends GraphQLType
             'salary' => [
                 'type' => Type::string(),
                 'privacy' => function(array $args): bool {
-                    return Auth::guard('api')->check() ? Auth::guard('api')->user()->hasRole('owner') : false;
+                    return Auth::guard('api')->check() ? Auth::guard('api')->user()->hasPermissionTo(\App\Models\Permission::MANAGE_SALARY, \App\Models\Permission::GUARD) : false;
                 }
             ],
             'company' => [
@@ -50,6 +50,12 @@ class UserType extends GraphQLType
             ],
             'roles' => [
                 'type' => Type::listOf(GraphQL::type('Role')),
+            ],
+            'permissions' => [
+                'type' => Type::listOf(GraphQL::type('Permission')),
+                'resolve' => function($root, $args) {
+                    return $root->getAllPermissions();
+                }
             ],
         ];
     }

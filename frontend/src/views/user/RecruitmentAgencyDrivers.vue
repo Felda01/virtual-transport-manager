@@ -261,6 +261,8 @@
                     verticalAlign: 'top',
                     type: 'success'
                 });
+
+                this.$apollo.queries.recruitmentAgencyDrivers.refresh();
             },
         },
         apollo: {

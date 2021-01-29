@@ -7,6 +7,24 @@ export default {
         FINISHED: 4,
         READY: 5,
         SLEEP: 6,
-        TRAVEL: 7
+        TRAVEL: 7,
+        ON_TRAINING: 8
+    },
+    PERMISSION: {
+        MANAGE_STATIC: 'manage static',
+        MANAGE_DRIVERS: 'manage drivers',
+        MANAGE_VEHICLES: 'manage vehicles',
+        MANAGE_GARAGES: 'manage garages',
+        MANAGE_PERSONS: 'manage persons',
+        MANAGE_JOBS: 'manage jobs',
+        MANAGE_SALARY: 'manage salary',
+    },
+    ADR_PRICE: {
+        1: 500,
+        2: 1000,
+        3: 2500,
+        4: 4000,
+        5: 7000,
+        6: 10000,
     }
 }

@@ -196,6 +196,8 @@ return [
                 'createTrailer' => \App\GraphQL\Mutations\CreateTrailerMutation::class,
 
                 'createDriver' => \App\GraphQL\Mutations\CreateDriverMutation::class,
+                'updateDriver' => \App\GraphQL\Mutations\UpdateDriverMutation::class,
+                'deleteDriver' => \App\GraphQL\Mutations\DeleteDriverMutation::class,
 
                 'assignDriverToTruck' => \App\GraphQL\Mutations\AssignDriverToTruckMutation::class,
                 'assignTrailerToTruck' => \App\GraphQL\Mutations\AssignTrailerToTruckMutation::class,
@@ -239,6 +241,7 @@ return [
         'Message' => \App\GraphQL\Types\MessageType::class,
         'Notification' => \App\GraphQL\Types\NotificationType::class,
         'Order' => \App\GraphQL\Types\OrderType::class,
+        'Permission' => \App\GraphQL\Types\PermissionType::class,
         'RoadTrip' => \App\GraphQL\Types\RoadTripType::class,
         'Role' => \App\GraphQL\Types\RoleType::class,
         'Route' => \App\GraphQL\Types\RouteType::class,

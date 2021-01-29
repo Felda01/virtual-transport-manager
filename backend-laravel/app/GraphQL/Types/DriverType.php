@@ -33,7 +33,7 @@ class DriverType extends GraphQLType
                 'type' => Type::boolean(),
             ],
             'status' => [
-                'type' => Type::string(),
+                'type' => Type::int(),
             ],
             'image' => [
                 'type' => Type::string(),

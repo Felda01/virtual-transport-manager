@@ -37,19 +37,36 @@
                                         <md-table-cell :md-label="$t('driver.property.garage')">{{ item.garage.garageModel.name }} - {{ item.garage.location.name }} ({{ item.garage.location.country.short_name | uppercase }})</md-table-cell>
                                         <md-table-cell :md-label="$t('driver.property.satisfaction')">{{ item.satisfaction }} {{ $t('driver.property.satisfactionUnit') }}</md-table-cell>
                                         <md-table-cell :md-label="$t('driver.property.location')">{{ item.location.name }} ({{ item.location.country.short_name | uppercase }})</md-table-cell>
-                                        <md-table-cell :md-label="$t('driver.property.adr')">{{ $t('ADRsShort.' + item.adr) }}</md-table-cell>
+                                        <md-table-cell :md-label="$t('driver.property.adr')">{{ $t('ADRs.' + item.adr) }}</md-table-cell>
                                         <md-table-cell :md-label="$t('driver.property.salary')">{{ item.salary | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('driver.property.salaryUnit') }}</md-table-cell>
                                         <md-table-cell :md-label="$t('driver.property.preferred_road_trips')">{{ $t('preferred_road_trips.' + item.preferred_road_trips) }}</md-table-cell>
                                     </md-table-row>
                                 </md-table>
                             </md-card-content>
-                            <md-card-actions md-alignment="right">
+                            <md-card-actions md-alignment="space-between" v-if="hasPermission(constants.PERMISSION.MANAGE_DRIVERS)">
+                                <template v-if="canUpdateDriver">
+                                    <md-button class="md-primary md-simple" @click="updateDriverModal"><md-icon>edit</md-icon>{{ $t('detail.btn.training') }}</md-button>
+                                </template>
+                                <template v-else-if="driver.adr === 6">
+                                    <p>{{ $t('driver.fully_trained') }}</p>
+                                </template>
+                                <div v-else class="vertical-center-flex">
+                                    <span>{{ $t('driver.can_not_train') }}</span>
+                                    <md-button class="md-primary md-simple md-just-icon md-round" @click="tooltipCanNotTrain = !tooltipCanNotTrain">
+                                        <md-icon>help</md-icon>
+                                        <md-tooltip :md-active.sync="tooltipCanNotTrain" md-direction="left">{{ $t('driver.can_not_train_info') }}</md-tooltip>
+                                    </md-button>
+                                </div>
                                 <template v-if="canDeleteDriver">
                                     <md-button class="md-danger md-simple" @click="deleteDriverModal"><md-icon>close</md-icon>{{ $t('detail.btn.fire') }}</md-button>
                                 </template>
-                                <template v-else>
-                                    <p>{{ $t('driver.can_not_fire') }}</p>
-                                </template>
+                                <div v-else class="vertical-center-flex">
+                                    <span>{{ $t('driver.can_not_fire') }}</span>
+                                    <md-button class="md-primary md-simple md-just-icon md-round" @click="tooltipCanNotFire = !tooltipCanNotFire">
+                                        <md-icon>help</md-icon>
+                                        <md-tooltip :md-active.sync="tooltipCanNotFire" md-direction="left">{{ $t('driver.can_not_fire_info') }}</md-tooltip>
+                                    </md-button>
+                                </div>
                             </md-card-actions>
                         </md-card>
                     </template>
@@ -70,7 +87,7 @@
                                         <md-table-cell :md-label="$t('truckModel.model')" class="td-name">{{ item.truckModel.brand }} {{ item.truckModel.name }}</md-table-cell>
                                         <md-table-cell :md-label="$t('truck.property.status')">{{ $t('status.' + item.status) }}</md-table-cell>
                                         <md-table-cell :md-label="$t('truck.relations.trailer')"><template v-if="item.trailer">{{ item.trailer.trailerModel.name }}</template><template v-else>{{ $t('truck.relations.no_trailer') }}</template></md-table-cell>
-                                        <md-table-cell md-label="">
+                                        <md-table-cell md-label="" v-if="hasPermission(constants.PERMISSION.MANAGE_DRIVERS) && hasPermission(constants.PERMISSION.MANAGE_VEHICLES)">
                                             <md-button class="md-danger md-simple md-full-text" @click.native.stop="unassignTruckFromDriverModal(item)"><md-icon>close</md-icon>{{ $t('detail.btn.unassign')}}</md-button>
                                         </md-table-cell>
                                     </md-table-row>
@@ -78,14 +95,16 @@
                                         {{ $t('driver.relations.no_truck') }}
                                     </md-table-empty-state>
                                 </md-table>
-                                <div class="text-center mt-3" v-if="!driver.truck">
-                                    <template v-if="this.availableTrucksInGarage && this.availableTrucksInGarage.data && this.availableTrucksInGarage.data.length > 0">
-                                        <md-button class="md-success md-simple" @click="assignTruckToDriverModal"><md-icon>add</md-icon>{{ $t('detail.btn.assign') }}</md-button>
-                                    </template>
-                                    <template v-else>
-                                        {{ $t('driver.relations.no_available_trucks') }}
-                                    </template>
-                                </div>
+                                <template v-if="hasPermission(constants.PERMISSION.MANAGE_DRIVERS) && hasPermission(constants.PERMISSION.MANAGE_VEHICLES)">
+                                    <div class="text-center mt-3" v-if="!driver.truck">
+                                        <template v-if="this.availableTrucksInGarage && this.availableTrucksInGarage.data && this.availableTrucksInGarage.data.length > 0">
+                                            <md-button class="md-success md-simple" @click="assignTruckToDriverModal"><md-icon>add</md-icon>{{ $t('detail.btn.assign') }}</md-button>
+                                        </template>
+                                        <template v-else>
+                                            {{ $t('driver.relations.no_available_trucks') }}
+                                        </template>
+                                    </div>
+                                </template>
                             </md-card-content>
                         </md-card>
                     </template>
@@ -116,19 +135,30 @@
             </div>
         </template>
 
-        <!-- Assign truck to driver modal-->
-        <mutation-modal ref="assignTruckToDriverModal" @ok="assignTruckToDriver" :modalSchema="modalSchemaAssignTruckToDriver" />
+        <template v-if="hasPermission(constants.PERMISSION.MANAGE_DRIVERS) && hasPermission(constants.PERMISSION.MANAGE_VEHICLES)">
+            <!-- Assign truck to driver modal-->
+            <mutation-modal ref="assignTruckToDriverModal" @ok="assignTruckToDriver" :modalSchema="modalSchemaAssignTruckToDriver" />
 
-        <!-- Unassign truck from driver modal-->
-        <delete-modal ref="unassignTruckFromDriverModal" @ok="unassignTruckFromDriver" :modalSchema="modalSchemaUnassignTruckFromDriver" />
+            <!-- Unassign truck from driver modal-->
+            <delete-modal ref="unassignTruckFromDriverModal" @ok="unassignTruckFromDriver" :modalSchema="modalSchemaUnassignTruckFromDriver" />
+        </template>
+
+        <template v-if="hasPermission(constants.PERMISSION.MANAGE_DRIVERS)">
+            <!-- Update driver modal-->
+            <delete-modal ref="updateDriverModal" @ok="updateDriver" :modalSchema="modalSchemaUpdateDriver" />
+
+            <!-- Delete driver modal-->
+            <delete-modal ref="deleteDriverModal" @ok="deleteDriver" :modalSchema="modalSchemaDeleteDriver" />
+        </template>
     </div>
 </template>
 
 <script>
     import { DRIVER_QUERY, AVAILABLE_TRUCKS_IN_GARAGE_QUERY } from '@/graphql/queries/user';
-    import { DELETE_DRIVER_MUTATION, ASSIGN_DRIVER_TO_TRUCK_MUTATION, UNASSIGN_DRIVER_FROM_TRUCK_MUTATION } from '@/graphql/mutations/user';
+    import { UPDATE_DRIVER_MUTATION, DELETE_DRIVER_MUTATION, ASSIGN_DRIVER_TO_TRUCK_MUTATION, UNASSIGN_DRIVER_FROM_TRUCK_MUTATION } from '@/graphql/mutations/user';
     import { Tabs, ProductCard, MutationModal, DeleteModal } from "@/components";
     import constants from "../../constants";
+    import { mapGetters } from "vuex";
 
     export default {
         title () {
@@ -142,6 +172,9 @@
             DeleteModal
         },
         computed: {
+            ...mapGetters([
+                'hasPermission',
+            ]),
             truckTable() {
                 return this.driver && this.driver.truck ? [this.driver.truck] : [];
             },
@@ -152,8 +185,10 @@
                 return this.driver && this.driver.garage ? [this.driver.garage] : [];
             },
             canDeleteDriver() {
-                return true;
-                //return this.trailer ?  (this.truck.drivers.length === 0 || this.truck.drivers[0].location.id === this.truck.garage.location.id) : false;
+                return this.driver ? this.driver.status === constants.STATUS.IDLE && this.driver.location.id === this.driver.garage.location.id && this.driver.truck === null : false;
+            },
+            canUpdateDriver() {
+                return this.driver ? [constants.STATUS.IDLE, constants.STATUS.READY].includes(this.driver.status) && this.driver.location.id === this.driver.garage.location.id : false;
             }
         },
         data() {
@@ -162,13 +197,22 @@
                 id: this.$route.params.id,
                 firstLoad: true,
                 availableTrucksInGarage: [],
+                modalSchemaUpdateDriver: {
+                    message: '',
+                    form: {
+                        mutation: UPDATE_DRIVER_MUTATION,
+                        idField: null,
+                    },
+                    okBtnTitle: this.$t('modal.btn.training'),
+                    cancelBtnTitle: this.$t('modal.btn.cancel')
+                },
                 modalSchemaDeleteDriver: {
                     message: '',
                     form: {
                         mutation: DELETE_DRIVER_MUTATION,
                         idField: null,
                     },
-                    okBtnTitle: this.$t('modal.btn.sell'),
+                    okBtnTitle: this.$t('modal.btn.fire'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
                 modalSchemaAssignTruckToDriver: {
@@ -192,7 +236,10 @@
                     okBtnTitle: this.$t('modal.btn.unassign'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
-                mdTableTrucks: 0
+                constants: constants,
+                mdTableTrucks: 0,
+                tooltipCanNotFire: false,
+                tooltipCanNotTrain: false,
             }
         },
         methods: {
@@ -202,11 +249,49 @@
                     params: {id: item.id}
                 });
             },
-            deleteDriverModal() {
+            updateDriverModal() {
+                let constantPrice = constants.ADR_PRICE[this.driver.adr + 1];
+                let price = this.$options.filters.currency(constantPrice, ' ', 2, { thousandsSeparator: ' ' });
+                this.modalSchemaUpdateDriver.message = this.$t('model.modal.title.update.driver', { price: price });
 
+                this.modalSchemaUpdateDriver.form.idField = this.id;
+
+                this.$refs['updateDriverModal'].openModal();
+            },
+            updateDriver(response) {
+                let driver = response.data.updateDriver;
+                this.$notify({
+                    timeout: 5000,
+                    message: this.$t('model.response.success.updated.driver', { modelName: driver.first_name + " " + driver.last_name }),
+                    icon: "add_alert",
+                    horizontalAlign: 'right',
+                    verticalAlign: 'top',
+                    type: 'success'
+                });
+
+                this.$apollo.queries.driver.refresh();
+            },
+            deleteDriverModal() {
+                this.modalSchemaDeleteDriver.message = this.$t('model.modal.title.delete.driver');
+
+                this.modalSchemaDeleteDriver.form.idField = this.id;
+
+                this.$refs['deleteDriverModal'].openModal();
             },
             deleteDriver(response) {
-
+                let driver = response.data.deleteDriver;
+                this.$notify({
+                    timeout: 5000,
+                    message: this.$t('model.response.success.deleted.driver', { modelName: driver.first_name + " " + driver.last_name }),
+                    icon: "add_alert",
+                    horizontalAlign: 'right',
+                    verticalAlign: 'top',
+                    type: 'success'
+                });
+                this.$router.push({
+                    name: 'drivers',
+                    params: {locale: this.$i18n.locale}
+                });
             },
             assignTruckToDriverModal() {
                 this.modalSchemaAssignTruckToDriver.form.fields = [

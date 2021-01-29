@@ -39,6 +39,6 @@ class TruckFreeTrailerSpotRule implements Rule
      */
     public function message()
     {
-        return trans('validation.truckFreeTrailerSpot');
+        return trans('validation.truck_free_trailer_spot');
     }
 }

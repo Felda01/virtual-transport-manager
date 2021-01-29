@@ -8,7 +8,7 @@ use App\Models\Driver;
 use App\Models\Truck;
 use App\Rules\DriverHasTruckRule;
 use App\Rules\ModelFromCompanyRule;
-use App\Rules\ModelInGarageRule;
+use App\Rules\ModelsInGarageRule;
 use App\Rules\ModelStatusRule;
 use App\Rules\TruckHasDriverRule;
 use App\Utilities\StatusUtility;
@@ -68,7 +68,7 @@ class UnassignDriverFromTruckMutation extends Mutation
                 new TruckHasDriverRule($args['driver'])
             ],
             'general' => [
-                new ModelInGarageRule('Driver', $args['driver'], 'Truck', $args['truck']),
+                new ModelsInGarageRule('Driver', $args['driver'], 'Truck', $args['truck']),
             ]
         ];
     }

@@ -8,7 +8,7 @@ use App\Models\Trailer;
 use App\Models\Truck;
 use App\Rules\ModelStatusRule;
 use App\Rules\ModelFromCompanyRule;
-use App\Rules\ModelInGarageRule;
+use App\Rules\ModelsInGarageRule;
 use App\Rules\TrailerEmptyTruckSpotRule;
 use App\Rules\TruckFreeTrailerSpotRule;
 use App\Utilities\StatusUtility;
@@ -63,7 +63,7 @@ class AssignTrailerToTruckMutation extends Mutation
                 new TruckFreeTrailerSpotRule(),
             ],
             'general' => [
-                new ModelInGarageRule('Trailer', $args['trailer'], 'Truck', $args['truck']),
+                new ModelsInGarageRule('Trailer', $args['trailer'], 'Truck', $args['truck']),
             ]
         ];
     }

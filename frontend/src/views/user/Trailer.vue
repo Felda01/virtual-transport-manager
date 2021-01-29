@@ -45,7 +45,7 @@
                                     </md-table-row>
                                 </md-table>
                             </md-card-content>
-                            <md-card-actions md-alignment="right">
+                            <md-card-actions md-alignment="right" v-if="hasPermission(constants.PERMISSION.MANAGE_VEHICLES)">
                                 <template v-if="canDeleteTrailer">
                                     <md-button class="md-danger md-simple" @click="deleteTrailerModal"><md-icon>close</md-icon>{{ $t('detail.btn.sell') }}</md-button>
                                 </template>
@@ -72,7 +72,7 @@
                                         <md-table-cell :md-label="$t('truckModel.model')" class="td-name">{{ item.truckModel.brand }} {{ item.truckModel.name }}</md-table-cell>
                                         <md-table-cell :md-label="$t('truck.property.status')">{{ $t('status.' + item.status) }}</md-table-cell>
                                         <md-table-cell :md-label="$t('truck.relations.drivers')"><template v-if="item.drivers && item.drivers.length > 0">{{ driversString(item.drivers) }}</template><template v-else>{{ $t('truck.relations.no_drivers') }}</template></md-table-cell>
-                                        <md-table-cell md-label="">
+                                        <md-table-cell md-label="" v-if="hasPermission(constants.PERMISSION.MANAGE_VEHICLES)">
                                             <md-button class="md-danger md-simple md-full-text" @click.native.stop="unassignTruckFromTrailerModal(item)"><md-icon>close</md-icon>{{ $t('detail.btn.unassign')}}</md-button>
                                         </md-table-cell>
                                     </md-table-row>
@@ -80,14 +80,16 @@
                                         {{ $t('trailer.relations.no_truck') }}
                                     </md-table-empty-state>
                                 </md-table>
-                                <div class="text-center mt-3" v-if="!trailer.truck">
-                                    <template v-if="this.availableTrucksInGarage && this.availableTrucksInGarage.data && this.availableTrucksInGarage.data.length > 0">
-                                        <md-button class="md-success md-simple" @click="assignTruckToTrailerModal"><md-icon>add</md-icon>{{ $t('detail.btn.assign') }}</md-button>
-                                    </template>
-                                    <template v-else>
-                                        {{ $t('trailer.relations.no_available_trucks') }}
-                                    </template>
-                                </div>
+                                <template v-if="hasPermission(constants.PERMISSION.MANAGE_VEHICLES)">
+                                    <div class="text-center mt-3" v-if="!trailer.truck">
+                                        <template v-if="this.availableTrucksInGarage && this.availableTrucksInGarage.data && this.availableTrucksInGarage.data.length > 0">
+                                            <md-button class="md-success md-simple" @click="assignTruckToTrailerModal"><md-icon>add</md-icon>{{ $t('detail.btn.assign') }}</md-button>
+                                        </template>
+                                        <template v-else>
+                                            {{ $t('trailer.relations.no_available_trucks') }}
+                                        </template>
+                                    </div>
+                                </template>
                             </md-card-content>
                         </md-card>
                     </template>
@@ -118,11 +120,13 @@
             </div>
         </template>
 
-        <!-- Assign truck to trailer modal-->
-        <mutation-modal ref="assignTruckToTrailerModal" @ok="assignTruckToTrailer" :modalSchema="modalSchemaAssignTruckToTrailer" />
+        <template v-if="hasPermission(constants.PERMISSION.MANAGE_VEHICLES)">
+            <!-- Assign truck to trailer modal-->
+            <mutation-modal ref="assignTruckToTrailerModal" @ok="assignTruckToTrailer" :modalSchema="modalSchemaAssignTruckToTrailer" />
 
-        <!-- Unassign truck from trailer modal-->
-        <delete-modal ref="unassignTruckFromTrailerModal" @ok="unassignTruckFromTrailer" :modalSchema="modalSchemaUnassignTruckFromTrailer" />
+            <!-- Unassign truck from trailer modal-->
+            <delete-modal ref="unassignTruckFromTrailerModal" @ok="unassignTruckFromTrailer" :modalSchema="modalSchemaUnassignTruckFromTrailer" />
+        </template>
     </div>
 </template>
 
@@ -131,6 +135,7 @@
     import { DELETE_TRAILER_MUTATION, ASSIGN_TRAILER_TO_TRUCK_MUTATION, UNASSIGN_TRAILER_FROM_TRUCK_MUTATION } from '@/graphql/mutations/user';
     import { Tabs, ProductCard, MutationModal, DeleteModal } from "@/components";
     import constants from "../../constants";
+    import { mapGetters } from "vuex";
 
     export default {
         title () {
@@ -144,6 +149,9 @@
             DeleteModal
         },
         computed: {
+            ...mapGetters([
+                'hasPermission',
+            ]),
             truckTable() {
                 return this.trailer.truck ? [this.trailer.truck] : [];
             },
@@ -193,6 +201,7 @@
                     okBtnTitle: this.$t('modal.btn.unassign'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
+                constants: constants,
                 mdTableTrucks: 0
             }
         },

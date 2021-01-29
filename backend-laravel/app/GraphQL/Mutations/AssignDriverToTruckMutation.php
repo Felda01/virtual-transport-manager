@@ -9,7 +9,7 @@ use App\Models\Truck;
 use App\Rules\DriverEmptyTruckSpotRule;
 use App\Rules\ModelStatusRule;
 use App\Rules\ModelFromCompanyRule;
-use App\Rules\ModelInGarageRule;
+use App\Rules\ModelsInGarageRule;
 use App\Rules\TruckFreeDriverSpotRule;
 use App\Utilities\StatusUtility;
 use Closure;
@@ -63,7 +63,7 @@ class AssignDriverToTruckMutation extends Mutation
                 new TruckFreeDriverSpotRule(),
             ],
             'general' => [
-                new ModelInGarageRule('Driver', $args['driver'], 'Truck', $args['truck']),
+                new ModelsInGarageRule('Driver', $args['driver'], 'Truck', $args['truck']),
             ]
         ];
     }

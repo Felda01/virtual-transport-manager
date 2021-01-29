@@ -17,6 +17,7 @@ class StatusUtility
     const READY = 5;
     const SLEEP = 6;
     const TRAVEL = 7;
+    const ON_TRAINING = 8;
 
 
     /**
@@ -51,6 +52,7 @@ class StatusUtility
             self::READY,
             self::ON_ROAD,
             self::SLEEP,
+            self::ON_TRAINING,
         ];
     }
 

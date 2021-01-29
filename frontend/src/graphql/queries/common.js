@@ -8,6 +8,11 @@ export const ME_QUERY = gql`
             last_name
             image
             roles {
+                id
+                name
+            }
+            permissions {
+                id
                 name
             }
         }

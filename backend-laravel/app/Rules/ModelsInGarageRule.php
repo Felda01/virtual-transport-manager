@@ -2,15 +2,13 @@
 
 namespace App\Rules;
 
-use App\Models\Company;
 use App\Models\Driver;
 use App\Models\Trailer;
 use App\Models\Truck;
 use Illuminate\Contracts\Validation\ImplicitRule;
-use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Database\Eloquent\Model;
 
-class ModelInGarageRule implements ImplicitRule
+class ModelsInGarageRule implements ImplicitRule
 {
     public $model;
 

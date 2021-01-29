@@ -7,7 +7,7 @@ namespace App\GraphQL\Mutations;
 use App\Models\Trailer;
 use App\Models\Truck;
 use App\Rules\ModelFromCompanyRule;
-use App\Rules\ModelInGarageRule;
+use App\Rules\ModelsInGarageRule;
 use App\Rules\ModelStatusRule;
 use App\Rules\TrailerHasTruckRule;
 use App\Rules\TruckHasTrailerRule;
@@ -68,7 +68,7 @@ class UnassignTrailerFromTruckMutation extends Mutation
                 new TruckHasTrailerRule($args['trailer'])
             ],
             'general' => [
-                new ModelInGarageRule('Trailer', $args['trailer'], 'Truck', $args['truck']),
+                new ModelsInGarageRule('Trailer', $args['trailer'], 'Truck', $args['truck']),
             ]
         ];
     }

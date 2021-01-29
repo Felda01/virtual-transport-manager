@@ -81,7 +81,9 @@
       "upgrade": "Upgrade",
       "sell": "Sell",
       "assign": "Assign",
-      "unassign": "Unassign"
+      "unassign": "Unassign",
+      "training": "Training",
+      "fire": "Fire"
     },
     "select": {
       "emptyOption": "No available options"
@@ -98,7 +100,8 @@
       "sell": "Sell",
       "assign": "Assign",
       "fire": "Fire",
-      "unassign": "Unassign"
+      "unassign": "Unassign",
+      "training": "Training"
     }
   },
   "pagination": {
@@ -156,7 +159,8 @@
           "trailerModel": "Update this trailer model",
           "truckModel": "Update this truck model",
           "garageModel": "Update this garage model",
-          "garage": "Upgrade this garage"
+          "garage": "Upgrade this garage",
+          "driver": "Are you sure you want to train this driver to a higher ADR class for {price} €?"
         },
         "delete": {
           "bankLoanType": "Are you sure you want to delete this bank loan type?",
@@ -167,7 +171,8 @@
           "trailerModel": "Are you sure you want to delete this trailer model?",
           "truckModel": "Are you sure you want to delete this truck model?",
           "garageModel": "Are you sure you want to delete this garage model?",
-          "garage": "Are you sure you want to sell this garage for {price} €?"
+          "garage": "Are you sure you want to sell this garage for {price} €?",
+          "driver": "Are you sure you want to fire this driver?"
         },
         "assign": {
           "driverToTruck": "Assign driver to truck",
@@ -210,7 +215,8 @@
           "trailerModel": "The trailer model {modelName} was successfully updated.",
           "truckModel": "The truck model {modelName} was successfully updated.",
           "garageModel": "The garage model {modelName} was successfully updated.",
-          "garage": "The garage in {location} was successfully upgraded to {modelName}."
+          "garage": "The garage in {location} was successfully upgraded to {modelName}.",
+          "updated": ""
         },
         "deleted": {
           "bankLoanType": "The bank loan type {modelName} was successfully deleted.",
@@ -221,7 +227,8 @@
           "trailerModel": "The trailer model {modelName} was successfully deleted.",
           "truckModel": "The truck model {modelName} was successfully deleted.",
           "garageModel": "The garage model {modelName} was successfully deleted.",
-          "garage": "The {modelName} garage in {location} was successfully sold."
+          "garage": "The {modelName} garage in {location} was successfully sold.",
+          "driver": "The driver {modelName} was successfully fired."
         },
         "assigned": {
           "driverToTruck": "The driver {modelName} was successfully assigned to this truck.",
@@ -518,7 +525,8 @@
       "trailer": "Trailer",
       "garage": "Garage"
     },
-    "can_not_sell": "Only truck in the garage can be sold."
+    "can_not_sell": "The truck cannot be sold.",
+    "can_not_sell_info": "The truck can be sold if the truck is in the garage and without drivers and a trailer."
   },
   "trailer": {
     "property": {
@@ -577,7 +585,11 @@
       "truck": "Truck",
       "garage": "Garage"
     },
-    "can_not_fire": "Can not fire"
+    "can_not_fire": "The driver cannot be fired.",
+    "can_not_fire_info": "The driver can be fired if the driver is in the garage and without a truck.",
+    "can_not_train": "The driver cannot be trained.",
+    "can_not_train_info": "The driver can be trained if the driver is in the garage and on idle or ready to work.",
+    "fully_trained": "Fully trained."
   },
   "status": {
     "0": "Delivering from shop",
@@ -587,7 +599,8 @@
     "4": "Finished",
     "5": "Ready to work",
     "6": "Sleeping",
-    "7": "Traveling"
+    "7": "Traveling",
+    "8": "On training"
   },
   "preferred_road_trips": {
     "0": "Short",

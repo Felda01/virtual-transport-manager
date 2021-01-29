@@ -17,7 +17,10 @@ export default new Vuex.Store({
     },
     getters: {
         user: state => state.user,
-        money: state => state.company && state.company ? parseFloat(state.company.money) : null
+        money: state => state.company && state.company ? parseFloat(state.company.money) : null,
+        hasPermission: (state) => (name) => {
+            return state.user ? state.user.permissions.some(permission => permission.name === name) : false
+        }
     },
     mutations: {
         SET_USER(state, user) {

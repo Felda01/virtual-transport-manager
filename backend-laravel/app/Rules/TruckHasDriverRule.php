@@ -41,6 +41,6 @@ class TruckHasDriverRule implements Rule
      */
     public function message()
     {
-        return trans('validation.truckHasDriver');
+        return trans('validation.truck_has_driver');
     }
 }

@@ -40,7 +40,7 @@
                                     </md-table-row>
                                 </md-table>
                             </md-card-content>
-                            <md-card-actions md-alignment="space-between">
+                            <md-card-actions md-alignment="space-between" v-if="hasPermission(constants.PERMISSION.MANAGE_GARAGES)">
                                 <template v-if="canUpdateGarage">
                                     <md-button class="md-primary md-simple" @click="updateGarageModal"><md-icon>edit</md-icon>{{ $t('detail.btn.upgrade') }}</md-button>
                                 </template>
@@ -140,18 +140,23 @@
                 </tabs>
             </div>
         </template>
-        <!-- Update garage modal-->
-        <mutation-modal ref="updateGarageModal" @ok="updateGarage" :modalSchema="modalSchemaUpdateGarage" />
 
-        <!-- Delete garage modal-->
-        <delete-modal ref="deleteGarageModal" @ok="deleteGarage" :modalSchema="modalSchemaDeleteGarage" />
+        <template v-if="hasPermission(constants.PERMISSION.MANAGE_GARAGES)">
+            <!-- Update garage modal-->
+            <mutation-modal ref="updateGarageModal" @ok="updateGarage" :modalSchema="modalSchemaUpdateGarage" />
+
+            <!-- Delete garage modal-->
+            <delete-modal ref="deleteGarageModal" @ok="deleteGarage" :modalSchema="modalSchemaDeleteGarage" />
+        </template>
     </div>
 </template>
 
 <script>
-    import { GARAGE_QUERY, AVAILABLE_GARAGE_MODEL_UPGRADES_QUERY, AVAILABLE_DRIVERS_FOR_ASSIGN_TO_GARAGE_QUERY } from '@/graphql/queries/user';
-    import { UPDATE_GARAGE_MUTATION, DELETE_GARAGE_MUTATION, ASSIGN_DRIVER_TO_GARAGE_MUTATION } from '@/graphql/mutations/user';
+    import { GARAGE_QUERY, AVAILABLE_GARAGE_MODEL_UPGRADES_QUERY } from '@/graphql/queries/user';
+    import { UPDATE_GARAGE_MUTATION, DELETE_GARAGE_MUTATION } from '@/graphql/mutations/user';
     import { Tabs, ProductCard, ChartCard, MutationModal, DeleteModal } from "@/components";
+    import { mapGetters } from 'vuex'
+    import constants from "../../constants";
 
     export default {
         title () {
@@ -166,6 +171,9 @@
             DeleteModal
         },
         computed: {
+            ...mapGetters([
+                'hasPermission',
+            ]),
             canUpdateGarage() {
                 return this.availableGarageModelUpgrades && this.availableGarageModelUpgrades.data && this.availableGarageModelUpgrades.data.length > 0;
             },
@@ -205,6 +213,7 @@
                     okBtnTitle: this.$t('modal.btn.sell'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
+                constants: constants
             }
         },
         methods: {
