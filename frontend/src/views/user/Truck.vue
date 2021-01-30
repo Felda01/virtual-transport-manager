@@ -170,6 +170,9 @@
 
             <!-- Unassign trailer from truck modal-->
             <delete-modal ref="unassignTrailerFromTruckModal" @ok="unassignTrailerFromTruck" :modalSchema="modalSchemaUnassignTrailerFromTruck" />
+
+            <!-- Delete truck modal-->
+            <delete-modal ref="deleteTruckModal" @ok="deleteTruck" :modalSchema="modalSchemaDeleteTruck" />
         </template>
 
         <template v-if="hasPermission(constants.PERMISSION.MANAGE_VEHICLES) && hasPermission(constants.PERMISSION.MANAGE_DRIVERS)">
@@ -215,7 +218,7 @@
                 return this.truck && this.truck.garage ? [this.truck.garage] : [];
             },
             canDeleteTruck() {
-                return this.truck ? [constants.STATUS.IDLE].includes(this.truck.status) && this.truck.drivers.length === 0 && this.truck.trailer === null : false;
+                return this.truck ? constants.STATUS.IDLE === this.truck.status && this.truck.drivers.length === 0 && this.truck.trailer === null : false;
             }
         },
         data() {
@@ -225,6 +228,15 @@
                 firstLoad: true,
                 availableDriversInGarage: [],
                 availableTrailersInGarage: [],
+                modalSchemaDeleteTruck: {
+                    message: '',
+                    form: {
+                        mutation: DELETE_TRUCK_MUTATION,
+                        idField: null,
+                    },
+                    okBtnTitle: this.$t('modal.btn.sell'),
+                    cancelBtnTitle: this.$t('modal.btn.cancel')
+                },
                 modalSchemaUnassignDriverFromTruck: {
                     message: this.$t('model.modal.title.unassign.driverFromTruck'),
                     form: {
@@ -284,10 +296,27 @@
                 return driver.first_name.charAt(0) + '. ' + driver.last_name
             },
             deleteTruckModal() {
+                let price = this.$options.filters.currency(this.truck.truckModel.price / 2, ' ', 2, { thousandsSeparator: ' ' });
+                this.modalSchemaDeleteTruck.message = this.$t('model.modal.title.delete.truck', { price: price });
 
+                this.modalSchemaDeleteTruck.form.idField = this.id;
+
+                this.$refs['deleteTruckModal'].openModal();
             },
             deleteTruck(response) {
-
+                let truck = response.data.deleteTruck;
+                this.$notify({
+                    timeout: 5000,
+                    message: this.$t('model.response.success.deleted.truck', { modelName: truck.truckModel.brand + " " + truck.truckModel.name }),
+                    icon: "add_alert",
+                    horizontalAlign: 'right',
+                    verticalAlign: 'top',
+                    type: 'success'
+                });
+                this.$router.push({
+                    name: 'trucks',
+                    params: {locale: this.$i18n.locale}
+                });
             },
             assignDriverToTruckModal() {
                 this.modalSchemaAssignDriverToTruck.form.fields = [

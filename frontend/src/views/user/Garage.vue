@@ -295,8 +295,8 @@
                 this.$apollo.queries.garage.refresh();
             },
             deleteGarageModal() {
-                let price = this.$options.filters.currency(this.garage.garageModel.price / 2, ' ', 2, { thousandsSeparator: ' ' })
-                this.modalSchemaDeleteGarage.message = this.$t('model.modal.title.delete.garage', {price: price});
+                let price = this.$options.filters.currency(this.garage.garageModel.price / 2, ' ', 2, { thousandsSeparator: ' ' });
+                this.modalSchemaDeleteGarage.message = this.$t('model.modal.title.delete.garage', { price: price });
 
                 this.modalSchemaDeleteGarage.form.idField = this.id;
 

@@ -145,8 +145,8 @@ return [
     'free_driver' => "The selected driver is not available at this moment.",
     'model_in_garage' => "The selected :model and :compareModel are not in the right garage.",
     'model_status' => "The selected :attribute is not available for this action.",
-    'driver_empty_truck_spot' => "The selected driver already has assign truck",
-    'trailer_empty_truck_spot' => "The selected trailer already has assign truck",
+    'driver_empty_truck_spot' => "The selected driver already has assign truck.",
+    'trailer_empty_truck_spot' => "The selected trailer already has assign truck.",
     'truck_free_driver_spot' => "The selected truck has the maximum count of assigned drivers.",
     'truck_free_trailer_spot' => "The selected truck already has assign trailer.",
     'driver_assigned_truck' => "The selected truck does not belong to the selected driver.",
@@ -155,6 +155,10 @@ return [
     'truck_has_trailer' => "The selected trailer does not belong to the selected truck.",
     'driver_in_garage' => "The selected driver is not in the right garage.",
     'can_update_driver_adr' => "The selected driver has ADR class on maximum.",
+    'empty_garage' => "The selected garage is not empty.",
+    'can_delete_trailer' => "The selected trailer has still assigned a truck.",
+    'can_delete_driver' => "The selected driver has still assigned a truck.",
+    'can_delete_truck' => "The selected truck has still assigned a driver or trailer.",
 
     /*
     |--------------------------------------------------------------------------

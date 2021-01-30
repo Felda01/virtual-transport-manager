@@ -6,6 +6,7 @@ namespace App\GraphQL\Mutations;
 
 use App\Models\Company;
 use App\Models\Garage;
+use App\Rules\EmptyGarageRule;
 use App\Rules\ModelFromCompanyRule;
 use App\Utilities\TransactionUtility;
 use Closure;
@@ -48,6 +49,7 @@ class DeleteGarageMutation extends Mutation
                 'string',
                 'exists:garages,id,deleted_at,NULL',
                 new ModelFromCompanyRule('Garage'),
+                new EmptyGarageRule(),
             ]
         ];
     }

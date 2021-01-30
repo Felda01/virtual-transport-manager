@@ -192,8 +192,10 @@ return [
                 'deleteGarage' => \App\GraphQL\Mutations\DeleteGarageMutation::class,
 
                 'createTruck' => \App\GraphQL\Mutations\CreateTruckMutation::class,
+                'deleteTruck' => \App\GraphQL\Mutations\DeleteTruckMutation::class,
 
                 'createTrailer' => \App\GraphQL\Mutations\CreateTrailerMutation::class,
+                'deleteTrailer' => \App\GraphQL\Mutations\DeleteTrailerMutation::class,
 
                 'createDriver' => \App\GraphQL\Mutations\CreateDriverMutation::class,
                 'updateDriver' => \App\GraphQL\Mutations\UpdateDriverMutation::class,

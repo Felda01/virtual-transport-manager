@@ -201,3 +201,28 @@ export const DELETE_DRIVER_MUTATION = gql`
         }
     }
 `;
+
+export const DELETE_TRAILER_MUTATION = gql`
+    mutation DeleteTrailerMutation($id: String!) {
+        deleteTrailer(id: $id) {
+            id
+            trailerModel {
+                id 
+                name
+            }
+        }
+    }
+`;
+
+export const DELETE_TRUCK_MUTATION = gql`
+    mutation DeleteTruckMutation($id: String!) {
+        deleteTruck(id: $id) {
+            id
+            truckModel {
+                id 
+                name
+                brand
+            }
+        }
+    }
+`;

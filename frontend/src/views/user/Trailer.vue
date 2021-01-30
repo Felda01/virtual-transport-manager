@@ -49,9 +49,13 @@
                                 <template v-if="canDeleteTrailer">
                                     <md-button class="md-danger md-simple" @click="deleteTrailerModal"><md-icon>close</md-icon>{{ $t('detail.btn.sell') }}</md-button>
                                 </template>
-                                <template v-else>
-                                    <p>{{ $t('truck.can_not_sell') }}</p>
-                                </template>
+                                <div v-else class="vertical-center-flex">
+                                    <span>{{ $t('trailer.can_not_sell') }}</span>
+                                    <md-button class="md-primary md-simple md-just-icon md-round" @click="tooltipCanNotSell = !tooltipCanNotSell">
+                                        <md-icon>help</md-icon>
+                                        <md-tooltip :md-active.sync="tooltipCanNotSell" md-direction="left">{{ $t('trailer.can_not_sell_info') }}</md-tooltip>
+                                    </md-button>
+                                </div>
                             </md-card-actions>
                         </md-card>
                     </template>
@@ -126,6 +130,9 @@
 
             <!-- Unassign truck from trailer modal-->
             <delete-modal ref="unassignTruckFromTrailerModal" @ok="unassignTruckFromTrailer" :modalSchema="modalSchemaUnassignTruckFromTrailer" />
+
+            <!-- Delete trailer modal-->
+            <delete-modal ref="deleteTrailerModal" @ok="deleteTrailer" :modalSchema="modalSchemaDeleteTrailer" />
         </template>
     </div>
 </template>
@@ -162,8 +169,7 @@
                 return this.trailer && this.trailer.garage ? [this.trailer.garage] : [];
             },
             canDeleteTrailer() {
-                return true;
-                //return this.trailer ?  (this.truck.drivers.length === 0 || this.truck.drivers[0].location.id === this.truck.garage.location.id) : false;
+                return this.trailer ? this.trailer.status === constants.STATUS.IDLE : false;
             }
         },
         data() {
@@ -202,7 +208,8 @@
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
                 constants: constants,
-                mdTableTrucks: 0
+                mdTableTrucks: 0,
+                tooltipCanNotSell: false
             }
         },
         methods: {
@@ -222,10 +229,27 @@
                 return result.join(', ');
             },
             deleteTrailerModal() {
+                let price = this.$options.filters.currency(this.trailer.trailerModel.price / 2, ' ', 2, { thousandsSeparator: ' ' });
+                this.modalSchemaDeleteTrailer.message = this.$t('model.modal.title.delete.trailer', { price: price });
 
+                this.modalSchemaDeleteTrailer.form.idField = this.id;
+
+                this.$refs['deleteTrailerModal'].openModal();
             },
             deleteTrailer(response) {
-
+                let trailer = response.data.deleteTrailer;
+                this.$notify({
+                    timeout: 5000,
+                    message: this.$t('model.response.success.deleted.trailer', { modelName: trailer.trailerModel.name }),
+                    icon: "add_alert",
+                    horizontalAlign: 'right',
+                    verticalAlign: 'top',
+                    type: 'success'
+                });
+                this.$router.push({
+                    name: 'trailers',
+                    params: {locale: this.$i18n.locale}
+                });
             },
             assignTruckToTrailerModal() {
                 this.modalSchemaAssignTruckToTrailer.form.fields = [
