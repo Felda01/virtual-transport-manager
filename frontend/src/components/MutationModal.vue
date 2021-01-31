@@ -209,6 +209,16 @@
             return i18n.t('validation.different', { attribute: values._field_, other: values.other })
         }
     });
+    extend('password', {
+        params: ['target', 'other'],
+        validate(value, { target }) {
+            console.log(value, target);
+            return value === target;
+        },
+        message: (_, values) =>  {
+            return i18n.t('validation.password', { attribute: values.target });
+        }
+    });
 
     export default {
         name: "MutationModal",

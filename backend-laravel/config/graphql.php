@@ -184,8 +184,10 @@ return [
                 'deleteCargo' => \App\GraphQL\Mutations\DeleteCargoMutation::class,
 
                 'createUser' => \App\GraphQL\Mutations\CreateUserMutation::class,
-//                'updateUser' => \App\GraphQL\Mutations\UpdateUserMutation::class,
-//                'deleteUser' => \App\GraphQL\Mutations\DeleteUserMutation::class,
+                'updateUser' => \App\GraphQL\Mutations\UpdateUserMutation::class,
+                'deleteUser' => \App\GraphQL\Mutations\DeleteUserMutation::class,
+                'updateUserPassword' => \App\GraphQL\Mutations\UpdateUserPasswordMutation::class,
+                'updateUserSalary' => \App\GraphQL\Mutations\UpdateUserSalaryMutation::class,
 
                 'createGarage' => \App\GraphQL\Mutations\CreateGarageMutation::class,
                 'updateGarage' => \App\GraphQL\Mutations\UpdateGarageMutation::class,

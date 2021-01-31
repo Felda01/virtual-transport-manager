@@ -31,6 +31,7 @@ export const USER_QUERY = gql`
             id
             first_name
             last_name
+            email
             image
             salary
             roles {

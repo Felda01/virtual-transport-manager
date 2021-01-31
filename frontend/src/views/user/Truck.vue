@@ -6,6 +6,11 @@
                 <content-placeholders-text :lines="15" />
             </content-placeholders>
         </template>
+        <template v-else-if="errorMessage">
+            <div class="md-layout-item md-size-100">
+                {{ errorMessage }}
+            </div>
+        </template>
         <template v-else>
             <div class="md-layout-item md-size-100">
                 <tabs
@@ -468,6 +473,9 @@
                 query: TRUCK_QUERY,
                 variables() {
                     return {id: this.id}
+                },
+                error(error, vm, key, type, options) {
+                    this.setErrorMessage(error);
                 },
                 result({data, loading, networkStatus}) {
                     this.firstLoad = false;

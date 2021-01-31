@@ -226,3 +226,39 @@ export const DELETE_TRUCK_MUTATION = gql`
         }
     }
 `;
+
+export const DELETE_USER_MUTATION = gql`
+    mutation DeleteUserMutation($id: String!) {
+        deleteUser(id: $id) {
+            id
+            first_name
+            last_name
+        }
+    }
+`;
+
+export const UPDATE_USER_PASSWORD_MUTATION = gql`
+    mutation UpdateUserPasswordMutation($id: String!, $password: String!, $new_password: String!, $new_password_confirmation: String!) {
+        updateUserPassword(id: $id, password: $password, new_password: $new_password, new_password_confirmation: $new_password_confirmation) {
+            id
+        }
+    }
+`;
+
+export const UPDATE_USER_MUTATION = gql`
+    mutation UpdateUserMutation($id: String!, $first_name: String!, $last_name: String!, $email: String!, $image: String) {
+        updateUser(id: $id, first_name: $first_name, last_name: $last_name, email: $email, image: $image) {
+            id
+        }
+    }
+`;
+export const UPDATE_USER_SALARY_MUTATION = gql`
+    mutation UpdateUserSalaryMutation($id: String!, $salary: String!, $roles: String!) {
+        updateUserSalary(id: $id, salary: $salary, roles: $roles) {
+            id
+            first_name
+            last_name
+        }
+    }
+`;
+
