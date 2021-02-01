@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Contracts\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -110,6 +111,15 @@ class Driver extends Model
         'expires_at' => 'datetime',
         'last_in_garage_at' => 'datetime'
     ];
+
+    /**
+     * @param Activity $activity
+     * @param string $eventName
+     */
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $activity->description = "activity.{$eventName}.driver";
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

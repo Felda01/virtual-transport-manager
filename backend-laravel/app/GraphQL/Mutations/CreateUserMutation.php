@@ -11,6 +11,7 @@ use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
@@ -95,39 +96,50 @@ class CreateUserMutation extends Mutation
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
-        /** @var User $currentUser */
-        $currentUser = User::current();
+        $result = DB::transaction(function () use($args) {
+            /** @var User $currentUser */
+            $currentUser = User::current();
 
-        /** @var User $user */
-        $user = User::create([
-            'first_name' => $args['first_name'],
-            'last_name' => $args['last_name'],
-            'email' => $args['email'],
-            'image' => '',
-            'password' => Hash::make(Str::random(60)),
-            'salary' => 0,
-            'company_id' => $currentUser->company_id
-        ]);
+            /** @var User $user */
+            $user = User::create([
+                'first_name' => $args['first_name'],
+                'last_name' => $args['last_name'],
+                'email' => $args['email'],
+                'image' => '',
+                'password' => Hash::make(Str::random(60)),
+                'salary' => 0,
+                'company_id' => $currentUser->company_id
+            ]);
 
-        $roles = Role::whereIn('id', explode(',', $args['roles']))->get();
+            $roles = Role::whereIn('id', explode(',', $args['roles']))->get();
 
-        $user->syncRoles(...$roles);
-        $user->save();
+            $user->syncRoles(...$roles);
+            $userSaved = $user->save();
 
-        $status = Password::sendResetLink(
-            ['email' => $args['email']]
-        );
+            $status = Password::sendResetLink(
+                ['email' => $args['email']]
+            );
 
-        if ($status === Password::RESET_LINK_SENT) {
-            return $user;
+            if (!$userSaved) {
+                throw new \Exception(trans('validation.general_exception'));
+            }
+
+            return [
+                'status' => $status,
+                'user' => $user
+            ];
+        });
+
+        if (Password::RESET_LINK_SENT === $result['status']) {
+            return $result['user'];
         } else {
             try {
-                $user->delete();
+                $result['user']->delete();
             } catch (\Exception $e) {
             } finally {
                 return response()->json([
                     'errors' => [
-                        'email' => trans($status)
+                        'email' => trans($result['status'])
                     ]
                 ], 422);
             }

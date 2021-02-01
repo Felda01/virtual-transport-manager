@@ -24,10 +24,10 @@
           <ul class="nav">
             <slot>
               <li>
-                <a href="#vue">
-                  <span class="sidebar-mini">MP</span>
-                  <span class="sidebar-normal">My Profile</span>
-                </a>
+                <router-link :to="{name: 'user', params: {id: user.id, locale: $i18n.locale}}">
+                  <span class="sidebar-mini">{{ $t('navigation.user.MP') }}</span>
+                  <span class="sidebar-normal">{{ $t('navigation.user.myProfile') }}</span>
+                </router-link>
               </li>
               <li>
                 <a href="#vue">

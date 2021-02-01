@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Types;
 
-use App\Models\Transaction;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Type as GraphQLType;
+use Spatie\Activitylog\Models\Activity;
 
-class TransactionType extends GraphQLType
+class ActivityType extends GraphQLType
 {
     protected $attributes = [
-        'name' => 'Transaction',
+        'name' => 'Activity',
         'description' => 'A type',
-        'model' => Transaction::class
+        'model' => Activity::class
     ];
 
     public function fields(): array
@@ -23,28 +23,29 @@ class TransactionType extends GraphQLType
             'id' => [
                 'type' => Type::nonNull(Type::string()),
             ],
-            'company' => [
-                'type' => GraphQL::type('Company'),
+            'subject' => [
+                'type' => GraphQL::type('SubjectUnion'),
             ],
-            'value' => [
-                'type' => Type::float(),
+            'description' => [
+                'type' => Type::string()
             ],
-            'activity' => [
+            'properties' => [
                 'type' => Type::string(),
-            ],
-            'productable' => [
-                'type' => GraphQL::type('ProductableUnion'),
-            ],
-            'user' => [
-                'type' => GraphQL::type('User'),
+                'resolve' => function($root, $args) {
+                    /** @var Activity $root */
+                    return $root->properties->toJson();
+                }
             ],
             'created_at' => [
                 'type' => Type::string(),
                 'resolve' => function($root, $args) {
-                    /** @var Transaction $root  */
+                    /** @var Activity $root  */
                     return $root->created_at->format('d.m.Y H:i');
                 }
-            ]
+            ],
+            'causer' => [
+                'type' => GraphQL::type('User')
+            ],
         ];
     }
 }

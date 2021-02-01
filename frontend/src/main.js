@@ -49,10 +49,9 @@ Vue.axios.interceptors.response.use(function (response) {
     return response
   }, function (error) {
     if (error.response.status === 401) {
-      console.log("Vue.axios.interceptors.response.use.error");
-      console.log(error.response);
-      console.log(error.config);
-      store.dispatch('logout', { fullPath: router.currentRoute.fullPath });
+      if (!error.config.url.includes('/api/logout')) {
+        store.dispatch('logout', { fullPath: router.currentRoute.fullPath });
+      }
     }
     return Promise.reject(error)
   });
@@ -84,16 +83,6 @@ const httpLinkDefault = createHttpLink({
   credentials: 'include'
 })
 
-// HTTP connection to the API
-// const httpLinkAuth = createHttpLink({
-//   // You should use an absolute URL here
-//   uri: 'https://virtual-transport-manager.ddev.site/api/graphql/auth',
-//   headers: {
-//     'Accept': 'application/json',
-//     'X-Requested-With': 'XMLHttpRequest'
-//   },
-//   credentials: 'include'
-// })
 
 // Cache implementation
 const cache = new InMemoryCache();
@@ -130,22 +119,9 @@ const apolloClientDefault =  new ApolloClient({
   defaultOptions: defaultOptions,
 });
 
-// Create the apollo client auth
-// const apolloClientAuth = new ApolloClient({
-//   link: httpLinkAuth,
-//   cache,
-//   defaultOptions: defaultOptions,
-//   connectToDevTools: true
-// })
-
 export const apolloClient = apolloClientDefault;
 
 const apolloProvider = new VueApollo({
-  // clients: {
-  //   apolloClientAuth,
-  //   apolloClientDefault
-  // },
-  // defaultClient: apolloClientAuth,
   defaultClient: apolloClientDefault,
 })
 

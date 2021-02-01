@@ -60,7 +60,11 @@
     "staticMapData": "Map data",
     "companyEquipmentData": "Company equipment",
     "shop": "Shop / Agency",
-    "companyEmployees": "Company employees"
+    "companyEmployees": "Company employees",
+    "user": {
+      "myProfile": "My Profile",
+      "MP": "MP"
+    }
   },
   "search": {
     "title": "Filters",
@@ -278,7 +282,11 @@
       "roles": "Roles"
     },
     "subNav": {
-      "info": "User info"
+      "info": "User info",
+      "activities": "Activities"
+    },
+    "relations": {
+      "no_activities": "No activities"
     },
     "detail": "Profile",
     "register": "Register new"
@@ -631,5 +639,16 @@
     "0": "Short",
     "1": "Medium",
     "2": "Long"
+  },
+  "activity": {
+    "property": {
+      "description": "Description",
+      "causer": "User",
+      "subject": "Subject",
+      "created_at": "Created at"
+    },
+    "created": {
+      "trailer": "Buy new trailer"
+    }
   }
 }

@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Contracts\Activity;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * App\Models\Order
@@ -40,7 +42,33 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Order extends Model
 {
-    use HasFactory, HasUuid;
+    use HasFactory, HasUuid, LogsActivity;
+
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [];
+
+    /**
+     * @var bool
+     */
+    protected static $logUnguarded = true;
+
+    /**
+     * @var bool
+     */
+    protected static $logOnlyDirty = true;
+
+    /**
+     * @param Activity $activity
+     * @param string $eventName
+     */
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $activity->description = "activity.{$eventName}.order";
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

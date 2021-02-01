@@ -25,6 +25,114 @@ export const USERS_QUERY = gql`
     }
 `;
 
+export const ACTIVITIES_QUERY = gql`
+    query ActivitiesQuery($limit: Int!, $page: Int!, $user: String) {
+        activities(limit: $limit, page: $page, user: $user) {
+            data {
+                id
+                description
+                subject {
+                    __typename
+                    ... on Garage {
+                        __typename
+                        id
+                        garageModel {
+                            id
+                            name
+                        }
+                        location {
+                            id
+                            name
+                            country {
+                                id
+                                short_name
+                            }
+                        }
+                    }
+                    ... on Truck {
+                        __typename
+                        id
+                        truckModel {
+                            id
+                            brand
+                            name
+                        }
+                        garage {
+                            id
+                            location {
+                                id
+                                name
+                                country {
+                                    id
+                                    short_name
+                                }
+                            }
+                        }
+                    }
+                    ... on Trailer {
+                        __typename
+                        id
+                        trailerModel {
+                            id
+                            name
+                        }
+                        garage {
+                            id
+                            location {
+                                id
+                                name
+                                country {
+                                    id
+                                    short_name
+                                }
+                            }
+                        }
+                    }
+                    ... on Driver {
+                        __typename
+                        id
+                        first_name
+                        last_name
+                        garage {
+                            id
+                            location {
+                                id
+                                name
+                                country {
+                                    id
+                                    short_name
+                                }
+                            }
+                        }
+                    }
+                    ... on User {
+                        __typename
+                        id
+                        first_name
+                        last_name
+                    }
+                    ... on Order {
+                        __typename 
+                        id
+                    }
+                    ... on BankLoan {
+                        __typename
+                        id
+                    }
+                }
+                created_at
+            }
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
+            has_more_pages
+        }
+    }
+`;
+
 export const USER_QUERY = gql`
     query UserQuery($id: String!) {
         user(id: $id) {

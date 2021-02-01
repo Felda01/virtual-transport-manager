@@ -148,6 +148,8 @@ return [
                 'truck' => \App\GraphQL\Queries\TruckQuery::class,
                 'trailer' => \App\GraphQL\Queries\TrailerQuery::class,
                 'driver' => \App\GraphQL\Queries\DriverQuery::class,
+
+                'activities' => \App\GraphQL\Queries\ActivitiesQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,
@@ -228,6 +230,7 @@ return [
     // The types available in the application.
     'types' => [
         // \Rebing\GraphQL\Support\UploadType::class,
+        'Activity' => \App\GraphQL\Types\ActivityType::class,
         'BankLoan' => \App\GraphQL\Types\BankLoanType::class,
         'BankLoanType' => \App\GraphQL\Types\BankLoanTypeType::class,
         'Cargo' => \App\GraphQL\Types\CargoType::class,
@@ -258,6 +261,9 @@ return [
 
         'TranslationInput' => \App\GraphQL\Inputs\TranslationInput::class,
         'FilterInput' => \App\GraphQL\Inputs\FilterInput::class,
+
+        'ProductableUnion' => \App\GraphQL\Unions\ProductableUnion::class,
+        'SubjectUnion' => \App\GraphQL\Unions\SubjectUnion::class,
     ],
 
     // The types will be loaded on demand. Default is to load all types on each request

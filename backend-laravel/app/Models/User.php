@@ -11,6 +11,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Activitylog\Contracts\Activity;
+use Spatie\Activitylog\Traits\CausesActivity;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -70,7 +72,7 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasUuid, SoftDeletes, HasApiTokens, HasRoles, LogsActivity, CanResetPassword;
+    use HasFactory, Notifiable, HasUuid, SoftDeletes, HasApiTokens, HasRoles, LogsActivity, CanResetPassword, CausesActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -117,6 +119,15 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    /**
+     * @param Activity $activity
+     * @param string $eventName
+     */
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $activity->description = "activity.{$eventName}.user";
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

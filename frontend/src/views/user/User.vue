@@ -14,7 +14,7 @@
         <template v-else>
             <div class="md-layout-item md-size-100">
                 <tabs
-                        :tab-name="[$t('user.subNav.info'), $t('truck.subNav.activity')]"
+                        :tab-name="[$t('user.subNav.info'), $t('user.subNav.activities')]"
                         class="page-subcategories"
                         plain
                         :tab-content-center="true"
@@ -43,58 +43,50 @@
                                 </md-table>
                             </md-card-content>
                             <md-card-actions md-alignment="space-between">
-                                <template v-if="currentUser.id === user.id">
+                                <template v-if="user && currentUser.id === user.id">
                                     <md-button class="md-success md-simple" @click="updateUserModal"><md-icon>edit</md-icon>{{ $t('detail.btn.updateProfile') }}</md-button>
                                     <md-button class="md-success md-simple" @click="updateUserPasswordModal"><md-icon>edit</md-icon>{{ $t('detail.btn.updatePassword') }}</md-button>
                                 </template>
                                 <template v-if="hasPermission(constants.PERMISSION.MANAGE_SALARY)">
                                     <md-button class="md-success md-simple" @click="updateUserSalaryModal"><md-icon>edit</md-icon>{{ $t('detail.btn.updateSalary') }}</md-button>
                                 </template>
-                                <template v-if="hasPermission(constants.PERMISSION.MANAGE_PERSONS) && currentUser.id !== user.id">
+                                <template v-if="user && hasPermission(constants.PERMISSION.MANAGE_PERSONS) && currentUser.id !== user.id">
                                     <md-button class="md-danger md-simple ml-auto" @click="deleteUserModal"><md-icon>close</md-icon>{{ $t('detail.btn.fire') }}</md-button>
                                 </template>
                             </md-card-actions>
                         </md-card>
                     </template>
-<!--                    <template slot="tab-pane-2">-->
-<!--                        <md-card>-->
-<!--                            <md-card-header>-->
-<!--                                <h4 class="title">{{ $t('truck.subNav.drivers') }}</h4>-->
-<!--                            </md-card-header>-->
-<!--                            <md-card-content>-->
-<!--                                <md-table v-model="user.activities.data" v-if="user.activities">-->
-<!--                                    <md-table-row v-if="user.activities && truck.drivers.length > 0" slot="md-table-row" slot-scope="{ item, index }" @click.native="clickTableRow(item, 'driver')" class="cursor-pointer-hover">-->
-<!--                                        <md-table-cell md-label="#">{{ index + 1 }}</md-table-cell>-->
-<!--                                        <md-table-cell md-label="">-->
-<!--                                            <div class="img-container table-profile-image">-->
-<!--                                                <img :src="item.image" :alt="item.first_name + ' ' + item.last_name" />-->
-<!--                                            </div>-->
-<!--                                        </md-table-cell>-->
-<!--                                        <md-table-cell :md-label="$t('driver.property.full_name')" class="td-name">{{ driver(item) }}</md-table-cell>-->
-<!--                                        <md-table-cell :md-label="$t('driver.property.status')">{{ $t('status.' + item.status) }}</md-table-cell>-->
-<!--                                        <md-table-cell :md-label="$t('driver.property.location')">{{ item.location.name }} ({{ item.location.country.short_name | uppercase }})</md-table-cell>-->
-<!--                                        <md-table-cell :md-label="$t('driver.property.adr')">{{ $t('ADRsShort.' + item.adr) }}</md-table-cell>-->
-<!--                                        <md-table-cell md-label="" v-if="hasPermission(constants.PERMISSION.MANAGE_VEHICLES) && hasPermission(constants.PERMISSION.MANAGE_DRIVERS)">-->
-<!--                                            <md-button class="md-danger md-simple md-full-text" @click.native.stop="unassignDriverFromTruckModal(item)"><md-icon>close</md-icon>{{ $t('detail.btn.unassign')}}</md-button>-->
-<!--                                        </md-table-cell>-->
-<!--                                    </md-table-row>-->
-<!--                                    <md-table-empty-state>-->
-<!--                                        {{ $t('truck.relations.no_drivers') }}-->
-<!--                                    </md-table-empty-state>-->
-<!--                                </md-table>-->
-<!--                                <template v-if="hasPermission(constants.PERMISSION.MANAGE_VEHICLES) && hasPermission(constants.PERMISSION.MANAGE_DRIVERS)">-->
-<!--                                    <div class="text-center mt-3" v-if="!truck.drivers || truck.drivers.length < 2">-->
-<!--                                        <template v-if="this.availableDriversInGarage && this.availableDriversInGarage.data && this.availableDriversInGarage.data.length > 0">-->
-<!--                                            <md-button class="md-success md-simple" @click="assignDriverToTruckModal"><md-icon>add</md-icon>{{ $t('detail.btn.assign') }}</md-button>-->
-<!--                                        </template>-->
-<!--                                        <template v-else>-->
-<!--                                            {{ $t('truck.relations.no_available_drivers') }}-->
-<!--                                        </template>-->
-<!--                                    </div>-->
-<!--                                </template>-->
-<!--                            </md-card-content>-->
-<!--                        </md-card>-->
-<!--                    </template>-->
+                    <template slot="tab-pane-2">
+                        <md-card>
+                            <md-card-header>
+                                <h4 class="title">{{ $t('user.subNav.activities') }}</h4>
+                            </md-card-header>
+                            <md-card-content>
+                                <md-table v-model="activities.data" v-if="activities && activities.data">
+                                    <md-table-row v-if="activities.data && activities.data.length > 0" slot="md-table-row" slot-scope="{ item, index }">
+                                        <md-table-cell md-label="#">{{ index + 1 }}</md-table-cell>
+                                        <md-table-cell :md-label="$t('activity.property.description')" class="td-name">{{ $t(item.description) }}</md-table-cell>
+                                        <md-table-cell :md-label="$t('activity.property.subject')">{{ activitySubject(item.subject) }}</md-table-cell>
+                                        <md-table-cell :md-label="$t('activity.property.created_at')">{{ item.created_at }}</md-table-cell>
+                                    </md-table-row>
+                                    <md-table-empty-state>
+                                        {{ $t('user.relations.no_activities') }}
+                                    </md-table-empty-state>
+                                </md-table>
+                            </md-card-content>
+                            <md-card-actions md-alignment="space-between">
+                                <div class="">
+                                    <p class="card-category">
+                                        {{ $t('pagination.display', {from: activities.from, to: activities.to, total: activities.total}) }}
+                                    </p>
+                                </div>
+                                <pagination class="pagination-no-border pagination-success"
+                                            v-model="page"
+                                            :per-page="activities.per_page"
+                                            :total="activities.total"></pagination>
+                            </md-card-actions>
+                        </md-card>
+                    </template>
                 </tabs>
             </div>
         </template>
@@ -122,10 +114,10 @@
 </template>
 
 <script>
-    import { USER_QUERY } from "@/graphql/queries/user";
+    import { USER_QUERY, ACTIVITIES_QUERY } from "@/graphql/queries/user";
     import { ROLES_QUERY } from "@/graphql/queries/common";
     import { DELETE_USER_MUTATION, UPDATE_USER_PASSWORD_MUTATION, UPDATE_USER_MUTATION, UPDATE_USER_SALARY_MUTATION } from "@/graphql/mutations/user";
-    import { Tabs, ProductCard, MutationModal, DeleteModal } from "@/components";
+    import { Tabs, ProductCard, MutationModal, DeleteModal, Pagination } from "@/components";
     import constants from "../../constants";
     import { mapGetters } from "vuex";
 
@@ -138,7 +130,8 @@
             Tabs,
             ProductCard,
             MutationModal,
-            DeleteModal
+            DeleteModal,
+            Pagination
         },
         computed: {
             ...mapGetters({
@@ -201,12 +194,36 @@
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
                 avatarPlaceholder: "/img/default-avatar.png",
-                constants: constants
+                constants: constants,
+                page: 1,
+                activities: {
+                    data: [],
+                    per_page: 10,
+                    current_page: 1,
+                    from: 0,
+                    to: 0
+                }
             }
         },
         methods: {
             rolesTitle(roles) {
                 return roles.map(role => this.$t('role.' + role.name)).join(", ");
+            },
+            activitySubject(subject) {
+                switch (subject.__typename) {
+                    case "User":
+                        return subject.first_name + " " + subject.last_name;
+                    case "Driver":
+                        return subject.first_name + " " + subject.last_name + " - " + subject.garage.location.name + " (" + subject.garage.location.country.short_name.toUpperCase() + ")";
+                    case "Garage":
+                        return subject.garageModel.name + " - " + subject.location.name + " (" + subject.location.country.short_name.toUpperCase() + ")";
+                    case "Truck":
+                        return subject.truckModel.brand + " " + subject.truckModel.name + " - " + subject.garage.location.name + " (" + subject.garage.location.country.short_name.toUpperCase() + ")";
+                    case "Trailer":
+                        return subject.trailerModel.name + " - " + subject.garage.location.name + " (" + subject.garage.location.country.short_name.toUpperCase() + ")";
+                    default:
+                        return "";
+                }
             },
             deleteUserModal() {
                 this.modalSchemaDeleteUser.message = this.$t('model.modal.title.delete.user');
@@ -396,6 +413,16 @@
             },
             roles: {
                 query: ROLES_QUERY,
+            },
+            activities: {
+                query: ACTIVITIES_QUERY,
+                fetchPolicy: 'no-cache',
+                variables() {
+                    return {page: this.page, limit: this.activities.per_page, user: this.id}
+                },
+                skip () {
+                    return !this.user;
+                },
             }
         }
     }
