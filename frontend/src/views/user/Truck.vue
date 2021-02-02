@@ -167,6 +167,9 @@
                     </template>
                 </tabs>
             </div>
+            <div class="md-layout-item md-size-100">
+                <orders-table v-if="truck.lastOrders" :orders="truck.lastOrders" />
+            </div>
         </template>
 
         <template v-if="hasPermission(constants.PERMISSION.MANAGE_VEHICLES)">
@@ -193,7 +196,7 @@
 <script>
     import { TRUCK_QUERY, AVAILABLE_DRIVERS_IN_GARAGE_QUERY, AVAILABLE_TRAILERS_IN_GARAGE_QUERY } from '@/graphql/queries/user';
     import { ASSIGN_DRIVER_TO_TRUCK_MUTATION, ASSIGN_TRAILER_TO_TRUCK_MUTATION, DELETE_TRUCK_MUTATION, UNASSIGN_DRIVER_FROM_TRUCK_MUTATION, UNASSIGN_TRAILER_FROM_TRUCK_MUTATION } from '@/graphql/mutations/user';
-    import { Tabs, ProductCard, ChartCard, MutationModal, DeleteModal } from "@/components";
+    import { Tabs, ProductCard, ChartCard, MutationModal, DeleteModal, OrdersTable } from "@/components";
     import constants from "../../constants";
     import { mapGetters } from "vuex";
 
@@ -207,7 +210,8 @@
             ProductCard,
             ChartCard,
             MutationModal,
-            DeleteModal
+            DeleteModal,
+            OrdersTable
         },
         computed: {
             ...mapGetters([

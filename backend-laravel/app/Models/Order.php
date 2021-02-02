@@ -44,6 +44,8 @@ class Order extends Model
 {
     use HasFactory, HasUuid, LogsActivity;
 
+    const LAST_ORDERS_COUNT = 10;
+
     /**
      * The attributes that aren't mass assignable.
      *
@@ -79,19 +81,11 @@ class Order extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function driver1()
+    public function drivers()
     {
-        return $this->belongsTo(Driver::class, 'driver1');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function driver2()
-    {
-        return $this->belongsTo(Driver::class, 'driver2');
+        return $this->belongsToMany(Driver::class, 'driver_order');
     }
 
     /**

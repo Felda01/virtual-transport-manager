@@ -41,6 +41,9 @@ class TrailerType extends GraphQLType
             'km' => [
                 'type' => Type::int(),
             ],
+            'lastOrders' => [
+                'type' => Type::listOf(GraphQL::type('Order'))
+            ]
         ];
     }
 

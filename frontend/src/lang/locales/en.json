@@ -650,5 +650,21 @@
     "created": {
       "trailer": "Buy new trailer"
     }
+  },
+  "order": {
+    "subNav": {
+      "last_orders": "Last orders"
+    },
+    "relations": {
+      "cargo_name": "Cargo name",
+      "market_price": "Price",
+      "drivers": "Drivers",
+      "truck": "Truck",
+      "trailer": "Trailer",
+      "location_from": "Location from",
+      "location_to": "Location to",
+      "routeTrip_status": "Status"
+    },
+    "no_orders": "No orders"
   }
 }

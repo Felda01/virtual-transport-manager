@@ -26,11 +26,8 @@ class OrderType extends GraphQLType
             'market' => [
                 'type' => GraphQL::type('Market')
             ],
-            'driver1' => [
-                'type' => GraphQL::type('Driver')
-            ],
-            'driver2' => [
-                'type' => GraphQL::type('Driver')
+            'drivers' => [
+                'type' => Type::listOf(GraphQL::type('Driver')),
             ],
             'truck' => [
                 'type' => GraphQL::type('Truck')

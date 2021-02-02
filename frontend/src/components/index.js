@@ -9,6 +9,7 @@ import DeleteModal from "./DeleteModal.vue";
 
 // Tables
 import GlobalSalesTable from "./Tables/GlobalSalesTable.vue";
+import OrdersTable from "./OrdersTable";
 
 import PricingCard from "./Cards/PricingCard.vue";
 import SignupCard from "./Cards/SignupCard.vue";
@@ -67,5 +68,6 @@ export {
   AnimatedNumber,
   Collapse,
   AsyncWorldMap,
-  SearchForm
+  SearchForm,
+  OrdersTable
 };

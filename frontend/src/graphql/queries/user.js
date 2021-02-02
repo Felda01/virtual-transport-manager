@@ -613,6 +613,54 @@ export const TRUCK_QUERY = gql`
                     id
                 }
             }
+            lastOrders {
+                id
+                market {
+                    id
+                    price
+                    locationFrom {
+                        id
+                        name
+                        country {
+                            id
+                            short_name
+                        }
+                    }
+                    locationTo {
+                        id
+                        name
+                        country {
+                            id
+                            short_name
+                        }
+                    }
+                    cargo {
+                        id
+                        name
+                        image
+                    }
+                }
+                drivers {
+                    id
+                    first_name
+                    last_name
+                }
+                truck {
+                    id
+                    truckModel {
+                        id
+                        brand
+                        name
+                    }
+                }
+                trailer {
+                    id
+                    trailerModel {
+                        id
+                        name
+                    }
+                }
+            }
         }
     }
 `;
@@ -686,6 +734,54 @@ export const TRAILER_QUERY = gql`
                 }
                 drivers {
                     id
+                }
+            }
+            lastOrders {
+                id
+                market {
+                    id
+                    price
+                    locationFrom {
+                        id
+                        name
+                        country {
+                            id
+                            short_name
+                        }
+                    }
+                    locationTo {
+                        id
+                        name
+                        country {
+                            id
+                            short_name
+                        }
+                    }
+                    cargo {
+                        id
+                        name
+                        image
+                    }
+                }
+                drivers {
+                    id
+                    first_name
+                    last_name
+                }
+                truck {
+                    id
+                    truckModel {
+                        id
+                        brand
+                        name
+                    }
+                }
+                trailer {
+                    id
+                    trailerModel {
+                        id
+                        name
+                    }
                 }
             }
         }
@@ -795,6 +891,54 @@ export const DRIVER_QUERY = gql`
                 }
                 drivers {
                     id
+                }
+            }
+            lastOrders {
+                id
+                market {
+                    id
+                    price
+                    locationFrom {
+                        id
+                        name
+                        country {
+                            id
+                            short_name
+                        }
+                    }
+                    locationTo {
+                        id
+                        name
+                        country {
+                            id
+                            short_name
+                        }
+                    }
+                    cargo {
+                        id
+                        name
+                        image
+                    }
+                }
+                drivers {
+                    id
+                    first_name
+                    last_name
+                }
+                truck {
+                    id
+                    truckModel {
+                        id
+                        brand
+                        name
+                    }
+                }
+                trailer {
+                    id
+                    trailerModel {
+                        id
+                        name
+                    }
                 }
             }
         }

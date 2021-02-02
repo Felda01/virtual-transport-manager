@@ -138,6 +138,9 @@
                     </template>
                 </tabs>
             </div>
+            <div class="md-layout-item md-size-100">
+                <orders-table v-if="driver.lastOrders" :orders="driver.lastOrders" />
+            </div>
         </template>
 
         <template v-if="hasPermission(constants.PERMISSION.MANAGE_DRIVERS) && hasPermission(constants.PERMISSION.MANAGE_VEHICLES)">
@@ -161,7 +164,7 @@
 <script>
     import { DRIVER_QUERY, AVAILABLE_TRUCKS_IN_GARAGE_QUERY } from '@/graphql/queries/user';
     import { UPDATE_DRIVER_MUTATION, DELETE_DRIVER_MUTATION, ASSIGN_DRIVER_TO_TRUCK_MUTATION, UNASSIGN_DRIVER_FROM_TRUCK_MUTATION } from '@/graphql/mutations/user';
-    import { Tabs, ProductCard, MutationModal, DeleteModal } from "@/components";
+    import { Tabs, ProductCard, MutationModal, DeleteModal, OrdersTable } from "@/components";
     import constants from "../../constants";
     import { mapGetters } from "vuex";
 
@@ -174,7 +177,8 @@
             Tabs,
             ProductCard,
             MutationModal,
-            DeleteModal
+            DeleteModal,
+            OrdersTable
         },
         computed: {
             ...mapGetters([

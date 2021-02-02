@@ -130,6 +130,21 @@ class Truck extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orders() {
+        return $this->hasMany(Order::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function lastOrders()
+    {
+        return $this->orders()->limit(Order::LAST_ORDERS_COUNT);
+    }
+
+    /**
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @param $value
      * @return Builder

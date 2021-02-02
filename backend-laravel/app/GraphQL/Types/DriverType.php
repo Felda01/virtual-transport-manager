@@ -68,6 +68,9 @@ class DriverType extends GraphQLType
             'expires_at' => [
                 'type' => Type::int(),
             ],
+            'lastOrders' => [
+                'type' => Type::listOf(GraphQL::type('Order'))
+            ]
         ];
     }
 
