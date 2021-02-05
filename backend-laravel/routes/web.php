@@ -12,3 +12,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/', function () {
+    return redirect(config('services.frontend.url'), 301);
+});
+
+Route::get('/routes', [\App\Http\Controllers\JsonController::class, 'routes']);
+Route::get('/reset-routes', function() {
+    \Illuminate\Support\Facades\Cache::forget('routes');
+});
