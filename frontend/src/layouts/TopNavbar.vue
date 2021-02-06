@@ -28,6 +28,11 @@
                 <animated-number :currency="true" :duration="1200" class="md-list-item-container" :value="money"></animated-number>
               </div>
             </li>
+            <li class="md-list-item" v-if="user && money !== null">
+              <div class="md-list-item-content">
+                <custom-time class="md-list-item-container"></custom-time>
+              </div>
+            </li>
             <li class="md-list-item">
               <a
                 href="#/components/notifications"
@@ -68,7 +73,7 @@
 
 <script>
   import { mapGetters } from 'vuex';
-  import { AnimatedNumber } from "@/components";
+  import { AnimatedNumber, CustomTime } from "@/components";
 
   export default {
     data() {
@@ -83,7 +88,8 @@
       ]),
     },
     components: {
-      AnimatedNumber
+      AnimatedNumber,
+      CustomTime
     },
     methods: {
       toggleSidebar() {

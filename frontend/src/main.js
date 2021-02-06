@@ -9,6 +9,8 @@ Vue.use(VueApollo);
 import VueI18n from 'vue-i18n'
 Vue.use(VueI18n)
 
+Vue.use(require('vue-moment'))
+
 Vue.config.productionTip = false
 
 import axios from 'axios';

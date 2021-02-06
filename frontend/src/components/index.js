@@ -38,6 +38,7 @@ import SidebarPlugin from "./SidebarPlugin";
 import AnimatedNumber from "./AnimatedNumber";
 
 import SearchForm from "./SearchForm";
+import CustomTime from "./CustomTime";
 
 export {
   IconCheckbox,
@@ -69,5 +70,6 @@ export {
   Collapse,
   AsyncWorldMap,
   SearchForm,
-  OrdersTable
+  OrdersTable,
+  CustomTime
 };

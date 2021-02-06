@@ -26,5 +26,9 @@ export default {
         4: 4000,
         5: 7000,
         6: 10000,
+    },
+    TIME: {
+        START: '24-01-2021 00:00:00',
+        ACCELERATION: 30
     }
 }

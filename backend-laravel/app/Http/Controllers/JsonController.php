@@ -18,7 +18,7 @@ class JsonController extends Controller
     public function routes()
     {
         $routes = Cache::rememberForever('routes', function() {
-            return Route::all(['id', 'location1_id', 'location2_id', 'time', 'distance', 'fee']);
+            return Route::all(['id', 'location1_id', 'location2_id', 'distance']);
         });
 
         return response()->json([

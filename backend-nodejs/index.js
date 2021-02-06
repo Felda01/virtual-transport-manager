@@ -2,7 +2,7 @@ const express = require('express');
 const basicAuth = require('express-basic-auth')
 require('dotenv').config();
 const fetch = require('node-fetch');
-const {GraphBuilder, DijkstraStrategy} = require('js-shortest-path');
+const {GraphBuilder, GreedStrategy} = require('js-shortest-path');
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -11,7 +11,9 @@ app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded( {extended: true} ) );
 
 let graph = null;
-let dijkstra = null;
+let greedy = null;
+
+let paths = {};
 
 app.use(basicAuth({
     users: { 'admin': process.env.BASE_AUTH_PASSWORD },
@@ -23,27 +25,22 @@ app.get('/', function (req, res) {
     res.send('Hello GET');
 });
 
-app.post('/trip', function (req, res) {
-    let from = req.query.from;
-    let to = req.query.to;
+app.all('/trip', function (req, res) {
+    let loc_from = req.query.from;
+    let loc_to = req.query.to;
 
-    let result = dijkstra.shortest(from, to);
+    let result;
 
-    res.json({
-        distance: result.cost,
-        path: result.path()
-    });
-});
-
-app.get('/trip', function (req, res) {
-    let from = req.query.from;
-    let to = req.query.to;
-
-    let result = dijkstra.shortest(from, to);
+    if (paths[loc_from + '-' + loc_to]) {
+        result = paths[loc_from + '-' + loc_to];
+    } else {
+        result = threeShortestRoutes(greedy.paths(loc_from, loc_to));
+        paths[loc_from + '-' + loc_to] = result;
+        paths[loc_to + '-' + loc_from] = result.reverse();
+    }
 
     res.json({
-        distance: result.cost,
-        path: result.path()
+        result: result
     });
 });
 
@@ -57,15 +54,35 @@ function fetchRoutes() {
         .then(json => {
             graph = GraphBuilder();
             for (let route of json['routes']) {
-                graph = graph.edge(route['location1_id'], route['location2_id'], route['distance']);
+                graph = graph.edge(route['location1_id'], route['location2_id'], route['distance'])
+                    .edge(route['location2_id'], route['location1_id'], route['distance']);
             }
             graph = graph.build();
 
-            dijkstra = DijkstraStrategy(graph);
+            greedy = GreedStrategy(graph);
         });
 }
 
+function threeShortestRoutes(routes) {
+    let MAX = Number.MAX_SAFE_INTEGER;
+    let first = {cost: MAX};
+    let second = {cost: MAX};
+    let third = {cost: MAX};
+    for (let i = 0; i < routes.length; i++) {
+        if (routes[i].cost < first.cost) {
+            third = second;
+            second = first;
+            first = routes[i];
+        } else if (routes[i].cost < second.cost) {
+            third = second;
+            second = routes[i];
+        } else if (routes[i].cost < third.cost) {
+            third = routes[i];
+        }
+    }
 
+    return [first, second, third];
+}
 
 const server = app.listen(process.env.PORT, function () {
     console.log("Started");
