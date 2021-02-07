@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Customer;
 use Illuminate\Database\Seeder;
 
-class LanguageLinesSeeder extends Seeder
+class CustomersSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,6 +14,6 @@ class LanguageLinesSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Customer::factory()->count(50)->create();
     }
 }

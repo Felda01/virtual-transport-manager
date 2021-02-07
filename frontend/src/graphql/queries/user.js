@@ -945,4 +945,73 @@ export const DRIVER_QUERY = gql`
     }
 `;
 
+export const MARKETS_QUERY = gql`
+    query MarketsQuery($limit: Int!, $page: Int!, $filter: [FilterInput], $sort: String) {
+        markets(limit: $limit, page: $page, filter: $filter, sort: $sort) {
+            data {
+                id
+                price
+                amount
+                expires_at
+                locationFrom {
+                    id
+                    name
+                    lat
+                    lng
+                    country {
+                        id
+                        short_name
+                    }
+                }
+                locationTo {
+                    id
+                    name
+                    lat
+                    lng
+                    country {
+                        id
+                        short_name
+                    }
+                }
+                cargo {
+                    id
+                    name
+                    image
+                    adr
+                    weight
+                    engine_power
+                    chassis
+                }
+            }
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
+            has_more_pages
+        }
+    }
+`;
+
+export const READY_DRIVERS_SELECT_QUERY = gql`
+    query DriversQuery($limit: Int!, $page: Int!, $filter: [FilterInput]) {
+        drivers(limit: $limit, page: $page, filter: $filter) {
+            data {
+                id
+                first_name
+                last_name
+                location {
+                    id
+                    name
+                    country {
+                        id
+                        short_name
+                    }
+                }
+            }
+        }
+    }
+`;
+
 

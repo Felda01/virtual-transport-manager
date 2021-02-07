@@ -49,11 +49,11 @@ class RecruitmentAgencyUtility
                 'truck_id' => null,
                 'location_id' => null,
                 'garage_id' => null,
-                'salary' => mt_rand(1000, 2000) + ($adr * 200),
+                'salary' => mt_rand(1000, 1400) + ($adr * 400),
                 'satisfaction' => 70,
                 'preferred_road_trips' => array_rand(config('constants.road_trips')),
                 'last_in_garage_at' => null,
-                'expires_at' => Carbon::now()->addMinutes($weekInMinutes),
+                'expires_at' => null,
                 'adr' => $adr
             ]);
 

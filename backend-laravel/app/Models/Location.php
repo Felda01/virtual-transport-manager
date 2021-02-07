@@ -86,4 +86,12 @@ class Location extends Model
 
         return $routesLocation1->merge($routesLocation2);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function drivers()
+    {
+        return $this->hasMany(Driver::class);
+    }
 }

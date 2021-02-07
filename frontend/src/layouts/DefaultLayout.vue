@@ -43,6 +43,11 @@
                     <sidebar-item :link="{ name: $t('pages.recruitmentAgencyDrivers'), path: generatePath('recruitmentAgencyDrivers') }"
                     ></sidebar-item>
                 </sidebar-item>
+                <sidebar-item :link="{ name: $t('navigation.orders'), icon: 'work' }">
+                    <sidebar-item
+                            :link="{ name: $t('pages.orderOffers'), path: generatePath('orderOffers') }"
+                    ></sidebar-item>
+                </sidebar-item>
             </template>
         </side-bar>
         <div class="main-panel">

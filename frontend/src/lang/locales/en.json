@@ -28,7 +28,8 @@
     "garage": "Garage",
     "truck": "Truck",
     "trailer": "Trailer",
-    "driver": "Driver"
+    "driver": "Driver",
+    "orderOffers": "Order offers"
   },
   "routes": {
     "login": "login",
@@ -54,7 +55,8 @@
     "trucks": "trucks",
     "trailers": "trailers",
     "recruitmentAgencyDrivers": "recruitment-agency",
-    "drivers": "drivers"
+    "drivers": "drivers",
+    "orderOffers": "order-offers"
   },
   "navigation": {
     "staticMapData": "Map data",
@@ -64,7 +66,8 @@
     "user": {
       "myProfile": "My Profile",
       "MP": "MP"
-    }
+    },
+    "orders": "Orders"
   },
   "search": {
     "title": "Filters",
@@ -666,5 +669,31 @@
       "routeTrip_status": "Status"
     },
     "no_orders": "No orders"
+  },
+  "market": {
+    "property": {
+      "price": "Price",
+      "priceUnit": "€",
+      "expires_at": "Expires at",
+      "amount": "Amount",
+      "amountUnit": "Kg"
+    },
+    "relations": {
+      "location_from": "Location from",
+      "location_to": "Location to"
+    },
+    "searchFields": {
+      "chassis": "Chassis",
+      "engine_power": "Engine power",
+      "adr": "ADR Class",
+      "weight": "Weight",
+      "trailers": "Trailer models",
+      "driver": "Driver filter",
+      "no_drivers_option": "No available drivers",
+      "price_asc": "Price Low to High",
+      "price_desc": "Price High to Low",
+      "km_asc": "Distance Low to High",
+      "km_desc": "Distance High to Low"
+    }
   }
 }

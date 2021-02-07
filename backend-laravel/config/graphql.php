@@ -150,6 +150,7 @@ return [
                 'driver' => \App\GraphQL\Queries\DriverQuery::class,
 
                 'activities' => \App\GraphQL\Queries\ActivitiesQuery::class,
+                'markets' => \App\GraphQL\Queries\MarketsQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,

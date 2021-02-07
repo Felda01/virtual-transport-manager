@@ -2,30 +2,28 @@
 
 namespace App\Jobs;
 
-use App\Models\Driver;
 use App\Models\Market;
+use App\Utilities\GameTimeUtility;
+use App\Utilities\MarketUtility;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class DeleteModel implements ShouldQueue
+class GenerateMarkets implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    public $model;
 
     /**
      * Create a new job instance.
      *
-     * @param $model
+     * @return void
      */
-    public function __construct(Model $model)
+    public function __construct()
     {
-        /** @var Model model */
-        $this->model = $model;
+        //
     }
 
     /**
@@ -36,13 +34,13 @@ class DeleteModel implements ShouldQueue
      */
     public function handle()
     {
-        if ($this->model instanceof Driver && $this->model->company_id !== null) {
-            return;
-        }
-        if ($this->model instanceof Market && $this->model->orders()->count() > 0) {
-            return;
-        }
+        $gameTime = Carbon::parse(GameTimeUtility::gameTime(Carbon::now('Europe/Bratislava')));
 
-        $this->model->delete();
+        if ($gameTime->hour > 7 && $gameTime->hour < 17) {
+            $deleted = Market::onlyTrashed()->count();
+
+            MarketUtility::reUseSimpleMarkets(max($deleted, 2));
+            MarketUtility::newSimpleMarkets(1);
+        }
     }
 }

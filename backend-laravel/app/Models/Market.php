@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Traits\HasUuid;
+use App\Utilities\FilterUtility;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -20,6 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $price
  * @property string $frequency
  * @property int $amount
+ * @property int $km
  * @property int $count_of_repetitions
  * @property \Illuminate\Support\Carbon $start
  * @property \Illuminate\Support\Carbon $end
@@ -64,14 +67,32 @@ class Market extends Model
     use HasFactory, HasUuid, SoftDeletes;
 
     /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [];
+
+    /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
     protected $casts = [
-        'start' => 'datetime',
-        'end' => 'datetime',
         'expires_at' => 'datetime',
+    ];
+
+    /**
+     * The attributes that are searchable.
+     *
+     * @var string[]
+     */
+    public static $searchable = [
+        'adr',
+        'weight',
+        'engine_power',
+        'chassis',
+        'trailers'
     ];
 
     /**
@@ -120,5 +141,108 @@ class Market extends Model
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchAdr($query, $value)
+    {
+        $adrs = explode(',', $value);
+
+        if ($adrs && count($adrs) > 0) {
+            return $query->whereHas('cargo', function (Builder $query) use ($adrs) {
+                $query->whereIn('adr', $adrs);
+            });
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchWeight($query, $value)
+    {
+        $values = FilterUtility::getRangeValues($value);
+
+        if (array_key_exists('min', $values)) {
+            $query = $query->whereHas('cargo', function (Builder $query) use ($values) {
+                $query->where('weight', '>=', $values['min']);
+            });
+        }
+        if (array_key_exists('max', $values)) {
+            $query = $query->whereHas('cargo', function (Builder $query) use ($values) {
+                $query->where('weight', '<=', $values['max']);
+            });
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchEnginePower($query, $value)
+    {
+        $values = FilterUtility::getRangeValues($value);
+
+        if (array_key_exists('min', $values)) {
+            $query = $query->whereHas('cargo', function (Builder $query) use ($values) {
+                $query->where('engine_power', '>=', $values['min']);
+            });
+        }
+        if (array_key_exists('max', $values)) {
+            $query =$query = $query->whereHas('cargo', function (Builder $query) use ($values) {
+                $query->where('engine_power', '<=', $values['max']);
+            });
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchChassis($query, $value)
+    {
+        $chassis = explode(',', $value);
+
+        if ($chassis && count($chassis) > 0) {
+            return $query = $query->whereHas('cargo', function (Builder $query) use ($chassis) {
+                $query->whereIn('chassis', $chassis);
+            });
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchTrailers($query, $value)
+    {
+        $trailers = explode(',', $value);
+
+        if ($trailers && count($trailers) > 0) {
+            return $query = $query->whereHas('cargo', function (Builder $query) use ($trailers) {
+                $query->whereHas('trailerModels', function (Builder $query) use ($trailers) {
+                    $query->whereIn('id', $trailers);
+                });
+
+            });
+        }
+
+        return $query;
     }
 }

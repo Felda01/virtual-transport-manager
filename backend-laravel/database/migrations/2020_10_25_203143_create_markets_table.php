@@ -25,15 +25,14 @@ class CreateMarketsTable extends Migration
             $table->uuid('customer_to');
             $table->foreign('customer_from')->references('id')->on('customers');
             $table->foreign('customer_to')->references('id')->on('customers');
-            $table->uuid('company_id');
+            $table->uuid('company_id')->nullable();
             $table->foreign('company_id')->references('id')->on('companies');
             $table->decimal('price');
             $table->string('frequency');
             $table->integer('amount');
             $table->integer('count_of_repetitions');
-            $table->timestamp('start')->useCurrent();
-            $table->timestamp('end')->useCurrent();
-            $table->timestamp('expires_at')->useCurrent();
+            $table->integer('km');
+            $table->timestamp('expires_at');
             $table->softDeletes();
             $table->timestamps();
         });

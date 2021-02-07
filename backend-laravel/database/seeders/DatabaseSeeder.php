@@ -14,12 +14,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            LanguageSeeder::class,
-            LanguageLinesSeeder::class,
-            ConstantsSeeder::class,
             RolesAndPermissionsSeeder::class,
             UsersSeeder::class,
-            PassportSeeder::class
+            PassportSeeder::class,
+            CustomersSeeder::class
         ]);
     }
 }

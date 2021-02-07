@@ -215,6 +215,20 @@ const userRoutes = [
                     }
                 }
             },
+            {
+                path: enRoute.orderOffers,
+                ...(getAlias('orderOffers')) && { alias: getAlias('orderOffers') },
+                name: 'orderOffers',
+                component: () => import('../views/user/Markets.vue'),
+                meta: {
+                    requiresAuth: true,
+                    userOnly: true,
+                    title: i18n.t('pages.orderOffers'),
+                    path: {
+                        en: enRoute.orderOffers
+                    }
+                }
+            },
         ]
     },
 ];

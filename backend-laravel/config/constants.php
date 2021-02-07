@@ -59,6 +59,9 @@ return [
         \App\Models\RoadTrip::SHORT,
         \App\Models\RoadTrip::MEDIUM,
         \App\Models\RoadTrip::LONG
-    ]
+    ],
+
+    'start_game_time' => '24.1.2021 00:00:00',
+    'time_acceleration' => 30
 
 ];

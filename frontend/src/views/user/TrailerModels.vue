@@ -1,6 +1,6 @@
 <template>
     <div class="md-layout">
-        <template v-if="$apollo.queries.trailerModels.loading">
+        <template v-if="$apollo.queries.trailerModels.loading && firstLoad">
             <content-placeholders class="md-layout-item md-size-100">
                 <content-placeholders-heading />
                 <content-placeholders-text :lines="2" />
@@ -101,6 +101,7 @@
                 ADRs: [],
                 trailerTypes: [],
                 page: 1,
+                firstLoad: true,
                 searchModel: {
                     type: [],
                     adr: [],
@@ -289,6 +290,9 @@
                 query: TRAILER_MODELS_QUERY,
                 variables() {
                     return { page: this.page, limit: this.trailerModels.per_page, filter: this.filters, sort: this.sort }
+                },
+                result({ data, loading, networkStatus }) {
+                    this.firstLoad = false;
                 }
             },
             trailerTypes: {
