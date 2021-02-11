@@ -25,7 +25,7 @@
                                 <md-table-cell :md-label="$t('bankLoanType.property.value')">{{ item.value | currency(' ', 0, { thousandsSeparator: ' ' }) }} {{ $t('bankLoanType.property.valueUnit') }}</md-table-cell>
                                 <md-table-cell :md-label="$t('bankLoanType.property.payment')">{{ item.payment | currency(' ', 0, { thousandsSeparator: ' ' })}} {{ $t('bankLoanType.property.paymentUnit') }}</md-table-cell>
                                 <md-table-cell :md-label="$t('bankLoanType.property.period')">{{ item.period }} {{ $tc('bankLoanType.property.periodUnit', item.period) }}</md-table-cell>
-                                <md-table-cell :md-label="$t('model.actions')" class="text-right">
+                                <md-table-cell :md-label="$t('model.actions')">
                                     <md-button class="md-just-icon md-success md-simple" @click="updateBankLoanTypeModal(item)"><md-icon>edit</md-icon></md-button>
                                     <md-button class="md-just-icon md-danger md-simple" @click="deleteBankLoanTypeModal(item)"><md-icon>close</md-icon></md-button>
                                 </md-table-cell>

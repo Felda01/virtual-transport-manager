@@ -211,21 +211,12 @@ return [
 
                 'unassignDriverFromTruck' => \App\GraphQL\Mutations\UnassignDriverFromTruckMutation::class,
                 'unassignTrailerFromTruck' => \App\GraphQL\Mutations\UnassignTrailerFromTruckMutation::class,
+
+                'createOrder' => \App\GraphQL\Mutations\CreateOrderMutation::class,
             ],
             'middleware' => ['auth:api'],
             'method' => ['get', 'post'],
         ],
-//        'auth' => [
-//            'query' => [
-//                'countries' => \App\GraphQL\Queries\CountriesQuery::class,
-//                // 'example_query' => ExampleQuery::class,
-//            ],
-//            'mutation' => [
-//                // 'example_mutation'  => ExampleMutation::class,
-//            ],
-//            'middleware' => ['auth:api'],
-//            'method' => ['get', 'post'],
-//        ],
     ],
 
     // The types available in the application.

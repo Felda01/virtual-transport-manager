@@ -262,3 +262,27 @@ export const UPDATE_USER_SALARY_MUTATION = gql`
     }
 `;
 
+export const CREATE_ORDER_MUTATION = gql`
+    mutation CreateOrderMutation($market: String!) {
+        createOrder(market: $market) {
+            id
+            market {
+                id
+                price
+                cargo {
+                    id
+                    name
+                }
+                locationFrom {
+                    id
+                    name
+                }
+                locationTo {
+                    id
+                    name
+                }
+            }
+        }
+    }
+`;
+

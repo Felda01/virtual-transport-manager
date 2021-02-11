@@ -275,10 +275,15 @@
                         let finalErrors = {};
 
                         if (error.graphQLErrors && error.graphQLErrors[0]) {
-                            errors = error.graphQLErrors[0].extensions.validation;
+                            if (error.graphQLErrors[0].extensions && error.graphQLErrors[0].extensions.validation) {
+                                errors = error.graphQLErrors[0].extensions.validation;
+                            } else if (error.graphQLErrors[0].message) {
+                                errors = {'General': error.graphQLErrors[0].message};
+                            }
                         } else if (error.errors && error.errors[0]) {
                             errors = error.errors[0].extensions.validation;
                         }
+
 
                         for (let errorKey in errors) {
                             if (errors.hasOwnProperty(errorKey)) {

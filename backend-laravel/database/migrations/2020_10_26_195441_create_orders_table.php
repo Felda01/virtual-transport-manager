@@ -17,11 +17,11 @@ class CreateOrdersTable extends Migration
             $table->uuid('id')->primary();
             $table->uuid('market_id');
             $table->foreign('market_id')->references('id')->on('markets');
-            $table->uuid('truck_id');
+            $table->uuid('truck_id')->nullable();
             $table->foreign('truck_id')->references('id')->on('trucks');
-            $table->uuid('trailer_id');
+            $table->uuid('trailer_id')->nullable();
             $table->foreign('trailer_id')->references('id')->on('trailers');
-            $table->uuid('road_trip_id');
+            $table->uuid('road_trip_id')->nullable();
             $table->foreign('road_trip_id')->references('id')->on('road_trips');
             $table->timestamps();
         });

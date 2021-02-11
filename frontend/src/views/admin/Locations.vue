@@ -26,7 +26,7 @@
                                 <md-table-cell :md-label="$t('location.property.lat')">{{ item.lat }}</md-table-cell>
                                 <md-table-cell :md-label="$t('location.property.lng')">{{ item.lng }}</md-table-cell>
                                 <md-table-cell :md-label="$t('location.property.country')">{{ item.country.name }}</md-table-cell>
-                                <md-table-cell :md-label="$t('model.actions')" class="text-right">
+                                <md-table-cell :md-label="$t('model.actions')">
                                     <md-button class="md-just-icon md-success md-simple" @click="updateLocationModal(item)"><md-icon>edit</md-icon></md-button>
                                     <md-button class="md-just-icon md-danger md-simple" @click="deleteLocationModal(item)"><md-icon>close</md-icon></md-button>
                                 </md-table-cell>

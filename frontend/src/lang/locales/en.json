@@ -90,7 +90,8 @@
       "assign": "Assign",
       "unassign": "Unassign",
       "training": "Training",
-      "fire": "Fire"
+      "fire": "Fire",
+      "acceptOffer": "Accept offer"
     },
     "select": {
       "emptyOption": "No available options"
@@ -158,7 +159,8 @@
           "truck": "Buy new truck",
           "trailer": "Buy new trailer",
           "driver": "Hire new driver",
-          "user": "Register new user"
+          "user": "Register new user",
+          "order": "Are you sure you want to accept this offer? {cargoName} from {locationFromName} to {locationToName} for {price}"
         },
         "update": {
           "bankLoanType": "Update this bank loan type",
@@ -220,7 +222,8 @@
           "truck": "The truck {modelName} was successfully purchased and is being transported to {location}.",
           "trailer": "The trailer {modelName} was successfully purchased and is being transported to {location}.",
           "driver": "The driver {modelName} was successfully hired and is being traveled to {location}.",
-          "user": "The user {modelName} was successfully registered."
+          "user": "The user {modelName} was successfully registered.",
+          "order": "The order {cargoName} from {locationFromName} to {locationToName} for {price} was successfully accepted."
         },
         "updated": {
           "bankLoanType": "The bank loan type {modelName} was successfully updated.",

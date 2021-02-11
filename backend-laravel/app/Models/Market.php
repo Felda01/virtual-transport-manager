@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\HasUuid;
 use App\Utilities\FilterUtility;
+use App\Utilities\StatusUtility;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -92,7 +93,8 @@ class Market extends Model
         'weight',
         'engine_power',
         'chassis',
-        'trailers'
+        'trailers',
+        'driver'
     ];
 
     /**
@@ -243,6 +245,35 @@ class Market extends Model
             });
         }
 
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchDriver($query, $value)
+    {
+        /** @var Driver $driver */
+        $driver = Driver::with('truck.trailer.trailerModel', 'truck.truckModel')
+            ->where('id', $value)
+            ->where('company_id', auth()->guard('api')->user()->company_id)
+            ->whereIn('status', [StatusUtility::READY, StatusUtility::SLEEP])
+            ->first();
+
+        if ($driver) {
+            $allChassis = config('constants.truck_chassis');
+            $chassis = array_slice($allChassis, 0, array_search($driver->truck->truckModel->chassis, $allChassis) + 1);
+            $query = $this->searchChassis($query, implode(',', $chassis));
+            $query = $this->searchEnginePower($query, '0_' . $driver->truck->truckModel->engine_power);
+            $query = $this->searchWeight($query, '0_' . $driver->truck->truckModel->load);
+            $query = $this->searchWeight($query, '0_' . $driver->truck->trailer->trailerModel->load);
+            $query = $this->searchTrailers($query, $driver->truck->trailer->trailerModel->id);
+
+            $query = $this->searchAdr($query, implode(',', range(0, $driver->truck->trailer->trailerModel->adr)));
+            $query = $this->searchAdr($query, implode(',', range(0, $driver->adr)));
+        }
         return $query;
     }
 }

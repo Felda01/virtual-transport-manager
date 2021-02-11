@@ -19,7 +19,7 @@
                     <md-card>
                         <md-card-content class="pb-0">
                             <md-table v-model="markets.data" v-if="markets && markets.data">
-                                <md-table-row slot="md-table-row" slot-scope="{ item, index }" @click.native="clickTableRow(item)" class="cursor-pointer-hover">
+                                <md-table-row slot="md-table-row" slot-scope="{ item, index }" @click.native="createOrderModal(item)" :class="{'cursor-pointer-hover': hasPermission(constants.PERMISSION.MANAGE_JOBS)}">
                                     <md-table-cell md-label="#">{{ index + markets.from }}</md-table-cell>
                                     <md-table-cell md-label="">
                                         <div class="img-container">
@@ -59,6 +59,10 @@
                 </div>
             </template>
         </template>
+        <template v-if="hasPermission(constants.PERMISSION.MANAGE_JOBS)">
+            <!-- Create order modal-->
+            <delete-modal ref="createOrderModal" @ok="createOrder" :modalSchema="modalSchemaCreateOrder" />
+        </template>
     </div>
 </template>
 
@@ -67,6 +71,8 @@
     import { ADRS_QUERY, CHASSIS_QUERY, TRAILER_MODELS_SELECT_QUERY } from "@/graphql/queries/common";
     import { MARKETS_QUERY, READY_DRIVERS_SELECT_QUERY } from "@/graphql/queries/user";
     import constants from "../../constants";
+    import { CREATE_ORDER_MUTATION } from "@/graphql/mutations/user";
+    import { mapGetters } from "vuex";
 
     export default {
         title () {
@@ -78,6 +84,11 @@
             Pagination,
             DeleteModal,
             SearchForm
+        },
+        computed: {
+            ...mapGetters([
+                'hasPermission',
+            ]),
         },
         data() {
             return {
@@ -93,6 +104,17 @@
                 chassisOptions: [],
                 driversOptions: [],
                 trailerModelsOptions: [],
+                constants: constants,
+                modalSchemaCreateOrder: {
+                    message: '',
+                    form: {
+                        mutation: CREATE_ORDER_MUTATION,
+                        hiddenFields: [],
+                        idField: null,
+                    },
+                    okBtnTitle: this.$t('modal.btn.acceptOffer'),
+                    cancelBtnTitle: this.$t('modal.btn.cancel')
+                },
                 searchModel: {
                     chassis: [],
                     adr: [],
@@ -207,7 +229,7 @@
                                             return option.id;
                                         },
                                         optionLabel: (option) => {
-                                            return option.first_name + " " + option.last_name + " - " + option.location.name + "(" + option.location.country.short_name.toUpperCase() + ")";
+                                            return option.first_name + " " + option.last_name + " - " + option.location.name + " (" + option.location.country.short_name.toUpperCase() + ")";
                                         },
                                         emptyOption: this.$t('market.searchFields.no_drivers_option')
                                     }
@@ -246,8 +268,38 @@
             }
         },
         methods: {
-            clickTableRow(item) {
+            createOrderModal(item) {
+                if (this.hasPermission(this.constants.PERMISSION.MANAGE_JOBS)) {
+                    this.modalSchemaCreateOrder.form.hiddenFields = [
+                        {
+                            name: 'market',
+                            value: item.id
+                        }
+                    ];
 
+                    let price = this.$options.filters.currency(item.price, ' ', 2, { thousandsSeparator: ' ' }) + ' €';
+
+                    this.modalSchemaCreateOrder.message = this.$t('model.modal.title.add.order', {cargoName: item.cargo.name, locationFromName: item.locationFrom.name, locationToName: item.locationTo.name, price: price})
+
+                    this.$refs['createOrderModal'].openModal();
+                }
+            },
+            createOrder(response) {
+                let order = response.data.createOrder;
+                let price = this.$options.filters.currency(order.price, ' ', 2, { thousandsSeparator: ' ' }) + ' €';
+                this.$notify({
+                    timeout: 5000,
+                    message: this.$t('model.response.success.created.order', {cargoName: order.market.cargo.name, locationFromName: order.market.locationFrom.name, locationToName: order.market.locationTo.name, price: price}),
+                    icon: "add_alert",
+                    horizontalAlign: 'right',
+                    verticalAlign: 'top',
+                    type: 'success'
+                });
+
+                this.$apollo.queries.markets.refresh();
+            },
+            showMap(item) {
+                console.log('map');
             }
         },
         apollo: {

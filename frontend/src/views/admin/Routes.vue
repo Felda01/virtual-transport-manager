@@ -28,7 +28,7 @@
                                 <md-table-cell :md-label="$t('route.property.time')">{{ item.time }} {{ $t('route.property.timeUnit') }}</md-table-cell>
                                 <md-table-cell :md-label="$t('route.property.fee')">{{ item.fee | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('route.property.feeUnit') }}</md-table-cell>
                                 <md-table-cell :md-label="$t('route.property.type')">{{ item.type }}</md-table-cell>
-                                <md-table-cell :md-label="$t('model.actions')" class="text-right">
+                                <md-table-cell :md-label="$t('model.actions')">
                                     <md-button class="md-just-icon md-success md-simple" @click="updateRouteModal(item)"><md-icon>edit</md-icon></md-button>
                                     <md-button class="md-just-icon md-danger md-simple" @click="deleteRouteModal(item)"><md-icon>close</md-icon></md-button>
                                 </md-table-cell>

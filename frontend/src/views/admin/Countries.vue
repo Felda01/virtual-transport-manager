@@ -24,7 +24,7 @@
                                 <md-table-cell md-label="#">{{ index + countries.from }}</md-table-cell>
                                 <md-table-cell :md-label="$t('country.property.name')">{{ item.name }}</md-table-cell>
                                 <md-table-cell :md-label="$t('country.property.short_name')">{{ item.short_name }}</md-table-cell>
-                                <md-table-cell :md-label="$t('model.actions')" class="text-right">
+                                <md-table-cell :md-label="$t('model.actions')">
                                     <md-button class="md-just-icon md-success md-simple" @click="updateCountryModal(item)"><md-icon>edit</md-icon></md-button>
                                     <md-button class="md-just-icon md-danger md-simple" @click="deleteCountryModal(item)"><md-icon>close</md-icon></md-button>
                                 </md-table-cell>
