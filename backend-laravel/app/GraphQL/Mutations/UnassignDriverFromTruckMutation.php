@@ -109,7 +109,7 @@ class UnassignDriverFromTruckMutation extends Mutation
             }
 
             if (!$driverSaved || !$truckSaved) {
-                throw new \Exception(trans('validation.general_exception'));
+                throw new \GraphQL\Error\Error(trans('validation.general_exception'));
             }
 
             return [

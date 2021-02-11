@@ -109,7 +109,7 @@ class UnassignTrailerFromTruckMutation extends Mutation
             $trailerSaved = $trailer->save();
 
             if (!$trailerSaved || !$truckSaved) {
-                throw new \Exception(trans('validation.general_exception'));
+                throw new \GraphQL\Error\Error(trans('validation.general_exception'));
             }
 
             return [

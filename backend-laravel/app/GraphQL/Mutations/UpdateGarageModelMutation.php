@@ -136,7 +136,7 @@ class UpdateGarageModelMutation extends Mutation
         $fileName = ImageUtility::changeImageProperty($args['image'], $garageModel->image);
 
         if (!$fileName) {
-            throw new \Exception(trans('mutation.image_failed'));
+            throw new \GraphQL\Error\Error(trans('mutation.image_failed'));
         }
 
         $garageModel->name = $args['name'];

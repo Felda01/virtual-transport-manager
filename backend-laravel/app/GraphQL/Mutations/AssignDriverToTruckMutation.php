@@ -106,7 +106,7 @@ class AssignDriverToTruckMutation extends Mutation
             $truckSaved = $truck->save();
 
             if (!$driverSaved || !$truckSaved) {
-                throw new \Exception(trans('validation.general_exception'));
+                throw new \GraphQL\Error\Error(trans('validation.general_exception'));
             }
 
             return [

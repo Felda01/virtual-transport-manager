@@ -109,7 +109,7 @@ class UpdateGarageMutation extends Mutation
             $company->save();
 
             if ($garage->garage_model_id !== $garageModel->id || !$transaction || $company->money !== ($oldMoney - $price)) {
-                throw new \Exception(trans('validation.general_exception'));
+                throw new \GraphQL\Error\Error(trans('validation.general_exception'));
             }
 
             return [

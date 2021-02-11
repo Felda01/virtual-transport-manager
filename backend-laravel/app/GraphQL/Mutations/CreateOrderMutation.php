@@ -8,7 +8,6 @@ use App\Models\Market;
 use App\Models\Order;
 use App\Rules\AvailableMarketRule;
 use Closure;
-use GraphQL\Error\Error;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
 use Illuminate\Support\Facades\Auth;
@@ -84,8 +83,7 @@ class CreateOrderMutation extends Mutation
             $marketSaved = $market->save();
 
             if (!$marketSaved || !$order || $market->amount !== ($amount - $cargo->weight)) {
-                dd(!$marketSaved, !$order, $market->amount !== ($amount - $cargo->weight));
-                throw new Error(trans('validation.general_exception'));
+                throw new \GraphQL\Error\Error(trans('validation.general_exception'));
             }
 
             return [

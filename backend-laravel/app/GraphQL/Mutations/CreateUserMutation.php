@@ -121,7 +121,7 @@ class CreateUserMutation extends Mutation
             );
 
             if (!$userSaved) {
-                throw new \Exception(trans('validation.general_exception'));
+                throw new \GraphQL\Error\Error(trans('validation.general_exception'));
             }
 
             return [
@@ -135,7 +135,7 @@ class CreateUserMutation extends Mutation
         } else {
             try {
                 $result['user']->delete();
-            } catch (\Exception $e) {
+            } catch (\GraphQL\Error\Error $e) {
             } finally {
                 return response()->json([
                     'errors' => [

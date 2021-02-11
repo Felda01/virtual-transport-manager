@@ -153,7 +153,7 @@ class CreateTruckModelMutation extends Mutation
         $fileName = ImageUtility::convertAndSaveBase64Image($args['image']);
 
         if (!$fileName) {
-            throw new \Exception(trans('mutation.image_failed'));
+            throw new \GraphQL\Error\Error(trans('mutation.image_failed'));
         }
 
         $truckModel = TruckModel::create([

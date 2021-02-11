@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Traits\HasUuid;
 use App\Utilities\FilterUtility;
 use App\Utilities\StatusUtility;
-use GraphQL\Type\Schema;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

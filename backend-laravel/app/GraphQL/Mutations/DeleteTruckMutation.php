@@ -97,7 +97,7 @@ class DeleteTruckMutation extends Mutation
             $company->save();
 
             if (!$truck->trashed() || !$transaction || $company->money !== $oldMoney + $price) {
-                throw new \Exception(trans('validation.general_exception'));
+                throw new \GraphQL\Error\Error(trans('validation.general_exception'));
             }
 
             return [

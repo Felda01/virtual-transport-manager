@@ -79,7 +79,7 @@ class DeleteUserMutation extends Mutation
         }
 
         if (!$user->trashed()) {
-            throw new \Exception(trans('validation.general_exception'));
+            throw new \GraphQL\Error\Error(trans('validation.general_exception'));
         }
         return $deletedUser;
     }

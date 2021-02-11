@@ -109,7 +109,7 @@ class UpdateUserMutation extends Mutation
             $fileName = ImageUtility::changeImageProperty($args['image'], $user->image);
 
             if (!$fileName) {
-                throw new \Exception(trans('mutation.image_failed'));
+                throw new \GraphQL\Error\Error(trans('mutation.image_failed'));
             }
             $user->image = $fileName;
         } elseif (!$args['image'] && $user->image) {

@@ -161,7 +161,7 @@ class UpdateCargoMutation extends Mutation
         $fileName = ImageUtility::changeImageProperty($args['image'], $cargo->image);
 
         if (!$fileName) {
-            throw new \Exception(trans('mutation.image_failed'));
+            throw new \GraphQL\Error\Error(trans('mutation.image_failed'));
         }
 
         $nameTranslations = [];

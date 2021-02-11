@@ -102,7 +102,7 @@ class UpdateDriverMutation extends Mutation
             $company->save();
 
             if (!$driverSaved || !$transaction || $company->money !== ($oldMoney - $price)) {
-                throw new \Exception(trans('validation.general_exception'));
+                throw new \GraphQL\Error\Error(trans('validation.general_exception'));
             }
 
             return [

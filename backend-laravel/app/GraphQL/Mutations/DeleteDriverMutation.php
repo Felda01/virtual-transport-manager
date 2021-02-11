@@ -82,10 +82,10 @@ class DeleteDriverMutation extends Mutation
             try {
                 $deleted = $driver->delete();
                 if (!$deleted) {
-                    throw new \Exception(trans('validation.general_exception'));
+                    throw new \GraphQL\Error\Error(trans('validation.general_exception'));
                 }
             } catch (\Exception $e) {
-                throw new \Exception(trans('validation.general_exception'));
+                throw new \GraphQL\Error\Error(trans('validation.general_exception'));
             }
 
             return [
