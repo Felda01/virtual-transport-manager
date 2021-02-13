@@ -151,6 +151,9 @@ return [
 
                 'activities' => \App\GraphQL\Queries\ActivitiesQuery::class,
                 'markets' => \App\GraphQL\Queries\MarketsQuery::class,
+
+                'orders' => \App\GraphQL\Queries\OrdersQuery::class,
+                'order' => \App\GraphQL\Queries\OrderQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,

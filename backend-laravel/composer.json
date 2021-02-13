@@ -20,7 +20,8 @@
         "rebing/graphql-laravel": "^5.1",
         "spatie/laravel-activitylog": "^3.16",
         "spatie/laravel-permission": "^3.17",
-        "spatie/laravel-translatable": "^4.6"
+        "spatie/laravel-translatable": "^4.6",
+        "ext-json": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.8",

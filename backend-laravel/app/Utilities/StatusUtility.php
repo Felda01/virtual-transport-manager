@@ -18,6 +18,7 @@ class StatusUtility
     const SLEEP = 6;
     const TRAVEL = 7;
     const ON_TRAINING = 8;
+    const WAITING_FOR_DRIVERS = 9;
 
 
     /**
@@ -62,8 +63,8 @@ class StatusUtility
     public static function order()
     {
         return [
-            self::ON_ROAD,
-            self::FINISHED
+            self::WAITING_FOR_DRIVERS,
+            self::ON_ROAD
         ];
     }
 

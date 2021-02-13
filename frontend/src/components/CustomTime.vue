@@ -20,12 +20,12 @@
             let diff = moment().tz("Europe/Bratislava").diff(start, 'seconds');
             let gameDiff = diff * constants.TIME.ACCELERATION;
             this.time = start.add(gameDiff, 'seconds');
-            this.currentTime = this.time.format('D.M. HH:mm');
+            this.currentTime = this.time.format('D.M.YYYY HH:mm');
             let interval = parseInt(60 / constants.TIME.ACCELERATION * 1000);
             let self = this;
             this.intervalTimer = setInterval(() => {
                 self.time = self.time.add(1, 'm');
-                self.currentTime = self.time.format('D.M. HH:mm');
+                self.currentTime = self.time.format('D.M.YYYY HH:mm');
             }, interval);
         },
         beforeDestroy() {

@@ -47,6 +47,12 @@
                     <sidebar-item
                             :link="{ name: $t('pages.orderOffers'), path: generatePath('orderOffers') }"
                     ></sidebar-item>
+                    <sidebar-item
+                            :link="{ name: $t('pages.orders'), path: generatePath('orders') }"
+                    ></sidebar-item>
+                    <sidebar-item
+                            :link="{ name: $t('pages.doneOrders'), path: generatePath('doneOrders') }"
+                    ></sidebar-item>
                 </sidebar-item>
             </template>
         </side-bar>

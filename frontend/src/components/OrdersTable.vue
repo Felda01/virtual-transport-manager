@@ -15,7 +15,7 @@
                         </md-table-cell>
                         <md-table-cell :md-label="$t('order.relations.cargo_name')" class="td-name">{{ item.market.cargo.name }}</md-table-cell>
                         <md-table-cell :md-label="$t('order.relations.market_price')">{{ item.market.price }}</md-table-cell>
-                        <md-table-cell :md-label="$t('order.relations.routeTrip_status')">{{ item.roadTrip.status }}</md-table-cell>
+                        <md-table-cell :md-label="$t('order.relations.roadTrip_status')">{{ $t('status.' + item.roadTrip.status) }}</md-table-cell>
                         <md-table-cell v-if="canShowColumn('drivers')" :md-label="$t('order.relations.drivers')">{{ drivers(item.drivers) }}</md-table-cell>
                         <md-table-cell v-if="canShowColumn('truck')" :md-label="$t('order.relations.truck')">{{ item.truck.truckModel.brand }} {{ item.truck.truckModel.name }}</md-table-cell>
                         <md-table-cell v-if="canShowColumn('trailer')" :md-label="$t('order.relations.trailer')">{{ item.trailer.trailerModel.name }}</md-table-cell>
@@ -54,7 +54,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>

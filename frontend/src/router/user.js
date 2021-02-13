@@ -229,6 +229,48 @@ const userRoutes = [
                     }
                 }
             },
+            {
+                path: enRoute.orders,
+                ...(getAlias('orders')) && { alias: getAlias('orders') },
+                name: 'orders',
+                component: () => import('../views/user/Orders.vue'),
+                meta: {
+                    requiresAuth: true,
+                    userOnly: true,
+                    title: i18n.t('pages.orders'),
+                    path: {
+                        en: enRoute.orders
+                    }
+                }
+            },
+            {
+                path: enRoute.doneOrders,
+                ...(getAlias('doneOrders')) && { alias: getAlias('doneOrders') },
+                name: 'doneOrders',
+                component: () => import('../views/user/DoneOrders.vue'),
+                meta: {
+                    requiresAuth: true,
+                    userOnly: true,
+                    title: i18n.t('pages.doneOrders'),
+                    path: {
+                        en: enRoute.doneOrders
+                    }
+                }
+            },
+            {
+                path: `${enRoute.orders}/:id`,
+                ...(getAlias('orders')) && { alias: `${getAlias('orders')}/:id` },
+                name: 'order',
+                component: () => import('../views/user/Order.vue'),
+                meta: {
+                    requiresAuth: true,
+                    userOnly: true,
+                    title: i18n.t('pages.order'),
+                    path: {
+                        en: `${enRoute.orders}/:id`
+                    }
+                }
+            },
         ]
     },
 ];

@@ -306,7 +306,7 @@
             markets: {
                 query: MARKETS_QUERY,
                 variables() {
-                    return { page: this.page, limit: this.markets.per_page, filter: this.filters }
+                    return { page: this.page, limit: this.markets.per_page, filter: this.filters, sort: this.sort}
                 },
                 result({ data, loading, networkStatus }) {
                     this.firstLoad = false;

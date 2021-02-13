@@ -1014,4 +1014,71 @@ export const READY_DRIVERS_SELECT_QUERY = gql`
     }
 `;
 
+export const ORDERS_QUERY = gql`
+    query OrdersQuery($limit: Int!, $page: Int!, $filter: [FilterInput], $sort: String) {
+        orders(limit: $limit, page: $page, filter: $filter, sort: $sort) {
+            data {
+                id
+                market {
+                    id
+                    price
+                    expires_at
+                    locationFrom {
+                        id
+                        name
+                        country {
+                            id
+                            short_name
+                        }
+                    }
+                    locationTo {
+                        id
+                        name
+                        country {
+                            id
+                            short_name
+                        }
+                    }
+                    cargo {
+                        id
+                        name
+                        image 
+                    }
+                }
+                roadTrip {
+                    id
+                    status
+                }
+                drivers {
+                    id
+                    first_name
+                    last_name
+                }
+                truck {
+                    id
+                    truckModel {
+                        id
+                        name
+                        brand
+                    }
+                }
+                trailer {
+                    id
+                    trailerModel {
+                        id
+                        name
+                    }
+                }
+            }
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
+            has_more_pages
+        }
+    }
+`;
+
 

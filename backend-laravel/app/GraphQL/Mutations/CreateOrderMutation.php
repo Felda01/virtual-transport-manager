@@ -6,7 +6,10 @@ namespace App\GraphQL\Mutations;
 
 use App\Models\Market;
 use App\Models\Order;
+use App\Models\RoadTrip;
+use App\Models\User;
 use App\Rules\AvailableMarketRule;
+use App\Utilities\StatusUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -67,9 +70,22 @@ class CreateOrderMutation extends Mutation
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
         $result = DB::transaction(function() use ($args) {
+            /** @var User $user */
+            $user = User::current();
+
+            /** @var RoadTrip $roadTrip */
+            $roadTrip = RoadTrip::create([
+                'km' => 0,
+                'time' => 0,
+                'routes' => json_encode([]),
+                'status' => StatusUtility::WAITING_FOR_DRIVERS
+            ]);
+
             /** @var Order $order */
             $order = Order::create([
-                'market_id' => $args['market']
+                'market_id' => $args['market'],
+                'company_id' => $user->company_id,
+                'road_trip_id' => $roadTrip->id
             ]);
 
             /** @var Market $market */

@@ -53,17 +53,15 @@ class MarketType extends GraphQLType
             'count_of_repetitions' => [
                 'type' => Type::int(),
             ],
-            'start' => [
-                'type' => Type::int(),
-            ],
-            'end' => [
-                'type' => Type::int(),
-            ],
             'expires_at' => [
-                'type' => Type::int(),
-            ],
-            'orders' => [
-                'type' => Type::listOf(GraphQL::type('Order')),
+                'type' => Type::string(),
+                'resolve' => function($root, $args) {
+                    /** @var Market $root  */
+                    if ($root->expires_at) {
+                        return $root->expires_at->format('d.m.Y H:i');
+                    }
+                    return '';
+                }
             ],
         ];
     }

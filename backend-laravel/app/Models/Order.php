@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasUuid;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\Contracts\Activity;
@@ -64,6 +65,15 @@ class Order extends Model
     protected static $logOnlyDirty = true;
 
     /**
+     * The attributes that are searchable.
+     *
+     * @var string[]
+     */
+    public static $searchable = [
+        'status'
+    ];
+
+    /**
      * @param Activity $activity
      * @param string $eventName
      */
@@ -112,4 +122,29 @@ class Order extends Model
         return $this->belongsTo(RoadTrip::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchStatus($query, $value)
+    {
+        $statuses = explode(',', $value);
+
+        if ($statuses && count($statuses) > 0) {
+            return $query = $query->whereHas('roadTrip', function (Builder $query) use ($statuses) {
+                $query->whereIn('status', $statuses);
+            });
+        }
+
+        return $query;
+    }
 }
