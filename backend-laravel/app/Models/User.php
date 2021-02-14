@@ -195,7 +195,12 @@ class User extends Authenticatable
      */
     public static function current()
     {
-        $user = Auth::guard('api')->user();
-        return User::find($user->id);
+        if (Auth::guard('api')->check()) {
+            $user = Auth::guard('api')->user();
+            if ($user) {
+                return User::find($user->id);
+            }
+        }
+        return null;
     }
 }

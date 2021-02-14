@@ -19,6 +19,7 @@ class CreateDriversTable extends Migration
             $table->string('last_name');
             $table->integer('gender');
             $table->integer('status');
+            $table->boolean('sleep')->default(false);
             $table->integer('adr');
             $table->string('image');
             $table->uuid('company_id')->nullable();

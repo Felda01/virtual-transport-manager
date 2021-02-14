@@ -134,7 +134,8 @@
   "login": {
     "logIn": "Log in",
     "submitBtn": "Lets Go",
-    "forgot_password": "Forgot Your Password?"
+    "forgot_password": "Forgot Your Password?",
+    "register": "Create account"
   },
   "register": {
     "submitBtn": "Get Started"
@@ -642,10 +643,10 @@
     "3": "On duty",
     "4": "Finished",
     "5": "Ready to work",
-    "6": "Sleeping",
     "7": "Traveling",
     "8": "On training",
-    "9": "Waiting for drivers"
+    "9": "Waiting for drivers",
+    "sleep": "Sleeping"
   },
   "preferred_road_trips": {
     "0": "Short",

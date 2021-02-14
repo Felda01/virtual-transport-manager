@@ -80,10 +80,10 @@
                                             </div>
                                         </md-table-cell>
                                         <md-table-cell :md-label="$t('driver.property.full_name')" class="td-name">{{ driver(item) }}</md-table-cell>
-                                        <md-table-cell :md-label="$t('driver.property.status')">{{ $t('status.' + item.status) }}</md-table-cell>
+                                        <md-table-cell :md-label="$t('driver.property.status')"><template v-if="item.sleep">{{ $t('status.sleep') }}</template><template v-else>{{ $t('status.' + item.status) }}</template></md-table-cell>
                                         <md-table-cell :md-label="$t('driver.property.location')">{{ item.location.name }} ({{ item.location.country.short_name | uppercase }})</md-table-cell>
                                         <md-table-cell :md-label="$t('driver.property.adr')">{{ $t('ADRsShort.' + item.adr) }}</md-table-cell>
-                                        <md-table-cell md-label="" v-if="hasPermission(constants.PERMISSION.MANAGE_VEHICLES) && hasPermission(constants.PERMISSION.MANAGE_DRIVERS)">
+                                        <md-table-cell md-label="" v-if="item.sleep === 0 && hasPermission(constants.PERMISSION.MANAGE_VEHICLES) && hasPermission(constants.PERMISSION.MANAGE_DRIVERS)">
                                             <md-button class="md-danger md-simple md-full-text" @click.native.stop="unassignDriverFromTruckModal(item)"><md-icon>close</md-icon>{{ $t('detail.btn.unassign')}}</md-button>
                                         </md-table-cell>
                                     </md-table-row>

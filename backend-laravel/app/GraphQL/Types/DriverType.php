@@ -35,6 +35,9 @@ class DriverType extends GraphQLType
             'status' => [
                 'type' => Type::int(),
             ],
+            'sleep' => [
+                'type' => Type::int(),
+            ],
             'image' => [
                 'type' => Type::string(),
             ],

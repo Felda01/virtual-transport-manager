@@ -29,7 +29,7 @@ class TransactionUtility
 
         $transaction = new Transaction();
         $transaction->company_id = $company->id;
-        $transaction->user_id = $user->id;
+        $transaction->user_id = $user ? $user->id : null;
         $transaction->value = $price;
         $transaction->activity = $activity;
         $transaction->productable()->associate($product);

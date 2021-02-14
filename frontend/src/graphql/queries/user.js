@@ -397,6 +397,7 @@ export const DRIVERS_QUERY = gql`
                 adr
                 satisfaction
                 status
+                sleep
                 truck {
                     id
                     truckModel {
@@ -506,6 +507,7 @@ export const GARAGE_QUERY = gql`
                 image         
                 adr
                 status
+                sleep
                 truck {
                     id
                     trailer {
@@ -577,6 +579,7 @@ export const TRUCK_QUERY = gql`
                 image         
                 adr
                 status
+                sleep
                 location {
                     id
                     name
@@ -699,6 +702,7 @@ export const TRAILER_QUERY = gql`
                     image         
                     adr
                     status
+                    sleep
                     location {
                         id
                         name
@@ -837,6 +841,7 @@ export const DRIVER_QUERY = gql`
             last_name
             image
             salary
+            sleep
             preferred_road_trips
             adr
             satisfaction
@@ -1081,4 +1086,61 @@ export const ORDERS_QUERY = gql`
     }
 `;
 
+export const ORDER_QUERY = gql`
+    query OrderQuery($id: String!) {
+        order(id: $id) {
+            id
+            market {
+                id
+                price
+                expires_at
+                locationFrom {
+                    id
+                    name
+                    country {
+                        id
+                        short_name
+                    }
+                }
+                locationTo {
+                    id
+                    name
+                    country {
+                        id
+                        short_name
+                    }
+                }
+                cargo {
+                    id
+                    name
+                    image 
+                }
+            }
+            roadTrip {
+                id
+                status
+            }
+            drivers {
+                id
+                first_name
+                last_name
+            }
+            truck {
+                id
+                truckModel {
+                    id
+                    name
+                    brand
+                }
+            }
+            trailer {
+                id
+                trailerModel {
+                    id
+                    name
+                }
+            }
+        }
+    }
+`;
 

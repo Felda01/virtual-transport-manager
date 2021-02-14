@@ -84,7 +84,8 @@ class AvailableDriversInGarageQuery extends Query
 
         $query = $query->whereHas('garage', function(Builder $query) use ($args) {
             $query->where('id', $args['garage']);
-        })->whereDoesntHave('truck')->where('status', StatusUtility::IDLE);
+        })->whereDoesntHave('truck')->where('status', StatusUtility::IDLE)
+            ->where('sleep', 0);
 
         if ($args['limit'] === -1) {
             $args['limit'] = Driver::count();

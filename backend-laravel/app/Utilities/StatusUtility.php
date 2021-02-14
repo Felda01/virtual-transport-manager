@@ -15,7 +15,6 @@ class StatusUtility
     const ON_DUTY = 3;
     const FINISHED = 4;
     const READY = 5;
-    const SLEEP = 6;
     const TRAVEL = 7;
     const ON_TRAINING = 8;
     const WAITING_FOR_DRIVERS = 9;
@@ -52,7 +51,6 @@ class StatusUtility
             self::IDLE,
             self::READY,
             self::ON_ROAD,
-            self::SLEEP,
             self::ON_TRAINING,
         ];
     }

@@ -20,7 +20,7 @@ class CreateTransactionsTable extends Migration
             $table->decimal('value', 60, 2);
             $table->nullableUuidMorphs('productable');
             $table->string('activity');
-            $table->uuid('user_id');
+            $table->uuid('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });

@@ -38,9 +38,15 @@
                 </md-field>
               </ValidationProvider>
 
-              <router-link :to="{ name: 'forgotPassword' }" class="small ml-auto my-auto">
-                {{ $t('login.forgot_password') }}
-              </router-link>
+              <div class="d-flex justify-space-between">
+                <router-link :to="{ name: 'register' }" class="small">
+                  {{ $t('login.register') }}
+                </router-link>
+                <router-link :to="{ name: 'forgotPassword' }" class="small">
+                  {{ $t('login.forgot_password') }}
+                </router-link>
+              </div>
+
             </template>
             <md-button slot="footer" class="md-simple md-success md-lg" @click="login">
               <md-progress-spinner v-if="loading" style="margin-right: 15px;" :md-diameter="20" :md-stroke="3" md-mode="indeterminate"></md-progress-spinner> {{ $t('login.submitBtn') }}

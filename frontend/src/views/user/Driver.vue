@@ -36,7 +36,7 @@
                                             </div>
                                         </md-table-cell>
                                         <md-table-cell :md-label="$t('driver.property.full_name')" class="td-name">{{ item.first_name }} {{ item.last_name }}</md-table-cell>
-                                        <md-table-cell :md-label="$t('driver.property.status')">{{ $t('status.' + item.status) }}</md-table-cell>
+                                        <md-table-cell :md-label="$t('driver.property.status')"><template v-if="item.sleep">{{ $t('status.sleep') }}</template><template v-else>{{ $t('status.' + item.status) }}</template></md-table-cell>
                                         <md-table-cell :md-label="$t('driver.relations.truck')"><template v-if="item.truck">{{ item.truck.truckModel.brand }} {{ item.truck.truckModel.name }}</template><template v-else>{{ $t('driver.relations.no_trailer') }}</template></md-table-cell>
                                         <md-table-cell :md-label="$t('driver.relations.trailer')"><template v-if="item.truck && item.truck.trailer">{{ item.truck.trailer.trailerModel.name }}</template><template v-else>{{ $t('driver.relations.no_trailer') }}</template></md-table-cell>
                                         <md-table-cell :md-label="$t('driver.property.garage')">{{ item.garage.garageModel.name }} - {{ item.garage.location.name }} ({{ item.garage.location.country.short_name | uppercase }})</md-table-cell>
@@ -92,7 +92,7 @@
                                         <md-table-cell :md-label="$t('truckModel.model')" class="td-name">{{ item.truckModel.brand }} {{ item.truckModel.name }}</md-table-cell>
                                         <md-table-cell :md-label="$t('truck.property.status')">{{ $t('status.' + item.status) }}</md-table-cell>
                                         <md-table-cell :md-label="$t('truck.relations.trailer')"><template v-if="item.trailer">{{ item.trailer.trailerModel.name }}</template><template v-else>{{ $t('truck.relations.no_trailer') }}</template></md-table-cell>
-                                        <md-table-cell md-label="" v-if="hasPermission(constants.PERMISSION.MANAGE_DRIVERS) && hasPermission(constants.PERMISSION.MANAGE_VEHICLES)">
+                                        <md-table-cell md-label="" v-if="driver.sleep === 0 && hasPermission(constants.PERMISSION.MANAGE_DRIVERS) && hasPermission(constants.PERMISSION.MANAGE_VEHICLES)">
                                             <md-button class="md-danger md-simple md-full-text" @click.native.stop="unassignTruckFromDriverModal(item)"><md-icon>close</md-icon>{{ $t('detail.btn.unassign')}}</md-button>
                                         </md-table-cell>
                                     </md-table-row>
@@ -100,7 +100,7 @@
                                         {{ $t('driver.relations.no_truck') }}
                                     </md-table-empty-state>
                                 </md-table>
-                                <template v-if="hasPermission(constants.PERMISSION.MANAGE_DRIVERS) && hasPermission(constants.PERMISSION.MANAGE_VEHICLES)">
+                                <template v-if="driver.sleep === 0 && hasPermission(constants.PERMISSION.MANAGE_DRIVERS) && hasPermission(constants.PERMISSION.MANAGE_VEHICLES)">
                                     <div class="text-center mt-3" v-if="!driver.truck">
                                         <template v-if="this.availableTrucksInGarage && this.availableTrucksInGarage.data && this.availableTrucksInGarage.data.length > 0">
                                             <md-button class="md-success md-simple" @click="assignTruckToDriverModal"><md-icon>add</md-icon>{{ $t('detail.btn.assign') }}</md-button>
@@ -194,10 +194,10 @@
                 return this.driver && this.driver.garage ? [this.driver.garage] : [];
             },
             canDeleteDriver() {
-                return this.driver ? this.driver.status === constants.STATUS.IDLE && this.driver.location.id === this.driver.garage.location.id && this.driver.truck === null : false;
+                return this.driver ? this.driver.sleep === 0 && this.driver.status === constants.STATUS.IDLE && this.driver.location.id === this.driver.garage.location.id && this.driver.truck === null : false;
             },
             canUpdateDriver() {
-                return this.driver ? [constants.STATUS.IDLE, constants.STATUS.READY].includes(this.driver.status) && this.driver.location.id === this.driver.garage.location.id : false;
+                return this.driver ? this.driver.sleep === 0 && [constants.STATUS.IDLE, constants.STATUS.READY].includes(this.driver.status) && this.driver.location.id === this.driver.garage.location.id : false;
             }
         },
         data() {
