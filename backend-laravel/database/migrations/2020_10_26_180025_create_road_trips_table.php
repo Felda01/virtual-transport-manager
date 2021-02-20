@@ -18,7 +18,7 @@ class CreateRoadTripsTable extends Migration
             $table->integer('km');
             $table->integer('time');
             $table->json('routes');
-            $table->string('status');
+            $table->integer('status');
             $table->timestamps();
         });
     }

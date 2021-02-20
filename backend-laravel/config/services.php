@@ -38,6 +38,12 @@ return [
     'frontend' => [
         'url' => env('FRONTEND_URL'),
         'cookie_domain' => env('FRONTEND_COOKIE_DOMAIN')
-    ]
+    ],
+
+    'nodejs' => [
+        'url' => env('NODEJS_URL'),
+        'user' => env('NODEJS_USER'),
+        'password' => env('NODEJS_PASSWORD')
+    ],
 
 ];

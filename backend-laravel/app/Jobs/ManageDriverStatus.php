@@ -19,15 +19,18 @@ class ManageDriverStatus implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $goSleep;
+    public $single;
 
     /**
      * Create a new job instance.
      *
      * @param bool $goSleep
+     * @param bool $single
      */
-    public function __construct($goSleep = true)
+    public function __construct($goSleep = true, $single = false)
     {
         $this->goSleep = $goSleep;
+        $this->single = $single;
     }
 
     /**
@@ -49,7 +52,7 @@ class ManageDriverStatus implements ShouldQueue
             $delayMinutes = 10 * 60;
         }
 
-        if ($updated) {
+        if ($updated && !$this->single) {
             QueueJobUtility::dispatch(new ManageDriverStatus(!$this->goSleep), Carbon::parse(GameTimeUtility::gameTimeToRealTime($delayMinutes), 'Europe/Bratislava'));
         }
     }

@@ -17,19 +17,18 @@ Route::get('/', function () {
     return redirect(config('services.frontend.url'), 301);
 });
 
-Route::get('/routes', [\App\Http\Controllers\JsonController::class, 'routes']);
-Route::get('/reset-routes', function() {
-    \Illuminate\Support\Facades\Cache::forget('routes');
+Route::get('/cm91dGVz', [\App\Http\Controllers\JsonController::class, 'routes']);
+
+Route::middleware(['auth.basic'])->group(function() {
+    Route::view('/YWRtaW4', 'admin')->name('admin');
+    Route::post('/YWRtaW4/cGF5RmVlcw', [\App\Http\Controllers\AdminController::class, 'payFees'])->name('admin.payFees');
+    Route::post('/YWRtaW4/Z2VuZXJhdGVNYXJrZXRz', [\App\Http\Controllers\AdminController::class, 'generateMarkets'])->name('admin.generateMarkets');
+    Route::post('/YWRtaW4/dXBkYXRlUGVyc29uYWxBZ2VuY3k', [\App\Http\Controllers\AdminController::class, 'updatePersonalAgency'])->name('admin.updatePersonalAgency');
+    Route::post('/YWRtaW4/bWFuYWdlRHJpdmVyU3RhdHVz', [\App\Http\Controllers\AdminController::class, 'manageDriverStatus'])->name('admin.manageDriverStatus');
+    Route::post('/YWRtaW4/cmVzZXRSb3V0ZXM', [\App\Http\Controllers\AdminController::class, 'resetRoutes'])->name('admin.resetRoutes');
+    Route::post('/YWRtaW4/YmFua0xvYW4', [\App\Http\Controllers\AdminController::class, 'bankLoan'])->name('admin.bankLoan');
 });
 
-Route::view('/YWRtaW4', 'admin')->middleware('auth.basic');
 
-Route::get('/sleep', function() {
-    dispatch(new \App\Jobs\ManageDriverStatus(false));
-});
-
-Route::get('/payment', function() {
-    dispatch(new \App\Jobs\PayFees());
-});
 
 

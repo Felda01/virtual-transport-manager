@@ -20,6 +20,7 @@ class CreateBankLoansTable extends Migration
             $table->uuid('bank_loan_type_id');
             $table->foreign('bank_loan_type_id')->references('id')->on('bank_loan_types');
             $table->boolean('done')->default(false);
+            $table->integer('paid')->default(0);
             $table->timestamps();
         });
     }

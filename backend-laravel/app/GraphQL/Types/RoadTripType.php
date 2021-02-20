@@ -33,7 +33,7 @@ class RoadTripType extends GraphQLType
                 'type' => Type::string(),
             ],
             'status' => [
-                'type' => Type::string(),
+                'type' => Type::int(),
             ],
             'order' => [
                 'type' => GraphQL::type('Order'),

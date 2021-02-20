@@ -3,7 +3,10 @@
 namespace App\Jobs;
 
 use App\Models\Driver;
+use App\Utilities\GameTimeUtility;
+use App\Utilities\QueueJobUtility;
 use App\Utilities\RecruitmentAgencyUtility;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -14,14 +17,16 @@ class UpdatePersonalAgency implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $single;
+
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param bool $single
      */
-    public function __construct()
+    public function __construct($single = false)
     {
-        //
+        $this->single = $single;
     }
 
     /**
@@ -33,8 +38,11 @@ class UpdatePersonalAgency implements ShouldQueue
     {
         $countDrivers = Driver::where('company_id', null)->count();
 
-        if ($countDrivers < 5) {
-            RecruitmentAgencyUtility::newDriver(2);
+        if ($countDrivers < 10) {
+            RecruitmentAgencyUtility::newDriver(4);
+        }
+        if (!$this->single) {
+            QueueJobUtility::dispatch(new UpdatePersonalAgency, Carbon::parse(GameTimeUtility::gameTimeToRealTime(24 * 60), 'Europe/Bratislava'));
         }
     }
 }

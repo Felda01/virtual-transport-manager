@@ -107,12 +107,14 @@ class CreateRouteMutation extends Mutation
             $args['distance'] = Route::getDistanceBetween($location1, $location2);
         }
 
+        $locations = Route::getSortedLocations($args['location1'], $args['location2']);
+
         $route = Route::create([
-            'location1_id' => $args['location1'],
-            'location2_id' => $args['location2'],
+            'location1_id' => $locations[0],
+            'location2_id' => $locations[1],
             'distance' => $args['distance'],
             'time' => $args['time'] ?? $args['distance'] / 75 * 60,
-            'fee' => $args['fee']
+            'fee' => $args['fee'] * $args['distance']
         ]);
         $route->save();
 

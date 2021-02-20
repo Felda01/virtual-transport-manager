@@ -18,20 +18,21 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 class PayFees implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $single;
+
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param bool $single
      */
-    public function __construct()
+    public function __construct($single = false)
     {
-        //
+        $this->single = $single;
     }
 
     /**
@@ -105,6 +106,8 @@ class PayFees implements ShouldQueue
         $nextMonth = $now->copy()->addMonths();
         $diffMinutes = $nextMonth->diffInRealMinutes($now);
 
-        QueueJobUtility::dispatch(new PayFees(), Carbon::parse(GameTimeUtility::gameTimeToRealTime($diffMinutes), 'Europe/Bratislava'));
+        if (!$this->single) {
+            QueueJobUtility::dispatch(new PayFees(), Carbon::parse(GameTimeUtility::gameTimeToRealTime($diffMinutes), 'Europe/Bratislava'));
+        }
     }
 }

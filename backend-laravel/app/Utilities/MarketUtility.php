@@ -11,6 +11,7 @@ use App\Models\Market;
 use App\Models\Route;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class MarketUtility
@@ -78,18 +79,21 @@ class MarketUtility
     {
         activity()->disableLogging();
 
-        $deletedMarkets = Market::onlyTrashed()->limit($count)->get();
-        $$deletedMarkets = $deletedMarkets->toArray();
-        $randomLocations = Location::where('is_city', true)->whereHas('drivers')->inRandomOrder()->limit($count * 2)->get();
+        $deletedMarkets = Market::onlyTrashed()->inRandomOrder()->limit($count)->get(['id']);
+        $deletedMarkets = $deletedMarkets->toArray();
+        $randomLocations = Location::where('is_city', true)->whereHas('drivers')->inRandomOrder()->limit($count * 2)->get(['id']);
 
-        if (count($randomLocations) < $count * 2) {
-            $randomLocations->merge(Location::where('is_city', true)->doesntHave('drivers')->inRandomOrder()->limit($count * 2 - count($randomLocations))->get());
-            $randomLocations = $randomLocations->toArray();
+        if ($randomLocations->count() < $count * 2) {
+            $randomLocationsWithoutDrivers = Location::where('is_city', true)->doesntHave('drivers')->inRandomOrder()->limit($count * 2 - $randomLocations->count())->get(['id']);
+            $randomLocations = $randomLocations->concat($randomLocationsWithoutDrivers);
         }
+        $randomLocations = $randomLocations->toArray();
 
         for ($i = 0; $i < count($deletedMarkets); $i++){
             /** @var Market $deletedMarket */
-            $deletedMarket = Market::find($deletedMarkets[$i]);
+            $deletedMarket = Market::onlyTrashed()->find($deletedMarkets[$i]['id']);
+
+            Log::warning('Deleted: ' . json_encode($deletedMarket));
 
             $weeks = random_int(3, 8);
 

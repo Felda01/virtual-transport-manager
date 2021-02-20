@@ -25,9 +25,30 @@ app.get('/', function (req, res) {
     res.send('Hello GET');
 });
 
-app.all('/trip', function (req, res) {
+app.get('/trip', function (req, res) {
+    console.log("Got a GET request");
     let loc_from = req.query.from;
     let loc_to = req.query.to;
+
+    let result;
+
+    if (paths[loc_from + '-' + loc_to]) {
+        result = paths[loc_from + '-' + loc_to];
+    } else {
+        result = threeShortestRoutes(greedy.paths(loc_from, loc_to));
+        paths[loc_from + '-' + loc_to] = result;
+        paths[loc_to + '-' + loc_from] = result;
+    }
+
+    res.json({
+        result: result
+    });
+});
+
+app.post('/trip', function (req, res) {
+    console.log("Got a POST request");
+    let loc_from = req.body.from;
+    let loc_to = req.body.to;
 
     let result;
 

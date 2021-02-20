@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Models\Market;
 use App\Utilities\GameTimeUtility;
 use App\Utilities\MarketUtility;
+use App\Utilities\QueueJobUtility;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -16,14 +17,16 @@ class GenerateMarkets implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $single;
+
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param bool $single
      */
-    public function __construct()
+    public function __construct($single = false)
     {
-        //
+        $this->single = $single;
     }
 
     /**
@@ -34,13 +37,19 @@ class GenerateMarkets implements ShouldQueue
      */
     public function handle()
     {
+        $deleted = Market::onlyTrashed()->count();
+
+        MarketUtility::reUseSimpleMarkets(min($deleted, 2));
+        MarketUtility::newSimpleMarkets(3);
+
         $gameTime = Carbon::parse(GameTimeUtility::gameTime(Carbon::now('Europe/Bratislava')));
 
-        if ($gameTime->hour > 7 && $gameTime->hour < 17) {
-            $deleted = Market::onlyTrashed()->count();
-
-            MarketUtility::reUseSimpleMarkets(max($deleted, 2));
-            MarketUtility::newSimpleMarkets(1);
+        if (!$this->single) {
+            if ($gameTime->hour > 7 && $gameTime->hour < 16) {
+                QueueJobUtility::dispatch(new GenerateMarkets, Carbon::parse(GameTimeUtility::gameTimeToRealTime(60), 'Europe/Bratislava'));
+            } else {
+                QueueJobUtility::dispatch(new GenerateMarkets, Carbon::parse(GameTimeUtility::gameTimeToRealTime(15 * 60), 'Europe/Bratislava'));
+            }
         }
     }
 }

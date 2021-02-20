@@ -84,4 +84,18 @@ class Route extends Model
 
         return ceil($d);
     }
+
+    /**
+     * @param $location1 string
+     * @param $location2 string
+     * @return string[]
+     */
+    public static function getSortedLocations($location1, $location2)
+    {
+        if ($location1 < $location2) {
+            return [$location1, $location2];
+        } else {
+            return [$location2, $location1];
+        }
+    }
 }

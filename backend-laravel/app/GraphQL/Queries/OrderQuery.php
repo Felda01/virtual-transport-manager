@@ -48,7 +48,7 @@ class OrderQuery extends Query
             'id' => [
                 'required',
                 'string',
-                'exists:orders,id,deleted_at,NULL'
+                'exists:orders,id'
             ],
         ];
     }
