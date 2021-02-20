@@ -18,6 +18,7 @@ class StatusUtility
     const TRAVEL = 7;
     const ON_TRAINING = 8;
     const WAITING_FOR_DRIVERS = 9;
+    const EXPIRED = 10;
 
 
     /**
@@ -62,7 +63,8 @@ class StatusUtility
     {
         return [
             self::WAITING_FOR_DRIVERS,
-            self::ON_ROAD
+            self::ON_ROAD,
+            self::EXPIRED,
         ];
     }
 
@@ -71,12 +73,6 @@ class StatusUtility
      */
     public static function all()
     {
-        return [
-            self::DELIVERY_FROM_SHOP,
-            self::IDLE,
-            self::ON_DUTY,
-            self::ON_ROAD,
-            self::FINISHED,
-        ];
+        return [];
     }
 }

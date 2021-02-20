@@ -212,7 +212,6 @@
     extend('password', {
         params: ['target', 'other'],
         validate(value, { target }) {
-            console.log(value, target);
             return value === target;
         },
         message: (_, values) =>  {

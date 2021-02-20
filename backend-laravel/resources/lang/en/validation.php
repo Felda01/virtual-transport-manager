@@ -161,6 +161,7 @@ return [
     'can_delete_truck' => "The selected truck has still assigned a driver or trailer.",
     'can_delete_user' => "You cannot fire yourself.",
     'available_market' => "This offer is not available anymore.",
+    'available_order' => "This order is not available for assignment anymore.",
 
     /*
     |--------------------------------------------------------------------------

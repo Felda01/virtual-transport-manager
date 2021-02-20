@@ -8,7 +8,8 @@ export default {
         READY: 5,
         SLEEP: 6,
         TRAVEL: 7,
-        ON_TRAINING: 8
+        ON_TRAINING: 8,
+        WAITING_FOR_DRIVERS: 9
     },
     PERMISSION: {
         MANAGE_STATIC: 'manage static',

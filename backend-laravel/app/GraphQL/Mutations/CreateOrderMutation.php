@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
+use App\Jobs\DeleteOrder;
 use App\Models\Market;
 use App\Models\Order;
 use App\Models\RoadTrip;
 use App\Models\User;
 use App\Rules\AvailableMarketRule;
+use App\Utilities\QueueJobUtility;
 use App\Utilities\StatusUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -103,9 +105,12 @@ class CreateOrderMutation extends Mutation
             }
 
             return [
-                'order' => $order
+                'order' => $order,
+                'market' => $market
             ];
         });
+
+        QueueJobUtility::dispatch(new DeleteOrder($result['order']), $result['market']->expires_at);
 
         return $result['order'];
     }

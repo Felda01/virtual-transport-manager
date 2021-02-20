@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasUuid;
+use App\Utilities\StatusUtility;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -220,6 +221,39 @@ class Truck extends Model
                 $query->whereIn('id', $garages);
             });
         }
+
+        return $query;
+    }
+
+    /**
+     * @param Builder $query
+     * @param $cargo
+     * @return Builder
+     */
+    public static function trucksForOrder(Builder $query, $cargo)
+    {
+        $allChassis = config('constants.truck_chassis');
+        $chassis = array_slice($allChassis, array_search($cargo->chassis, $allChassis));
+
+        $query = $query->whereHas('trailer', function (Builder $query) use ($cargo) {
+            $query->whereHas('trailerModel', function (Builder $nestedQuery) use ($cargo) {
+                $nestedQuery->whereIn('id', $cargo->trailerModels->pluck('id')->all())
+                    ->where('load', '>=', $cargo->weight)
+                    ->where('adr', '>=', $cargo->adr);
+            });
+        })->whereHas('drivers', function (Builder $query) use ($cargo) {
+            $query->where('sleep', 1)
+                ->orWhere('status', '!=',StatusUtility::READY)
+                ->orWhere('adr', '<', $cargo->adr);
+        }, '=', 0)->whereHas('drivers', function (Builder $query) use ($cargo) {
+            $query->where('sleep', 0)
+                ->where('status', StatusUtility::READY)
+                ->where('adr', '>=', $cargo->adr);
+        })->whereHas('truckModel', function (Builder $query) use ($cargo, $chassis) {
+            $query->where('engine_power', '>=', $cargo->engine_power)
+                ->whereIn('chassis', $chassis)
+                ->where('load', '>=', $cargo->weight);
+        });
 
         return $query;
     }

@@ -154,6 +154,9 @@ return [
 
                 'orders' => \App\GraphQL\Queries\OrdersQuery::class,
                 'order' => \App\GraphQL\Queries\OrderQuery::class,
+
+                'trucksForOrder' => \App\GraphQL\Queries\TrucksForOrderQuery::class,
+                'pathsForOrder' => \App\GraphQL\Queries\PathsForOrderQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,
@@ -216,6 +219,7 @@ return [
                 'unassignTrailerFromTruck' => \App\GraphQL\Mutations\UnassignTrailerFromTruckMutation::class,
 
                 'createOrder' => \App\GraphQL\Mutations\CreateOrderMutation::class,
+                'updateOrder' => \App\GraphQL\Mutations\UpdateOrderMutation::class,
             ],
             'middleware' => ['auth:api'],
             'method' => ['get', 'post'],

@@ -666,7 +666,11 @@
   },
   "order": {
     "subNav": {
-      "last_orders": "Last orders"
+      "last_orders": "Last orders",
+      "info": "Order info",
+      "drivers": "Drivers",
+      "truck": "Truck",
+      "trailer": "Trailer"
     },
     "relations": {
       "cargo_name": "Cargo name",
@@ -681,11 +685,40 @@
       "location_from": "Location from",
       "location_to": "Location to",
       "roadTrip_status": "Status",
-      "no_roadTrip": "Waiting for assign"
+      "no_roadTrip": "Waiting for assign",
+      "customer_from": "Customer from",
+      "customer_to": "Customer to"
     },
     "no_orders": "No orders",
     "searchFields": {
       "status": "Status"
+    },
+    "form": {
+      "title": "Assign an order",
+      "subtitle": "Assign an order to drivers and select a path",
+      "drivers": "Select drivers",
+      "path": "Select a path",
+      "summary": "Summary",
+      "firstStep": {
+        "truck": {
+          "label": "Drivers"
+        }
+      },
+      "secondStep": {
+        "path": {
+          "label": "Path"
+        },
+        "distanceUnit": "km",
+        "timeHelp": "* - in ideal traffic",
+        "feesHelp": "** - price for the toll roads",
+        "feeUnit": "€"
+      },
+      "thirdStep": {
+
+      },
+      "prevButtonText": "Previous",
+      "nextButtonText": "Next",
+      "finishButtonText": "Finish"
     }
   },
   "market": {
@@ -706,7 +739,7 @@
       "adr": "ADR Class",
       "weight": "Weight",
       "trailers": "Trailer models",
-      "driver": "Driver filter",
+      "drivers": "Drivers filter",
       "no_drivers_option": "No available drivers",
       "price_asc": "Price Low to High",
       "price_desc": "Price High to Low",

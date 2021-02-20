@@ -69,7 +69,7 @@
 <script>
     import { MutationModal, Pagination, DeleteModal, SearchForm } from "@/components";
     import { ADRS_QUERY, CHASSIS_QUERY, TRAILER_MODELS_SELECT_QUERY } from "@/graphql/queries/common";
-    import { MARKETS_QUERY, READY_DRIVERS_SELECT_QUERY } from "@/graphql/queries/user";
+    import { MARKETS_QUERY, TRUCKS_FOR_ORDER_QUERY } from "@/graphql/queries/user";
     import constants from "../../constants";
     import { CREATE_ORDER_MUTATION } from "@/graphql/mutations/user";
     import { mapGetters } from "vuex";
@@ -102,9 +102,12 @@
                 page: 1,
                 firstLoad: true,
                 chassisOptions: [],
-                driversOptions: [],
+                trucksOptions: [],
                 trailerModelsOptions: [],
                 constants: constants,
+                trucksForOrder: {
+                    data: []
+                },
                 modalSchemaCreateOrder: {
                     message: '',
                     form: {
@@ -220,8 +223,8 @@
                                     class: ['md-medium-size-50', 'md-xsmall-size-100' ,'md-size-33'],
                                     type: 'select',
                                     input: 'select',
-                                    name: 'driver',
-                                    label: this.$t('market.searchFields.driver'),
+                                    name: 'truck',
+                                    label: this.$t('market.searchFields.drivers'),
                                     value: '',
                                     config: {
                                         options: [],
@@ -229,7 +232,19 @@
                                             return option.id;
                                         },
                                         optionLabel: (option) => {
-                                            return option.first_name + " " + option.last_name + " - " + option.location.name + " (" + option.location.country.short_name.toUpperCase() + ")";
+                                            let result = [];
+                                            let location = {};
+
+                                            if (!option.drivers || option.drivers.length === 0) {
+                                                return '';
+                                            }
+
+                                            for (let driver of option.drivers) {
+                                                result.push(driver.first_name.charAt(0) + '. ' + driver.last_name)
+                                                location = driver.location;
+                                            }
+
+                                            return result.join(', ') + " - " + location.name + " (" + location.country.short_name.toUpperCase() + ")";
                                         },
                                         emptyOption: this.$t('market.searchFields.no_drivers_option')
                                     }
@@ -342,15 +357,15 @@
                     });
                 },
             },
-            drivers: {
-                query: READY_DRIVERS_SELECT_QUERY,
+            trucksForOrder: {
+                query: TRUCKS_FOR_ORDER_QUERY,
                 variables() {
-                    return { page: 1, limit: -1, filter: [{ column: 'status', value: constants.STATUS.READY + "," + constants.STATUS.SLEEP}] }
+                    return {page: 1, limit: -1}
                 },
                 result({ data, loading, networkStatus }) {
-                    this.driversOptions = data.drivers.data;
+                    this.trucksOptions = data.trucksForOrder.data;
                     this.$nextTick( () => {
-                        this.$set(this.searchSchema.groups[0].fields[5].config, 'options', this.driversOptions);
+                        this.$set(this.searchSchema.groups[0].fields[5].config, 'options', this.trucksOptions);
                     });
                 },
             }

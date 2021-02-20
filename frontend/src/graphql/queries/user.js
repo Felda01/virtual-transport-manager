@@ -999,26 +999,6 @@ export const MARKETS_QUERY = gql`
     }
 `;
 
-export const READY_DRIVERS_SELECT_QUERY = gql`
-    query DriversQuery($limit: Int!, $page: Int!, $filter: [FilterInput]) {
-        drivers(limit: $limit, page: $page, filter: $filter) {
-            data {
-                id
-                first_name
-                last_name
-                location {
-                    id
-                    name
-                    country {
-                        id
-                        short_name
-                    }
-                }
-            }
-        }
-    }
-`;
-
 export const ORDERS_QUERY = gql`
     query OrdersQuery($limit: Int!, $page: Int!, $filter: [FilterInput], $sort: String) {
         orders(limit: $limit, page: $page, filter: $filter, sort: $sort) {
@@ -1110,6 +1090,14 @@ export const ORDER_QUERY = gql`
                         short_name
                     }
                 }
+                customerFrom {
+                    id
+                    name
+                }
+                customerTo {
+                    id
+                    name
+                }
                 cargo {
                     id
                     name
@@ -1141,6 +1129,35 @@ export const ORDER_QUERY = gql`
                 }
             }
         }
+    }
+`;
+
+export const TRUCKS_FOR_ORDER_QUERY = gql`
+    query TrucksForOrderQuery($order: String, $limit: Int!, $page: Int!) {
+        trucksForOrder(order: $order, limit: $limit, page: $page) {
+            data {
+                id
+                drivers {
+                    id
+                    first_name
+                    last_name
+                    location {
+                        id
+                        name
+                        country {
+                            id
+                            short_name
+                        }
+                    }
+                }
+            }
+        }
+    }
+`;
+
+export const PATHS_FOR_ORDER = gql`
+    query PathsForOrderQuery($order: String!) {
+        pathsForOrder(order: $order)
     }
 `;
 

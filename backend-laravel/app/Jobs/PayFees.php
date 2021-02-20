@@ -12,6 +12,7 @@ use App\Utilities\GameTimeUtility;
 use App\Utilities\QueueJobUtility;
 use App\Utilities\TransactionUtility;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -97,7 +98,7 @@ class PayFees implements ShouldQueue
                 $item->save();
 
                 if ($item->money !== ($oldMoney - $sum)) {
-                    throw new \GraphQL\Error\Error(trans('validation.general_exception'));
+                    throw new Exception(trans('validation.general_exception'));
                 }
             });
         });

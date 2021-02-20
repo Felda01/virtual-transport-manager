@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Utilities\GameTimeUtility;
 use App\Utilities\QueueJobUtility;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -65,7 +66,7 @@ class PayBankLoans implements ShouldQueue
                 $item->save();
 
                 if ($item->money !== ($oldMoney - $sum) || !$updated || !$updatedDone) {
-                    throw new \GraphQL\Error\Error(trans('validation.general_exception'));
+                    throw new Exception(trans('validation.general_exception'));
                 }
             });
         });
