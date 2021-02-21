@@ -393,9 +393,7 @@ export const DRIVERS_QUERY = gql`
                 last_name
                 image
                 salary
-                preferred_road_trips
-                adr
-                satisfaction
+                adr              
                 status
                 sleep
                 truck {
@@ -842,9 +840,7 @@ export const DRIVER_QUERY = gql`
             image
             salary
             sleep
-            preferred_road_trips
             adr
-            satisfaction
             status
             location {
                 id
@@ -1112,19 +1108,33 @@ export const ORDER_QUERY = gql`
                 id
                 first_name
                 last_name
+                status
+                image
+                location {
+                    id
+                    name
+                    country {
+                        id
+                        short_name
+                    }
+                }
             }
             truck {
                 id
+                status
                 truckModel {
                     id
+                    image
                     name
                     brand
                 }
             }
             trailer {
                 id
+                status
                 trailerModel {
                     id
+                    image
                     name
                 }
             }
@@ -1156,8 +1166,8 @@ export const TRUCKS_FOR_ORDER_QUERY = gql`
 `;
 
 export const PATHS_FOR_ORDER = gql`
-    query PathsForOrderQuery($order: String!) {
-        pathsForOrder(order: $order)
+    query PathsForOrderQuery($order: String!, $truck: String) {
+        pathsForOrder(order: $order, truck: $truck)
     }
 `;
 

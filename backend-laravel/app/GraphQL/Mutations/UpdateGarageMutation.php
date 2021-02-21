@@ -113,12 +113,11 @@ class UpdateGarageMutation extends Mutation
             }
 
             return [
-                'garage' => $garage,
-                'transaction' => $transaction
+                'garage' => $garage
             ];
         });
 
-        BroadcastUtility::broadcast(new ProcessTransaction($result['transaction']));
+        BroadcastUtility::broadcast(new ProcessTransaction($company));
         return $result['garage'];
     }
 }

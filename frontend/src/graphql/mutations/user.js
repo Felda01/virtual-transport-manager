@@ -286,3 +286,27 @@ export const CREATE_ORDER_MUTATION = gql`
     }
 `;
 
+export const UPDATE_ORDER_MUTATION = gql`
+    mutation UpdateOrderMutation($id: String!, $truck: String!, $path: Int!) {
+        updateOrder(id: $id, truck: $truck, path: $path) {
+            id
+            market {
+                id
+                price
+                cargo {
+                    id
+                    name
+                }
+                locationFrom {
+                    id
+                    name
+                }
+                locationTo {
+                    id
+                    name
+                }
+            }
+        }
+    }
+`;
+

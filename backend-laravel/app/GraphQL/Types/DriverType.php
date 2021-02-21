@@ -56,16 +56,7 @@ class DriverType extends GraphQLType
             'salary' => [
                 'type' => Type::int(),
             ],
-            'satisfaction' => [
-                'type' => Type::int(),
-            ],
-            'preferred_road_trips' => [
-                'type' => Type::int(),
-            ],
             'adr' => [
-                'type' => Type::int(),
-            ],
-            'last_in_garage_at' => [
                 'type' => Type::int(),
             ],
             'expires_at' => [

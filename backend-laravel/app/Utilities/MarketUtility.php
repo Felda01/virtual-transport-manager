@@ -40,6 +40,7 @@ class MarketUtility
             $weeks = random_int(3, 8);
 
             $expiresAt = GameTimeUtility::addTimeToRealTime($weeks * 7 * 24 * 60);
+            $expiresAtCarbon = Carbon::parse($expiresAt);
 
             $locationFrom = Location::find($randomLocations[$i * 2]['id']);
             $locationTo = Location::find($randomLocations[$i * 2 + 1]['id']);
@@ -61,11 +62,11 @@ class MarketUtility
             $market->amount = $cargo->weight * random_int(5, 15);
             $market->frequency = 0;
             $market->count_of_repetitions = 0;
-            $market->expires_at = Carbon::parse($expiresAt);
+            $market->expires_at = $expiresAtCarbon;
 
             $market->save();
 
-            QueueJobUtility::dispatch(new DeleteModel($market), $expiresAt);
+            QueueJobUtility::dispatch(new DeleteModel($market), $expiresAtCarbon);
         }
 
         activity()->enableLogging();
@@ -93,11 +94,10 @@ class MarketUtility
             /** @var Market $deletedMarket */
             $deletedMarket = Market::onlyTrashed()->find($deletedMarkets[$i]['id']);
 
-            Log::warning('Deleted: ' . json_encode($deletedMarket));
-
             $weeks = random_int(3, 8);
 
             $expiresAt = GameTimeUtility::addTimeToRealTime($weeks * 7 * 24 * 60);
+            $expiresAtCarbon = Carbon::parse($expiresAt);
 
             $cargo = $deletedMarket->cargo;
 
@@ -111,10 +111,10 @@ class MarketUtility
             $deletedMarket->amount = $cargo->weight * random_int(5, 15);
             $deletedMarket->km = $km;
             $deletedMarket->deleted_at = null;
-            $deletedMarket->expires_at = $expiresAt;
+            $deletedMarket->expires_at = $expiresAtCarbon;
             $deletedMarket->save();
 
-            QueueJobUtility::dispatch(new DeleteModel($deletedMarket), $expiresAt);
+            QueueJobUtility::dispatch(new DeleteModel($deletedMarket), $expiresAtCarbon);
         }
 
         activity()->enableLogging();

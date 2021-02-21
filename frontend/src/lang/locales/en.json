@@ -244,7 +244,8 @@
           "driver": "The training for driver Peter was successfully purchased and driver is being travel to training.",
           "userPassword": "Your password has been successfully updated.",
           "user": "Your profile info has been successfully updated.",
-          "userSalary": "The user {modelName} was successfully updated."
+          "userSalary": "The user {modelName} was successfully updated.",
+          "order": "The order {cargoName} from {locationFromName} to {locationToName} for {price} was successfully assigned to selected drivers."
         },
         "deleted": {
           "bankLoanType": "The bank loan type {modelName} was successfully deleted.",
@@ -646,6 +647,7 @@
     "7": "Traveling",
     "8": "On training",
     "9": "Waiting for drivers",
+    "10": "Expired",
     "sleep": "Sleeping"
   },
   "preferred_road_trips": {
@@ -709,7 +711,7 @@
           "label": "Path"
         },
         "distanceUnit": "km",
-        "timeHelp": "* - in ideal traffic",
+        "timeHelp": "* - in ideal traffic, not includes drivers sleep, drivers breaks, loading and unloading cargo",
         "feesHelp": "** - price for the toll roads",
         "feeUnit": "€"
       },

@@ -54,7 +54,7 @@ class GameTimeUtility
     }
 
     /**
-     * Return real time with game hours
+     * Return real time with game minutes
      *
      * @param $minutes
      * @param string|null $time

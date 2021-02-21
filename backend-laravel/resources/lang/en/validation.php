@@ -162,6 +162,7 @@ return [
     'can_delete_user' => "You cannot fire yourself.",
     'available_market' => "This offer is not available anymore.",
     'available_order' => "This order is not available for assignment anymore.",
+    'truck_for_order' => "Selected drivers are not suitable for this order.",
 
     /*
     |--------------------------------------------------------------------------

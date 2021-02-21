@@ -17,6 +17,8 @@ class CreateRoadTripsTable extends Migration
             $table->uuid('id')->primary();
             $table->integer('km');
             $table->integer('time');
+            $table->decimal('fees');
+            $table->integer('damage')->default(0);
             $table->json('routes');
             $table->integer('status');
             $table->timestamps();

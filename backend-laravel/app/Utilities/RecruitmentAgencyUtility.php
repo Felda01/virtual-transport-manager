@@ -57,7 +57,7 @@ class RecruitmentAgencyUtility
                 'adr' => $adr
             ]);
 
-            QueueJobUtility::dispatch(new DeleteModel($driver), $weekInMinutes);
+            QueueJobUtility::dispatch(new DeleteModel($driver), Carbon::parse(GameTimeUtility::gameTimeToRealTime($weekInMinutes)));
         }
 
         activity()->enableLogging();

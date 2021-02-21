@@ -2,7 +2,9 @@
 
 namespace App\Events;
 
+use App\Models\Company;
 use App\Models\Transaction;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -13,16 +15,16 @@ class ProcessTransaction implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $transaction;
+    public $company;
 
     /**
      * Create a new event instance.
      *
-     * @param Transaction $transaction
+     * @param Company $company
      */
-    public function __construct(Transaction $transaction)
+    public function __construct(Company $company)
     {
-        $this->transaction = $transaction;
+        $this->company = $company;
     }
 
     /**
@@ -32,7 +34,7 @@ class ProcessTransaction implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('company-' . $this->transaction->company_id);
+        return new Channel('company-' . $this->company->id);
     }
 
     /**
@@ -44,7 +46,6 @@ class ProcessTransaction implements ShouldBroadcast
     {
         return [
             'modelType' => 'Transaction',
-            'model' => $this->transaction
         ];
     }
 }

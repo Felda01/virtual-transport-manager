@@ -13,9 +13,11 @@ use App\Rules\AvailableGarageSpotRule;
 use App\Rules\ModelFromCompanyRule;
 use App\Rules\MoneyCheckRule;
 use App\Utilities\BroadcastUtility;
+use App\Utilities\GameTimeUtility;
 use App\Utilities\QueueJobUtility;
 use App\Utilities\StatusUtility;
 use App\Utilities\TransactionUtility;
+use Carbon\Carbon;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -117,13 +119,12 @@ class CreateTrailerMutation extends Mutation
             }
 
             return [
-                'trailer' => $trailer,
-                'transaction' => $transaction
+                'trailer' => $trailer
             ];
         });
 
-        BroadcastUtility::broadcast(new ProcessTransaction($result['transaction']));
-        QueueJobUtility::dispatch(new UpdateModelStatus($result['trailer'], StatusUtility::IDLE), 60 * 6);
+        BroadcastUtility::broadcast(new ProcessTransaction($company));
+        QueueJobUtility::dispatch(new UpdateModelStatus($result['trailer'], StatusUtility::IDLE), Carbon::parse(GameTimeUtility::gameTimeToRealTime(60 * 6), 'Europe/Bratislava'));
         return $result['trailer'];
     }
 }

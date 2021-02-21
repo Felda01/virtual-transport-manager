@@ -2,8 +2,10 @@
 
 namespace App\Jobs;
 
+use App\Events\ProcessTransaction;
 use App\Models\BankLoan;
 use App\Models\Company;
+use App\Utilities\BroadcastUtility;
 use App\Utilities\GameTimeUtility;
 use App\Utilities\QueueJobUtility;
 use Carbon\Carbon;
@@ -69,6 +71,8 @@ class PayBankLoans implements ShouldQueue
                     throw new Exception(trans('validation.general_exception'));
                 }
             });
+
+            BroadcastUtility::broadcast(new ProcessTransaction($item));
         });
 
         $now = Carbon::parse(GameTimeUtility::gameTime(Carbon::now('Europe/Bratislava')));

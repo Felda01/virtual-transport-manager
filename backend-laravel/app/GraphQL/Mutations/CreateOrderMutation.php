@@ -79,6 +79,8 @@ class CreateOrderMutation extends Mutation
             $roadTrip = RoadTrip::create([
                 'km' => 0,
                 'time' => 0,
+                'fees' => 0,
+                'damage' => 0,
                 'routes' => json_encode([]),
                 'status' => StatusUtility::WAITING_FOR_DRIVERS
             ]);

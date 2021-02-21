@@ -90,7 +90,9 @@ class TrucksForOrderQuery extends Query
         } else {
             $query = $query->whereHas('trailer')->whereHas('drivers', function (Builder $query) {
                 $query->where('sleep', 0)->where('status', StatusUtility::READY);
-            });
+            })->whereHas('drivers', function (Builder $query) {
+                $query->where('sleep', 1)->orWhere('status', '!=', StatusUtility::READY);
+            }, '=', 0);
         }
 
         if ($args['limit'] === -1) {

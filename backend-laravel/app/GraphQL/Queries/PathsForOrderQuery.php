@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Queries;
 
+use App\Models\Driver;
 use App\Models\Order;
+use App\Models\Truck;
+use App\Rules\ModelFromCompanyRule;
+use App\Rules\TruckForOrderRule;
 use App\Utilities\PathUtility;
 use App\Utilities\StatusUtility;
 use Closure;
@@ -47,6 +51,9 @@ class PathsForOrderQuery extends Query
             'order' => [
                 'type' => Type::nonNull(Type::string()),
             ],
+            'truck' => [
+                'type' => Type::string(),
+            ]
         ];
     }
 
@@ -59,33 +66,59 @@ class PathsForOrderQuery extends Query
             return [];
         }
 
-//        $response = Http::withBasicAuth(config('services.nodejs.user'), config('services.nodejs.password'))->post(config('services.nodejs.url'), [
-//            'from' => $order->market->location_from,
-//            'to' => $order->market->location_to,
-//        ]);
-//
-//        if (!$response->successful()) {
-//            return [];
-//        }
-//
-//        $data = $response->json();
+        $market = $order->market;
 
-        $data = ["result" => [["path" => ["6eb19875-7dba-4407-9605-3dabf4972c63","e05b0a43-0cfb-4bf6-80be-e2718b68e712","05932cb4-ec20-4745-9d01-0a4918d0a12a"],"cost" => 4404],["path" => ["6eb19875-7dba-4407-9605-3dabf4972c63","e05b0a43-0cfb-4bf6-80be-e2718b68e712","023eb1af-7df5-49e5-aed4-aab7548a183c","05932cb4-ec20-4745-9d01-0a4918d0a12a"],"cost" => 4678], ["cost" => 9007199254740991]]];
+        $data = PathUtility::getPaths($market->location_from, $market->location_to);
+
+        $needTruckPath = false;
+        $truckPath = [];
+        $truckRoutes = [];
+
+        if ($args['truck']) {
+            /** @var Truck $truck */
+            $truck = Truck::find($args['truck']);
+
+            if ($truck && $truck->drivers->count() > 0) {
+                /** @var Driver $driver */
+                $driver = $truck->drivers->first();
+
+                if ($driver->location_id !== $market->location_from) {
+                    $dataTruck = PathUtility::getPaths($driver->location_id, $market->location_from);
+
+                    if ($dataTruck['result'] && count($dataTruck['result']) > 0) {
+                        $needTruckPath = true;
+                        $truckPath = $dataTruck['result'][0];
+                        $truckRoutes = PathUtility::getRoutesFromPath($truckPath['path']);
+                    }
+                }
+            }
+        }
 
         $results = [];
 
-        foreach ($data['result'] as $item) {
+        for ($i = 0; $i < count($data['result']); $i++) {
+            $item = $data['result'][$i];
 
             if (array_key_exists('path', $item)) {
                 $routes = PathUtility::getRoutesFromPath($item['path']);
 
-                $result = [
-                    'path' => $item['path'],
-                    'distance' => $item['cost'],
-                    'time' => $routes->sum('time'),
-                    'fee' => $routes->sum('fee'),
-                    'routes' => $routes->pluck('id')->all()
-                ];
+                if ($needTruckPath) {
+                    $result = [
+                        'path' => array_merge($truckPath['path'], $item['path']) ,
+                        'distance' => $truckPath['cost'] + $item['cost'],
+                        'time' => $truckRoutes->sum('time') + $routes->sum('time'),
+                        'fee' => $truckRoutes->sum('fee') + $routes->sum('fee'),
+                        'routes' => array_merge($truckRoutes->pluck('id')->all(), $routes->pluck('id')->all())
+                    ];
+                } else {
+                    $result = [
+                        'path' => $item['path'],
+                        'distance' => $item['cost'],
+                        'time' => $routes->sum('time'),
+                        'fee' => $routes->sum('fee'),
+                        'routes' => $routes->pluck('id')->all()
+                    ];
+                }
 
                 $results[] = json_encode($result);
             }

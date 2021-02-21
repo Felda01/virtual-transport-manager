@@ -23,21 +23,21 @@
                         <template slot="label">
                             {{ $t('order.form.drivers') }}
                         </template>
-                        <first-step ref="step1" v-model="form" :options="trucksForOrder.data" :location-from="order.market.locationFrom" @on-validated="onStepValidated"></first-step>
+                        <first-step ref="step1" v-model="form" :options="trucksForOrder.data" :location-from="order.market.locationFrom"></first-step>
                     </wizard-tab>
 
                     <wizard-tab :before-change="() => validateStep('step2')">
                         <template slot="label">
                             {{ $t('order.form.path') }}
                         </template>
-                        <second-step ref="step2" v-model="form" :options="pathsForOrder" @on-validated="onStepValidated"></second-step>
+                        <second-step ref="step2" v-model="form" :options="pathsForOrder"></second-step>
                     </wizard-tab>
 
                     <wizard-tab :before-change="() => validateStep('step3')">
                         <template slot="label">
                             {{ $t('order.form.summary') }}
                         </template>
-                        <third-step ref="step3" v-model="form" :options="trucksForOrder.data" @on-validated="wizardComplete"></third-step>
+                        <third-step ref="step3" v-model="form" :options-truck="trucksForOrder.data" :options-path="pathsForOrder" @on-validated="wizardComplete"></third-step>
                     </wizard-tab>
                 </simple-wizard>
             </div>
@@ -94,7 +94,6 @@
                                         <md-table-cell :md-label="$t('driver.property.full_name')" class="td-name">{{ driverName(item) }}</md-table-cell>
                                         <md-table-cell :md-label="$t('driver.property.status')"><template v-if="item.sleep">{{ $t('status.sleep') }}</template><template v-else>{{ $t('status.' + item.status) }}</template></md-table-cell>
                                         <md-table-cell :md-label="$t('driver.property.location')">{{ item.location.name }} ({{ item.location.country.short_name | uppercase }})</md-table-cell>
-                                        <md-table-cell :md-label="$t('driver.property.adr')">{{ $t('ADRsShort.' + item.adr) }}</md-table-cell>
                                     </md-table-row>
                                     <md-table-empty-state>
                                         {{ $t('order.relations.no_drivers') }}
@@ -143,7 +142,6 @@
                                         </md-table-cell>
                                         <md-table-cell :md-label="$t('trailer.relations.trailerModel')" class="td-name">{{ item.trailerModel.name }}</md-table-cell>
                                         <md-table-cell :md-label="$t('trailer.property.status')">{{ $t('status.' + item.status) }}</md-table-cell>
-                                        <md-table-cell :md-label="$t('trailer.property.adr')">{{ $t('ADRs.' + item.trailerModel.adr) }}</md-table-cell>
                                     </md-table-row>
                                     <md-table-empty-state>
                                         {{ $t('truck.relations.no_trailer') }}
@@ -160,6 +158,7 @@
 
 <script>
     import { ORDER_QUERY, TRUCKS_FOR_ORDER_QUERY, PATHS_FOR_ORDER } from '@/graphql/queries/user';
+    import { UPDATE_ORDER_MUTATION } from '@/graphql/mutations/user';
     import { Tabs, MutationModal, DeleteModal, SimpleWizard, WizardTab } from "@/components";
     import constants from "../../constants";
     import { mapGetters } from "vuex";
@@ -209,7 +208,8 @@
                 mdTableTrailer: 0,
                 form: {
                     truck: '',
-                    path: ''
+                    path: '',
+                    id: '',
                 },
                 trucksForOrder: {
                     data: []
@@ -239,11 +239,48 @@
             validateStep(ref) {
                 return this.$refs[ref].validate();
             },
-            onStepValidated(validated, model) {
-
-            },
             wizardComplete() {
+                this.form.id = this.id;
+                this.$apollo.mutate({
+                    mutation: UPDATE_ORDER_MUTATION,
+                    variables: this.form
+                }).then(response => {
+                    let order = response.data.updateOrder;
+                    let price = this.$options.filters.currency(order.price, ' ', 2, { thousandsSeparator: ' ' }) + ' €';
+                    this.$notify({
+                        timeout: 5000,
+                        message: this.$t('model.response.success.updated.order', {cargoName: order.market.cargo.name, locationFromName: order.market.locationFrom.name, locationToName: order.market.locationTo.name, price: price}),
+                        icon: "add_alert",
+                        horizontalAlign: 'right',
+                        verticalAlign: 'top',
+                        type: 'success'
+                    });
 
+                    this.$apollo.queries.order.refresh();
+                }).catch(error => {
+                    let errors = {};
+                    if (error.graphQLErrors && error.graphQLErrors[0]) {
+                        if (error.graphQLErrors[0].extensions && error.graphQLErrors[0].extensions.validation) {
+                            errors = error.graphQLErrors[0].extensions.validation;
+                        } else if (error.graphQLErrors[0].message) {
+                            errors = {'General': error.graphQLErrors[0].message};
+                        }
+                    } else if (error.errors && error.errors[0]) {
+                        errors = error.errors[0].extensions.validation;
+                    }
+
+                    if (errors['truck']) {
+                        errors[this.$t('order.form.firstStep.truck.label')] = errors['truck'];
+                        errors[this.$t('order.form.secondStep.path.label')] = errors['path'];
+                        this.$refs['step1'].setErrors(errors);
+                        this.$refs['step2'].setErrors(errors);
+                        this.$refs['formWizard'].navigateToTab(0);
+                    } else if (errors['path']) {
+                        errors[this.$t('order.form.secondStep.path.label')] = errors['path'];
+                        this.$refs['step2'].setErrors(errors);
+                        this.$refs['formWizard'].navigateToTab(1);
+                    }
+                });
             }
         },
         apollo: {
@@ -274,12 +311,12 @@
             pathsForOrder: {
                 query: PATHS_FOR_ORDER,
                 variables() {
-                    return {order: this.id}
+                    return {order: this.id, truck: this.form.truck}
                 },
                 result({data, loading, networkStatus}) {
                     if (data.pathsForOrder && data.pathsForOrder.length > 0) {
                         this.$nextTick( () => {
-                            this.$set(this.form, 'path', data.pathsForOrder[0]);
+                            this.$set(this.form, 'path', 1);
                         });
                     }
                 },

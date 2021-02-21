@@ -2,12 +2,14 @@
 
 namespace App\Jobs;
 
+use App\Events\ProcessTransaction;
 use App\Models\Company;
 use App\Models\Driver;
 use App\Models\Garage;
 use App\Models\Trailer;
 use App\Models\Truck;
 use App\Models\User;
+use App\Utilities\BroadcastUtility;
 use App\Utilities\GameTimeUtility;
 use App\Utilities\QueueJobUtility;
 use App\Utilities\TransactionUtility;
@@ -101,6 +103,8 @@ class PayFees implements ShouldQueue
                     throw new Exception(trans('validation.general_exception'));
                 }
             });
+
+            BroadcastUtility::broadcast(new ProcessTransaction($item));
         });
 
         $now = Carbon::parse(GameTimeUtility::gameTime(Carbon::now('Europe/Bratislava')));

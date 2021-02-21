@@ -4,6 +4,7 @@
 namespace App\Utilities;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class QueueJobUtility
@@ -17,6 +18,7 @@ class QueueJobUtility
      */
     public static function dispatch($job, $delay)
     {
+        Log::info('Job delay: ' . $delay);
         dispatch($job)->delay(Carbon::now()->addMinutes(1));
     }
 }

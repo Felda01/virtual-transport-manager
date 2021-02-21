@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $customer_from
  * @property string $customer_to
  * @property string $company_id
- * @property string $price
+ * @property float $price
  * @property string $frequency
  * @property int $amount
  * @property int $km

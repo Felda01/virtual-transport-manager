@@ -3,6 +3,8 @@
 
 namespace App\Utilities;
 
+use App\Events\ProcessTransaction;
+
 /**
  * Class BroadcastUtility
  * @package App\Utilities
@@ -14,6 +16,10 @@ class BroadcastUtility
      */
     public static function broadcast($event)
     {
-        broadcast($event)->toOthers();
+        if ($event instanceof ProcessTransaction) {
+            broadcast($event);
+        } else {
+            broadcast($event)->toOthers();
+        }
     }
 }

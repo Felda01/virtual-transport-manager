@@ -11,6 +11,7 @@ use App\Models\Garage;
 use App\Rules\AvailableDriverRecruitmentAgencyRule;
 use App\Rules\AvailableGarageSpotRule;
 use App\Rules\ModelFromCompanyRule;
+use App\Utilities\GameTimeUtility;
 use App\Utilities\QueueJobUtility;
 use App\Utilities\StatusUtility;
 use Carbon\Carbon;
@@ -111,7 +112,7 @@ class CreateDriverMutation extends Mutation
             ];
         });
 
-        QueueJobUtility::dispatch(new UpdateModelStatus($result['driver'], StatusUtility::IDLE), 60 * 6);
+        QueueJobUtility::dispatch(new UpdateModelStatus($result['driver'], StatusUtility::IDLE), Carbon::parse(GameTimeUtility::gameTimeToRealTime(60 * 6), 'Europe/Bratislava'));
         return $result['driver'];
     }
 }

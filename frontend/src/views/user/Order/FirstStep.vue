@@ -87,6 +87,9 @@
                     }
                 });
             },
+            setErrors(errors) {
+                this.$refs['formElement'].setErrors(errors);
+            },
             updateMap() {
 
             }

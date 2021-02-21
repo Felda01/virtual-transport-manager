@@ -13,9 +13,11 @@ use App\Rules\DriverInGarageRule;
 use App\Rules\ModelFromCompanyRule;
 use App\Rules\ModelStatusRule;
 use App\Utilities\BroadcastUtility;
+use App\Utilities\GameTimeUtility;
 use App\Utilities\QueueJobUtility;
 use App\Utilities\StatusUtility;
 use App\Utilities\TransactionUtility;
+use Carbon\Carbon;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -79,10 +81,10 @@ class UpdateDriverMutation extends Mutation
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
-        $result = DB::transaction(function () use ($args) {
-            /** @var Company $company */
-            $company = Company::currentCompany();
+        /** @var Company $company */
+        $company = Company::currentCompany();
 
+        $result = DB::transaction(function () use ($args, $company) {
             /** @var Driver $driver */
             $driver = Driver::find($args['id']);
 
@@ -112,10 +114,8 @@ class UpdateDriverMutation extends Mutation
             ];
         });
 
-        $dayInMinutes = 24 * 60;
-
-        QueueJobUtility::dispatch(new UpdateModelStatus($result['driver'], $result['oldStatus']), 3 * $dayInMinutes);
-        BroadcastUtility::broadcast(new ProcessTransaction($result['transaction']));
+        QueueJobUtility::dispatch(new UpdateModelStatus($result['driver'], $result['oldStatus']), Carbon::parse(GameTimeUtility::gameTimeToRealTime(3 * 24 * 60), 'Europe/Bratislava'));
+        BroadcastUtility::broadcast(new ProcessTransaction($company));
         return $result['driver'];
     }
 }

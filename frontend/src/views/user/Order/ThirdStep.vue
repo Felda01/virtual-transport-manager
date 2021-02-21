@@ -33,14 +33,17 @@
             value: {
                 type: Object
             },
-            options: {
+            optionsTruck: {
+                type: Array
+            },
+            optionsPath: {
                 type: Array
             },
         },
         methods: {
             pathText(value) {
                 if (value.path) {
-                    let optionObject = JSON.parse(value.path);
+                    let optionObject = JSON.parse(this.optionsPath[value.path - 1]);
 
                     let distance = this.$options.filters.currency(optionObject.distance, ' ', 0, { thousandsSeparator: ' ' });
                     let timeMinutes = optionObject.time % 60;
@@ -63,7 +66,7 @@
                 let location = {};
 
                 if (value.truck) {
-                    let truck = this.lodash.find(this.options, ['id', value.truck]);
+                    let truck = this.lodash.find(this.optionsTruck, ['id', value.truck]);
                     console.log(truck);
                     for (let driver of truck.drivers) {
                         result.push(driver.first_name.charAt(0) + '. ' + driver.last_name)
@@ -75,6 +78,7 @@
                 return '';
             },
             validate() {
+                this.$emit("on-validated");
                 return true;
             },
         }

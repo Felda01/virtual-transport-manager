@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $id
  * @property int $km
  * @property int $time
+ * @property float $fees
+ * @property int $damage
  * @property array $routes
  * @property string $status
  * @property \Illuminate\Support\Carbon|null $created_at

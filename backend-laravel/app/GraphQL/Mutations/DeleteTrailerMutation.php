@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
+use App\Events\ProcessTransaction;
 use App\Models\Company;
 use App\Models\Trailer;
 use App\Rules\CanDeleteTrailerRule;
 use App\Rules\ModelFromCompanyRule;
 use App\Rules\ModelStatusRule;
 use App\Rules\TrailerEmptyTruckSpotRule;
+use App\Utilities\BroadcastUtility;
 use App\Utilities\StatusUtility;
 use App\Utilities\TransactionUtility;
 use Closure;
@@ -74,13 +76,13 @@ class DeleteTrailerMutation extends Mutation
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
-        $result = DB::transaction(function () use ($args) {
+        $company = Company::currentCompany();
+
+        $result = DB::transaction(function () use ($args, $company) {
             /** @var Trailer $trailer */
             $trailer = Trailer::find($args['id']);
 
             $deletedTrailer = $trailer;
-
-            $company = Company::currentCompany();
 
             $price = $deletedTrailer->trailerModel->price / 2;
 
@@ -101,11 +103,11 @@ class DeleteTrailerMutation extends Mutation
             }
 
             return [
-                'trailer' => $deletedTrailer,
-                'transaction' => $transaction
+                'trailer' => $deletedTrailer
             ];
         });
 
+        BroadcastUtility::broadcast(new ProcessTransaction($company));
         return $result['trailer'];
     }
 }

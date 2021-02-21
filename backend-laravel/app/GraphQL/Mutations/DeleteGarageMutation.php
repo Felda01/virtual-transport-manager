@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
+use App\Events\ProcessTransaction;
 use App\Models\Company;
 use App\Models\Garage;
 use App\Rules\EmptyGarageRule;
 use App\Rules\ModelFromCompanyRule;
+use App\Utilities\BroadcastUtility;
 use App\Utilities\TransactionUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -98,11 +100,11 @@ class DeleteGarageMutation extends Mutation
             }
 
             return [
-                'garage' => $deletedGarage,
-                'transaction' => $transaction
+                'garage' => $deletedGarage
             ];
         });
 
+        BroadcastUtility::broadcast(new ProcessTransaction($company));
         return $result['garage'];
     }
 }

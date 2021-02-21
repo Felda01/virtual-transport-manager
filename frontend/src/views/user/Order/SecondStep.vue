@@ -7,8 +7,8 @@
                 </div>
                 <div class="md-layout-item md-size-33 mt-4 md-small-size-100">
                     <ValidationProvider :name="$t('order.form.secondStep.path.label')" rules="required" class="radio-group" tag="div">
-                        <template v-for="option in options">
-                            <md-radio v-model="value.path" :value="optionValue(option)" :name="$t('order.form.secondStep.path.label')" @change="updateMap">
+                        <template v-for="(option, index) in options">
+                            <md-radio v-model="value.path" :value="index + 1" :name="$t('order.form.secondStep.path.label')" @change="updateMap">
                                 {{ optionLabel(option) }}
                             </md-radio>
                         </template>
@@ -38,9 +38,6 @@
             }
         },
         methods: {
-            optionValue(option) {
-                return option;
-            },
             optionLabel(option) {
                 let optionObject = JSON.parse(option);
 
@@ -65,6 +62,9 @@
                         return true;
                     }
                 });
+            },
+            setErrors(errors) {
+                this.$refs['formElement'].setErrors(errors);
             },
             updateMap() {
 

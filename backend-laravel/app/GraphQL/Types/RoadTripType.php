@@ -29,6 +29,12 @@ class RoadTripType extends GraphQLType
             'time' => [
                 'type' => Type::int(),
             ],
+            'fees' => [
+                'type' => Type::float(),
+            ],
+            'damage' => [
+                'type' => Type::float(),
+            ],
             'routes' => [
                 'type' => Type::string(),
             ],

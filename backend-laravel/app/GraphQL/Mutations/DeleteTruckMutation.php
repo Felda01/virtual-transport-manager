@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
+use App\Events\ProcessTransaction;
 use App\Models\Company;
 use App\Models\Truck;
 use App\Rules\CanDeleteTruckRule;
 use App\Rules\ModelFromCompanyRule;
 use App\Rules\ModelStatusRule;
+use App\Utilities\BroadcastUtility;
 use App\Utilities\StatusUtility;
 use App\Utilities\TransactionUtility;
 use Closure;
@@ -74,13 +76,13 @@ class DeleteTruckMutation extends Mutation
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
-        $result = DB::transaction(function () use ($args) {
+        $company = Company::currentCompany();
+
+        $result = DB::transaction(function () use ($args, $company) {
             /** @var Truck $truck */
             $truck = Truck::find($args['id']);
 
             $deletedTruck = $truck;
-
-            $company = Company::currentCompany();
 
             $price = $deletedTruck->truckModel->price / 2;
 
@@ -101,11 +103,11 @@ class DeleteTruckMutation extends Mutation
             }
 
             return [
-                'truck' => $deletedTruck,
-                'transaction' => $transaction
+                'truck' => $deletedTruck
             ];
         });
 
+        BroadcastUtility::broadcast(new ProcessTransaction($company));
         return $result['truck'];
     }
 }

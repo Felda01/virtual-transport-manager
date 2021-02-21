@@ -19,6 +19,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string $truck_id
  * @property string $trailer_id
  * @property string $road_trip_id
+ * @property string $company_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Driver $driver1
@@ -27,6 +28,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property-read \App\Models\RoadTrip $roadTrip
  * @property-read \App\Models\Trailer $trailer
  * @property-read \App\Models\Truck $truck
+ * @property-read \App\Models\Company $company
  * @method static \Illuminate\Database\Eloquent\Builder|Order newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Order newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Order query()
