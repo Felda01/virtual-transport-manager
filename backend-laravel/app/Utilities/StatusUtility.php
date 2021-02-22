@@ -64,6 +64,16 @@ class StatusUtility
         return [
             self::WAITING_FOR_DRIVERS,
             self::ON_ROAD,
+        ];
+    }
+
+    /**
+     * @return int[]
+     */
+    public static function doneOrder()
+    {
+        return [
+            self::FINISHED,
             self::EXPIRED,
         ];
     }

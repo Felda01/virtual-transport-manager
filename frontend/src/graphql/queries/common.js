@@ -204,9 +204,3 @@ export const STATUSES_QUERY = gql`
         statuses(model: $model)
     }
 `;
-
-export const PREFERRED_ROAD_TRIPS_QUERY = gql`
-    query PreferredRoadTripsQuery {
-        preferredRoadTrips
-    }
-`;

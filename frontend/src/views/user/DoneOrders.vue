@@ -19,7 +19,7 @@
                     <md-card>
                         <md-card-content class="pb-0">
                             <md-table v-model="orders.data" v-if="orders && orders.data">
-                                <md-table-row slot="md-table-row" slot-scope="{ item, index }" @click.native="clickTableRow(item)" class="cursor-pointer-hover">
+                                <md-table-row slot="md-table-row" slot-scope="{ item, index }">
                                     <md-table-cell md-label="#">{{ index + orders.from }}</md-table-cell>
                                     <md-table-cell md-label="">
                                         <div class="img-container">
@@ -29,7 +29,9 @@
                                     <md-table-cell :md-label="$t('order.relations.cargo_name')" class="td-name">{{ item.market.cargo.name }}</md-table-cell>
                                     <md-table-cell :md-label="$t('order.relations.market_price')">{{ item.market.price | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('order.relations.market_priceUnit') }}</md-table-cell>
                                     <md-table-cell :md-label="$t('order.relations.roadTrip_status')">{{ $t('status.' + item.roadTrip.status) }}</md-table-cell>
-                                    <md-table-cell :md-label="$t('market.property.expires_at')">{{ item.market.expires_at }}</md-table-cell>
+                                    <md-table-cell :md-label="$t('order.relations.roadTrip_km')">{{ item.roadTrip.km }} {{ $t('order.relations.roadTrip_kmUnit') }}</md-table-cell>
+                                    <md-table-cell :md-label="$t('order.relations.roadTrip_fees')">{{ item.roadTrip.fees }} {{ $t('order.relations.roadTrip_feesUnit') }}</md-table-cell>
+                                    <md-table-cell :md-label="$t('order.relations.roadTrip_damage')">{{ item.roadTrip.damage }} {{ $t('order.relations.roadTrip_damageUnit') }}</md-table-cell>
                                     <md-table-cell :md-label="$t('order.relations.drivers')"><template v-if="item.drivers && item.drivers.length > 0">{{ drivers(item.drivers) }}</template><template v-else>{{ $t('order.relations.no_drivers') }}</template></md-table-cell>
                                     <md-table-cell :md-label="$t('order.relations.truck')"><template v-if="item.truck">{{ item.truck.truckModel.brand }} {{ item.truck.truckModel.name }}</template><template v-else>{{ $t('order.relations.no_truck') }}</template></md-table-cell>
                                     <md-table-cell :md-label="$t('order.relations.trailer')"><template v-if="item.trailer">{{ item.trailer.trailerModel.name }}</template><template v-else>{{ $t('order.relations.no_trailer') }}</template></md-table-cell>
@@ -63,14 +65,14 @@
 
 <script>
     import { MutationModal, Pagination, SearchForm } from "@/components";
-    import { ORDERS_QUERY } from "@/graphql/queries/user";
+    import { DONE_ORDERS_QUERY } from "@/graphql/queries/user";
     import { STATUSES_QUERY } from "@/graphql/queries/common";
 
     export default {
         title () {
-            return this.$t('pages.orders');
+            return this.$t('pages.doneOrders');
         },
-        name: "Orders",
+        name: "DoneOrders",
         components: {
             MutationModal,
             Pagination,
@@ -123,12 +125,6 @@
             }
         },
         methods: {
-            clickTableRow(item) {
-                this.$router.push({
-                    name: 'order',
-                    params: {id: item.id}
-                });
-            },
             drivers(drivers) {
                 let result = [];
 
@@ -141,9 +137,9 @@
         },
         apollo: {
             orders: {
-                query: ORDERS_QUERY,
+                query: DONE_ORDERS_QUERY,
                 variables() {
-                    return {page: this.page, limit: this.orders.per_page, filter: this.filters}
+                    return {page: this.page, limit: this.orders.per_page, filter: this.filters, done: true}
                 },
                 result({data, loading, networkStatus}) {
                     this.firstLoad = false;
@@ -152,7 +148,7 @@
             statuses: {
                 query: STATUSES_QUERY,
                 variables() {
-                    return { model: 'order'}
+                    return { model: 'doneOrder'}
                 },
                 result({ data, loading, networkStatus }) {
                     this.statusesOptions = data.statuses;

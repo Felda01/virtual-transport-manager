@@ -26,10 +26,6 @@
                             </h4>
                             <div class="card-description">
                                 <div class="md-layout md-alignment-center-space-between">
-                                    <div class="md-layout-item md-size-50 text-left">{{ $t('driver.property.preferred_road_trips') }}</div>
-                                    <div class="md-layout-item md-size-50 text-right">{{ $t('preferred_road_trips.' + driver.preferred_road_trips) }}</div>
-                                </div>
-                                <div class="md-layout md-alignment-center-space-between">
                                     <div class="md-layout-item md-size-50 text-left">{{ $t('driver.property.adr') }}</div>
                                     <div class="md-layout-item md-size-50 text-right">{{ $t('ADRsShort.' + driver.adr) }}</div>
                                 </div>
@@ -69,7 +65,7 @@
     import { RECRUITMENT_AGENCY_DRIVERS_QUERY, AVAILABLE_GARAGES_QUERY } from "@/graphql/queries/user";
     import { SearchForm, Pagination, MutationModal } from "@/components";
     import { CREATE_DRIVER_MUTATION } from "@/graphql/mutations/user";
-    import { ADRS_QUERY, PREFERRED_ROAD_TRIPS_QUERY } from "@/graphql/queries/common";
+    import { ADRS_QUERY } from "@/graphql/queries/common";
 
     export default {
         title () {
@@ -106,7 +102,6 @@
                         max: ''
                     },
                     adr: [],
-                    preferred_road_trips: [],
                 },
                 searchSchema: {
                     groups: [
@@ -144,25 +139,6 @@
                                         multiple: true
                                     }
                                 },
-                                {
-                                    class: ['md-medium-size-50', 'md-xsmall-size-100' ,'md-size-33'],
-                                    type: 'select',
-                                    input: 'select',
-                                    name: 'preferred_road_trips',
-                                    label: this.$t('driver.property.preferred_road_trips'),
-                                    value: [],
-                                    config: {
-                                        options: [],
-                                        optionValue: (option) => {
-                                            return option;
-                                        },
-                                        translatableLabel: 'preferred_road_trips.',
-                                        optionLabel: (option) => {
-                                            return option;
-                                        },
-                                        multiple: true
-                                    }
-                                }
                             ]
                         },
                         {
@@ -281,15 +257,6 @@
                     this.ADRsOptions = data.ADRs;
                     this.$nextTick( () => {
                         this.$set(this.searchSchema.groups[0].fields[1].config, 'options', this.ADRsOptions);
-                    });
-                },
-            },
-            preferredRoadTrips: {
-                query: PREFERRED_ROAD_TRIPS_QUERY,
-                result({ data, loading, networkStatus }) {
-                    this.preferredRoadTripsOptions = data.preferredRoadTrips;
-                    this.$nextTick( () => {
-                        this.$set(this.searchSchema.groups[0].fields[2].config, 'options', this.preferredRoadTripsOptions);
                     });
                 },
             },

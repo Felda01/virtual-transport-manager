@@ -370,7 +370,6 @@ export const RECRUITMENT_AGENCY_DRIVERS_QUERY = gql`
                 last_name
                 image
                 salary
-                preferred_road_trips
                 adr
             }
             total
@@ -1029,6 +1028,76 @@ export const ORDERS_QUERY = gql`
                 roadTrip {
                     id
                     status
+                }
+                drivers {
+                    id
+                    first_name
+                    last_name
+                }
+                truck {
+                    id
+                    truckModel {
+                        id
+                        name
+                        brand
+                    }
+                }
+                trailer {
+                    id
+                    trailerModel {
+                        id
+                        name
+                    }
+                }
+            }
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
+            has_more_pages
+        }
+    }
+`;
+
+export const DONE_ORDERS_QUERY = gql`
+    query OrdersQuery($limit: Int!, $page: Int!, $filter: [FilterInput], $sort: String, $done: Boolean) {
+        orders(limit: $limit, page: $page, filter: $filter, sort: $sort, done: $done) {
+            data {
+                id
+                market {
+                    id
+                    price
+                    locationFrom {
+                        id
+                        name
+                        country {
+                            id
+                            short_name
+                        }
+                    }
+                    locationTo {
+                        id
+                        name
+                        country {
+                            id
+                            short_name
+                        }
+                    }
+                    cargo {
+                        id
+                        name
+                        image 
+                    }
+                }
+                roadTrip {
+                    id
+                    status
+                    km
+                    time
+                    fees
+                    damage
                 }
                 drivers {
                     id

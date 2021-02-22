@@ -65,7 +65,7 @@
   },
   "navigation": {
     "staticMapData": "Map data",
-    "companyEquipmentData": "Company equipment",
+    "companyEquipmentData": "Company assets",
     "shop": "Shop / Agency",
     "companyEmployees": "Company employees",
     "user": {
@@ -604,9 +604,6 @@
       "status": "Status",
       "salary": "Salary",
       "salaryUnit": "€/month",
-      "satisfaction": "Satisfaction",
-      "satisfactionUnit": "%",
-      "preferred_road_trips": "Preferred road trips",
       "last_in_garage_at": "Days on road",
       "adr": "ADR class",
       "location": "Location",
@@ -650,11 +647,6 @@
     "10": "Expired",
     "sleep": "Sleeping"
   },
-  "preferred_road_trips": {
-    "0": "Short",
-    "1": "Medium",
-    "2": "Long"
-  },
   "activity": {
     "property": {
       "description": "Description",
@@ -687,6 +679,12 @@
       "location_from": "Location from",
       "location_to": "Location to",
       "roadTrip_status": "Status",
+      "roadTrip_km": "Distance",
+      "roadTrip_kmUnit": "Km",
+      "roadTrip_fees": "Fees",
+      "roadTrip_feesUnit": "€",
+      "roadTrip_damage": "Damage",
+      "roadTrip_damageUnit": "%",
       "no_roadTrip": "Waiting for assign",
       "customer_from": "Customer from",
       "customer_to": "Customer to"

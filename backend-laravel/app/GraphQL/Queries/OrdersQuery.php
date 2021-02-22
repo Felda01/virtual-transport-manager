@@ -62,6 +62,10 @@ class OrdersQuery extends Query
             'sort' => [
                 'type' => Type::string(),
                 'defaultValue' => ''
+            ],
+            'done' => [
+                'type' => Type::boolean(),
+                'defaultValue' => false,
             ]
         ];
     }
@@ -81,9 +85,15 @@ class OrdersQuery extends Query
 
         $query = FilterUtility::filterCompany($query, User::current());
 
-        $query = $query = $query->whereHas('roadTrip', function (Builder $query) {
-            $query->where('status', '!=', StatusUtility::FINISHED);
-        });
+        if (array_key_exists('done', $args) && $args['done']) {
+            $query = $query = $query->whereHas('roadTrip', function (Builder $query) {
+                $query->whereIn('status',  [StatusUtility::FINISHED, StatusUtility::EXPIRED]);
+            });
+        } else {
+            $query = $query = $query->whereHas('roadTrip', function (Builder $query) {
+                $query->whereNotIn('status',  [StatusUtility::FINISHED, StatusUtility::EXPIRED]);
+            });
+        }
 
         if ($args['limit'] === -1) {
             $args['limit'] = Order::count();
