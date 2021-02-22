@@ -80,7 +80,15 @@ class FinishOrder implements ShouldQueue
                 'sleep' => $now->hour < 7 || $now->hour > 16
             ]);
 
-            if (!$roadTripSaved || !$driversUpdated || $company->money !== ($oldMoney + $sum)) {
+            $truck = $this->order->truck;
+            $truck->increment('km', $roadTrip->km);
+            $truckUpdated = $truck->save();
+
+            $trailer = $truck->trailer;
+            $trailer->increment('km', $roadTrip->km);
+            $trailerSaved = $trailer->save();
+
+            if (!$roadTripSaved || !$driversUpdated || !$truckUpdated || !$trailerSaved || $company->money !== ($oldMoney + $sum)) {
                 throw new \GraphQL\Error\Error(trans('validation.general_exception'));
             }
         });
