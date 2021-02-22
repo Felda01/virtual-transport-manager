@@ -91,7 +91,7 @@ class FinishOrder implements ShouldQueue
             if (!$roadTripSaved || !$driversUpdated || !$truckUpdated || !$trailerSaved || $company->money !== ($oldMoney + $sum)) {
                 throw new \GraphQL\Error\Error(trans('validation.general_exception'));
             }
-        });
+        }, 5);
 
         BroadcastUtility::broadcast(new ProcessTransaction($company));
     }
