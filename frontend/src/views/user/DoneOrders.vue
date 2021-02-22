@@ -92,7 +92,22 @@
                 statusesOptions: [],
                 statuses: [],
                 searchModel: {
-                    status: []
+                    status: [],
+                    price: {
+                        type: 'range',
+                        min: '',
+                        max: ''
+                    },
+                    km: {
+                        type: 'range',
+                        min: '',
+                        max: ''
+                    },
+                    damage: {
+                        type: 'range',
+                        min: '',
+                        max: ''
+                    },
                 },
                 searchSchema: {
                     groups: [
@@ -116,6 +131,42 @@
                                             return option;
                                         },
                                         multiple: true
+                                    }
+                                },
+                                {
+                                    class: ['md-medium-size-50', 'md-xsmall-size-100' ,'md-size-33'],
+                                    type: 'text',
+                                    input: 'range',
+                                    name: 'price',
+                                    labelFrom: this.$t('order.relations.market_price') + ' ' + this.$t('search.from'),
+                                    labelTo: this.$t('order.relations.market_price') + ' ' + this.$t('search.to'),
+                                    value: {
+                                        min: '',
+                                        max: ''
+                                    }
+                                },
+                                {
+                                    class: ['md-medium-size-50', 'md-xsmall-size-100' ,'md-size-33'],
+                                    type: 'text',
+                                    input: 'range',
+                                    name: 'km',
+                                    labelFrom: this.$t('order.relations.roadTrip_km') + ' ' + this.$t('search.from'),
+                                    labelTo: this.$t('order.relations.roadTrip_km') + ' ' + this.$t('search.to'),
+                                    value: {
+                                        min: '',
+                                        max: ''
+                                    }
+                                },
+                                {
+                                    class: ['md-medium-size-50', 'md-xsmall-size-100' ,'md-size-33'],
+                                    type: 'text',
+                                    input: 'range',
+                                    name: 'damage',
+                                    labelFrom: this.$t('order.relations.roadTrip_damage') + ' ' + this.$t('search.from'),
+                                    labelTo: this.$t('order.relations.roadTrip_damage') + ' ' + this.$t('search.to'),
+                                    value: {
+                                        min: '',
+                                        max: ''
                                     }
                                 },
                             ],

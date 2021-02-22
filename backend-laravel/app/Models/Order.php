@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasUuid;
+use App\Utilities\FilterUtility;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -72,7 +73,10 @@ class Order extends Model
      * @var string[]
      */
     public static $searchable = [
-        'status'
+        'status',
+        'price',
+        'km',
+        'damage'
     ];
 
     /**
@@ -144,6 +148,75 @@ class Order extends Model
         if ($statuses && count($statuses) > 0) {
             return $query = $query->whereHas('roadTrip', function (Builder $query) use ($statuses) {
                 $query->whereIn('status', $statuses);
+            });
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchPrice($query, $value)
+    {
+        $values = FilterUtility::getRangeValues($value);
+
+        if (array_key_exists('min', $values)) {
+            $query = $query->whereHas('market', function (Builder $query) use ($values) {
+                $query->where('price', '>=', $values['min']);
+            });
+        }
+        if (array_key_exists('max', $values)) {
+            $query =$query = $query->whereHas('market', function (Builder $query) use ($values) {
+                $query->where('price', '<=', $values['max']);
+            });
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchKm($query, $value)
+    {
+        $values = FilterUtility::getRangeValues($value);
+
+        if (array_key_exists('min', $values)) {
+            $query = $query->whereHas('roadTrip', function (Builder $query) use ($values) {
+                $query->where('km', '>=', $values['min']);
+            });
+        }
+        if (array_key_exists('max', $values)) {
+            $query =$query = $query->whereHas('roadTrip', function (Builder $query) use ($values) {
+                $query->where('km', '<=', $values['max']);
+            });
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchDamage($query, $value)
+    {
+        $values = FilterUtility::getRangeValues($value);
+
+        if (array_key_exists('min', $values)) {
+            $query = $query->whereHas('roadTrip', function (Builder $query) use ($values) {
+                $query->where('damage', '>=', $values['min']);
+            });
+        }
+        if (array_key_exists('max', $values)) {
+            $query =$query = $query->whereHas('roadTrip', function (Builder $query) use ($values) {
+                $query->where('damage', '<=', $values['max']);
             });
         }
 
