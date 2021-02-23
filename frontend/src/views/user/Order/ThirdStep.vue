@@ -1,7 +1,7 @@
 <template>
     <div class="md-layout">
         <div class="md-layout-item md-size-66 mt-4 md-small-size-100 md-small-hide">
-            Mapa
+            <order-map :location-from="locationFrom" :location-to="locationTo" :options-truck="optionsTruck" :options-path="optionsPath" :form="value"></order-map>
         </div>
         <div class="md-layout-item md-size-33 mt-4 md-small-size-100">
             <md-list class="md-double-line md-dense">
@@ -26,8 +26,13 @@
 </template>
 
 <script>
+    import { OrderMap } from "@/components";
+
     export default {
         name: "ThirdStep",
+        components: {
+            OrderMap
+        },
         props: {
             mutation: String,
             value: {
@@ -38,6 +43,12 @@
             },
             optionsPath: {
                 type: Array
+            },
+            locationFrom: {
+                type: Object
+            },
+            locationTo: {
+                type: Object
             },
         },
         methods: {
@@ -67,7 +78,6 @@
 
                 if (value.truck) {
                     let truck = this.lodash.find(this.optionsTruck, ['id', value.truck]);
-                    console.log(truck);
                     for (let driver of truck.drivers) {
                         result.push(driver.first_name.charAt(0) + '. ' + driver.last_name)
                         location = driver.location;

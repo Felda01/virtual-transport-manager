@@ -1142,6 +1142,8 @@ export const ORDER_QUERY = gql`
                 locationFrom {
                     id
                     name
+                    lat
+                    lng
                     country {
                         id
                         short_name
@@ -1150,6 +1152,8 @@ export const ORDER_QUERY = gql`
                 locationTo {
                     id
                     name
+                    lat
+                    lng
                     country {
                         id
                         short_name
@@ -1182,6 +1186,8 @@ export const ORDER_QUERY = gql`
                 location {
                     id
                     name
+                    lat
+                    lng
                     country {
                         id
                         short_name
@@ -1223,6 +1229,8 @@ export const TRUCKS_FOR_ORDER_QUERY = gql`
                     location {
                         id
                         name
+                        lat
+                        lng
                         country {
                             id
                             short_name

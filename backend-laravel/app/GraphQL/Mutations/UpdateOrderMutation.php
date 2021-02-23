@@ -95,13 +95,13 @@ class UpdateOrderMutation extends Mutation
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
-        $data = PathUtility::getPaths();
+        /** @var Order $order */
+        $order = Order::find($args['id']);
+        $data = PathUtility::getPaths($order->market->location_from, $order->market->location_to);
 
         $path = $data['result'][$args['path'] - 1];
 
-        $result = DB::transaction(function () use ($args, $path) {
-            /** @var Order $order */
-            $order = Order::find($args['id']);
+        $result = DB::transaction(function () use ($args, $path, $order) {
 
             /** @var RoadTrip $roadTrip */
             $roadTrip = RoadTrip::find($order->road_trip_id);

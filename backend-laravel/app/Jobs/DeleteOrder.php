@@ -42,7 +42,8 @@ class DeleteOrder implements ShouldQueue
     public function handle()
     {
         if ($this->order->roadTrip->status === StatusUtility::WAITING_FOR_DRIVERS) {
-            $company = Company::currentCompany();
+            /** @var Company $company */
+            $company = Company::find($this->order->company_id);
 
             DB::transaction(function() use ($company) {
                 /** @var RoadTrip $roadTrip */

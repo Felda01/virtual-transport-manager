@@ -23,21 +23,21 @@
                         <template slot="label">
                             {{ $t('order.form.drivers') }}
                         </template>
-                        <first-step ref="step1" v-model="form" :options="trucksForOrder.data" :location-from="order.market.locationFrom"></first-step>
+                        <first-step ref="step1" v-model="form" :options="trucksForOrder.data" :location-from="order.market.locationFrom" :location-to="order.market.locationTo"></first-step>
                     </wizard-tab>
 
                     <wizard-tab :before-change="() => validateStep('step2')">
                         <template slot="label">
                             {{ $t('order.form.path') }}
                         </template>
-                        <second-step ref="step2" v-model="form" :options="pathsForOrder"></second-step>
+                        <second-step ref="step2" v-model="form" :options-truck="trucksForOrder.data" :options-path="pathsForOrder" :location-from="order.market.locationFrom" :location-to="order.market.locationTo"></second-step>
                     </wizard-tab>
 
                     <wizard-tab :before-change="() => validateStep('step3')">
                         <template slot="label">
                             {{ $t('order.form.summary') }}
                         </template>
-                        <third-step ref="step3" v-model="form" :options-truck="trucksForOrder.data" :options-path="pathsForOrder" @on-validated="wizardComplete"></third-step>
+                        <third-step ref="step3" v-model="form" :location-from="order.market.locationFrom" :location-to="order.market.locationTo" :options-truck="trucksForOrder.data" :options-path="pathsForOrder" @on-validated="wizardComplete"></third-step>
                     </wizard-tab>
                 </simple-wizard>
             </div>

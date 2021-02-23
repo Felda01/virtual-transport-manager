@@ -39,6 +39,7 @@ import AnimatedNumber from "./AnimatedNumber";
 
 import SearchForm from "./SearchForm";
 import CustomTime from "./CustomTime";
+import OrderMap from "./OrderMap";
 
 export {
   IconCheckbox,
@@ -71,5 +72,6 @@ export {
   AsyncWorldMap,
   SearchForm,
   OrdersTable,
-  CustomTime
+  CustomTime,
+  OrderMap,
 };

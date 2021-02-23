@@ -2,14 +2,14 @@
     <ValidationObserver ref="formElement">
         <form @submit.prevent="validate">
             <div class="md-layout">
-                <div class="md-layout-item md-size-66 mt-4 md-small-size-100 md-small-hide">
-                    Mapa
+                <div class="md-layout-item md-size-66 mt-4 md-small-size-100">
+                    <order-map :location-from="locationFrom" :location-to="locationTo" :options-truck="options" :form="value"></order-map>
                 </div>
                 <div class="md-layout-item md-size-33 mt-4 md-small-size-100">
                     <ValidationProvider :name="$t('order.form.firstStep.truck.label')" rules="required" v-slot="{ passed, errors, failed }" tag="div">
                         <md-field :mdClearable="true" :class="[{ 'md-error md-invalid': failed }, { 'md-valid': passed }]">
                             <label>{{ $t('order.form.firstStep.truck.label') }}</label>
-                            <md-select v-model="value.truck" :name="$t('order.form.firstStep.truck.label')" :multiple="false" @change="updateMap">
+                            <md-select v-model="value.truck" :name="$t('order.form.firstStep.truck.label')" :multiple="false">
                                 <template v-if="options && options.length > 0">
                                         <md-option :value="optionValue(option)" v-for="option in options" :key="optionValue(option)">{{ optionLabel(option) }}</md-option>
                                 </template>
@@ -38,19 +38,24 @@
     import { SlideYDownTransition } from "vue2-transitions";
     import { extend } from "vee-validate";
     import { required } from "vee-validate/dist/rules";
+    import { OrderMap } from "@/components";
 
     extend("required", required);
 
     export default {
         name: "FirstStep",
         components: {
-            SlideYDownTransition
+            SlideYDownTransition,
+            OrderMap
         },
         props: {
             options: {
                 type: Array
             },
             locationFrom: {
+                type: Object
+            },
+            locationTo: {
                 type: Object
             },
             value: {
@@ -90,9 +95,6 @@
             setErrors(errors) {
                 this.$refs['formElement'].setErrors(errors);
             },
-            updateMap() {
-
-            }
         }
     }
 </script>

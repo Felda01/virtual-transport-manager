@@ -103,12 +103,14 @@ class PathsForOrderQuery extends Query
                 $routes = PathUtility::getRoutesFromPath($item['path']);
 
                 if ($needTruckPath) {
+                    $path = array_merge($truckPath['path'], $item['path']);
                     $result = [
-                        'path' => array_merge($truckPath['path'], $item['path']) ,
+                        'path' => $path,
                         'distance' => $truckPath['cost'] + $item['cost'],
                         'time' => $truckRoutes->sum('time') + $routes->sum('time'),
                         'fee' => $truckRoutes->sum('fee') + $routes->sum('fee'),
-                        'routes' => array_merge($truckRoutes->pluck('id')->all(), $routes->pluck('id')->all())
+                        'routes' => array_merge($truckRoutes->pluck('id')->all(), $routes->pluck('id')->all()),
+                        'pathModels' => PathUtility::getPathLocations($path),
                     ];
                 } else {
                     $result = [
@@ -116,7 +118,8 @@ class PathsForOrderQuery extends Query
                         'distance' => $item['cost'],
                         'time' => $routes->sum('time'),
                         'fee' => $routes->sum('fee'),
-                        'routes' => $routes->pluck('id')->all()
+                        'routes' => $routes->pluck('id')->all(),
+                        'pathModels' => PathUtility::getPathLocations($item['path']),
                     ];
                 }
 

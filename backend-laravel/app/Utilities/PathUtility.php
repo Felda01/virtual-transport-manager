@@ -1,6 +1,7 @@
 <?php
 namespace App\Utilities;
 
+use App\Models\Location;
 use App\Models\Route;
 
 /**
@@ -96,5 +97,23 @@ class PathUtility
         } catch (\Exception $e) {
         }
         return 0;
+    }
+
+    /**
+     * @param $path
+     * @param string[] $columns
+     * @return Location[]|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public static function getPathLocations($path, $columns = ['id', 'lat', 'lng'])
+    {
+        $query = Location::query();
+
+        $query = $query->whereIn('id', $path);
+
+        foreach ($path as $item) {
+                $query = $query->orderByRaw('id = "'. $item .'"');
+        }
+
+        return $query->get($columns);
     }
 }
