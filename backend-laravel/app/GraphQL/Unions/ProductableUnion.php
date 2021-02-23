@@ -6,6 +6,7 @@ namespace App\GraphQL\Unions;
 
 use App\Models\Driver;
 use App\Models\Garage;
+use App\Models\Order;
 use App\Models\Trailer;
 use App\Models\Truck;
 use Rebing\GraphQL\Support\Facades\GraphQL;
@@ -24,6 +25,7 @@ class ProductableUnion extends UnionType
             GraphQL::type('Trailer'),
             GraphQL::type('Driver'),
             GraphQL::type('Garage'),
+            GraphQL::type('Order'),
         ];
     }
 
@@ -37,6 +39,8 @@ class ProductableUnion extends UnionType
             return GraphQL::type('Driver');
         } elseif ($root instanceof Garage) {
             return GraphQL::type('Garage');
+        } elseif ($root instanceof Order) {
+            return GraphQL::type('Order');
         }
         return null;
     }

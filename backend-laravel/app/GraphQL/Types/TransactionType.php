@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\GraphQL\Types;
 
 use App\Models\Transaction;
+use App\Utilities\GameTimeUtility;
+use Carbon\Carbon;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Type as GraphQLType;
@@ -42,7 +44,8 @@ class TransactionType extends GraphQLType
                 'type' => Type::string(),
                 'resolve' => function($root, $args) {
                     /** @var Transaction $root  */
-                    return $root->created_at->format('d.m.Y H:i');
+                    $time = GameTimeUtility::gameTime($root->created_at);
+                    return Carbon::parse($time, 'Europe/Bratislava')->format('d.m.Y H:i');
                 }
             ]
         ];

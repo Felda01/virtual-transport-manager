@@ -114,6 +114,29 @@ export const ACTIVITIES_QUERY = gql`
                     ... on Order {
                         __typename 
                         id
+                        market {
+                            id
+                            cargo {
+                                id
+                                name
+                            }
+                            locationFrom {
+                                id
+                                name
+                                country {
+                                    id
+                                    short_name
+                                }
+                            }
+                            locationTo {
+                                id
+                                name
+                                country {
+                                    id
+                                    short_name
+                                }
+                            }
+                        }
                     }
                     ... on BankLoan {
                         __typename

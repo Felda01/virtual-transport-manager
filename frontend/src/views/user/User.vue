@@ -210,6 +210,9 @@
                 return roles.map(role => this.$t('role.' + role.name)).join(", ");
             },
             activitySubject(subject) {
+                if (!subject) {
+                    return "";
+                }
                 switch (subject.__typename) {
                     case "User":
                         return subject.first_name + " " + subject.last_name;
@@ -221,6 +224,8 @@
                         return subject.truckModel.brand + " " + subject.truckModel.name + " - " + subject.garage.location.name + " (" + subject.garage.location.country.short_name.toUpperCase() + ")";
                     case "Trailer":
                         return subject.trailerModel.name + " - " + subject.garage.location.name + " (" + subject.garage.location.country.short_name.toUpperCase() + ")";
+                    case "Order":
+                        return subject.market.cargo.name + " - " + subject.market.locationFrom.name + " (" + subject.market.locationFrom.country.short_name.toUpperCase() + ")" + " >>> " + subject.market.locationTo.name + " (" + subject.market.locationTo.country.short_name.toUpperCase() + ")";
                     default:
                         return "";
                 }

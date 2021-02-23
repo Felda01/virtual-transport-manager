@@ -22,7 +22,7 @@ class GameTimeUtility
     {
         $start = Carbon::parse(Config::get('constants.start_game_time'), 'Europe/Bratislava');
 
-        $currentTime = Carbon::parse($time);
+        $currentTime = Carbon::parse($time, 'Europe/Bratislava');
 
         $diffSeconds = $start->diffInRealSeconds($currentTime);
 

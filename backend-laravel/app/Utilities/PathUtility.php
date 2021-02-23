@@ -3,6 +3,8 @@ namespace App\Utilities;
 
 use App\Models\Location;
 use App\Models\Route;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Http;
 
 /**
  * Class PathUtility
@@ -44,18 +46,20 @@ class PathUtility
      */
     public static function getPaths($locationFrom, $locationTo)
     {
-//        $response = Http::withBasicAuth(config('services.nodejs.user'), config('services.nodejs.password'))->post(config('services.nodejs.url'), [
-//            'from' => $locationFrom,
-//            'to' => $locationTo,
-//        ]);
-//
-//        if (!$response->successful()) {
-//            return [];
-//        }
-//
-//        return $response->json();
+        if (App::environment('local')) {
+            return ["result" => [["path" => ["6eb19875-7dba-4407-9605-3dabf4972c63","e05b0a43-0cfb-4bf6-80be-e2718b68e712","05932cb4-ec20-4745-9d01-0a4918d0a12a"],"cost" => 4404],["path" => ["6eb19875-7dba-4407-9605-3dabf4972c63","e05b0a43-0cfb-4bf6-80be-e2718b68e712","023eb1af-7df5-49e5-aed4-aab7548a183c","05932cb4-ec20-4745-9d01-0a4918d0a12a"],"cost" => 4678], ["cost" => 9007199254740991]]];
+        } else {
+            $response = Http::withBasicAuth(config('services.nodejs.user'), config('services.nodejs.password'))->post(config('services.nodejs.url'), [
+                'from' => $locationFrom,
+                'to' => $locationTo,
+            ]);
 
-        return ["result" => [["path" => ["6eb19875-7dba-4407-9605-3dabf4972c63","e05b0a43-0cfb-4bf6-80be-e2718b68e712","05932cb4-ec20-4745-9d01-0a4918d0a12a"],"cost" => 4404],["path" => ["6eb19875-7dba-4407-9605-3dabf4972c63","e05b0a43-0cfb-4bf6-80be-e2718b68e712","023eb1af-7df5-49e5-aed4-aab7548a183c","05932cb4-ec20-4745-9d01-0a4918d0a12a"],"cost" => 4678], ["cost" => 9007199254740991]]];
+            if (!$response->successful()) {
+                return [];
+            }
+
+            return $response->json();
+        }
     }
 
     /**

@@ -25,6 +25,7 @@ class CreateOrdersTable extends Migration
             $table->foreign('road_trip_id')->references('id')->on('road_trips');
             $table->uuid('company_id')->nullable();
             $table->foreign('company_id')->references('id')->on('companies');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

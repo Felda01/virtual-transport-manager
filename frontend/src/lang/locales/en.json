@@ -655,7 +655,29 @@
       "created_at": "Created at"
     },
     "created": {
-      "trailer": "Buy new trailer"
+      "trailer": "Buy new trailer",
+      "truck": "Buy new truck",
+      "garage": "Buy new garage",
+      "driver": "Hire new driver",
+      "order": "Accept new order",
+      "bankLoan": "",
+      "user": "Hire new user"
+    },
+    "updated": {
+      "trailer": "Buy new trailer",
+      "truck": "Buy new truck",
+      "garage": "Upgrade garage",
+      "driver": "Driver training",
+      "order": "Assign order",
+      "bankLoan": "",
+      "user": ""
+    },
+    "deleted": {
+      "trailer": "Sell trailer",
+      "truck": "Sell truck",
+      "garage": "Sell garage",
+      "driver": "Fire driver",
+      "user": "Fire user"
     }
   },
   "order": {

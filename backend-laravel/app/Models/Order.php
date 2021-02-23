@@ -7,6 +7,7 @@ use App\Utilities\FilterUtility;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Contracts\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -46,7 +47,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  */
 class Order extends Model
 {
-    use HasFactory, HasUuid, LogsActivity;
+    use HasFactory, HasUuid, LogsActivity, SoftDeletes;
 
     const LAST_ORDERS_COUNT = 10;
 
