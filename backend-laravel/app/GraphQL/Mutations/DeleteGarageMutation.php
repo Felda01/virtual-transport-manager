@@ -88,7 +88,7 @@ class DeleteGarageMutation extends Mutation
 
             $price = $deletedGarage->garageModel->price / 2;
 
-            $transaction = TransactionUtility::create($company, $garage, $price, 'sell');
+            $transaction = TransactionUtility::create($company, $garage, $price, 'garage_sell');
 
             $oldMoney = $company->money;
 

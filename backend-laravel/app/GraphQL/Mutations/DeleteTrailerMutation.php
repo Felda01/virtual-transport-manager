@@ -86,7 +86,7 @@ class DeleteTrailerMutation extends Mutation
 
             $price = $deletedTrailer->trailerModel->price / 2;
 
-            $transaction = TransactionUtility::create($company, $trailer, $price, 'sell');
+            $transaction = TransactionUtility::create($company, $trailer, $price, 'trailer_sell');
 
             try {
                 $trailer->delete();

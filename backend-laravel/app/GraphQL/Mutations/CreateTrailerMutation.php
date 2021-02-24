@@ -107,7 +107,7 @@ class CreateTrailerMutation extends Mutation
 
             $price = $trailerModel->price;
 
-            $transaction = TransactionUtility::create($company, $trailer, -1 * $price, 'create');
+            $transaction = TransactionUtility::create($company, $trailer, -1 * $price, 'trailer_create');
 
             $oldMoney = $company->money;
 

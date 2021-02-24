@@ -86,7 +86,7 @@ class DeleteTruckMutation extends Mutation
 
             $price = $deletedTruck->truckModel->price / 2;
 
-            $transaction = TransactionUtility::create($company, $truck, $price, 'sell');
+            $transaction = TransactionUtility::create($company, $truck, $price, 'truck_sell');
 
             try {
                 $truck->delete();

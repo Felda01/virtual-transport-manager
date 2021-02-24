@@ -94,7 +94,7 @@ class CreateGarageMutation extends Mutation
 
             $price = $garage->garageModel->price;
 
-            $transaction = TransactionUtility::create($company, $garage, -1 * $price, 'create');
+            $transaction = TransactionUtility::create($company, $garage, -1 * $price, 'garage_create');
 
             $oldMoney = $company->money;
 

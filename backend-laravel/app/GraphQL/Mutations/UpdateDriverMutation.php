@@ -96,7 +96,7 @@ class UpdateDriverMutation extends Mutation
 
             $price = config('constants.adr_price')[$driver->adr];
 
-            $transaction = TransactionUtility::create($company, $driver, -1 * $price, 'training');
+            $transaction = TransactionUtility::create($company, $driver, -1 * $price, 'driver_training');
 
             $oldMoney = $company->money;
 

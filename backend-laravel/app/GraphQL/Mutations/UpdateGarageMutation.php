@@ -101,7 +101,7 @@ class UpdateGarageMutation extends Mutation
 
             $price = $garageModel->price - $currentGarageModel->price;
 
-            $transaction = TransactionUtility::create($company, $garage, -1 * $price, 'upgrade');
+            $transaction = TransactionUtility::create($company, $garage, -1 * $price, 'garage_upgrade');
 
             $oldMoney = $company->money;
 

@@ -108,7 +108,7 @@ class CreateTruckMutation extends Mutation
 
             $price = $truckModel->price;
 
-            $transaction = TransactionUtility::create($company, $truck, -1 * $price, 'create');
+            $transaction = TransactionUtility::create($company, $truck, -1 * $price, 'truck_create');
 
             $oldMoney = $company->money;
 

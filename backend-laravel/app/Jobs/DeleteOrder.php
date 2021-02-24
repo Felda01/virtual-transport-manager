@@ -54,7 +54,7 @@ class DeleteOrder implements ShouldQueue
                 $oldMoney = $company->money;
                 $price = config('constants.expired_order');
 
-                $transaction = TransactionUtility::create($company, $this->order, -1 * $price, 'expired');
+                $transaction = TransactionUtility::create($company, $this->order, -1 * $price, 'order_expired');
 
                 $company->decrement('money', $price);
                 $company->save();
