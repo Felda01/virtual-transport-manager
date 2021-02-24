@@ -70,10 +70,10 @@ class FilterUtility
             return $result;
         }
 
-        if ($values[0] && is_numeric($values[0])) {
+        if (is_numeric($values[0])) {
             $result['min'] = $values[0];
         }
-        if ($values[1] && is_numeric($values[1])) {
+        if (is_numeric($values[1])) {
             $result['max'] = $values[1];
         }
 

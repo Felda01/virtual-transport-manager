@@ -56,7 +56,7 @@
                                 </div>
                             </div>
                         </template>
-                        <template v-if="field.input === 'switch'">
+                        <template v-else-if="field.input === 'switch'">
                             <md-switch class="md-primary" v-model="value[field.name]">{{ field.label }}</md-switch>
                         </template>
                     </div>

@@ -10,6 +10,7 @@ use App\Models\Trailer;
 use App\Models\Truck;
 use App\Models\User;
 use App\Utilities\BroadcastUtility;
+use App\Utilities\CompanyUtility;
 use App\Utilities\GameTimeUtility;
 use App\Utilities\QueueJobUtility;
 use App\Utilities\TransactionUtility;
@@ -52,46 +53,35 @@ class PayFees implements ShouldQueue
             $result = DB::transaction(function () use ($item) {
                 $sum = 0;
 
-                $userSalary = User::where('company_id', $item->id)->sum('salary');
-                if ($userSalary && $userSalary > 0) {
-                    TransactionUtility::create($item, null, $userSalary, 'user_salaries');
-                    $sum += $userSalary;
+                $data = CompanyUtility::nextPayment($item);
+
+                if ($data['userSalary'] && $data['userSalary'] > 0) {
+                    TransactionUtility::create($item, null, -1 * $data['userSalary'], 'user_salaries');
+                    $sum += $data['userSalary'];
                 }
 
-                $driverSalary = Driver::where('company_id', $item->id)->sum('salary');
-                if ($driverSalary && $driverSalary > 0) {
-                    TransactionUtility::create($item, null, $driverSalary, 'driver_salaries');
-                    $sum += $driverSalary;
+                if ($data['driverSalary'] && $data['driverSalary'] > 0) {
+                    TransactionUtility::create($item, null, -1 * $data['driverSalary'], 'driver_salaries');
+                    $sum += $data['driverSalary'];
                 }
 
-                $truckData = Truck::where('company_id', $item->id)
-                    ->join('truck_models', 'trucks.truck_model_id', '=', 'truck_models.id')
-                    ->selectRaw('sum(truck_models.tax) as truck_tax, sum(truck_models.insurance) as truck_insurance')
-                    ->first()->toArray();
-                if ($truckData && $truckData['truck_tax'] && $truckData['truck_insurance']) {
-                    TransactionUtility::create($item, null, $truckData['truck_tax'], 'truck_taxes');
-                    TransactionUtility::create($item, null, $truckData['truck_insurance'], 'truck_insurances');
-                    $sum += $truckData['truck_tax'] + $truckData['truck_insurance'];
+
+                if ($data['truck_tax'] && $data['truck_insurance']) {
+                    TransactionUtility::create($item, null, -1 * $data['truck_tax'], 'truck_taxes');
+                    TransactionUtility::create($item, null, -1 * $data['truck_insurance'], 'truck_insurances');
+                    $sum += $data['truck_tax'] + $data['truck_insurance'];
                 }
 
-                $trailerData = Trailer::where('company_id', $item->id)
-                    ->join('trailer_models', 'trailers.trailer_model_id', '=', 'trailer_models.id')
-                    ->selectRaw('sum(trailer_models.tax) as trailer_tax, sum(trailer_models.insurance) as trailer_insurance')
-                    ->first()->toArray();
-                if ($trailerData && $trailerData['trailer_tax'] && $trailerData['trailer_insurance']) {
-                    TransactionUtility::create($item, null, $trailerData['trailer_tax'], 'trailer_taxes');
-                    TransactionUtility::create($item, null, $trailerData['trailer_insurance'], 'trailer_insurances');
-                    $sum += $trailerData['trailer_tax'] + $trailerData['trailer_insurance'];
+                if ($data['trailer_tax'] && $data['trailer_insurance']) {
+                    TransactionUtility::create($item, null, -1 * $data['trailer_tax'], 'trailer_taxes');
+                    TransactionUtility::create($item, null, -1 * $data['trailer_insurance'], 'trailer_insurances');
+                    $sum += $data['trailer_tax'] + $data['trailer_insurance'];
                 }
 
-                $garageData = Garage::where('company_id', $item->id)
-                    ->join('garage_models', 'garages.garage_model_id', '=', 'garage_models.id')
-                    ->selectRaw('sum(garage_models.tax) as garage_tax, sum(garage_models.insurance) as garage_insurance')
-                    ->first()->toArray();
-                if ($garageData && $garageData['garage_tax'] && $garageData['garage_insurance']) {
-                    TransactionUtility::create($item, null, $garageData['garage_tax'], 'garage_taxes');
-                    TransactionUtility::create($item, null, $garageData['garage_insurance'], 'garage_insurances');
-                    $sum += $garageData['garage_tax'] + $garageData['garage_insurance'];
+                if ($data['garage_tax'] && $data['garage_insurance']) {
+                    TransactionUtility::create($item, null, -1 * $data['garage_tax'], 'garage_taxes');
+                    TransactionUtility::create($item, null, -1 * $data['garage_insurance'], 'garage_insurances');
+                    $sum += $data['garage_tax'] + $data['garage_insurance'];
                 }
 
                 $oldMoney = $item->money;

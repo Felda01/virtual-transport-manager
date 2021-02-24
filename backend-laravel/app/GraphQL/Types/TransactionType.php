@@ -45,7 +45,7 @@ class TransactionType extends GraphQLType
                 'resolve' => function($root, $args) {
                     /** @var Transaction $root  */
                     $time = GameTimeUtility::gameTime($root->created_at);
-                    return Carbon::parse($time, 'Europe/Bratislava')->format('d.m.Y H:i');
+                    return Carbon::parse($time, 'Europe/Bratislava')->format('d.m.Y');
                 }
             ]
         ];

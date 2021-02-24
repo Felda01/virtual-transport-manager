@@ -54,6 +54,11 @@
                             :link="{ name: $t('pages.doneOrders'), path: generatePath('doneOrders') }"
                     ></sidebar-item>
                 </sidebar-item>
+                <sidebar-item :link="{ name: $t('navigation.economy'), icon: 'trending_up' }">
+                    <sidebar-item
+                            :link="{ name: $t('pages.transactions'), path: generatePath('transactions') }"
+                    ></sidebar-item>
+                </sidebar-item>
             </template>
         </side-bar>
         <div class="main-panel">

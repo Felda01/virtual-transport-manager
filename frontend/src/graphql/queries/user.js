@@ -1271,3 +1271,152 @@ export const PATHS_FOR_ORDER = gql`
     }
 `;
 
+export const TRANSACTIONS_QUERY = gql`
+    query TransactionsQuery($limit: Int!, $page: Int!, $filter: [FilterInput], $sort: String) {
+        transactions(limit: $limit, page: $page, filter: $filter, sort: $sort) {
+            data {
+                id
+                value
+                activity
+                created_at
+                user {
+                    id
+                    first_name
+                    last_name
+                }
+                productable {
+                    __typename
+                    ... on Garage {
+                        __typename
+                        id
+                        garageModel {
+                            id
+                            name
+                        }
+                        location {
+                            id
+                            name
+                            country {
+                                id
+                                short_name
+                            }
+                        }
+                    }
+                    ... on Truck {
+                        __typename
+                        id
+                        truckModel {
+                            id
+                            brand
+                            name
+                        }
+                        garage {
+                            id
+                            location {
+                                id
+                                name
+                                country {
+                                    id
+                                    short_name
+                                }
+                            }
+                        }
+                    }
+                    ... on Trailer {
+                        __typename
+                        id
+                        trailerModel {
+                            id
+                            name
+                        }
+                        garage {
+                            id
+                            location {
+                                id
+                                name
+                                country {
+                                    id
+                                    short_name
+                                }
+                            }
+                        }
+                    }
+                    ... on Driver {
+                        __typename
+                        id
+                        first_name
+                        last_name
+                        garage {
+                            id
+                            location {
+                                id
+                                name
+                                country {
+                                    id
+                                    short_name
+                                }
+                            }
+                        }
+                    }
+                    ... on Order {
+                        __typename 
+                        id
+                        market {
+                            id
+                            cargo {
+                                id
+                                name
+                            }
+                            locationFrom {
+                                id
+                                name
+                                country {
+                                    id
+                                    short_name
+                                }
+                            }
+                            locationTo {
+                                id
+                                name
+                                country {
+                                    id
+                                    short_name
+                                }
+                            }
+                        }
+                    }
+                    ... on BankLoan {
+                        __typename
+                        id
+                    }
+                }
+            }
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
+            has_more_pages
+        }
+    }    
+`;
+
+export const USERS_SELECT_QUERY = gql`
+    query UsersQuery($limit: Int!, $page: Int!, $filter: [FilterInput]) {
+        users(limit: $limit, page: $page, filter: $filter) {
+            data {
+                id
+                first_name
+                last_name
+            }
+        }
+    }
+`;
+
+export const NEXT_PAYMENT_QUERY = gql`
+    query NextPaymentQuery {
+        nextPayment
+    }
+`;
+

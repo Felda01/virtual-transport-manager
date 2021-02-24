@@ -8,6 +8,7 @@ use App\Models\Company;
 use App\Utilities\BroadcastUtility;
 use App\Utilities\GameTimeUtility;
 use App\Utilities\QueueJobUtility;
+use App\Utilities\TransactionUtility;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Bus\Queueable;
@@ -62,12 +63,14 @@ class PayBankLoans implements ShouldQueue
                         'done' => true,
                     ]);
 
+                $transaction = TransactionUtility::create($item, null, -1 * $sum, 'bank_loan_payment');
+
                 $oldMoney = $item->money;
 
                 $item->decrement('money', $sum);
                 $item->save();
 
-                if ($item->money !== ($oldMoney - $sum) || !$updated || !$updatedDone) {
+                if ($item->money !== ($oldMoney - $sum) || !$updated || !$updatedDone || !$transaction) {
                     throw new Exception(trans('validation.general_exception'));
                 }
             });

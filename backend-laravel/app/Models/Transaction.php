@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Traits\HasUuid;
+use App\Utilities\FilterUtility;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -38,12 +40,24 @@ class Transaction extends Model
 {
     use HasFactory, HasUuid;
 
+    const SYSTEM_USER = 'system';
+
     /**
      * The attributes that aren't mass assignable.
      *
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * The attributes that are searchable.
+     *
+     * @var string[]
+     */
+    public static $searchable = [
+        'user',
+        'value',
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -58,7 +72,7 @@ class Transaction extends Model
      */
     public function productable()
     {
-        return $this->morphTo();
+        return $this->morphTo()->withTrashed();
     }
 
     /**
@@ -67,5 +81,43 @@ class Transaction extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchUser($query, $value)
+    {
+        if ($value) {
+            if ($value === self::SYSTEM_USER) {
+                return $query->whereNull('user_id');
+            }
+            return $query->whereHas('user', function (Builder $query) use ($value) {
+                $query->where('id', $value);
+            });
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $value
+     * @return Builder
+     */
+    public function searchValue($query, $value)
+    {
+        $values = FilterUtility::getRangeValues($value);
+
+        if (array_key_exists('min', $values)) {
+            $query = $query->where('value', '>=', $values['min']);
+        }
+        if (array_key_exists('max', $values)) {
+            $query = $query->where('value', '<=', $values['max']);
+        }
+
+        return $query;
     }
 }

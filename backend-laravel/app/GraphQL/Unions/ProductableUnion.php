@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Unions;
 
+use App\Models\BankLoan;
 use App\Models\Driver;
 use App\Models\Garage;
 use App\Models\Order;
@@ -26,6 +27,7 @@ class ProductableUnion extends UnionType
             GraphQL::type('Driver'),
             GraphQL::type('Garage'),
             GraphQL::type('Order'),
+            GraphQL::type('BankLoan'),
         ];
     }
 
@@ -41,6 +43,8 @@ class ProductableUnion extends UnionType
             return GraphQL::type('Garage');
         } elseif ($root instanceof Order) {
             return GraphQL::type('Order');
+        } elseif ($root instanceof BankLoan) {
+            return GraphQL::type('BankLoan');
         }
         return null;
     }

@@ -271,6 +271,20 @@ const userRoutes = [
                     }
                 }
             },
+            {
+                path: enRoute.transactions,
+                ...(getAlias('transactions')) && { alias: getAlias('transactions') },
+                name: 'transactions',
+                component: () => import('../views/user/Transactions.vue'),
+                meta: {
+                    requiresAuth: true,
+                    userOnly: true,
+                    title: i18n.t('pages.transactions'),
+                    path: {
+                        en: enRoute.transactions
+                    }
+                }
+            },
         ]
     },
 ];

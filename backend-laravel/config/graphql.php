@@ -151,6 +151,8 @@ return [
 
                 'activities' => \App\GraphQL\Queries\ActivitiesQuery::class,
                 'markets' => \App\GraphQL\Queries\MarketsQuery::class,
+                'transactions' => \App\GraphQL\Queries\TransactionsQuery::class,
+                'nextPayment' => \App\GraphQL\Queries\NextPaymentQuery::class,
 
                 'orders' => \App\GraphQL\Queries\OrdersQuery::class,
                 'order' => \App\GraphQL\Queries\OrderQuery::class,

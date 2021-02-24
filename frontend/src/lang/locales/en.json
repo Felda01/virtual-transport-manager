@@ -32,7 +32,8 @@
     "orderOffers": "Order offers",
     "orders": "Orders",
     "doneOrders": "Done orders",
-    "order": "Order"
+    "order": "Order",
+    "transactions": "Accounting"
   },
   "routes": {
     "login": "login",
@@ -61,7 +62,8 @@
     "drivers": "drivers",
     "orderOffers": "order-offers",
     "orders": "orders",
-    "doneOrders": "done-orders"
+    "doneOrders": "done-orders",
+    "transactions": "accounting"
   },
   "navigation": {
     "staticMapData": "Map data",
@@ -72,7 +74,8 @@
       "myProfile": "My Profile",
       "MP": "MP"
     },
-    "orders": "Orders"
+    "orders": "Orders",
+    "economy": "Economy"
   },
   "search": {
     "title": "Filters",
@@ -767,6 +770,72 @@
       "price_desc": "Price High to Low",
       "km_asc": "Distance Low to High",
       "km_desc": "Distance High to Low"
+    }
+  },
+  "transaction": {
+    "property": {
+      "activity": "Activity",
+      "value": "Price",
+      "valueUnit": "€",
+      "user": "User",
+      "no_user": "System",
+      "product": "Product",
+      "created_at": "Date"
+    },
+    "searchFields": {
+      "price_asc": "Price Low to High",
+      "price_desc": "Price High to Low",
+      "created_at_asc": "First soonest dates",
+      "created_at_desc": "First latest dates"
+    },
+    "activity": {
+      "garage_create": "Buy new garage",
+      "garage_upgrade": "Upgrade garage",
+      "garage_sell": "Sell garage",
+      "garage_taxes": "Garage taxes",
+      "garage_insurances": "Garage insurance",
+      "truck_create": "Buy new truck",
+      "truck_sell": "Sell truck",
+      "truck_taxes": "Truck taxes",
+      "truck_insurances": "Truck insurance",
+      "trailer_create": "Buy new trailer",
+      "trailer_sell": "Sell trailer",
+      "trailer_taxes": "Trailer taxes",
+      "trailer_insurances": "Trailer insurance",
+      "driver_training": "Driver training",
+      "driver_salaries": "Driver salaries",
+      "user_salaries": "User salaries",
+      "order_finish": "Price for the order",
+      "order_road_fees": "Price for the toll roads",
+      "order_expired": "Penalty for not delivery order",
+      "bank_loan_payment": "Bank loan payment"
+    },
+    "next_payment": {
+      "title": "Next month payments",
+      "text": "Taxes, insurance, salaries",
+      "name": "Type of payment",
+      "price": "Price",
+      "priceUnit": "€",
+      "total": "Total",
+      "item": {
+        "0": "User salaries",
+        "1": "Drivers salaries",
+        "2": "Truck taxes",
+        "3": "Truck insurance",
+        "4": "Trailer taxes",
+        "5": "Trailer insurance",
+        "6": "Garage taxes",
+        "7": "Garage insurance"
+      }
+    },
+    "next_payment_chart": {
+      "title": "Next month payments percentage chart",
+      "legend": "Legend",
+      "series_a": "User",
+      "series_b": "Driver",
+      "series_c": "Truck",
+      "series_d": "Trailer",
+      "series_e": "Garage"
     }
   }
 }
