@@ -310,3 +310,27 @@ export const UPDATE_ORDER_MUTATION = gql`
     }
 `;
 
+export const CREATE_BANK_LOAN_MUTATION = gql`
+    mutation CreateBankLoanMutation($bank_loan_type: String!) {
+        createBankLoan(bank_loan_type: $bank_loan_type) {
+            id
+            bankLoanType {
+                id
+                value
+            }
+        }
+    }
+`;
+
+export const UPDATE_BANK_LOAN_MUTATION = gql`
+    mutation UpdateBankLoanMutation($id: String!) {
+        updateBankLoan(id: $id) {
+            id
+            bankLoanType {
+                id
+                value
+            }
+        }
+    }
+`;
+

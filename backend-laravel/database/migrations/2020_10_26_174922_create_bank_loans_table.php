@@ -21,6 +21,7 @@ class CreateBankLoansTable extends Migration
             $table->foreign('bank_loan_type_id')->references('id')->on('bank_loan_types');
             $table->boolean('done')->default(false);
             $table->integer('paid')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

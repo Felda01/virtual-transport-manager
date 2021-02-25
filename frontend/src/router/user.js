@@ -285,6 +285,20 @@ const userRoutes = [
                     }
                 }
             },
+            {
+                path: enRoute.bankLoans,
+                ...(getAlias('bankLoans')) && { alias: getAlias('bankLoans') },
+                name: 'bankLoans',
+                component: () => import('../views/user/BankLoans.vue'),
+                meta: {
+                    requiresAuth: true,
+                    userOnly: true,
+                    title: i18n.t('pages.bankLoans'),
+                    path: {
+                        en: enRoute.bankLoans
+                    }
+                }
+            },
         ]
     },
 ];

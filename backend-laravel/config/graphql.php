@@ -153,6 +153,7 @@ return [
                 'markets' => \App\GraphQL\Queries\MarketsQuery::class,
                 'transactions' => \App\GraphQL\Queries\TransactionsQuery::class,
                 'nextPayment' => \App\GraphQL\Queries\NextPaymentQuery::class,
+                'bankLoans' => \App\GraphQL\Queries\BankLoansQuery::class,
 
                 'orders' => \App\GraphQL\Queries\OrdersQuery::class,
                 'order' => \App\GraphQL\Queries\OrderQuery::class,
@@ -222,6 +223,9 @@ return [
 
                 'createOrder' => \App\GraphQL\Mutations\CreateOrderMutation::class,
                 'updateOrder' => \App\GraphQL\Mutations\UpdateOrderMutation::class,
+
+                'createBankLoan' => \App\GraphQL\Mutations\CreateBankLoanMutation::class,
+                'updateBankLoan' => \App\GraphQL\Mutations\UpdateBankLoanMutation::class,
             ],
             'middleware' => ['auth:api'],
             'method' => ['get', 'post'],

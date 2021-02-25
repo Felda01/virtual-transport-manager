@@ -68,4 +68,6 @@ return [
 
     'working_hours' => 9,
 
+    'max_bank_loans' => 5,
+
 ];

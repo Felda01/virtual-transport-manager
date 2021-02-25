@@ -33,7 +33,8 @@
     "orders": "Orders",
     "doneOrders": "Done orders",
     "order": "Order",
-    "transactions": "Accounting"
+    "transactions": "Accounting",
+    "bankLoans": "Bank"
   },
   "routes": {
     "login": "login",
@@ -63,7 +64,8 @@
     "orderOffers": "order-offers",
     "orders": "orders",
     "doneOrders": "done-orders",
-    "transactions": "accounting"
+    "transactions": "accounting",
+    "bankLoans": "bank"
   },
   "navigation": {
     "staticMapData": "Map data",
@@ -99,7 +101,9 @@
       "unassign": "Unassign",
       "training": "Training",
       "fire": "Fire",
-      "acceptOffer": "Accept offer"
+      "acceptOffer": "Accept offer",
+      "apply": "Apply",
+      "repay": "Repay"
     },
     "select": {
       "emptyOption": "No available options"
@@ -169,7 +173,8 @@
           "trailer": "Buy new trailer",
           "driver": "Hire new driver",
           "user": "Register new user",
-          "order": "Are you sure you want to accept this offer? {cargoName} from {locationFromName} to {locationToName} for {price}"
+          "order": "Are you sure you want to accept this offer? {cargoName} from {locationFromName} to {locationToName} for {price}",
+          "bankLoan": "Are you sure you want to apply for a loan of {price}?"
         },
         "update": {
           "bankLoanType": "Update this bank loan type",
@@ -184,7 +189,8 @@
           "driver": "Are you sure you want to train this driver to a higher ADR class for {price} €?",
           "userPassword": "Change password",
           "user": "Update profile info",
-          "userSalary": "Update user salary / roles"
+          "userSalary": "Update user salary / roles",
+          "bankLoan": "Are you sure you want to repay this loan?"
         },
         "delete": {
           "bankLoanType": "Are you sure you want to delete this bank loan type?",
@@ -232,7 +238,8 @@
           "trailer": "The trailer {modelName} was successfully purchased and is being transported to {location}.",
           "driver": "The driver {modelName} was successfully hired and is being traveled to {location}.",
           "user": "The user {modelName} was successfully registered.",
-          "order": "The order {cargoName} from {locationFromName} to {locationToName} for {price} was successfully accepted."
+          "order": "The order {cargoName} from {locationFromName} to {locationToName} for {price} was successfully accepted.",
+          "bankLoan": "The loan of {price} was successfully approved."
         },
         "updated": {
           "bankLoanType": "The bank loan type {modelName} was successfully updated.",
@@ -248,7 +255,8 @@
           "userPassword": "Your password has been successfully updated.",
           "user": "Your profile info has been successfully updated.",
           "userSalary": "The user {modelName} was successfully updated.",
-          "order": "The order {cargoName} from {locationFromName} to {locationToName} for {price} was successfully assigned to selected drivers."
+          "order": "The order {cargoName} from {locationFromName} to {locationToName} for {price} was successfully assigned to selected drivers.",
+          "bankLoan": "The loan of {price} was successfully repaid."
         },
         "deleted": {
           "bankLoanType": "The bank loan type {modelName} was successfully deleted.",
@@ -351,18 +359,24 @@
   },
   "bankLoanType": {
     "property": {
-      "value": "Value",
+      "value": "Loan",
       "valueUnit": "€",
-      "payment": "Payment",
+      "payment": "Installment",
       "paymentUnit": "€/month",
-      "period": "Period",
+      "period": "Duration",
       "periodUnit": "0 | month | months"
     },
     "additionalLabelText": {
       "value": "(in €)",
       "payment": "(€ per month)",
       "period": "(in months)"
-    }
+    },
+    "teaser": {
+      "repayment": "Repayment period",
+      "installment": "Monthly installment",
+      "btn": "Apply"
+    },
+    "offer": "Loan offers"
   },
   "garageModel": {
     "model": "Garage model",
@@ -808,7 +822,9 @@
       "order_finish": "Price for the order",
       "order_road_fees": "Price for the toll roads",
       "order_expired": "Penalty for not delivery order",
-      "bank_loan_payment": "Bank loan payment"
+      "bank_loan_payment": "Loans installments",
+      "bank_loan_create": "Approved loan",
+      "bank_loan_update": "Loan repaid"
     },
     "next_payment": {
       "title": "Next month payments",
@@ -837,5 +853,18 @@
       "series_d": "Trailer",
       "series_e": "Garage"
     }
+  },
+  "bankLoan": {
+    "property": {
+      "loan": "Loan",
+      "loanUnit": "€",
+      "left_to_repay": "Left to repay",
+      "duration": "Duration (in months)",
+      "installment": "Installment",
+      "installmentUnit": "€",
+      "repay": "Repay"
+    },
+    "activeLoans": "Active loans",
+    "noResults": "No active loans found."
   }
 }

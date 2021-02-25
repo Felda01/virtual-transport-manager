@@ -204,3 +204,23 @@ export const STATUSES_QUERY = gql`
         statuses(model: $model)
     }
 `;
+
+export const BANK_LOAN_TYPES_QUERY = gql`
+    query BankLoanTypesQuery($limit: Int!, $page: Int!) {
+        bankLoanTypes(limit: $limit, page: $page) {
+            data {
+                id
+                value
+                payment
+                period
+            }
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
+            has_more_pages
+        }
+    }
+`;

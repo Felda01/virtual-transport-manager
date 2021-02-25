@@ -1420,3 +1420,27 @@ export const NEXT_PAYMENT_QUERY = gql`
     }
 `;
 
+export const BANK_LOANS_QUERY = gql`
+    query BankLoansQuery($limit: Int!, $page: Int!) {
+        bankLoans(limit: $limit, page: $page) {
+            data {
+                id
+                paid
+                bankLoanType {
+                    id
+                    value
+                    payment
+                    period
+                }
+            }
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
+            has_more_pages
+        }
+    }
+`;
+

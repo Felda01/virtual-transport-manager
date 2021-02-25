@@ -75,26 +75,6 @@ export const ROUTES_QUERY = gql`
     }
 `;
 
-export const BANK_LOAN_TYPES_QUERY = gql`
-    query BankLoanTypesQuery($limit: Int!, $page: Int!) {
-        bankLoanTypes(limit: $limit, page: $page) {
-            data {
-                id
-                value
-                payment
-                period
-            }
-            total
-            per_page
-            current_page
-            from
-            to
-            last_page
-            has_more_pages
-        }
-    }
-`;
-
 export const CARGOS_QUERY = gql`
     query CargosQuery($limit: Int!, $page: Int!) {
         cargos(limit: $limit, page: $page) {

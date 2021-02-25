@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Activitylog\Contracts\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -15,6 +16,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property string $company_id
  * @property string $bank_loan_type_id
  * @property int $done
+ * @property int $paid
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\BankLoanType $bankLoanType
@@ -31,7 +33,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  */
 class BankLoan extends Model
 {
-    use HasFactory, HasUuid, LogsActivity;
+    use HasFactory, HasUuid, LogsActivity, SoftDeletes;
 
     /**
      * The attributes that aren't mass assignable.

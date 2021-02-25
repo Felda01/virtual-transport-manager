@@ -32,6 +32,9 @@ class BankLoanType extends GraphQLType
             'done' => [
                 'type' => Type::boolean()
             ],
+            'paid' => [
+                'type' => Type::int()
+            ],
         ];
     }
 }

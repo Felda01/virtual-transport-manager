@@ -59,7 +59,7 @@
 </template>
 
 <script>
-    import { BANK_LOAN_TYPES_QUERY } from '@/graphql/queries/admin';
+    import { BANK_LOAN_TYPES_QUERY } from '@/graphql/queries/common';
     import { CREATE_BANK_LOAN_TYPE_MUTATION, UPDATE_BANK_LOAN_TYPE_MUTATION, DELETE_BANK_LOAN_TYPE_MUTATION } from '@/graphql/mutations/admin';
     import { MutationModal, Pagination, DeleteModal } from "@/components";
     import {LOCALES_QUERY} from "../../graphql/queries/common";

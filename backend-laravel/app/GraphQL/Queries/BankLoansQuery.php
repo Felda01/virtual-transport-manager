@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Queries;
 
-use App\Models\Transaction;
+use App\Models\BankLoan;
 use App\Models\User;
 use App\Utilities\FilterUtility;
-use Carbon\Carbon;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -16,16 +15,16 @@ use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Query;
 use Rebing\GraphQL\Support\SelectFields;
 
-class TransactionsQuery extends Query
+class BankLoansQuery extends Query
 {
     protected $attributes = [
-        'name' => 'transactions',
+        'name' => 'bankLoans',
         'description' => 'A query'
     ];
 
     public function type(): Type
     {
-        return GraphQL::paginate('Transaction');
+        return GraphQL::paginate('BankLoan');
     }
 
     private function guard()
@@ -54,14 +53,6 @@ class TransactionsQuery extends Query
                 'type' => Type::int(),
                 'defaultValue' => 1,
             ],
-            'filter' => [
-                'type' => Type::listOf(GraphQL::type('FilterInput')),
-                'defaultValue' => [],
-            ],
-            'sort' => [
-                'type' => Type::string(),
-                'defaultValue' => ''
-            ]
         ];
     }
 
@@ -72,18 +63,14 @@ class TransactionsQuery extends Query
         $select = $fields->getSelect();
         $with = $fields->getRelations();
 
-        $query = Transaction::query();
-
-        if ($args['filter'] && count($args['filter']) > 0) {
-            $query = FilterUtility::handleFilter($query, new Transaction, Transaction::$searchable, $args['filter']);
-        }
+        $query = BankLoan::query();
 
         $query = FilterUtility::filterCompany($query, User::current());
 
-        if ($args['sort']) {
-            $query = FilterUtility::handleSort($query, (new Transaction)->getTable(), $args['sort']);
-        } else {
-            $query = $query->orderBy('created_at', 'desc');
+        $query = $query->where('done', false);
+
+        if ($args['limit'] === -1) {
+            $args['limit'] = BankLoan::count();
         }
 
         return $query->with($with)
