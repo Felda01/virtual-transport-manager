@@ -17,6 +17,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class PayBankLoans implements ShouldQueue
 {
@@ -43,17 +44,19 @@ class PayBankLoans implements ShouldQueue
     {
         $companies = Company::whereHas('bankLoans', function($query) {
             $query->where('done', false);
-        });
+        })->get();
 
         $companies->each(function ($item, $key) {
             $result = DB::transaction(function () use ($item) {
-                $sum = BankLoan::where('company_id', $item->id)
+                $sum = DB::table('bank_loans')->where('company_id', $item->id)
+                    ->leftJoin('bank_loan_types', 'bank_loans.bank_loan_type_id', '=', 'bank_loan_types.id')
                     ->where('done', false)
-                    ->sum('payment');
+                    ->sum('bank_loan_types.payment');
 
                 $updated = DB::table('bank_loans')->leftJoin('bank_loan_types', 'bank_loans.bank_loan_type_id', '=', 'bank_loan_types.id')
                     ->where('bank_loans.company_id', $item->id)
                     ->where('bank_loan_types.period', '>', DB::raw('bank_loans.paid + 1'))
+                    ->where('done', false)
                     ->increment('bank_loans.paid');
 
                 $updatedDone = DB::table('bank_loans')->leftJoin('bank_loan_types', 'bank_loans.bank_loan_type_id', '=', 'bank_loan_types.id')
@@ -70,7 +73,7 @@ class PayBankLoans implements ShouldQueue
                 $item->decrement('money', $sum);
                 $item->save();
 
-                if ($item->money !== ($oldMoney - $sum) || !$updated || !$updatedDone || !$transaction) {
+                if ($item->money !== ($oldMoney - $sum) || (!$updated && !$updatedDone) || !$transaction) {
                     throw new Exception(trans('validation.general_exception'));
                 }
             });

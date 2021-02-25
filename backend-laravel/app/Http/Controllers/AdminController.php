@@ -10,6 +10,7 @@ use App\Jobs\UpdatePersonalAgency;
 use App\Utilities\QueueJobUtility;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 /**
  * Class AdminController
@@ -109,6 +110,25 @@ class AdminController extends Controller
             QueueJobUtility::dispatch(new PayBankLoans(true), Carbon::now('Europe/Bratislava'));
         } else {
             QueueJobUtility::dispatch(new PayBankLoans(), Carbon::now('Europe/Bratislava'));
+        }
+
+        return back()->with([
+            'message' => 'Job dispatched.'
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function testNodeJs(Request $request)
+    {
+        try {
+            $response = Http::withBasicAuth(config('services.nodejs.user'), config('services.nodejs.password'))->post(config('services.nodejs.test_url'));
+        } catch (\Exception $e) {
+            return back()->with([
+                'message' => $e->getMessage()
+            ]);
         }
 
         return back()->with([

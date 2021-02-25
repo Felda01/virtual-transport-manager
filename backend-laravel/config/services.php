@@ -42,6 +42,7 @@ return [
 
     'nodejs' => [
         'url' => env('NODEJS_URL'),
+        'test_url' => env('NODEJS_TEST_URL'),
         'user' => env('NODEJS_USER'),
         'password' => env('NODEJS_PASSWORD')
     ],
