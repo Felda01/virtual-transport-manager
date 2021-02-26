@@ -1444,3 +1444,28 @@ export const BANK_LOANS_QUERY = gql`
     }
 `;
 
+export const CONVERSATION_QUERY = gql`
+    query ConversationQuery($user1: String!, $user2: String!, $limit: Int!, $page: Int!) {
+        conversation(user1: $user1, user2: $user2,limit: $limit, page: $page) {
+            data {
+                id
+                message
+                userFrom {
+                    id
+                }
+                userTo {
+                    id
+                }
+                created_at
+            }
+            total
+            per_page
+            current_page
+            from
+            to
+            last_page
+            has_more_pages
+        }
+    }
+`;
+

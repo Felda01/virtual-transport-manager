@@ -160,6 +160,8 @@ return [
 
                 'trucksForOrder' => \App\GraphQL\Queries\TrucksForOrderQuery::class,
                 'pathsForOrder' => \App\GraphQL\Queries\PathsForOrderQuery::class,
+
+                'conversation' => \App\GraphQL\Queries\ConversationQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,
@@ -226,6 +228,8 @@ return [
 
                 'createBankLoan' => \App\GraphQL\Mutations\CreateBankLoanMutation::class,
                 'updateBankLoan' => \App\GraphQL\Mutations\UpdateBankLoanMutation::class,
+
+                'createMessage' => \App\GraphQL\Mutations\CreateMessageMutation::class,
             ],
             'middleware' => ['auth:api'],
             'method' => ['get', 'post'],

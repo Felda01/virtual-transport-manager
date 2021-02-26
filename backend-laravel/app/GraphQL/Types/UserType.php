@@ -48,12 +48,6 @@ class UserType extends GraphQLType
             'company' => [
                 'type' => GraphQL::type('Company'),
             ],
-            'messages' => [
-                'type' => Type::listOf(GraphQL::type('Message')),
-            ],
-            'notifications' => [
-                'type' => Type::listOf(GraphQL::type('Notification')),
-            ],
             'roles' => [
                 'type' => Type::listOf(GraphQL::type('Role')),
             ],

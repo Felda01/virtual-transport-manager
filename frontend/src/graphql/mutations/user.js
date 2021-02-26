@@ -334,3 +334,11 @@ export const UPDATE_BANK_LOAN_MUTATION = gql`
     }
 `;
 
+export const CREATE_MESSAGE_MUTATION = gql`
+    mutation CreateMessageMutation($user1: String!, $user2: String!, $message: String!) {
+        createMessage(user1: $user1, user2: $user2, message: $message) {
+            id
+        }
+    }
+`;
+

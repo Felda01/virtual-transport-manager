@@ -25,21 +25,15 @@
             <slot>
               <li>
                 <router-link :to="{name: 'user', params: {id: user.id, locale: $i18n.locale}}">
-                  <span class="sidebar-mini">{{ $t('navigation.user.MP') }}</span>
-                  <span class="sidebar-normal">{{ $t('navigation.user.myProfile') }}</span>
+                  <span class="sidebar-mini">{{ $t('navigation.user.mini') }}</span>
+                  <span class="sidebar-normal">{{ $t('navigation.user.normal') }}</span>
                 </router-link>
               </li>
               <li>
-                <a href="#vue">
-                  <span class="sidebar-mini">EP</span>
-                  <span class="sidebar-normal">Edit Profile</span>
-                </a>
-              </li>
-              <li>
-                <a href="#vue">
-                  <span class="sidebar-mini">S</span>
-                  <span class="sidebar-normal">Settings</span>
-                </a>
+                <router-link :to="{name: 'messages'}">
+                  <span class="sidebar-mini">{{ $t('navigation.messages.mini') }}</span>
+                  <span class="sidebar-normal">{{ $t('navigation.messages.normal') }}</span>
+                </router-link>
               </li>
             </slot>
           </ul>

@@ -33,18 +33,8 @@ class MessageType extends GraphQLType
                 'type' => Type::string(),
             ],
             'created_at' => [
-                'type' => Type::int(),
+                'type' => Type::string(),
             ]
         ];
-    }
-
-    /**
-     * @param $root
-     * @param $args
-     * @return string
-     */
-    protected function resolveCreatedAtField($root, $args)
-    {
-        return $root->created_at->timestamp;
     }
 }

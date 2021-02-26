@@ -152,6 +152,9 @@ import i18n from './lang/index.js';
 import Vue2Filters from 'vue2-filters';
 Vue.use(Vue2Filters);
 
+import VueChatScroll from 'vue-chat-scroll';
+Vue.use(VueChatScroll);
+
 // import Echo from 'laravel-echo';
 // window.io = require('socket.io-client');
 //

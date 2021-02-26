@@ -299,6 +299,20 @@ const userRoutes = [
                     }
                 }
             },
+            {
+                path: enRoute.messages,
+                ...(getAlias('messages')) && { alias: getAlias('messages') },
+                name: 'messages',
+                component: () => import('../views/user/Messages.vue'),
+                meta: {
+                    requiresAuth: true,
+                    userOnly: true,
+                    title: i18n.t('pages.messages'),
+                    path: {
+                        en: enRoute.messages
+                    }
+                }
+            },
         ]
     },
 ];

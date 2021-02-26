@@ -34,7 +34,8 @@
     "doneOrders": "Done orders",
     "order": "Order",
     "transactions": "Accounting",
-    "bankLoans": "Bank"
+    "bankLoans": "Bank",
+    "messages": "Messages"
   },
   "routes": {
     "login": "login",
@@ -65,7 +66,8 @@
     "orders": "orders",
     "doneOrders": "done-orders",
     "transactions": "accounting",
-    "bankLoans": "bank"
+    "bankLoans": "bank",
+    "messages": "messages"
   },
   "navigation": {
     "staticMapData": "Map data",
@@ -73,8 +75,12 @@
     "shop": "Shop / Agency",
     "companyEmployees": "Company employees",
     "user": {
-      "myProfile": "My Profile",
-      "MP": "MP"
+      "normal": "My Profile",
+      "mini": "MP"
+    },
+    "messages": {
+      "mini": "M",
+      "normal": "Messages"
     },
     "orders": "Orders",
     "economy": "Economy"
@@ -866,5 +872,11 @@
     },
     "activeLoans": "Active loans",
     "noResults": "No active loans found."
+  },
+  "message": {
+    "property": {
+      "message": "Message"
+    },
+    "chats": "Chats"
   }
 }
