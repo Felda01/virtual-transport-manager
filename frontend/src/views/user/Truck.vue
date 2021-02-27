@@ -199,6 +199,7 @@
     import { Tabs, ProductCard, ChartCard, MutationModal, DeleteModal, OrdersTable } from "@/components";
     import constants from "../../constants";
     import { mapGetters } from "vuex";
+    import EventBus from "../../event-bus";
 
     export default {
         title () {
@@ -471,6 +472,19 @@
                 this.$apollo.queries.truck.refresh();
                 this.$apollo.queries.availableTrailersInGarage.refresh();
             }
+        },
+        mounted() {
+            EventBus.$on('refreshQuery', function (payLoad) {
+                if (payLoad.modelType === 'Truck' && payLoad.id === this.id) {
+                    this.$apollo.queries.truck.refresh();
+                }
+                if (payLoad.modelType === 'Driver') {
+                    this.$apollo.queries.availableDriversInGarage.refresh();
+                }
+                if (payLoad.modelType === 'Trailer') {
+                    this.$apollo.queries.availableTrailersInGarage.refresh();
+                }
+            });
         },
         apollo: {
             truck: {

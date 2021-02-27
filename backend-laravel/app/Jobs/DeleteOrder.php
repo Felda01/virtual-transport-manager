@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Events\ProcessTransaction;
+use App\Events\RefreshQuery;
 use App\Models\Company;
 use App\Models\Order;
 use App\Models\RoadTrip;
@@ -65,6 +66,7 @@ class DeleteOrder implements ShouldQueue
             });
 
             BroadcastUtility::broadcast(new ProcessTransaction($company));
+            BroadcastUtility::broadcast(new RefreshQuery($company, 'Order', $this->order->id));
         }
         return;
     }

@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
+use App\Events\RefreshQuery;
+use App\Models\Company;
 use App\Models\Role;
 use App\Models\User;
 use App\Rules\ExistsAllRule;
+use App\Utilities\BroadcastUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -90,6 +93,8 @@ class UpdateUserSalaryMutation extends Mutation
 
         $user->syncRoles(...$roles);
         $user->save();
+
+        BroadcastUtility::broadcast(new RefreshQuery(Company::currentCompany(), 'User', $user->id));
 
         return $user;
     }

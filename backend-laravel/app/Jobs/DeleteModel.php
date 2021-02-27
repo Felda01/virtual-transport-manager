@@ -2,8 +2,11 @@
 
 namespace App\Jobs;
 
+use App\Events\RefreshQuery;
+use App\Models\Company;
 use App\Models\Driver;
 use App\Models\Market;
+use App\Utilities\BroadcastUtility;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Model;
@@ -44,5 +47,6 @@ class DeleteModel implements ShouldQueue
         }
 
         $this->model->delete();
+        BroadcastUtility::broadcast(new RefreshQuery(Company::currentCompany(), class_basename($this->model), $this->model->id));
     }
 }

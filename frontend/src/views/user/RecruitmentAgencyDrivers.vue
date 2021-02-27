@@ -66,6 +66,7 @@
     import { SearchForm, Pagination, MutationModal } from "@/components";
     import { CREATE_DRIVER_MUTATION } from "@/graphql/mutations/user";
     import { ADRS_QUERY } from "@/graphql/queries/common";
+    import EventBus from "../../event-bus";
 
     export default {
         title () {
@@ -240,6 +241,16 @@
 
                 this.$apollo.queries.recruitmentAgencyDrivers.refresh();
             },
+        },
+        mounted() {
+            EventBus.$on('refreshQuery', function (payLoad) {
+                if (payLoad.modelType === 'Recruitment') {
+                    this.$apollo.queries.recruitmentAgencyDrivers.refresh();
+                }
+                if (payLoad.modelType === 'Garage') {
+                    this.$apollo.queries.availableGarages.refresh();
+                }
+            });
         },
         apollo: {
             recruitmentAgencyDrivers: {

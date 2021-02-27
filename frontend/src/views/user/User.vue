@@ -120,6 +120,7 @@
     import { Tabs, ProductCard, MutationModal, DeleteModal, Pagination } from "@/components";
     import constants from "../../constants";
     import { mapGetters } from "vuex";
+    import EventBus from "../../event-bus";
 
     export default {
         title () {
@@ -402,6 +403,16 @@
 
                 this.$apollo.queries.user.refresh();
             }
+        },
+        mounted() {
+            EventBus.$on('refreshQuery', function (payLoad) {
+                if (payLoad.modelType === 'User' && payLoad.id === this.id) {
+                    this.$apollo.queries.user.refresh();
+                }
+                if (['User', 'Truck', 'Trailer', 'Garage', 'Driver', 'Order', 'BankLoan'].includes(payLoad.modelType)) {
+                    this.$apollo.queries.activities.refresh();
+                }
+            });
         },
         apollo: {
             user: {

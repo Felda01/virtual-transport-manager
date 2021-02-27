@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
+use App\Events\RefreshQuery;
+use App\Models\Company;
 use App\Models\Role;
 use App\Models\User;
 use App\Rules\ExistsAllRule;
+use App\Utilities\BroadcastUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -131,6 +134,7 @@ class CreateUserMutation extends Mutation
         });
 
         if (Password::RESET_LINK_SENT === $result['status']) {
+            BroadcastUtility::broadcast(new RefreshQuery(Company::currentCompany(), 'User', $result['user']->id));
             return $result['user'];
         } else {
             try {

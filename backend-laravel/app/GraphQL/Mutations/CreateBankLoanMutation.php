@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\GraphQL\Mutations;
 
 use App\Events\ProcessTransaction;
+use App\Events\RefreshQuery;
 use App\Models\BankLoan;
 use App\Models\BankLoanType;
 use App\Models\Company;
@@ -104,6 +105,7 @@ class CreateBankLoanMutation extends Mutation
         });
 
         BroadcastUtility::broadcast(new ProcessTransaction($company));
+        BroadcastUtility::broadcast(new RefreshQuery($company, 'BankLoan', $result['bankLoan']->id));
         return $result['bankLoan'];
     }
 }

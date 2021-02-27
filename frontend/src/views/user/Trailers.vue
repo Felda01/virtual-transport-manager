@@ -61,6 +61,7 @@
     import { TRAILERS_QUERY, GARAGES_SELECT_QUERY } from '@/graphql/queries/user';
     import { TRAILER_MODELS_SELECT_QUERY, STATUSES_QUERY } from "@/graphql/queries/common";
     import { Pagination, SearchForm } from "@/components";
+    import EventBus from "../../event-bus";
 
     export default {
         title () {
@@ -174,6 +175,16 @@
                     params: {id: item.id}
                 });
             }
+        },
+        mounted() {
+            EventBus.$on('refreshQuery', function (payLoad) {
+                if (payLoad.modelType === 'Trailer') {
+                    this.$apollo.queries.trailers.refresh();
+                }
+                if (payLoad.modelType === 'Garage') {
+                    this.$apollo.queries.garages.refresh();
+                }
+            });
         },
         apollo: {
             trailers: {

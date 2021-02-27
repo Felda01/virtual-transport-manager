@@ -166,6 +166,7 @@
     import SecondStep from "./Order/SecondStep";
     import ThirdStep from "./Order/ThirdStep";
     import OrdersTable from "../../components/OrdersTable";
+    import EventBus from "../../event-bus";
 
     export default {
         title () {
@@ -282,6 +283,16 @@
                     }
                 });
             }
+        },
+        mounted() {
+            EventBus.$on('refreshQuery', function (payLoad) {
+                if (payLoad.modelType === 'Order' && payLoad.id === this.id) {
+                    this.$apollo.queries.order.refresh();
+                }
+                if (['Driver', 'Truck', 'Trailer'].includes(payload.modelType)) {
+                    this.$apollo.queries.trucksForOrder.refresh();
+                }
+            });
         },
         apollo: {
             order: {

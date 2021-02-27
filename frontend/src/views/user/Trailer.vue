@@ -151,6 +151,7 @@
     import { Tabs, ProductCard, MutationModal, DeleteModal, OrdersTable } from "@/components";
     import constants from "../../constants";
     import { mapGetters } from "vuex";
+    import EventBus from "../../event-bus";
 
     export default {
         title () {
@@ -331,6 +332,16 @@
                 this.$apollo.queries.trailer.refresh();
                 this.$apollo.queries.availableTrucksInGarage.refresh();
             }
+        },
+        mounted() {
+            EventBus.$on('refreshQuery', function (payLoad) {
+                if (payLoad.modelType === 'Trailer' && payLoad.id === this.id) {
+                    this.$apollo.queries.trailer.refresh();
+                }
+                if (payLoad.modelType === 'Truck') {
+                    this.$apollo.queries.availableTrucksInGarage.refresh();
+                }
+            });
         },
         apollo: {
             trailer: {

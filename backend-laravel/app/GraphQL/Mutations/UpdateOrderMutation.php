@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
+use App\Events\RefreshQuery;
 use App\Jobs\FinishOrder;
+use App\Models\Company;
 use App\Models\Order;
 use App\Models\RoadTrip;
 use App\Models\Truck;
 use App\Rules\AvailableOrderRule;
 use App\Rules\ModelFromCompanyRule;
 use App\Rules\TruckForOrderRule;
+use App\Utilities\BroadcastUtility;
 use App\Utilities\GameTimeUtility;
 use App\Utilities\PathUtility;
 use App\Utilities\QueueJobUtility;
@@ -139,6 +142,8 @@ class UpdateOrderMutation extends Mutation
 
         $timeInMinutes = PathUtility::calculateRoadTripTime($result['roadTrip']->time);
         QueueJobUtility::dispatch(new FinishOrder($result['order']), Carbon::parse(GameTimeUtility::gameTimeToRealTime($timeInMinutes), 'Europe/Bratislava'));
+        $company = Company::currentCompany();
+        BroadcastUtility::broadcast(new RefreshQuery($company, 'Order', $result['order']->id));
 
         return $result['order'];
     }

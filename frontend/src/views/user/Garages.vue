@@ -61,6 +61,7 @@
     import { GARAGES_QUERY, COUNTRIES_WITH_GARAGE_QUERY } from '@/graphql/queries/user';
     import { GARAGE_MODELS_QUERY } from "@/graphql/queries/common";
     import { Pagination, SearchForm } from "@/components";
+    import EventBus from "../../event-bus";
 
     export default {
         title () {
@@ -161,6 +162,14 @@
                     params: {id: item.id}
                 });
             }
+        },
+        mounted() {
+            EventBus.$on('refreshQuery', function (payLoad) {
+                if (payLoad.modelType === 'Garage') {
+                    this.$apollo.queries.garages.refresh();
+                    this.$apollo.queries.countriesWithGarages.refresh();
+                }
+            });
         },
         apollo: {
             garages: {

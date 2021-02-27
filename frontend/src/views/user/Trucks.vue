@@ -61,6 +61,7 @@
     import { TRUCKS_QUERY, GARAGES_SELECT_QUERY } from '@/graphql/queries/user';
     import { TRUCK_MODELS_SELECT_QUERY, STATUSES_QUERY } from "@/graphql/queries/common";
     import { Pagination, SearchForm } from "@/components";
+    import EventBus from "../../event-bus";
 
     export default {
         title () {
@@ -183,6 +184,16 @@
                     params: {id: item.id}
                 });
             }
+        },
+        mounted() {
+            EventBus.$on('refreshQuery', function (payLoad) {
+                if (payLoad.modelType === 'Truck') {
+                    this.$apollo.queries.trucks.refresh();
+                }
+                if (payLoad.modelType === 'Garage') {
+                    this.$apollo.queries.garages.refresh();
+                }
+            });
         },
         apollo: {
             trucks: {

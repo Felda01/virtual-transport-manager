@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Events\ProcessTransaction;
+use App\Events\RefreshQuery;
 use App\Models\BankLoan;
 use App\Models\Company;
 use App\Utilities\BroadcastUtility;
@@ -79,6 +80,7 @@ class PayBankLoans implements ShouldQueue
             });
 
             BroadcastUtility::broadcast(new ProcessTransaction($item));
+            BroadcastUtility::broadcast(new RefreshQuery($item, 'BankLoan'));
         });
 
         $now = Carbon::parse(GameTimeUtility::gameTime(Carbon::now('Europe/Bratislava')));

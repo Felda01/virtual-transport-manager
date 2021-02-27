@@ -2,7 +2,10 @@
 
 namespace App\Jobs;
 
+use App\Events\RefreshQuery;
+use App\Models\Company;
 use App\Models\Driver;
+use App\Utilities\BroadcastUtility;
 use App\Utilities\GameTimeUtility;
 use App\Utilities\QueueJobUtility;
 use App\Utilities\RecruitmentAgencyUtility;
@@ -41,8 +44,15 @@ class UpdatePersonalAgency implements ShouldQueue
         if ($countDrivers < 10) {
             RecruitmentAgencyUtility::newDriver(4);
         }
+
+        $companies = Company::all();
+
+        $companies->each(function ($item, $key) {
+            BroadcastUtility::broadcast(new RefreshQuery($item, 'Recruitment'));
+        });
+
         if (!$this->single) {
-            QueueJobUtility::dispatch(new UpdatePersonalAgency, Carbon::parse(GameTimeUtility::gameTimeToRealTime(24 * 60), 'Europe/Bratislava'));
+            QueueJobUtility::dispatch(new UpdatePersonalAgency(), Carbon::parse(GameTimeUtility::gameTimeToRealTime(24 * 60), 'Europe/Bratislava'));
         }
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\GraphQL\Mutations;
 
 use App\Events\ProcessTransaction;
+use App\Events\RefreshQuery;
 use App\Jobs\UpdateModelStatus;
 use App\Models\Company;
 use App\Models\Trailer;
@@ -119,11 +120,14 @@ class CreateTrailerMutation extends Mutation
             }
 
             return [
-                'trailer' => $trailer
+                'trailer' => $trailer,
+                'garageId' => $args['garage']
             ];
         });
 
         BroadcastUtility::broadcast(new ProcessTransaction($company));
+        BroadcastUtility::broadcast(new RefreshQuery($company, 'Trailer', $result['trailer']->id));
+        BroadcastUtility::broadcast(new RefreshQuery($company, 'Garage', $result['garageId']));
         QueueJobUtility::dispatch(new UpdateModelStatus($result['trailer'], StatusUtility::IDLE), Carbon::parse(GameTimeUtility::gameTimeToRealTime(60 * 6), 'Europe/Bratislava'));
         return $result['trailer'];
     }

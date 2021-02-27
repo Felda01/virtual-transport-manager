@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
+use App\Events\RefreshQuery;
+use App\Models\Company;
 use App\Models\Trailer;
 use App\Models\Truck;
 use App\Rules\ModelStatusRule;
@@ -11,6 +13,7 @@ use App\Rules\ModelFromCompanyRule;
 use App\Rules\ModelsInGarageRule;
 use App\Rules\TrailerEmptyTruckSpotRule;
 use App\Rules\TruckFreeTrailerSpotRule;
+use App\Utilities\BroadcastUtility;
 use App\Utilities\StatusUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -113,9 +116,14 @@ class AssignTrailerToTruckMutation extends Mutation
             }
 
             return [
-                'trailer' => $trailer
+                'trailer' => $trailer,
+                'truck' => $truck,
             ];
         });
+
+        $company = Company::currentCompany();
+        BroadcastUtility::broadcast(new RefreshQuery($company, 'Trailer', $result['trailer']->id));
+        BroadcastUtility::broadcast(new RefreshQuery($company, 'Truck', $result['truck']->id));
 
         return $result['trailer'];
     }

@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
+use App\Events\RefreshQuery;
+use App\Models\Company;
 use App\Models\User;
+use App\Utilities\BroadcastUtility;
 use App\Utilities\ImageUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -124,6 +127,7 @@ class UpdateUserMutation extends Mutation
         $user->email = $args['email'];
         $user->save();
 
+        BroadcastUtility::broadcast(new RefreshQuery(Company::currentCompany(), 'User', $user->id));
         return $user;
     }
 }

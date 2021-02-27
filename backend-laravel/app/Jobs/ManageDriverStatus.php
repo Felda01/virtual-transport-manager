@@ -2,7 +2,10 @@
 
 namespace App\Jobs;
 
+use App\Events\RefreshQuery;
+use App\Models\Company;
 use App\Models\Driver;
+use App\Utilities\BroadcastUtility;
 use App\Utilities\GameTimeUtility;
 use App\Utilities\QueueJobUtility;
 use App\Utilities\StatusUtility;
@@ -51,6 +54,12 @@ class ManageDriverStatus implements ShouldQueue
         } else {
             $delayMinutes = 10 * 60;
         }
+
+        $companies = Company::all();
+
+        $companies->each(function ($item, $key) {
+            BroadcastUtility::broadcast(new RefreshQuery($item, 'Driver'));
+        });
 
         if ($updated && !$this->single) {
             QueueJobUtility::dispatch(new ManageDriverStatus(!$this->goSleep), Carbon::parse(GameTimeUtility::gameTimeToRealTime($delayMinutes), 'Europe/Bratislava'));

@@ -6,6 +6,9 @@ export const ME_QUERY = gql`
             id
             first_name
             last_name
+            company {
+                id
+            }
             image
             roles {
                 id

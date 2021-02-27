@@ -67,6 +67,7 @@
     import { MutationModal, Pagination, SearchForm } from "@/components";
     import { DONE_ORDERS_QUERY } from "@/graphql/queries/user";
     import { STATUSES_QUERY } from "@/graphql/queries/common";
+    import EventBus from "../../event-bus";
 
     export default {
         title () {
@@ -185,6 +186,13 @@
 
                 return result.join(', ');
             },
+        },
+        mounted() {
+            EventBus.$on('refreshQuery', function (payLoad) {
+                if (payLoad.modelType === 'DoneOrder') {
+                    this.$apollo.queries.orders.refresh();
+                }
+            });
         },
         apollo: {
             orders: {

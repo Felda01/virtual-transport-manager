@@ -155,19 +155,19 @@ Vue.use(Vue2Filters);
 import VueChatScroll from 'vue-chat-scroll';
 Vue.use(VueChatScroll);
 
-// import Echo from 'laravel-echo';
-// window.io = require('socket.io-client');
-//
-// if (typeof io !== 'undefined') {
-//   const echo_instance = new Echo({
-//     broadcaster: 'socket.io',
-//     host: process.env.VUE_APP_LARAVEL_ENDPOINT + ':6001',
-//     transports: ['websocket', 'polling', 'flashsocket'],
-//   });
-//
-//   window.Echo = echo_instance;
-//   Vue.prototype.$echo = echo_instance;
-// }
+import Echo from 'laravel-echo';
+window.io = require('socket.io-client');
+
+if (typeof io !== 'undefined') {
+  const echo_instance = new Echo({
+    broadcaster: 'socket.io',
+    host: process.env.VUE_APP_LARAVEL_ENDPOINT + ':6001',
+    transports: ['websocket', 'polling', 'flashsocket'],
+  });
+
+  window.Echo = echo_instance;
+  Vue.prototype.$echo = echo_instance;
+}
 
 
 new Vue({

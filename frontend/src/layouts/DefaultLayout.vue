@@ -84,6 +84,8 @@
     import PerfectScrollbar from "perfect-scrollbar";
     import "perfect-scrollbar/css/perfect-scrollbar.css";
 
+    import EventBus from "../event-bus";
+
     function hasElement(className) {
         return document.getElementsByClassName(className).length > 0;
     }
@@ -120,6 +122,7 @@
     import MobileMenu from "./Extra/MobileMenu.vue";
     import UserMenu from "./Extra/UserMenu.vue";
     import { ZoomCenterTransition } from "vue2-transitions";
+    import { mapGetters } from "vuex";
 
     export default {
         name: "DefaultLayout",
@@ -163,11 +166,25 @@
         },
         mounted() {
             reinitScrollbar();
+            Echo.channel('company-' + this.user.company.id).listen('ProcessTransaction', (data) => {
+                this.$store.dispatch('getCompany');
+            });
+            Echo.channel('company-' + this.user.company.id).listen('RefreshQuery', (data) => {
+                EventBus.$emit('refreshQuery', data);
+            });
+            Echo.channel('market').listen('RefreshMarketQuery', (data) => {
+                EventBus.$emit('refreshMarket');
+            });
+        },
+        computed: {
+            ...mapGetters([
+                'user'
+            ]),
         },
         watch: {
             sidebarMini() {
                 this.minimizeSidebar();
-            }
+            },
         }
     }
 </script>

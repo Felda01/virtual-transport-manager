@@ -162,6 +162,7 @@
     import { Tabs, ProductCard, ChartCard, MutationModal, DeleteModal } from "@/components";
     import { mapGetters } from 'vuex'
     import constants from "../../constants";
+    import EventBus from "../../event-bus";
 
     export default {
         title () {
@@ -322,6 +323,13 @@
                     params: {locale: this.$i18n.locale}
                 });
             },
+        },
+        mounted() {
+            EventBus.$on('refreshQuery', function (payLoad) {
+                if (payLoad.modelType === 'Garage' && payLoad.id === this.id) {
+                    this.$apollo.queries.garage.refresh();
+                }
+            });
         },
         apollo: {
             garage: {

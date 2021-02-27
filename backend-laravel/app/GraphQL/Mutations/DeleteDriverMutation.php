@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
+use App\Events\RefreshQuery;
+use App\Models\Company;
 use App\Models\Driver;
 use App\Rules\CanDeleteDriverRule;
 use App\Rules\DriverEmptyTruckSpotRule;
 use App\Rules\ModelFromCompanyRule;
 use App\Rules\ModelStatusRule;
+use App\Utilities\BroadcastUtility;
 use App\Utilities\StatusUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -93,6 +96,9 @@ class DeleteDriverMutation extends Mutation
             ];
         });
 
+        $company = Company::currentCompany();
+        BroadcastUtility::broadcast(new RefreshQuery($company, 'Driver', $result['driver']->id));
+        BroadcastUtility::broadcast(new RefreshQuery($company, 'Garage', $result['driver']->garage_id));
         return $result['driver'];
     }
 }

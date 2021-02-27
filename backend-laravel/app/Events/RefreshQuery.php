@@ -9,20 +9,26 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ProcessTransaction implements ShouldBroadcast
+class RefreshQuery implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $company;
+    public $modelType;
+    public $id;
 
     /**
      * Create a new event instance.
      *
      * @param Company $company
+     * @param string $modelType
+     * @param string $id
      */
-    public function __construct(Company $company)
+    public function __construct(Company $company, string $modelType, string $id = '')
     {
         $this->company = $company;
+        $this->modelType = $modelType;
+        $this->id = $id;
     }
 
     /**
@@ -43,7 +49,8 @@ class ProcessTransaction implements ShouldBroadcast
     public function broadcastWith()
     {
         return [
-            'modelType' => 'Transaction',
+            'modelType' => $this->modelType,
+            'id' => $this->id
         ];
     }
 }

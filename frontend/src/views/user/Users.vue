@@ -61,6 +61,7 @@
     import { SearchForm, Pagination, MutationModal } from "@/components";
     import { ROLES_QUERY } from "@/graphql/queries/common";
     import { CREATE_USER_MUTATION } from "@/graphql/mutations/user"
+    import EventBus from "../../event-bus";
 
     export default {
         title () {
@@ -218,6 +219,13 @@
                 });
                 this.$apollo.queries.users.refresh();
             },
+        },
+        mounted() {
+            EventBus.$on('refreshQuery', function (payLoad) {
+                if (payLoad.modelType === 'User') {
+                    this.$apollo.queries.users.refresh();
+                }
+            });
         },
         apollo: {
             users: {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\GraphQL\Mutations;
 
 use App\Events\ProcessTransaction;
+use App\Events\RefreshQuery;
 use App\Models\Company;
 use App\Models\Trailer;
 use App\Rules\CanDeleteTrailerRule;
@@ -108,6 +109,8 @@ class DeleteTrailerMutation extends Mutation
         });
 
         BroadcastUtility::broadcast(new ProcessTransaction($company));
+        BroadcastUtility::broadcast(new RefreshQuery($company, 'Trailer', $result['trailer']->id));
+        BroadcastUtility::broadcast(new RefreshQuery($company, 'Garage', $result['trailer']->garage_id));
         return $result['trailer'];
     }
 }

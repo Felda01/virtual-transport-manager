@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
+use App\Events\RefreshMarketQuery;
+use App\Events\RefreshQuery;
 use App\Jobs\DeleteOrder;
+use App\Models\Company;
 use App\Models\Market;
 use App\Models\Order;
 use App\Models\RoadTrip;
 use App\Models\User;
 use App\Rules\AvailableMarketRule;
+use App\Utilities\BroadcastUtility;
 use App\Utilities\QueueJobUtility;
 use App\Utilities\StatusUtility;
 use Closure;
@@ -112,6 +116,9 @@ class CreateOrderMutation extends Mutation
             ];
         });
 
+        $company = Company::currentCompany();
+        BroadcastUtility::broadcast(new RefreshQuery($company, 'Order', $result['order']->id));
+        BroadcastUtility::broadcast(new RefreshMarketQuery());
         QueueJobUtility::dispatch(new DeleteOrder($result['order']), $result['market']->expires_at);
 
         return $result['order'];

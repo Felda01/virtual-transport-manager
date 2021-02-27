@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\GraphQL\Mutations;
 
 use App\Events\ProcessTransaction;
+use App\Events\RefreshQuery;
 use App\Models\Company;
 use App\Models\Garage;
 use App\Rules\AvailableLocationRule;
@@ -111,6 +112,7 @@ class CreateGarageMutation extends Mutation
         });
 
         BroadcastUtility::broadcast(new ProcessTransaction($company));
+        BroadcastUtility::broadcast(new RefreshQuery($company, 'Garage', $result['garage']->id));
         return $result['garage'];
     }
 }

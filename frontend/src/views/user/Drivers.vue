@@ -64,6 +64,7 @@
     import { DRIVERS_QUERY, GARAGES_SELECT_QUERY } from '@/graphql/queries/user';
     import { STATUSES_QUERY, ADRS_QUERY } from "@/graphql/queries/common";
     import { Pagination, SearchForm } from "@/components";
+    import EventBus from "../../event-bus";
 
     export default {
         title () {
@@ -177,6 +178,16 @@
             driver(driver) {
                 return driver.first_name.charAt(0) + '. ' + driver.last_name
             }
+        },
+        mounted() {
+            EventBus.$on('refreshQuery', function (payLoad) {
+                if (payLoad.modelType === 'Driver') {
+                    this.$apollo.queries.drivers.refresh();
+                }
+                if (payLoad.modelType === 'Garage') {
+                    this.$apollo.queries.garages.refresh();
+                }
+            });
         },
         apollo: {
             drivers: {

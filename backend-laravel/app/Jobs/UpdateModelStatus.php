@@ -2,6 +2,9 @@
 
 namespace App\Jobs;
 
+use App\Events\RefreshQuery;
+use App\Models\Company;
+use App\Utilities\BroadcastUtility;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -37,5 +40,8 @@ class UpdateModelStatus implements ShouldQueue
         $this->model->update([
             'status' => $this->status
         ]);
+
+        $company = Company::find($this->model->company_id);
+        BroadcastUtility::broadcast(new RefreshQuery($company, class_basename($this->model), $this->model->id));
     }
 }

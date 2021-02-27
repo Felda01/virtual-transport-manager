@@ -2,27 +2,24 @@
 
 namespace App\Events;
 
-use App\Models\Company;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ProcessTransaction implements ShouldBroadcast
+class RefreshMarketQuery implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
-    public $company;
 
     /**
      * Create a new event instance.
      *
-     * @param Company $company
+     * @return void
      */
-    public function __construct(Company $company)
+    public function __construct()
     {
-        $this->company = $company;
+        //
     }
 
     /**
@@ -32,7 +29,7 @@ class ProcessTransaction implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('company-' . $this->company->id);
+        return new Channel('market');
     }
 
     /**
@@ -43,7 +40,7 @@ class ProcessTransaction implements ShouldBroadcast
     public function broadcastWith()
     {
         return [
-            'modelType' => 'Transaction',
+            'modelType' => 'Market',
         ];
     }
 }

@@ -2,7 +2,10 @@
 
 namespace App\Jobs;
 
+use App\Events\RefreshMarketQuery;
+use App\Events\RefreshQuery;
 use App\Models\Market;
+use App\Utilities\BroadcastUtility;
 use App\Utilities\GameTimeUtility;
 use App\Utilities\MarketUtility;
 use App\Utilities\QueueJobUtility;
@@ -43,12 +46,13 @@ class GenerateMarkets implements ShouldQueue
         MarketUtility::newSimpleMarkets(3);
 
         $gameTime = Carbon::parse(GameTimeUtility::gameTime(Carbon::now('Europe/Bratislava')));
+        BroadcastUtility::broadcast(new RefreshMarketQuery());
 
         if (!$this->single) {
             if ($gameTime->hour > 7 && $gameTime->hour < 16) {
-                QueueJobUtility::dispatch(new GenerateMarkets, Carbon::parse(GameTimeUtility::gameTimeToRealTime(60), 'Europe/Bratislava'));
+                QueueJobUtility::dispatch(new GenerateMarkets(), Carbon::parse(GameTimeUtility::gameTimeToRealTime(60), 'Europe/Bratislava'));
             } else {
-                QueueJobUtility::dispatch(new GenerateMarkets, Carbon::parse(GameTimeUtility::gameTimeToRealTime(15 * 60), 'Europe/Bratislava'));
+                QueueJobUtility::dispatch(new GenerateMarkets(), Carbon::parse(GameTimeUtility::gameTimeToRealTime(15 * 60), 'Europe/Bratislava'));
             }
         }
     }

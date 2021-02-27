@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
+use App\Events\RefreshQuery;
 use App\Jobs\UpdateModelStatus;
 use App\Models\Company;
 use App\Models\Driver;
@@ -11,6 +12,7 @@ use App\Models\Garage;
 use App\Rules\AvailableDriverRecruitmentAgencyRule;
 use App\Rules\AvailableGarageSpotRule;
 use App\Rules\ModelFromCompanyRule;
+use App\Utilities\BroadcastUtility;
 use App\Utilities\GameTimeUtility;
 use App\Utilities\QueueJobUtility;
 use App\Utilities\StatusUtility;
@@ -108,10 +110,12 @@ class CreateDriverMutation extends Mutation
             }
 
             return [
-                'driver' => $driver
+                'driver' => $driver,
+                'garage' => $garage
             ];
         });
-
+        BroadcastUtility::broadcast(new RefreshQuery($company, 'Driver', $result['driver']->id));
+        BroadcastUtility::broadcast(new RefreshQuery($company, 'Garage', $result['garage']->id));
         QueueJobUtility::dispatch(new UpdateModelStatus($result['driver'], StatusUtility::IDLE), Carbon::parse(GameTimeUtility::gameTimeToRealTime(60 * 6), 'Europe/Bratislava'));
         return $result['driver'];
     }

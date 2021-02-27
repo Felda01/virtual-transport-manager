@@ -42,7 +42,7 @@
                         </md-list>
                     </md-app-drawer>
 
-                    <md-app-content class="min-content-width messages-wrapper">
+                    <md-app-content class="min-content-width messages-wrapper" v-if="user">
                         <div class="spinner-center" v-if="!selectedUser || ($apollo.queries.conversation.loading && conversationFirstLoad)">
                             <md-progress-spinner md-mode="indeterminate"></md-progress-spinner>
                         </div>
@@ -148,7 +148,7 @@
             conversation: {
                 query: CONVERSATION_QUERY,
                 variables() {
-                    return { page: this.conversationPage, limit: this.conversation.per_page, user1: this.user.id, user2: this.selectedUser.id }
+                    return { page: this.conversationPage, limit: this.conversation.per_page, user1: this.user ? this.user.id : '', user2: this.selectedUser.id }
                 },
                 result({data, loading, networkStatus}) {
                     this.conversationFirstLoad = false;

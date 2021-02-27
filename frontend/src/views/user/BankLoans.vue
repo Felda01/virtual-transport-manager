@@ -85,6 +85,7 @@
     import { CREATE_BANK_LOAN_MUTATION, UPDATE_BANK_LOAN_MUTATION } from '@/graphql/mutations/user';
     import constants from "../../constants";
     import { mapGetters } from "vuex";
+    import EventBus from "../../event-bus";
 
     export default {
         title () {
@@ -197,6 +198,13 @@
 
                 this.$apollo.queries.bankLoans.refresh();
             }
+        },
+        mounted() {
+            EventBus.$on('refreshQuery', function (payLoad) {
+                if (payLoad.modelType === 'BankLoan') {
+                    this.$apollo.queries.bankLoans.refresh();
+                }
+            });
         },
         apollo: {
             bankLoanTypes: {

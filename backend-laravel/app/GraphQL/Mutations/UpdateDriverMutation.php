@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\GraphQL\Mutations;
 
 use App\Events\ProcessTransaction;
+use App\Events\RefreshQuery;
 use App\Jobs\UpdateModelStatus;
 use App\Models\Company;
 use App\Models\Driver;
@@ -116,6 +117,7 @@ class UpdateDriverMutation extends Mutation
 
         QueueJobUtility::dispatch(new UpdateModelStatus($result['driver'], $result['oldStatus']), Carbon::parse(GameTimeUtility::gameTimeToRealTime(3 * 24 * 60), 'Europe/Bratislava'));
         BroadcastUtility::broadcast(new ProcessTransaction($company));
+        BroadcastUtility::broadcast(new RefreshQuery($company, 'Driver', $result['driver']->id));
         return $result['driver'];
     }
 }

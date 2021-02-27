@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
+use App\Events\RefreshQuery;
+use App\Models\Company;
 use App\Models\User;
 use App\Rules\CanDeleteUserRule;
 use App\Rules\ModelFromCompanyRule;
+use App\Utilities\BroadcastUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -81,6 +84,7 @@ class DeleteUserMutation extends Mutation
         if (!$user->trashed()) {
             throw new \GraphQL\Error\Error(trans('validation.general_exception'));
         }
+        BroadcastUtility::broadcast(new RefreshQuery(Company::currentCompany(), 'User', $deletedUser->id));
         return $deletedUser;
     }
 }

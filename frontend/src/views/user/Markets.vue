@@ -73,6 +73,7 @@
     import constants from "../../constants";
     import { CREATE_ORDER_MUTATION } from "@/graphql/mutations/user";
     import { mapGetters } from "vuex";
+    import EventBus from "../../event-bus";
 
     export default {
         title () {
@@ -313,9 +314,16 @@
 
                 this.$apollo.queries.markets.refresh();
             },
-            showMap(item) {
-                console.log('map');
-            }
+        },
+        mounted() {
+            EventBus.$on('refreshMarket', function () {
+                this.$apollo.queries.markets.refresh();
+            });
+            EventBus.$on('refreshQuery', function (payload) {
+                if (['Driver', 'Truck', 'Trailer'].includes(payload.modelType)) {
+                    this.$apollo.queries.trucksForOrder.refresh();
+                }
+            });
         },
         apollo: {
             markets: {
