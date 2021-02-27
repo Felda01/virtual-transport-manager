@@ -19,7 +19,22 @@ app.use(basicAuth({
     challenge: true
 }));
 
-app.post('/trip', function (req, res) {
+app.post('/Y29ubmV0aW9u', function (req, res) {
+    res.json({
+        'status': 'OK'
+    });
+});
+
+app.post('/ZmV0Y2hSb3V0ZXM', function (req, res) {
+
+    fetchRoutes();
+
+    res.json({
+        'status': 'OK'
+    });
+});
+
+app.post('/dHJpcA', function (req, res) {
     let loc_from = req.body.from;
     let loc_to = req.body.to;
 
@@ -80,6 +95,4 @@ function threeShortestRoutes(routes) {
 
 const server = app.listen(process.env.PORT, function () {
     console.log("Started");
-    fetchRoutes();
-    console.log("Routes fetched");
 });

@@ -28,6 +28,7 @@ Route::middleware(['auth.basic'])->group(function() {
     Route::post('/YWRtaW4/cmVzZXRSb3V0ZXM', [\App\Http\Controllers\AdminController::class, 'resetRoutes'])->name('admin.resetRoutes');
     Route::post('/YWRtaW4/YmFua0xvYW4', [\App\Http\Controllers\AdminController::class, 'bankLoan'])->name('admin.bankLoan');
     Route::post('/YWRtaW4/VGVzdE5vZGVKcw', [\App\Http\Controllers\AdminController::class, 'testNodeJs'])->name('admin.testNodeJs');
+    Route::post('/YWRtaW4/ZmV0Y2hSb3V0ZXM', [\App\Http\Controllers\AdminController::class, 'fetchRoutes'])->name('admin.fetchRoutes');
 });
 
 

@@ -144,6 +144,19 @@
                                     </div>
                                 </form>
                             </div>
+
+                            <div class="flex items-center">
+                                <div class="text-lg leading-7 font-semibold"><span class="text-gray-900 dark:text-white">NodeJs fetch routes</span></div>
+                            </div>
+
+                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                                <form method="post" action="{{ route('admin.fetchRoutes') }}">
+                                    @csrf
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">Run job</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
 
                         <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">

@@ -135,4 +135,23 @@ class AdminController extends Controller
             'message' => 'Job dispatched.'
         ]);
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function fetchRoutes(Request $request)
+    {
+        try {
+            $response = Http::withBasicAuth(config('services.nodejs.user'), config('services.nodejs.password'))->post(config('services.nodejs.fetch_routes_url'));
+        } catch (\Exception $e) {
+            return back()->with([
+                'message' => $e->getMessage()
+            ]);
+        }
+
+        return back()->with([
+            'message' => 'Job dispatched.'
+        ]);
+    }
 }
