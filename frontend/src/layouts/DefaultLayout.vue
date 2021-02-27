@@ -175,6 +175,9 @@
             Echo.channel('market').listen('RefreshMarketQuery', (data) => {
                 EventBus.$emit('refreshMarket');
             });
+            Echo.channel('message-' + this.user.id).listen('RefreshMessageQuery', (data) => {
+                EventBus.$emit('refreshMessage', data);
+            });
         },
         computed: {
             ...mapGetters([

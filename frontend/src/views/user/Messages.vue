@@ -70,6 +70,7 @@
     import { USERS_QUERY, CONVERSATION_QUERY } from "@/graphql/queries/user";
     import { CREATE_MESSAGE_MUTATION } from '@/graphql/mutations/user';
     import { mapGetters } from "vuex";
+    import EventBus from "../../event-bus";
 
     export default {
         name: "Messages",
@@ -133,6 +134,13 @@
                     });
                 }
             }
+        },
+        mounted() {
+            EventBus.$on('refreshMessage', function (payLoad) {
+                if (payLoad.userFrom === this.selectedUser.id) {
+                    this.$apollo.queries.conversation.refresh();
+                }
+            });
         },
         apollo: {
             users: {

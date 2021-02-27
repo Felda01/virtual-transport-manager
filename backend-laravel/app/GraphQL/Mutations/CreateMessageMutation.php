@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutations;
 
+use App\Events\RefreshMessageQuery;
 use App\Models\Message;
 use App\Rules\ModelFromCompanyRule;
+use App\Utilities\BroadcastUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -89,6 +91,7 @@ class CreateMessageMutation extends Mutation
             'message' => $args['message']
         ]);
 
+        BroadcastUtility::broadcast(new RefreshMessageQuery($args['user1'], $args['user2']));
         return $message;
     }
 }
