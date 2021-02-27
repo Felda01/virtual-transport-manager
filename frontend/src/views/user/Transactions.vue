@@ -252,6 +252,8 @@
                         return product.trailerModel.name + " - " + product.garage.location.name + " (" + product.garage.location.country.short_name.toUpperCase() + ")";
                     case "Order":
                         return product.market.cargo.name + " - " + product.market.locationFrom.name + " (" + product.market.locationFrom.country.short_name.toUpperCase() + ")" + " >>> " + product.market.locationTo.name + " (" + product.market.locationTo.country.short_name.toUpperCase() + ")";
+                    case "BankLoan":
+                        return product.bankLoanType.value + " € - " + this.$t('bankLoanType.teaser.repayment') + ": " + product.bankLoanType.period + " " + this.$tc('bankLoanType.property.periodUnit', product.bankLoanType.period);
                     default:
                         return "";
                 }
@@ -284,9 +286,6 @@
             },
             nextPayment: {
                 query: NEXT_PAYMENT_QUERY,
-                result({data, loading, networkStatus}) {
-                    console.log(data.nextPayment);
-                }
             }
         }
     }

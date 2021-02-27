@@ -166,7 +166,7 @@ class Driver extends Model
      */
     public function lastOrders()
     {
-        return $this->orders()->limit(Order::LAST_ORDERS_COUNT);
+        return $this->orders()->orderBy('updated_at', 'desc')->limit(Order::LAST_ORDERS_COUNT);
     }
 
     /**

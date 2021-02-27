@@ -102,7 +102,7 @@ class PayFees implements ShouldQueue
         $diffMinutes = $nextMonth->diffInRealMinutes($now);
 
         if (!$this->single) {
-            QueueJobUtility::dispatch(new PayFees(), Carbon::parse(GameTimeUtility::gameTimeToRealTime($diffMinutes), 'Europe/Bratislava'));
+            QueueJobUtility::dispatch(new PayFees(), Carbon::parse(GameTimeUtility::addTimeToRealTime($diffMinutes), 'Europe/Bratislava'));
         }
     }
 }

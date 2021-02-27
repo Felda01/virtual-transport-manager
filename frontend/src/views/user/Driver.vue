@@ -47,11 +47,11 @@
                                 </md-table>
                             </md-card-content>
                             <md-card-actions md-alignment="space-between" v-if="hasPermission(constants.PERMISSION.MANAGE_DRIVERS)">
-                                <template v-if="canUpdateDriver">
-                                    <md-button class="md-primary md-simple" @click="updateDriverModal"><md-icon>edit</md-icon>{{ $t('detail.btn.training') }}</md-button>
-                                </template>
-                                <template v-else-if="driver.adr === 6">
+                                <template v-if="driver.adr === 6">
                                     <p>{{ $t('driver.fully_trained') }}</p>
+                                </template>
+                                <template v-else-if="canUpdateDriver">
+                                    <md-button class="md-primary md-simple" @click="updateDriverModal"><md-icon>edit</md-icon>{{ $t('detail.btn.training') }}</md-button>
                                 </template>
                                 <div v-else class="vertical-center-flex">
                                     <span>{{ $t('driver.can_not_train') }}</span>
@@ -90,7 +90,7 @@
                                         <md-table-cell :md-label="$t('truckModel.model')" class="td-name">{{ item.truckModel.brand }} {{ item.truckModel.name }}</md-table-cell>
                                         <md-table-cell :md-label="$t('truck.property.status')">{{ $t('status.' + item.status) }}</md-table-cell>
                                         <md-table-cell :md-label="$t('truck.relations.trailer')"><template v-if="item.trailer">{{ item.trailer.trailerModel.name }}</template><template v-else>{{ $t('truck.relations.no_trailer') }}</template></md-table-cell>
-                                        <md-table-cell md-label="" v-if="driver.sleep === 0 && hasPermission(constants.PERMISSION.MANAGE_DRIVERS) && hasPermission(constants.PERMISSION.MANAGE_VEHICLES)">
+                                        <md-table-cell md-label="" v-if="driver.sleep === 0 && driver.status === constants.STATUS.READY && hasPermission(constants.PERMISSION.MANAGE_DRIVERS) && hasPermission(constants.PERMISSION.MANAGE_VEHICLES)">
                                             <md-button class="md-danger md-simple md-full-text" @click.native.stop="unassignTruckFromDriverModal(item)"><md-icon>close</md-icon>{{ $t('detail.btn.unassign')}}</md-button>
                                         </md-table-cell>
                                     </md-table-row>
@@ -98,7 +98,7 @@
                                         {{ $t('driver.relations.no_truck') }}
                                     </md-table-empty-state>
                                 </md-table>
-                                <template v-if="driver.sleep === 0 && hasPermission(constants.PERMISSION.MANAGE_DRIVERS) && hasPermission(constants.PERMISSION.MANAGE_VEHICLES)">
+                                <template v-if="driver.sleep === 0 && driver.status === constants.STATUS.IDLE && hasPermission(constants.PERMISSION.MANAGE_DRIVERS) && hasPermission(constants.PERMISSION.MANAGE_VEHICLES)">
                                     <div class="text-center mt-3" v-if="!driver.truck">
                                         <template v-if="this.availableTrucksInGarage && this.availableTrucksInGarage.data && this.availableTrucksInGarage.data.length > 0">
                                             <md-button class="md-success md-simple" @click="assignTruckToDriverModal"><md-icon>add</md-icon>{{ $t('detail.btn.assign') }}</md-button>

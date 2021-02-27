@@ -129,7 +129,7 @@ class CreateTruckMutation extends Mutation
         BroadcastUtility::broadcast(new ProcessTransaction($company));
         BroadcastUtility::broadcast(new RefreshQuery($company, 'Truck', $result['truck']->id));
         BroadcastUtility::broadcast(new RefreshQuery($company, 'Garage', $result['garageId']));
-        QueueJobUtility::dispatch(new UpdateModelStatus($result['truck'], StatusUtility::IDLE), Carbon::parse(GameTimeUtility::gameTimeToRealTime(60 * 6), 'Europe/Bratislava'));
+        QueueJobUtility::dispatch(new UpdateModelStatus($result['truck'], StatusUtility::IDLE), Carbon::parse(GameTimeUtility::addTimeToRealTime(60 * 6), 'Europe/Bratislava'));
         return $result['truck'];
     }
 }

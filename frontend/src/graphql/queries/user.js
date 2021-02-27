@@ -141,6 +141,12 @@ export const ACTIVITIES_QUERY = gql`
                     ... on BankLoan {
                         __typename
                         id
+                        bankLoanType {
+                            id
+                            value
+                            payment
+                            period
+                        }
                     }
                 }
                 created_at
@@ -663,6 +669,10 @@ export const TRUCK_QUERY = gql`
                         image
                     }
                 }
+                roadTrip {
+                    id
+                    status
+                }
                 drivers {
                     id
                     first_name
@@ -786,6 +796,10 @@ export const TRAILER_QUERY = gql`
                         name
                         image
                     }
+                }
+                roadTrip {
+                    id
+                    status
                 }
                 drivers {
                     id
@@ -942,6 +956,10 @@ export const DRIVER_QUERY = gql`
                         name
                         image
                     }
+                }
+                roadTrip {
+                    id
+                    status
                 }
                 drivers {
                     id
@@ -1388,6 +1406,12 @@ export const TRANSACTIONS_QUERY = gql`
                     ... on BankLoan {
                         __typename
                         id
+                        bankLoanType {
+                            id
+                            value
+                            payment
+                            period
+                        }
                     }
                 }
             }

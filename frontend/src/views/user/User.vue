@@ -227,6 +227,8 @@
                         return subject.trailerModel.name + " - " + subject.garage.location.name + " (" + subject.garage.location.country.short_name.toUpperCase() + ")";
                     case "Order":
                         return subject.market.cargo.name + " - " + subject.market.locationFrom.name + " (" + subject.market.locationFrom.country.short_name.toUpperCase() + ")" + " >>> " + subject.market.locationTo.name + " (" + subject.market.locationTo.country.short_name.toUpperCase() + ")";
+                    case "BankLoan":
+                        return subject.bankLoanType.value + " € - " + this.$t('bankLoanType.teaser.repayment') + ": " + subject.bankLoanType.period + " " + this.$tc('bankLoanType.property.periodUnit', subject.bankLoanType.period);
                     default:
                         return "";
                 }

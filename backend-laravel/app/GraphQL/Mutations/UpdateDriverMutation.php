@@ -93,6 +93,7 @@ class UpdateDriverMutation extends Mutation
 
             $driver->increment('adr');
             $driver->status = StatusUtility::ON_TRAINING;
+            $driver->salary += 400;
             $driverSaved = $driver->save();
 
             $price = config('constants.adr_price')[$driver->adr];
@@ -115,7 +116,7 @@ class UpdateDriverMutation extends Mutation
             ];
         });
 
-        QueueJobUtility::dispatch(new UpdateModelStatus($result['driver'], $result['oldStatus']), Carbon::parse(GameTimeUtility::gameTimeToRealTime(3 * 24 * 60), 'Europe/Bratislava'));
+        QueueJobUtility::dispatch(new UpdateModelStatus($result['driver'], $result['oldStatus']), Carbon::parse(GameTimeUtility::addTimeToRealTime(3 * 24 * 60), 'Europe/Bratislava'));
         BroadcastUtility::broadcast(new ProcessTransaction($company));
         BroadcastUtility::broadcast(new RefreshQuery($company, 'Driver', $result['driver']->id));
         return $result['driver'];

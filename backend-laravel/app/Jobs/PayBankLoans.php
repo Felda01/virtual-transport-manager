@@ -88,7 +88,7 @@ class PayBankLoans implements ShouldQueue
         $diffMinutes = $nextMonth->diffInRealMinutes($now);
 
         if (!$this->single) {
-            QueueJobUtility::dispatch(new PayBankLoans(), Carbon::parse(GameTimeUtility::gameTimeToRealTime($diffMinutes), 'Europe/Bratislava'));
+            QueueJobUtility::dispatch(new PayBankLoans(), Carbon::parse(GameTimeUtility::addTimeToRealTime($diffMinutes), 'Europe/Bratislava'));
         }
     }
 }

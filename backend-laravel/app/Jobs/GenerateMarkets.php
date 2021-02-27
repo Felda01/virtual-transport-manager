@@ -50,9 +50,9 @@ class GenerateMarkets implements ShouldQueue
 
         if (!$this->single) {
             if ($gameTime->hour > 7 && $gameTime->hour < 16) {
-                QueueJobUtility::dispatch(new GenerateMarkets(), Carbon::parse(GameTimeUtility::gameTimeToRealTime(60), 'Europe/Bratislava'));
+                QueueJobUtility::dispatch(new GenerateMarkets(), Carbon::parse(GameTimeUtility::addTimeToRealTime(60), 'Europe/Bratislava'));
             } else {
-                QueueJobUtility::dispatch(new GenerateMarkets(), Carbon::parse(GameTimeUtility::gameTimeToRealTime(15 * 60), 'Europe/Bratislava'));
+                QueueJobUtility::dispatch(new GenerateMarkets(), Carbon::parse(GameTimeUtility::addTimeToRealTime(15 * 60), 'Europe/Bratislava'));
             }
         }
     }

@@ -62,7 +62,7 @@ class ManageDriverStatus implements ShouldQueue
         });
 
         if ($updated && !$this->single) {
-            QueueJobUtility::dispatch(new ManageDriverStatus(!$this->goSleep), Carbon::parse(GameTimeUtility::gameTimeToRealTime($delayMinutes), 'Europe/Bratislava'));
+            QueueJobUtility::dispatch(new ManageDriverStatus(!$this->goSleep), Carbon::parse(GameTimeUtility::addTimeToRealTime($delayMinutes), 'Europe/Bratislava'));
         }
     }
 }

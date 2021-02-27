@@ -141,7 +141,7 @@ class UpdateOrderMutation extends Mutation
         });
 
         $timeInMinutes = PathUtility::calculateRoadTripTime($result['roadTrip']->time);
-        QueueJobUtility::dispatch(new FinishOrder($result['order']), Carbon::parse(GameTimeUtility::gameTimeToRealTime($timeInMinutes), 'Europe/Bratislava'));
+        QueueJobUtility::dispatch(new FinishOrder($result['order']), Carbon::parse(GameTimeUtility::addTimeToRealTime($timeInMinutes), 'Europe/Bratislava'));
         $company = Company::currentCompany();
         BroadcastUtility::broadcast(new RefreshQuery($company, 'Order', $result['order']->id));
 

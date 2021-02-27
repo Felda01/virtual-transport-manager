@@ -52,7 +52,7 @@ class UpdatePersonalAgency implements ShouldQueue
         });
 
         if (!$this->single) {
-            QueueJobUtility::dispatch(new UpdatePersonalAgency(), Carbon::parse(GameTimeUtility::gameTimeToRealTime(24 * 60), 'Europe/Bratislava'));
+            QueueJobUtility::dispatch(new UpdatePersonalAgency(), Carbon::parse(GameTimeUtility::addTimeToRealTime(24 * 60), 'Europe/Bratislava'));
         }
     }
 }

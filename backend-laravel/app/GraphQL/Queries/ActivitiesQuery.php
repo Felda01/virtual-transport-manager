@@ -75,6 +75,7 @@ class ActivitiesQuery extends Query
 
         return $query->with($with)
             ->select($select)
+            ->orderBy('created_at', 'desc')
             ->paginate($args['limit'], ['*'], 'page', $args['page']);
     }
 }

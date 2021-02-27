@@ -102,6 +102,7 @@ class CreateDriverMutation extends Mutation
             $driver->garage_id = $garage->id;
             $driver->location_id = $garage->location_id;
             $driver->last_in_garage_at = Carbon::now();
+            $driver->status = StatusUtility::TRAVEL;
 
             $driver->save();
 
@@ -116,7 +117,7 @@ class CreateDriverMutation extends Mutation
         });
         BroadcastUtility::broadcast(new RefreshQuery($company, 'Driver', $result['driver']->id));
         BroadcastUtility::broadcast(new RefreshQuery($company, 'Garage', $result['garage']->id));
-        QueueJobUtility::dispatch(new UpdateModelStatus($result['driver'], StatusUtility::IDLE), Carbon::parse(GameTimeUtility::gameTimeToRealTime(60 * 6), 'Europe/Bratislava'));
+        QueueJobUtility::dispatch(new UpdateModelStatus($result['driver'], StatusUtility::IDLE), Carbon::parse(GameTimeUtility::addTimeToRealTime(60 * 6), 'Europe/Bratislava'));
         return $result['driver'];
     }
 }
