@@ -7,20 +7,12 @@
     :style="sidebarStyle"
   >
     <div class="logo">
-      <a
-        href="https://www.creative-tim.com"
-        class="simple-text logo-mini"
-        target="_blank"
-      >
+      <a :href="logoUrl" class="simple-text logo-mini">
         <div class="logo-img">
-          <img :src="logo" />
+          <img :src="logo" alt="Transport manager"/>
         </div>
       </a>
-      <a
-        href="https://www.creative-tim.com"
-        class="simple-text logo-normal"
-        target="_blank"
-      >
+      <a :href="logoUrl" class="simple-text logo-normal">
         <template v-if="$route.meta.rtlActive">{{ rtlTitle }}</template>
         <template v-else>{{ title }}</template>
       </a>
@@ -104,6 +96,9 @@ export default {
     logo: {
       type: String,
       default: "/img/vue-logo.png"
+    },
+    logoUrl: {
+      type: String,
     },
     sidebarLinks: {
       type: Array,

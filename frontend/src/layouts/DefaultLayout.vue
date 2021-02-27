@@ -10,12 +10,13 @@
                 :active-color="sidebarBackground"
                 :background-image="sidebarBackgroundImage"
                 :data-background-color="sidebarBackgroundColor"
+                :title="'Transport manager'"
+                logo="/img/truck.png"
+                :logo-url="generatePath('dashboard')"
         >
             <user-menu></user-menu>
             <mobile-menu></mobile-menu>
             <template slot="links">
-                <sidebar-item :link="{ name: 'Dashboard', icon: 'dashboard', path: generatePath('dashboard') }"
-                ></sidebar-item>
                 <sidebar-item :link="{ name: $t('navigation.companyEmployees'), icon: 'group' }">
                     <sidebar-item :link="{ name: $t('pages.users'), path: generatePath('users') }"
                     ></sidebar-item>

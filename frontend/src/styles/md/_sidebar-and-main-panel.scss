@@ -358,7 +358,7 @@
             text-transform: uppercase;
             padding: $padding-small-vertical $padding-zero;
             display: inline-block;
-            font-size: 18px;
+            font-size: 12px;
             white-space: nowrap;
             font-weight: $font-weight-default;
             line-height: 30px;
@@ -383,10 +383,9 @@
 
 
                 img{
-                  width: 51%;
+                  width: 65%;
                   vertical-align: unset;
                   position: relative;
-                  top: 2px;
                 }
             }
         }

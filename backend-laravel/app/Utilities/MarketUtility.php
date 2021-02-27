@@ -3,14 +3,13 @@
 
 namespace App\Utilities;
 
-use App\Jobs\DeleteModel;
+use App\Jobs\DeleteMarket;
 use App\Models\Cargo;
 use App\Models\Customer;
 use App\Models\Location;
 use App\Models\Market;
 use App\Models\Route;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -36,7 +35,8 @@ class MarketUtility
         $randomCargos = Cargo::inRandomOrder()->limit($count)->get(['id']);
         $randomCargos = $randomCargos->toArray();
 
-        for ($i = 0; $i < $count; $i++){
+        $forCount = min($count, floor(count($randomLocations) / 2));
+        for ($i = 0; $i < $forCount; $i++){
             $weeks = random_int(3, 8);
 
             $expiresAt = GameTimeUtility::addTimeToRealTime($weeks * 7 * 24 * 60);
@@ -52,7 +52,7 @@ class MarketUtility
 
             $market = new Market;
             $market->location_from = $randomLocations[$i * 2]['id'];
-            $market->location_to = $randomLocations[$i * 2]['id'];
+            $market->location_to = $randomLocations[$i * 2 + 1]['id'];
             $market->customer_from = $randomCustomers[$i * 2]['id'];
             $market->customer_to = $randomCustomers[$i * 2 + 1]['id'];
             $market->cargo_id = $cargo->id;
@@ -66,7 +66,7 @@ class MarketUtility
 
             $market->save();
 
-            QueueJobUtility::dispatch(new DeleteModel($market), $expiresAtCarbon);
+            QueueJobUtility::dispatch(new DeleteMarket($market), $expiresAtCarbon);
         }
 
         activity()->enableLogging();
@@ -90,7 +90,8 @@ class MarketUtility
         }
         $randomLocations = $randomLocations->toArray();
 
-        for ($i = 0; $i < count($deletedMarkets); $i++){
+        $forCount = min(count($deletedMarkets), floor(count($randomLocations) / 2));
+        for ($i = 0; $i < $forCount; $i++){
             /** @var Market $deletedMarket */
             $deletedMarket = Market::onlyTrashed()->find($deletedMarkets[$i]['id']);
 
@@ -114,7 +115,7 @@ class MarketUtility
             $deletedMarket->expires_at = $expiresAtCarbon;
             $deletedMarket->save();
 
-            QueueJobUtility::dispatch(new DeleteModel($deletedMarket), $expiresAtCarbon);
+            QueueJobUtility::dispatch(new DeleteMarket($deletedMarket), $expiresAtCarbon);
         }
 
         activity()->enableLogging();

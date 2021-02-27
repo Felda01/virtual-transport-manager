@@ -3,34 +3,28 @@
 namespace App\Jobs;
 
 use App\Events\RefreshMarketQuery;
-use App\Events\RefreshQuery;
-use App\Models\Company;
-use App\Models\Driver;
 use App\Models\Market;
 use App\Utilities\BroadcastUtility;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 
-class DeleteModel implements ShouldQueue
+class DeleteMarket implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $model;
+    public $market;
 
     /**
      * Create a new job instance.
      *
-     * @param $model
+     * @param Market $market
      */
-    public function __construct(Model $model)
+    public function __construct(Market $market)
     {
-        /** @var Model model */
-        $this->model = $model;
+        $this->market = $market;
     }
 
     /**
@@ -41,13 +35,12 @@ class DeleteModel implements ShouldQueue
      */
     public function handle()
     {
-        if ($this->model instanceof Driver && $this->model->company_id !== null) {
+        if ($this->market->orders()->count() > 0) {
+            BroadcastUtility::broadcast(new RefreshMarketQuery());
             return;
         }
 
-        $company = Company::find($this->model->company_id);
-        BroadcastUtility::broadcast(new RefreshQuery($company, class_basename($this->model), $this->model->id));
-
-        $this->model->delete();
+        BroadcastUtility::broadcast(new RefreshMarketQuery());
+        $this->market->delete();
     }
 }
