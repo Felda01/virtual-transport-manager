@@ -2,7 +2,7 @@
     <div class="md-layout">
         <div class="md-layout-item">
             <signup-card>
-                <h2 class="title text-center" slot="title">Register</h2>
+                <h2 class="title text-center" slot="title">{{ $t('register.title') }}</h2>
                 <div class="md-layout-item md-size-50 md-medium-size-50 md-small-size-100 ml-auto" slot="content-left">
                     <div class="info info-horizontal" v-for="item in contentLeft" :key="item.title">
                         <div :class="`icon ${item.colorIcon}`">

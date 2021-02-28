@@ -27,3 +27,4 @@ const i18n = new VueI18n({
 export default i18n;
 
 export const enRoute = localMessages.en.routes;
+export const skRoute = localMessages.sk.routes;

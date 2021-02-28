@@ -8,7 +8,7 @@
   >
     <div class="md-toolbar-row">
       <div class="md-toolbar-section-start">
-        <h3 class="md-title">{{ $route.meta.title }}</h3>
+        <h3 class="md-title">{{ $t($route.meta.title) }}</h3>
       </div>
       <div class="md-toolbar-section-end">
         <md-button
@@ -33,9 +33,14 @@
                 <custom-time class="md-list-item-container"></custom-time>
               </div>
             </li>
+            <md-list-item :to="{ name: $router.name, params: { locale: $i18n.locale === 'en' ? 'sk' : 'en'} }">
+              <i class="material-icons">language</i>
+              <p class="hidden-lg hidden-md">{{ nextLanguage | uppercase }}</p>
+            </md-list-item>
 
             <md-list-item href="#" @click.prevent="logout">
-              <md-icon class="mr-0">logout</md-icon>
+              <i class="material-icons mr-0">logout</i>
+              <p class="hidden-lg hidden-md">{{ $t('logout') }}</p>
             </md-list-item>
           </md-list>
         </div>
@@ -59,6 +64,9 @@
         'user',
         'money',
       ]),
+      nextLanguage() {
+        return this.$i18n.locale === 'en' ? 'sk' : 'en'
+      }
     },
     components: {
       AnimatedNumber,

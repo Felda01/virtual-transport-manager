@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Cookies from 'js-cookie'
+import { localize } from 'vee-validate';
+
+
 
 Vue.use(VueRouter)
 
@@ -10,6 +13,7 @@ import store from '../store';
 import authRoutes from "./auth";
 import adminRoutes from "./admin";
 import userRoutes from "./user";
+import EventBus from "../event-bus";
 
 const currentLocale = location.pathname.split("/")[1] || "en";
 i18n.locale = currentLocale;
@@ -74,7 +78,8 @@ router.beforeEach((to, from, next) => {
     let currentLocale = to.params.locale;
     // setting the new locale
     i18n.locale = currentLocale;
-    store.dispatch('setLanguageCookie', {locale: currentLocale});
+    localize(currentLocale);
+    store.dispatch('setLanguageCookie', { locale: currentLocale });
 
     if (!from.params.locale) {
       from.params.locale = currentLocale;
@@ -133,7 +138,7 @@ router.beforeEach((to, from, next) => {
     }
 
     if (to.params.locale !== from.params.locale) {
-      router.go();
+      EventBus.$emit('localeChanged');
     }
   }
 });
@@ -164,7 +169,7 @@ router.afterEach(to => {
         el.includes(":")
     );
     if (router.currentRoute.path !== localizedRoute.path && !hasUnresolvedPath) {
-      router.push(localizedRoute);
+      router.replace(localizedRoute);
     }
   }
 

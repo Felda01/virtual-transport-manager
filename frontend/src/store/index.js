@@ -135,7 +135,7 @@ export default new Vuex.Store({
             let current = Cookies.get('locale');
             if (locale !== current) {
                 const expiryTime = new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000);
-                Cookies.set('locale', locale, {expires: expiryTime, sameSite: 'lax', secure: true});
+                Cookies.set('locale', locale, {expires: expiryTime, sameSite: 'lax', secure: true, domain: process.env.VUE_APP_LOCALE_COOKIE_DOMAIN});
             }
         }
     }

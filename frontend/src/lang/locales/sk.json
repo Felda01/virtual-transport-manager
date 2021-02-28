@@ -1,0 +1,884 @@
+{
+  "pages": {
+    "login": "Prihlásenie",
+    "register": "Registrácia",
+    "forgotPassword": "Zabudol si heslo",
+    "resetPassword": "Obnoviť heslo",
+    "countries": "Štáty",
+    "locations": "Miesta",
+    "routes": "Trasy",
+    "constants": "Constants",
+    "dashboard": "Dashboard",
+    "adminDashboard": "Admin Dashboard",
+    "bankLoanTypes": "Typy pôžičiek",
+    "garageModels": "Modely garáži",
+    "trailerModels": "Modely návesov",
+    "truckModels": "Modely kamiónov",
+    "cargos": "Náklady",
+    "users": "Používatelia",
+    "user": "Používateľ",
+    "truckShop": "Obchod s kamiónmi",
+    "garageShop": "Obchod s garážami",
+    "trailerShop": "Obchod s návesmi",
+    "garages": "Garáže",
+    "trucks": "Kamióny",
+    "trailers": "Návesy",
+    "recruitmentAgencyDrivers": "Personálna agentúra",
+    "drivers": "Vodiči",
+    "garage": "Garáž",
+    "truck": "Kamión",
+    "trailer": "Náves",
+    "driver": "Vodič",
+    "orderOffers": "Ponuky objednávok",
+    "orders": "Objednávky",
+    "doneOrders": "Dokončené objednávky",
+    "order": "Objednávka",
+    "transactions": "Účtovníctvo",
+    "bankLoans": "Banka",
+    "messages": "Správy"
+  },
+  "routes": {
+    "login": "prihlasenie",
+    "register": "registracia",
+    "forgotPassword": "zabudnute-heslo",
+    "resetPassword": "obnovenie-hesla",
+    "countries": "staty",
+    "locations": "miesta",
+    "routes": "trasy",
+    "constants": "constants",
+    "dashboard": "",
+    "adminDashboard": "admin",
+    "bankLoanTypes": "typy-bankovych-poziciek",
+    "garageModels": "modely-garazi",
+    "trailerModels": "modely-navesov",
+    "truckModels": "modely-kamionov",
+    "cargos": "naklady",
+    "users": "pouzivatelia",
+    "truckShop": "obchod-s-kamionmi",
+    "garageShop": "obchod-s-garazami",
+    "trailerShop": "obchod-s-navesmi",
+    "garages": "garaze",
+    "trucks": "kamiony",
+    "trailers": "navesy",
+    "recruitmentAgencyDrivers": "personalna-agentura",
+    "drivers": "vodici",
+    "orderOffers": "ponuky-objednavok",
+    "orders": "objednavky",
+    "doneOrders": "dokoncene-objednavky",
+    "transactions": "uctovnictvo",
+    "bankLoans": "banka",
+    "messages": "spravy"
+  },
+  "navigation": {
+    "staticMapData": "Údaje k mape",
+    "companyEquipmentData": "Majetok firmy",
+    "shop": "Obchod / Agentúra",
+    "companyEmployees": "Zamestnanci firmy",
+    "user": {
+      "normal": "Môj profil",
+      "mini": "MP"
+    },
+    "messages": {
+      "mini": "M",
+      "normal": "Správy"
+    },
+    "orders": "Objednávky",
+    "economy": "Ekonomika"
+  },
+  "search": {
+    "title": "Filtre",
+    "noResults": "Neboli nájdené žiadne výsledky.",
+    "from": "od",
+    "to": "do",
+    "sortBy": "Zoradiť podľa"
+  },
+  "modal": {
+    "btn" : {
+      "add": "Vytvoriť",
+      "update": "Upraviť",
+      "cancel": "Zrušiť",
+      "delete": "Vymazať",
+      "buy": "Kúpiť",
+      "hire": "Najať",
+      "register": "Zaregistrovať",
+      "upgrade": "Vylepšiť",
+      "sell": "Predať",
+      "assign": "Priradiť",
+      "unassign": "Zrušiť priradenie",
+      "training": "Tréning",
+      "fire": "Vyhodiť",
+      "acceptOffer": "Akceptovať ponuku",
+      "apply": "Uchádzať sa",
+      "repay": "Splatiť"
+    },
+    "select": {
+      "emptyOption": "Nie sú k dispozícii žiadne možnosti"
+    }
+  },
+  "shop": {
+    "buy": "Kúpiť hneď",
+    "hire": "Najať hneď"
+  },
+  "detail": {
+    "btn": {
+      "update": "Upraviť",
+      "upgrade": "Vylepšiť",
+      "sell": "Predať",
+      "assign": "Priradiť",
+      "fire": "Vyhodiť",
+      "unassign": "Zrušiť priradenie",
+      "training": "Tréning",
+      "updatePassword": "Zmeniť heslo",
+      "updateProfile": "Upraviť profil",
+      "updateSalary": "Upraviť plat / role"
+    }
+  },
+  "pagination": {
+    "display": "Zobrazuje sa {from} až {to} z {total} záznamov"
+  },
+  "validation": {
+    "latitude": "Formát Latitude je neplatný.",
+    "longitude": "Formát Longitude je neplatný.",
+    "autocomplete": "No {model} matching \"{term}\" were found.",
+    "different": "{Attribute} a {other} musia byť odlišné.",
+    "min_integer": "{Attribute} musí byť aspoň {min}.",
+    "password": "Heslá sa nezhodujú."
+  },
+  "login": {
+    "logIn": "Prihlásiť sa",
+    "submitBtn": "Prihlásiť",
+    "forgot_password": "Zabudol si heslo?",
+    "register": "Vytvoriť účet"
+  },
+  "register": {
+    "title": "Registrovať sa",
+    "submitBtn": "Registrovať"
+  },
+  "logout": "Odhlásiť",
+  "forgotPassword": {
+    "title": "Zabudnuté heslo",
+    "submitBtn": "Odoslať odkaz na obnovenie hesla"
+  },
+  "resetPassword": {
+    "title": "Obnoviť heslo",
+    "submitBtn": "Obnoviť heslo"
+  },
+  "model": {
+    "actions": "",
+    "modal": {
+      "title": {
+        "add": {
+          "bankLoanType": "Vytvoriť nový typ bankovej pôžičky",
+          "cargo": "Vytvoriť nový náklad",
+          "country": "Create new country",
+          "location": "Vytvoriť nové miesto",
+          "route": "Vytvoriť novú trasu",
+          "trailerModel": "Vytovriť novy model návesu",
+          "truckModel": "Vytovriť novy model kamiónu",
+          "garageModel": "Vytovriť novy model garáže",
+          "garage": "Kúpiť novú garáž",
+          "truck": "Kúpiť nový kamión",
+          "trailer": "Kúpiť nový náves",
+          "driver": "Najať nového vodiča",
+          "user": "Zaregistrovať nového používateľa",
+          "order": "Naozaj chcete prijať túto ponuku? {cargoName} z {locationFromName} do {locationToName} za {price}",
+          "bankLoan": "Naozaj chcete požiadať o pôžičku vo výske {price}?"
+        },
+        "update": {
+          "bankLoanType": "Upraviť tento typ bankovej pôžičky",
+          "cargo": "Upraviť tento náklad",
+          "country": "Upraviť tento štát",
+          "location": "Upraviť toto miesto",
+          "route": "Upraviť túto trasu",
+          "trailerModel": "Upraviť tento model návasu",
+          "truckModel": "Upraviť tento model kamiónu",
+          "garageModel": "Upraviť tento model garáže",
+          "garage": "Vylepšiť túto garáž",
+          "driver": "Ste is istý, že chcete tohto vodiča poslať na tréning vyššej ADR triedy za {price} €?",
+          "userPassword": "Zmeniť heslo",
+          "user": "Upraviť informácie v profile",
+          "userSalary": "Upraviť používateľovi plat / role",
+          "bankLoan": "Naozaj chcete splatiť túto pôžičku?"
+        },
+        "delete": {
+          "bankLoanType": "Naozaj chcete odstrániť tento typ bankovej pôžička?",
+          "cargo": "Naozaj chcete odstrániť tento náklad?",
+          "country": "Naozaj chcete odstrániť tento štát?",
+          "location": "Naozaj chcete odstrániť toto miesto?",
+          "route": "Naozaj chcete odstrániť túto trasu?",
+          "trailerModel": "Naozaj chcete odstrániť tento model návesu?",
+          "truckModel": "Naozaj chcete odstrániť tento model kamiónu?",
+          "garageModel": "Naozaj chcete odstrániť tento model garáže?",
+          "garage": "Naozaj chcete predať túto garáž za {price} €?",
+          "driver": "Naozaj chcete prepustiť tohto vodiča?",
+          "trailer": "Naozaj chcete predať tento náves za {price} €?",
+          "truck": "Naozaj chcete predať tento kamión za {price} €?",
+          "user": "Naozaj chcete prepustiť tohto používateľa?"
+        },
+        "assign": {
+          "driverToTruck": "Priradenie vodiča do kamiónu",
+          "trailerToTruck": "Priradenie návasu ku kamiónu",
+          "truckToDriver": "Priradenie kamióna k vodičovi",
+          "truckToTrailer": "Priradenie kamiónu k návesu"
+        },
+        "unassign": {
+          "driverFromTruck": "Naozaj chcete zrušiť priradenie vybraného vodiča a tohto kamiónu?",
+          "trailerFromTruck": "Naozaj chcete zrušiť priradenie vybraného návesu a tohto kamiónu?",
+          "truckFromDriver": "Naozaj chcete zrušiť priradenie vybraného kamiónu a tohto vodiča?",
+          "truckFromTrailer": "Naozaj chcete zrušiť priradenie vybraného kamiónu a tohto návesu?"
+        }
+      }
+    },
+    "new": "Vytvoriť nový",
+    "response": {
+      "success": {
+        "created": {
+          "bankLoanType": "Typ bankovej pôžičky {modelName} bol úspešne vytvorený.",
+          "cargo": "Náklad {modelName} bol úspešne vytvorený.",
+          "country": "Štát {modelName} bol úspešne vytvorený.",
+          "location": "Miesto {modelName} bolo úspešne vytvorené.",
+          "route": "Trasa {modelName} bola úspešne vytvorená.",
+          "trailerModel": "Model návesu {modelName} bol úspešne vytvorený.",
+          "truckModel": "Model kamiónu {modelName} bol úspešne vytvorený.",
+          "garageModel": "Model garáže {modelName} bol úspešne vytvorený.",
+          "garage": "{ModelName} garáž bola úspešne zakúpená v {location}.",
+          "truck": "Kamión {modelName} bol úspešne zakúpený a prepravuje sa do {location}.",
+          "trailer": "Náves {modelName} bol úspešne zakúpený a prepravuje sa do {location}.",
+          "driver": "Vodič {modelName} bol úspešne prijatý a cestuje do {location}.",
+          "user": "Používateľ {modelName} bol úspešne zaregistrovaný.",
+          "order": "Objednávka {cargoName} z {locationFromName} do {locationToName} za {price} bola úspešne akceptovaná.",
+          "bankLoan": "Pôžička za {price} boal úspešne schválená."
+        },
+        "updated": {
+          "bankLoanType": "Typ bankovej pôžičky {modelName} bol úspešne aktualizovaný.",
+          "cargo": "Náklad {modelName} bol úspešne aktualizovaný.",
+          "country": "Štát {modelName} bol úspešne aktualizovaný.",
+          "location": "Miesto {modelName} bolo úspešne aktualizované.",
+          "route": "Trasa {modelName} bola úspešne aktualizovaná.",
+          "trailerModel": "Model návesu {modelName} bol úspešne aktualizovaný.",
+          "truckModel": "Model kamiónu {modelName} bol úspešne aktualizovaný.",
+          "garageModel": "Model garáže {modelName} bol úspešne aktualizovaný.",
+          "garage": "Garáž v {location} bola úspešne vylepšená na {modelName}.",
+          "driver": "Tréning pre vodiča {modelName} bol úspešne zaplatený a vodič cestuje na miesto tréningu.",
+          "userPassword": "Vaše heslo bolo úspešne aktualizované.",
+          "user": "Informácie o vašom profile boli úspešne aktualizované.",
+          "userSalary": "Informácie o používateľovi {modelName} boli úspešne aktualizované.",
+          "order": "Objednávka {cargoName} z {locationFromName} do {locationToName} za {price} bola úspešne priradená vybraným vodičom.",
+          "bankLoan": "Pôžička za {price} bola úspešne splatená."
+        },
+        "deleted": {
+          "bankLoanType": "Typ bankovej pôžičky {modelName} bol úspešne vymazaný.",
+          "cargo": "Náklad {modelName} bol úspešne vymazaný.",
+          "country": "Štát {modelName} bol úspešne vymazaný.",
+          "location": "Miesto {modelName} bolé úspešne vymazané.",
+          "route": "Trasa {modelName} bola úspešne vymazaná.",
+          "trailerModel": "Model návesu {modelName} bol úspešne vymazaný.",
+          "truckModel": "Model kamiónu {modelName} bol úspešne vymazaný.",
+          "garageModel": "Model garáže {modelName} bol úspešne vymazaný.",
+          "garage": "{ModelName} garáž v {location} bola úspešne predaná.",
+          "driver": "Vodič {modelName} bol úspešne prepustený.",
+          "trailer": "Náves {modelName} bol úspešne predaný.",
+          "truck": "Kamión {modelName} bol úspešne predaný.",
+          "user": "Používateľ {modelName} bol úspešne prepustený."
+        },
+        "assigned": {
+          "driverToTruck": "Vodič {modelName} bol úspešne priradený k tomuto kamiónu.",
+          "trailerToTruck": "Náves {modelName} bol úspešne priradený k tomuto kamiónu.",
+          "truckToDriver": "Vybraný kamión bol úspešne priradený k tomuto vodičovi.",
+          "truckToTrailer": "Vybraný kamión bol úspešne priradený k tomuto návesu."
+        },
+        "unassigned": {
+          "driverFromTruck": "Priradenie medzi týmto kamiónom a vodičom {modelName} bolo úspešne zrušené.",
+          "trailerFromTruck": "Priradenie medzi týmto kamiónom a návesom {modelName} bolo úspešne zrušené.",
+          "truckFromDriver": "Priradenie medzi týmto vodičom a vybraným kamiónom bolo úspešne zrušené.",
+          "truckFromTrailer": "Priradenie medzi týmto návesom a vybraným kamiónom bolo úspešne zrušené."
+        }
+      }
+    }
+  },
+  "user": {
+    "property": {
+      "email": "Email",
+      "password": "Heslo",
+      "password_confirmation": "Potvrdenie hesla",
+      "new_password": "Nové heslo",
+      "new_password_confirmation": "Potvrdenie nového hesla",
+      "first_name": "Krstné meno",
+      "last_name": "Priezvisko",
+      "company_name": "Názov firmy",
+      "full_name": "Celé meno",
+      "salary": "Plat",
+      "salaryUnit": "€/mesiac"
+    },
+    "searchFields": {
+      "roles": "Role"
+    },
+    "subNav": {
+      "info": "Informácie",
+      "activities": "Aktivity"
+    },
+    "relations": {
+      "no_activities": "Žiadne aktivity"
+    },
+    "detail": "Profil",
+    "register": "Zaregistrovať nového"
+  },
+  "role": {
+    "owner": "Vlastník",
+    "person manager": "Správca používateľov",
+    "driver manager": "Správca vodičov",
+    "vehicle manager": "Správca vozidiel",
+    "job manager": "Správca objednávok",
+    "garage manager": "Správca garaží"
+  },
+  "country": {
+    "property": {
+      "name": "Názov",
+      "short_name": "Skratka"
+    }
+  },
+  "location": {
+    "property": {
+      "name": "Názov",
+      "is_city": "Je to mesto",
+      "lat": "Latitude",
+      "lng": "Longitude",
+      "country": "Krajina"
+    }
+  },
+  "route": {
+    "property": {
+      "location1": "Miesto 1",
+      "location2": "Miesto 2",
+      "time": "Čas",
+      "timeUnit": "minúty",
+      "distance": "Vzdialenosť",
+      "distanceUnit": "km",
+      "type": "Typ",
+      "fee": "Poplatok",
+      "feeUnit": "€/km"
+    },
+    "additionalLabelText": {
+      "location": "(prázdne == automatický výpočet)",
+      "time": "(v minútach, prázdne == automatický výpočet)",
+      "timeUpdate": "(v minútach)",
+      "fee": "(€ za km)"
+    }
+  },
+  "bankLoanType": {
+    "property": {
+      "value": "Pôžička",
+      "valueUnit": "€",
+      "payment": "Splátka",
+      "paymentUnit": "€/mesiac",
+      "period": "Trvanie",
+      "periodUnit": "0 | mesiac | mesiacov"
+    },
+    "additionalLabelText": {
+      "value": "(v €)",
+      "payment": "(€ za mesiac)",
+      "period": "(v mesiacoch)"
+    },
+    "teaser": {
+      "repayment": "Doba splácania",
+      "installment": "Mesačná splátka",
+      "btn": "Podať žiadosť"
+    },
+    "offer": "Ponuky pôžičiek"
+  },
+  "garageModel": {
+    "model": "Model garáže",
+    "property": {
+      "name": "Názov",
+      "truck_count": "Počet kamiónov",
+      "trailer_count": "Počet návesov",
+      "image": "Obrázok",
+      "insurance": "Poistenie",
+      "insuranceUnit": "€/mesiac",
+      "tax": "Daň",
+      "taxUnit": "€/mesiac",
+      "price": "Cena",
+      "priceUnit": "€"
+    },
+    "additionalLabelText": {
+      "truck_count": "(maximum)",
+      "trailer_count": "(maximum)",
+      "insurance": "(€ za mesiac)",
+      "tax": "(€ za mesiac)",
+      "price": "(v €)"
+    },
+    "searchFields": {
+      "price_asc": "Cena od najnižšej po najvyššiu",
+      "price_desc": "Cena od najvyššej po najnižšiu"
+    },
+    "selectOptions": {
+      "slots": "Sloty: {trucks} kamiónov, {trailers} návesov"
+    }
+  },
+  "trailerModel": {
+    "model": "Model návesu",
+    "property": {
+      "name": "Názov",
+      "type": "Typ",
+      "load": "Nosnosť",
+      "loadUnit": "Kg",
+      "adr": "Trieda ADR",
+      "km": "Km",
+      "kmUnit": "km",
+      "image": "Obrázok",
+      "insurance": "Poistenie",
+      "insuranceUnit": "€/mesiac",
+      "tax": "Daň",
+      "taxUnit": "€/mesiac",
+      "price": "Cena",
+      "priceUnit": "€"
+    },
+    "additionalLabelText": {
+      "load": "(v kg)",
+      "km": "(v km)",
+      "insurance": "(€ za mesiac)",
+      "tax": "(€ za mesiac)",
+      "price": "(v €)"
+    },
+    "searchFields": {
+      "price_asc": "Cena od najnižšej po najvyššiu",
+      "price_desc": "Cena od najvyššej po najnižšiu",
+      "adr_asc": "Trieda ADR od najnižšej po najvyššiu",
+      "adr_desc": "Trieda ADR od najvyššej po najnižšiu"
+    }
+  },
+  "ADRs": {
+    "0": "Bez triedy",
+    "1": "Trieda 1 - Výbušniny",
+    "2": "Trieda 2 - Plyny",
+    "3": "Trieda 3 - Horľavé kvapaliny",
+    "4": "Trieda 4 - Horľavé pevné látky",
+    "5": "Trieda 6 - Toxické látky",
+    "6": "Trieda 8 - Žieravé látky"
+  },
+  "ADRsShort": {
+    "0": "Bez triedy",
+    "1": "Trieda 1",
+    "2": "Trieda 2",
+    "3": "Trieda 3",
+    "4": "Trieda 4",
+    "5": "Trieda 6",
+    "6": "Trieda 8"
+  },
+  "truckModel": {
+    "model": "Model kamiónu",
+    "property": {
+      "name": "Názov",
+      "brand": "Znažka",
+      "engine_power": "Výkon motora",
+      "engine_powerUnit": "hp",
+      "chassis": "Podvozok",
+      "load": "Nosnosť",
+      "loadUnit": "Kg",
+      "emission_class": "Emisná trieda",
+      "km": "Km",
+      "kmUnit": "km",
+      "image": "Obrázok",
+      "insurance": "Poistenie",
+      "insuranceUnit": "€/mesiac",
+      "tax": "Daň",
+      "taxUnit": "€/mesiac",
+      "price": "Cena",
+      "priceUnit": "€"
+    },
+    "additionalLabelText": {
+      "load": "(v kg)",
+      "km": "(v km)",
+      "engine_power": "(v hp)",
+      "insurance": "(€ za mesiac)",
+      "tax": "(€ za mesiac)",
+      "price": "(v €)"
+    },
+    "searchFields": {
+      "price_asc": "Cena od najnižšej po najvyššiu",
+      "price_desc": "Cena od najvyššej po najnižšiu",
+      "engine_power_asc": "Výkon motora od najnižšieho po najvyšší",
+      "engine_power_desc": "Výkon motora od najvyššieho po najnižší"
+    }
+  },
+  "truckEmissionClasses": {
+    "3": "Euro III",
+    "4": "Euro IV",
+    "5": "Euro V",
+    "6": "Euro VI"
+  },
+  "cargo": {
+    "property": {
+      "name": "Názov",
+      "adr": "Trieda ADR",
+      "weight": "Váha",
+      "weightUnit": "kg",
+      "engine_power": "Výkon motora",
+      "engine_powerUnit": "hp",
+      "chassis": "Podvozok",
+      "min_price": "Minimálna cena",
+      "min_priceUnit": "€",
+      "max_price": "Maximálna cena",
+      "max_priceUnit": "€",
+      "own_trailer": "Vlastný náves",
+      "image": "Obrázok"
+    },
+    "additionalLabelText": {
+      "engine_power": "(v hp)",
+      "weight": "(v kg)",
+      "min_price": "(v €)",
+      "max_price": "(v €)"
+    },
+    "relations": {
+      "trailerModels": "Modely návesov"
+    }
+  },
+  "adminDashboard": {
+    "countries": "Štáty",
+    "locations": "Miesta",
+    "routes": "Trasy",
+    "constants": "Constants",
+    "bankLoanTypes": "Typy bankových pôžičiek",
+    "garageModels": "Modely garáží",
+    "trailerModels": "Modely návesov",
+    "truckModels": "Modely kmiónov",
+    "cargos": "Náklady"
+  },
+  "garage": {
+    "property": {
+      "location": "Miesto",
+      "garage_model": "Model garáže",
+      "trucks": "Kamióny",
+      "trailers": "Návesy",
+      "drivers": "Vodiči"
+    },
+    "searchFields": {
+      "country": "Štát",
+      "available_truck_spot": "Aspoň jedno voľné miesto pre kamión",
+      "available_trailer_spot": "Aspoň jedno voľné miesto pre náves"
+    },
+    "subNav": {
+      "info": "Informácie",
+      "trucks": "Kamióny",
+      "trailers": "Návesy",
+      "drivers": "Vodiči"
+    },
+    "relations": {
+      "no_drivers": "Žiadni vodiči",
+      "no_trucks": "Žiadne kamiónov",
+      "no_trailers": "Žiadne návesy"
+    },
+    "no_upgrades": "Plne vylepšená.",
+    "can_not_sell": "Predať sa dá iba prázdna garáž."
+  },
+  "truck": {
+    "property": {
+      "garage": "Garáž",
+      "status": "Status"
+    },
+    "relations": {
+      "drivers": "Vodiči",
+      "no_drivers": "Žiadni vodiči",
+      "trailer": "Náves",
+      "no_trailer": "Žiaden náves",
+      "truckModel": "Model kamiónu",
+      "location": "Miesto",
+      "drivers_from_same_garage": "Vodiči z garáže",
+      "no_available_drivers": "V garáži nie sú k dispozícii žiadni vodiči na priradenie",
+      "trailers_from_same_garage": "Návesy z garáže",
+      "no_available_trailers": "V garáži nie sú k dispozícii žiadne prívesy na priradenie"
+    },
+    "subNav": {
+      "info": "Informácie",
+      "drivers": "Vodiči",
+      "trailer": "Náves",
+      "garage": "Garáž"
+    },
+    "can_not_sell": "Kamión sa nedá predať.",
+    "can_not_sell_info": "Kamión sa môže predať len ak je v garáži, bez vodičov a prívesu."
+  },
+  "trailer": {
+    "property": {
+      "garage": "Garáž",
+      "status": "Status",
+      "adr": "Trieda ADR"
+    },
+    "relations": {
+      "trailerModel": "Model návesu",
+      "truck": "Kamión",
+      "no_truck": "Žiaden kamión",
+      "location": "Miesto",
+      "trucks_from_same_garage": "Kamióny z garáže",
+      "no_available_trucks": "V garáži nie sú k dispozícii žiadne kamióny na priradenie"
+    },
+    "subNav": {
+      "info": "Informácie",
+      "truck": "Kamión",
+      "garage": "Garáž"
+    },
+    "can_not_sell": "Príves sa nedá predať.",
+    "can_not_sell_info": "Príves je možné predať len ak je v garáži a kamiónu."
+  },
+  "driver": {
+    "model": "Vodič",
+    "property": {
+      "full_name": "Meno",
+      "first_name": "Krstné meno",
+      "last_name": "Priezvisko",
+      "gender": "Pohlavie",
+      "status": "Status",
+      "salary": "Plat",
+      "salaryUnit": "€/mesiac",
+      "last_in_garage_at": "Dni na ceste",
+      "adr": "Trieda ADR",
+      "location": "Miesto",
+      "garage": "Garáž"
+    },
+    "searchFields": {
+      "salary_asc": "Plat od najnižšieho po najvyšší",
+      "salary_desc": "Plat od najvyššieho po najnižší",
+      "adr_asc": "Trieda ADR od najnižšej po najvyššiu",
+      "adr_desc": "Trieda ADR od najvyššej po najnižšiu"
+    },
+    "relations": {
+      "truck": "Kamión",
+      "no_truck": "Žiaden kamión",
+      "trailer": "Náves",
+      "no_trailer": "Žiaden náves",
+      "trucks_from_same_garage": "Kamióny z garáže",
+      "no_available_trucks": "V garáži nie sú k dispozícii žiadne kamióny na priradenie"
+    },
+    "subNav": {
+      "info": "Informácie",
+      "truck": "Kamión",
+      "garage": "Garáž"
+    },
+    "can_not_fire": "Vodiča nie je možno prepustiť.",
+    "can_not_fire_info": "Vodič môže byť prepustený len ak je vodič v garáži a bez kamiónu.",
+    "can_not_train": "Vodiča nie je môžné poslať na tréning.",
+    "can_not_train_info": "Vodiča je možné poslať na tréning len ak je v garáži, nečinný alebo pripravený na prácu.",
+    "fully_trained": "Dosiahnutý maximálny level tréningu."
+  },
+  "status": {
+    "0": "Doručovanie z obchodu",
+    "1": "Nečinný",
+    "2": "Na ceste",
+    "3": "V službe",
+    "4": "Ukončená",
+    "5": "Pripravený na prácu",
+    "7": "Presun",
+    "8": "Na tréningu",
+    "9": "Čaká na vodičov",
+    "10": "Vypršala",
+    "sleep": "Spí"
+  },
+  "activity": {
+    "property": {
+      "description": "Popis",
+      "causer": "Používateľ",
+      "subject": "Predmet",
+      "created_at": "Dátum"
+    },
+    "created": {
+      "trailer": "Nákup nového prívesu",
+      "truck": "Nákup nového kamiónu",
+      "garage": "Nákup novej garáže",
+      "driver": "Najatie nového vodiča",
+      "order": "Akceptovanie novej objednávky",
+      "bankLoan": "Schválená pôžička",
+      "user": "Najatie nového používateľa"
+    },
+    "updated": {
+      "trailer": "Aktualizovanie návesu",
+      "truck": "Aktualizovanie kamióna",
+      "garage": "Vylepšenie garáže",
+      "driver": "Tréning vodiča",
+      "order": "Priradenie objednávky",
+      "bankLoan": "Splatenie pôžičky",
+      "user": "Aktualizovanie údajov používateľa"
+    },
+    "deleted": {
+      "trailer": "Predanie návesu",
+      "truck": "Predanie kamiónu",
+      "garage": "Predanie garáže",
+      "driver": "Prepustenie vodiča",
+      "user": "Prepustenie používateľa"
+    }
+  },
+  "order": {
+    "subNav": {
+      "last_orders": "Posledné objednávky",
+      "info": "Informácie",
+      "drivers": "Vodiči",
+      "truck": "Kamión",
+      "trailer": "Náves"
+    },
+    "relations": {
+      "cargo_name": "Náklad",
+      "market_price": "Cena",
+      "market_priceUnit": "€",
+      "drivers": "Vodiči",
+      "no_drivers": "Žiadni vodiči",
+      "truck": "Kamión",
+      "no_truck": "Žiaden kamión",
+      "trailer": "Náves",
+      "no_trailer": "Žiaden náves",
+      "location_from": "Miesto prevzatia",
+      "location_to": "Miesto doručenia",
+      "roadTrip_status": "Status",
+      "roadTrip_km": "Vzdialenosť",
+      "roadTrip_kmUnit": "Km",
+      "roadTrip_fees": "Poplatky",
+      "roadTrip_feesUnit": "€",
+      "roadTrip_damage": "Poškodenie",
+      "roadTrip_damageUnit": "%",
+      "no_roadTrip": "Čaká na priradenie vodičov",
+      "customer_from": "Odovzdávajúci zákazník",
+      "customer_to": "Preberajúci zákazník"
+    },
+    "no_orders": "Žiadne objednávky",
+    "searchFields": {
+      "status": "Status"
+    },
+    "form": {
+      "title": "Priradenie objednávky",
+      "subtitle": "Priradenie objednávky vodičom a výber cesty",
+      "drivers": "Vyberte vodičov",
+      "path": "Vyberte cestu",
+      "summary": "Zhrnutie",
+      "firstStep": {
+        "truck": {
+          "label": "Vodiči"
+        }
+      },
+      "secondStep": {
+        "path": {
+          "label": "Cesta"
+        },
+        "distanceUnit": "km",
+        "timeHelp": "* - v ideálnej premávke, nezahŕňa spánok vodičov, povinné prestávky, naloženie a vyloženie nákladu",
+        "feesHelp": "** - cena za spoplatnené cesty",
+        "feeUnit": "€"
+      },
+      "thirdStep": {
+
+      },
+      "prevButtonText": "Predchádzajúca",
+      "nextButtonText": "Nasledujúca",
+      "finishButtonText": "Dokončiť"
+    }
+  },
+  "market": {
+    "property": {
+      "price": "Cena",
+      "priceUnit": "€",
+      "expires_at": "Dátum vypršania",
+      "amount": "Množstvo",
+      "amountUnit": "Kg"
+    },
+    "relations": {
+      "location_from": "Miesto prevzatia",
+      "location_to": "Miesto doručenia"
+    },
+    "searchFields": {
+      "chassis": "Podvozok",
+      "engine_power": "Výkon motora",
+      "adr": "Trieda ADR",
+      "weight": "Váha",
+      "trailers": "Modely návesov",
+      "drivers": "Filter vodičov",
+      "no_drivers_option": "Nie sú k dispozícii žiadni vodiči",
+      "price_asc": "Cena od najnižšej po najvyššiu",
+      "price_desc": "Cena od najvyššej po najnižšiu",
+      "km_asc": "Vzdialenosť od najnižšiej po najvyššiu",
+      "km_desc": "Vzdialenosť od najvyššej po najnižšiu"
+    }
+  },
+  "transaction": {
+    "property": {
+      "activity": "Aktivita",
+      "value": "Cena",
+      "valueUnit": "€",
+      "user": "Používateľ",
+      "no_user": "Systém",
+      "product": "Produkt",
+      "created_at": "Dátum"
+    },
+    "searchFields": {
+      "price_asc": "Cena od najnižšej po najvyššiu",
+      "price_desc": "Cena od najvyššej po najnižšiu",
+      "created_at_asc": "Dátum od najstaršieho",
+      "created_at_desc": "Dátum od najnovšieho"
+    },
+    "activity": {
+      "garage_create": "Nákup novej garáže",
+      "garage_upgrade": "Vylepšenie garáže",
+      "garage_sell": "Predaj garáže",
+      "garage_taxes": "Dane z garáží",
+      "garage_insurances": "Poistenie garáží",
+      "truck_create": "Nákup nového kamiónu",
+      "truck_sell": "Predaj kamiónu",
+      "truck_taxes": "Dane z kamiónov",
+      "truck_insurances": "Poistenie kamiónov",
+      "trailer_create": "Nákup nového návesu",
+      "trailer_sell": "Predaj návesu",
+      "trailer_taxes": "Dane z návesov",
+      "trailer_insurances": "Poistenie návesov",
+      "driver_training": "Tréning vodiča",
+      "driver_salaries": "Platy vodičov",
+      "user_salaries": "Platy používateľov",
+      "order_finish": "Cena za objednávky",
+      "order_road_fees": "Cena za spoplatnené cesty",
+      "order_expired": "Pokuta za nedodanie objednávky",
+      "bank_loan_payment": "Splátky pôžičiek",
+      "bank_loan_create": "Schválená pôžička",
+      "bank_loan_update": "Splatenie pôžičky"
+    },
+    "next_payment": {
+      "title": "Platby budúci mesiac",
+      "text": "Dane, poistenie, platy",
+      "name": "Druh platby",
+      "price": "Cena",
+      "priceUnit": "€",
+      "total": "Spolu",
+      "item": {
+        "0": "Platy použivateľov",
+        "1": "Platy vodičov",
+        "2": "Dane z kamiónov",
+        "3": "Poistenie kamiónov",
+        "4": "Dane z návesov",
+        "5": "Poistenie návesov",
+        "6": "Dane z garáží",
+        "7": "Poistenie garáží"
+      }
+    },
+    "next_payment_chart": {
+      "title": "Graf percentuálneho podielu platieb budúci mesiac",
+      "legend": "Legenda",
+      "series_a": "Používateľ",
+      "series_b": "Vodič",
+      "series_c": "Kamión",
+      "series_d": "Náves",
+      "series_e": "Garáž"
+    }
+  },
+  "bankLoan": {
+    "property": {
+      "loan": "Pôžička",
+      "loanUnit": "€",
+      "left_to_repay": "Zostáva splatiť",
+      "duration": "Trvanie (v mesiacoch)",
+      "installment": "Splátka",
+      "installmentUnit": "€",
+      "repay": "Splatiť"
+    },
+    "activeLoans": "Aktívne pôžičky",
+    "noResults": "Žiadne aktívne pôžičky."
+  },
+  "message": {
+    "property": {
+      "message": "Správa"
+    },
+    "chats": "Čety"
+  }
+}

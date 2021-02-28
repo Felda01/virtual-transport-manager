@@ -24,7 +24,7 @@
                             <md-table-row slot="md-table-row" slot-scope="{ item, index }">
                                 <md-table-cell>{{ index + 1 }}</md-table-cell>
                                 <md-table-cell :md-label="$t('transaction.next_payment.name')">{{ $t('transaction.next_payment.item.' + index) }}</md-table-cell>
-                                <md-table-cell :md-label="$t('transaction.next_payment.price')" class="text-right">{{ item.value | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('transaction.next_payment.priceUnit') }}</md-table-cell>
+                                <md-table-cell class="text-right">{{ item.value | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('transaction.next_payment.priceUnit') }}</md-table-cell>
                             </md-table-row>
                         </md-table>
                         <div class="table table-stats">

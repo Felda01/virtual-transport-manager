@@ -153,6 +153,7 @@
   "register": {
     "submitBtn": "Get Started"
   },
+  "logout": "Log out",
   "forgotPassword": {
     "title": "Forgot password",
     "submitBtn": "Send Password Reset Link"
@@ -162,7 +163,7 @@
     "submitBtn": "Reset password"
   },
   "model": {
-    "actions": "Actions",
+    "actions": "",
     "modal": {
       "title": {
         "add": {
@@ -410,7 +411,7 @@
       "price_desc": "Price High to Low"
     },
     "selectOptions": {
-      "slots": "Slots: {trucks} trucks, {trailers} trailer"
+      "slots": "Slots: {trucks} trucks, {trailers} trailers"
     }
   },
   "trailerModel": {
@@ -618,7 +619,7 @@
     "can_not_sell_info": "The trailer can be sold if the trailer is in the garage and without truck."
   },
   "driver": {
-    "model": "Drivers",
+    "model": "Driver",
     "property": {
       "full_name": "Name",
       "first_name": "First name",

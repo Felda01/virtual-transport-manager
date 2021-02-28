@@ -13,9 +13,15 @@
       </a>
     </li>
     <li>
+      <router-link :to="{ name: $router.name, params: { locale: $i18n.locale === 'en' ? 'sk' : 'en'} }">
+        <md-icon>language</md-icon>
+        <p>{{ nextLanguage | uppercase }}</p>
+      </router-link>
+    </li>
+    <li>
       <a href="#" data-toggle="dropdown" class="dropdown-toggle" @click.prevent="logout">
         <md-icon>logout</md-icon>
-        <p>Log out</p>
+        <p>{{ $t('logout') }}</p>
       </a>
     </li>
   </ul>
@@ -33,6 +39,9 @@
       ...mapGetters([
         'money',
       ]),
+      nextLanguage() {
+        return this.$i18n.locale === 'en' ? 'sk' : 'en'
+      }
     },
     components: {
       CustomTime

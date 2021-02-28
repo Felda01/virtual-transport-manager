@@ -354,9 +354,9 @@
                 result = result.replaceAll('_', ' ');
 
                 if (result === 'location1') {
-                    result = 'location 1';
+                    result = this.$t('route.property.location1');
                 } else if (result === 'location2') {
-                    result = 'location 2';
+                    result = this.$t('route.property.location2');
                 }
                 return result[0].toUpperCase() + result.substring(1);
             },

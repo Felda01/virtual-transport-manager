@@ -1,10 +1,10 @@
-import i18n, {enRoute} from "../lang";
+import i18n, { enRoute, skRoute } from "../lang";
 import { getAlias } from "./index";
 
 const authRoutes = [
     {
         path: enRoute.login,
-        ...(getAlias('login')) && { alias: getAlias('login') },
+        alias: [skRoute.login],
         component: () => import('../layouts/AuthLayout.vue'),
         children: [
             {
@@ -13,10 +13,11 @@ const authRoutes = [
                 component: () => import('../views/auth/Login.vue'),
                 meta: {
                     guest: true,
-                    title: i18n.t('pages.login'),
+                    title: 'pages.login',
                     image: 'login',
                     path: {
-                        en: enRoute.login
+                        en: enRoute.login,
+                        sk: skRoute.login
                     }
                 }
             },
@@ -24,7 +25,7 @@ const authRoutes = [
     },
     {
         path: enRoute.register,
-        ...(getAlias('register')) && { alias: getAlias('register') },
+        alias: [skRoute.register],
         component: () => import('../layouts/AuthLayout.vue'),
         children: [
             {
@@ -33,10 +34,11 @@ const authRoutes = [
                 component: () => import('../views/auth/Register.vue'),
                 meta: {
                     guest: true,
-                    title: i18n.t('pages.register'),
+                    title: 'pages.register',
                     image: 'register',
                     path: {
-                        en: enRoute.register
+                        en: enRoute.register,
+                        sk: skRoute.register
                     }
                 }
             },
@@ -44,7 +46,7 @@ const authRoutes = [
     },
     {
         path: enRoute.forgotPassword,
-        ...(getAlias('forgotPassword')) && { alias: getAlias('forgotPassword') },
+        alias: skRoute.forgotPassword,
         component: () => import('../layouts/AuthLayout.vue'),
         children: [
             {
@@ -53,10 +55,11 @@ const authRoutes = [
                 component: () => import('../views/auth/ForgotPassword.vue'),
                 meta: {
                     guest: true,
-                    title: i18n.t('pages.forgotPassword'),
+                    title: 'pages.forgotPassword',
                     image: 'forgotPassword',
                     path: {
-                        en: enRoute.forgotPassword
+                        en: enRoute.forgotPassword,
+                        sk: skRoute.forgotPassword
                     }
                 }
             },
@@ -64,7 +67,7 @@ const authRoutes = [
     },
     {
         path: `${enRoute.resetPassword}/:token/:email`,
-        ...(getAlias('forgotPassword')) && { alias: `${getAlias('resetPassword')}/:token/:email` },
+        alias: [`${skRoute.resetPassword}/:token/:email`],
         component: () => import('../layouts/AuthLayout.vue'),
         children: [
             {
@@ -73,10 +76,11 @@ const authRoutes = [
                 component: () => import('../views/auth/ResetPassword.vue'),
                 meta: {
                     guest: true,
-                    title: i18n.t('pages.resetPassword'),
+                    title: 'pages.resetPassword',
                     image: 'resetPassword',
                     path: {
-                        en: `${enRoute.resetPassword}/:token/:email`
+                        en: `${enRoute.resetPassword}/:token/:email`,
+                        sk: `${skRoute.resetPassword}/:token/:email`
                     }
                 }
             },

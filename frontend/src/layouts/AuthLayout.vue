@@ -3,7 +3,7 @@
     <md-toolbar md-elevation="0" class="md-transparent md-toolbar-absolute">
       <div class="md-toolbar-row md-offset">
         <div class="md-toolbar-section-start">
-          <h3 class="md-title">{{ $route.meta.title }}</h3>
+          <h3 class="md-title">{{ $t($route.meta.title) }}</h3>
         </div>
         <div class="md-toolbar-section-end">
           <md-button
@@ -28,6 +28,9 @@
               <md-list-item :to="{ name: 'login', params: { locale: $i18n.locale} }" @click="linkClick">
                 <md-icon>fingerprint</md-icon>
                 {{ $t('pages.login') }}
+              </md-list-item>
+              <md-list-item :to="{ name: $router.name, params: { locale: $i18n.locale === 'en' ? 'sk' : 'en'} }" @click="linkClick">
+                <md-icon>language</md-icon>
               </md-list-item>
             </md-list>
           </div>
@@ -101,7 +104,7 @@ export default {
       };
     },
     setPageClass() {
-      return `${this.$route.meta.title}-page`.toLowerCase();
+      return `${this.$route.name}-page`.toLowerCase();
     }
   },
   methods: {
