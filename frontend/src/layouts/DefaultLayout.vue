@@ -173,7 +173,7 @@
                 Echo.channel('company-' + this.user.company.id).listen('ProcessTransaction', (data) => {
                     this.$store.dispatch('getCompany');
                 });
-                Echo.channel('company-' + this.user.company.id).listen('RefreshQuery', (data) => {
+                Echo.channel('transport_manager_database_company-' + this.user.company.id).listen('RefreshQuery', (data) => {
                     console.log("data");
                     console.log(data);
                     EventBus.$emit('refreshQuery', data);
