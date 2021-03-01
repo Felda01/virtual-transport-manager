@@ -155,6 +155,9 @@ Vue.use(Vue2Filters);
 import VueChatScroll from 'vue-chat-scroll';
 Vue.use(VueChatScroll);
 
+import LoadScript from 'vue-plugin-load-script';
+Vue.use(LoadScript);
+
 import Echo from 'laravel-echo';
 window.io = require('socket.io-client');
 

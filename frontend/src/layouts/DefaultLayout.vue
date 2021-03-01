@@ -168,19 +168,22 @@
         mounted() {
             console.log("moounted");
             reinitScrollbar();
-            Echo.channel('company-' + this.user.company.id).listen('ProcessTransaction', (data) => {
-                this.$store.dispatch('getCompany');
-            });
-            Echo.channel('company-' + this.user.company.id).listen('RefreshQuery', (data) => {
-                console.log("data");
-                console.log(data);
-                EventBus.$emit('refreshQuery', data);
-            });
-            Echo.channel('market').listen('RefreshMarketQuery', (data) => {
-                EventBus.$emit('refreshMarket');
-            });
-            Echo.channel('message-' + this.user.id).listen('RefreshMessageQuery', (data) => {
-                EventBus.$emit('refreshMessage', data);
+            this.$loadScript(process.env.VUE_APP_LARAVEL_ENDPOINT_SOCKET_IO)
+            .then(() => {
+                Echo.channel('company-' + this.user.company.id).listen('ProcessTransaction', (data) => {
+                    this.$store.dispatch('getCompany');
+                });
+                Echo.channel('company-' + this.user.company.id).listen('RefreshQuery', (data) => {
+                    console.log("data");
+                    console.log(data);
+                    EventBus.$emit('refreshQuery', data);
+                });
+                Echo.channel('market').listen('RefreshMarketQuery', (data) => {
+                    EventBus.$emit('refreshMarket');
+                });
+                Echo.channel('message-' + this.user.id).listen('RefreshMessageQuery', (data) => {
+                    EventBus.$emit('refreshMessage', data);
+                });
             });
         },
         computed: {
