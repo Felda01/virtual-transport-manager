@@ -4,6 +4,8 @@ require('dotenv').config();
 const fetch = require('node-fetch');
 const {GraphBuilder, GreedStrategy} = require('js-shortest-path');
 const bodyParser = require('body-parser');
+const fs = require('fs')
+const https = require('https')
 
 const app = express();
 
@@ -93,6 +95,19 @@ function threeShortestRoutes(routes) {
     return [first, second, third];
 }
 
-const server = app.listen(process.env.PORT, function () {
-    console.log("Started");
-});
+if (process.env.ENVIROMENT === 'local') {
+    const server = app.listen(process.env.PORT, function () {
+        console.log("Started");
+    });
+} else {
+    const httpsServer = https.createServer({
+        key: fs.readFileSync(process.env.PRIVKEY_PATH),
+        cert: fs.readFileSync(process.env.FULLCHAIN_PATH),
+    }, app);
+
+    httpsServer.listen(443, () => {
+        console.log('HTTPS Server running on port 443');
+    });
+}
+
+
