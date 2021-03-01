@@ -64,13 +64,14 @@ class PathUtility
 
     /**
      * @param $time
+     * @param $driversCount
      * @return float|int
      */
-    public static function calculateRoadTripTime($time)
+    public static function calculateRoadTripTime($time, $driversCount = 1)
     {
         $time = $time + self::calculateDelay();
 
-        $days = ceil($time / (config('constants.working_hours') * 60));
+        $days = ceil($time / (config('constants.working_hours') * $driversCount * 60));
 
         return $days * 24 * 60;
     }

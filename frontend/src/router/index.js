@@ -169,7 +169,7 @@ router.afterEach(to => {
         el.includes(":")
     );
     if (router.currentRoute.path !== localizedRoute.path && !hasUnresolvedPath) {
-      router.replace(localizedRoute);
+      router.replace(localizedRoute).catch(() => {});
     }
   }
 

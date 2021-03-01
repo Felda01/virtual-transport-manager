@@ -136,11 +136,12 @@ class UpdateOrderMutation extends Mutation
 
             return [
                 'order' => $order,
-                'roadTrip' => $roadTrip
+                'roadTrip' => $roadTrip,
+                'driversCount' => $order->drivers()->count()
             ];
         });
 
-        $timeInMinutes = PathUtility::calculateRoadTripTime($result['roadTrip']->time);
+        $timeInMinutes = PathUtility::calculateRoadTripTime($result['roadTrip']->time, $result['driversCount']);
         QueueJobUtility::dispatch(new FinishOrder($result['order']), Carbon::parse(GameTimeUtility::addTimeToRealTime($timeInMinutes), 'Europe/Bratislava'));
         $company = Company::currentCompany();
         BroadcastUtility::broadcast(new RefreshQuery($company, 'Order', $result['order']->id));
