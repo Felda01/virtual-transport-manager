@@ -25,6 +25,7 @@ app.post('/Y29ubmV0aW9u', function (req, res) {
     res.json({
         'status': 'OK'
     });
+    console.log('OK');
 });
 
 app.post('/ZmV0Y2hSb3V0ZXM', function (req, res) {
