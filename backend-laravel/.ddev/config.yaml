@@ -13,8 +13,10 @@ use_dns_when_possible: true
 webimage_extra_packages: ['supervisor']
 hooks:
   post-start:
+    - exec: sudo composer self-update --snapshot
     - exec-host: ddev exec -s node npm install -g laravel-echo-server
     - exec-host: ddev exec -s node laravel-echo-server start --force
+
 
 
 # This config.yaml was created with ddev version v1.14.0
