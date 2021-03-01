@@ -130,9 +130,9 @@ class AdminController extends Controller
                 'message' => $e->getMessage()
             ]);
         }
-
+        $data = $response->json();
         return back()->with([
-            'message' => 'Job dispatched.'
+            'message' => $data['status'];
         ]);
     }
 
