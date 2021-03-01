@@ -4,7 +4,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/.htaccess"
   },
   {
-    "revision": "522cb8e0f473e0af4f17",
+    "revision": "27597efdcedbccc56e51",
     "url": "/css/app.48460241.css"
   },
   {
@@ -180,12 +180,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/vue-logo.png"
   },
   {
-    "revision": "f7c1f7b84e2d27134dcbe04a38224f58",
+    "revision": "2d84ea763c16d16f5b338e4734469c38",
     "url": "/index.html"
   },
   {
-    "revision": "522cb8e0f473e0af4f17",
-    "url": "/js/app.60123494.js"
+    "revision": "27597efdcedbccc56e51",
+    "url": "/js/app.e9e4016c.js"
   },
   {
     "revision": "4694d8594528fae67e3a",

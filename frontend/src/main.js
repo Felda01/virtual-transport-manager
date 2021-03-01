@@ -162,7 +162,6 @@ if (typeof io !== 'undefined') {
   const echo_instance = new Echo({
     broadcaster: 'socket.io',
     host: process.env.VUE_APP_LARAVEL_ENDPOINT + ':6001',
-    transports: ['websocket', 'polling', 'flashsocket'],
   });
 
   window.Echo = echo_instance;
