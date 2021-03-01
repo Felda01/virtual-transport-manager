@@ -105,7 +105,7 @@ if (process.env.ENVIROMENT === 'local') {
         cert: fs.readFileSync(process.env.FULLCHAIN_PATH),
     }, app);
 
-    httpsServer.listen(443, () => {
+    httpsServer.listen(process.env.PORT, () => {
         console.log('HTTPS Server running on port 443');
     });
 }
