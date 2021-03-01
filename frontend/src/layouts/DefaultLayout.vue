@@ -170,13 +170,9 @@
             reinitScrollbar();
             this.$loadScript(process.env.VUE_APP_LARAVEL_ENDPOINT_SOCKET_IO)
             .then(() => {
+                console.log("script loaded");
                 this.$echo.channel('company-' + this.user.company.id).listen('ProcessTransaction', (data) => {
                     this.$store.dispatch('getCompany');
-                });
-                this.$echo.channel('transport_manager_database_company-' + this.user.company.id).listen('RefreshQuery', (data) => {
-                    console.log("transport_manager_database_company");
-                    console.log(data);
-                    EventBus.$emit('refreshQuery', data);
                 });
                 this.$echo.channel('company-' + this.user.company.id).listen('RefreshQuery', (data) => {
                     console.log("company");
@@ -188,7 +184,7 @@
                     console.log(data);
                     EventBus.$emit('refreshQuery', data);
                 });
-                this.$echo.channel('company-' + this.user.company.id).listen('.refresh.query', function(data) {
+                window.Echo.channel('company-' + this.user.company.id).listen('.refresh.query', function(data) {
                     console.log(".refresh.query - function");
                     console.log(data);
                     EventBus.$emit('refreshQuery', data);
