@@ -132,7 +132,7 @@ class AdminController extends Controller
         }
         $data = $response->json();
         return back()->with([
-            'message' => $data['status'];
+            'message' => $data['status']
         ]);
     }
 
