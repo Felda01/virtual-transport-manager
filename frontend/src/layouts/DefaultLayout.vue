@@ -173,7 +173,7 @@
                 this.$echo.channel('transport_manager_database_company-' + this.user.company.id).listen('ProcessTransaction', (data) => {
                     this.$store.dispatch('getCompany');
                 });
-                this.$echo.channel('transport_manager_database_company-' + this.user.company.id).listen('.refresh.query', (data) => {
+                this.$echo.channel('transport_manager_database_company-' + this.user.company.id).listen('RefreshQuery', (data) => {
                     EventBus.$emit('refreshQuery', data);
                 });
                 this.$echo.channel('transport_manager_database_market').listen('RefreshMarketQuery', (data) => {
