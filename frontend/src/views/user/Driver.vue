@@ -374,7 +374,7 @@
             }
         },
         mounted() {
-            EventBus.$on('refreshQuery', function (payLoad) {
+            EventBus.$on('refreshQuery', (payLoad) => {
                 if (payLoad.modelType === 'Driver' && payLoad.id === this.id) {
                     this.$apollo.queries.driver.refresh();
                 }

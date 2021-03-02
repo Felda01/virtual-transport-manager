@@ -177,7 +177,7 @@
             }
         },
         mounted() {
-            EventBus.$on('refreshQuery', function (payLoad) {
+            EventBus.$on('refreshQuery', (payLoad) => {
                 if (payLoad.modelType === 'Trailer') {
                     this.$apollo.queries.trailers.refresh();
                 }

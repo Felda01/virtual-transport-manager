@@ -186,7 +186,7 @@
             }
         },
         mounted() {
-            EventBus.$on('refreshQuery', function (payLoad) {
+            EventBus.$on('refreshQuery', (payLoad) => {
                 if (payLoad.modelType === 'Truck') {
                     this.$apollo.queries.trucks.refresh();
                 }

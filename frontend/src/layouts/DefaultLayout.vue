@@ -166,7 +166,6 @@
             reinitScrollbar();
         },
         mounted() {
-            console.log("moounted");
             reinitScrollbar();
             this.$loadScript(process.env.VUE_APP_LARAVEL_ENDPOINT_SOCKET_IO)
             .then(() => {

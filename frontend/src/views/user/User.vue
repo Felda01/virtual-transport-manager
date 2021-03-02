@@ -407,7 +407,7 @@
             }
         },
         mounted() {
-            EventBus.$on('refreshQuery', function (payLoad) {
+            EventBus.$on('refreshQuery', (payLoad) => {
                 if (payLoad.modelType === 'User' && payLoad.id === this.id) {
                     this.$apollo.queries.user.refresh();
                 }

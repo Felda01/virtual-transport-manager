@@ -141,7 +141,7 @@
             },
         },
         mounted() {
-            EventBus.$on('refreshQuery', function (payLoad) {
+            EventBus.$on('refreshQuery', (payLoad) => {
                 if (payLoad.modelType === 'Order') {
                     this.$apollo.queries.orders.refresh();
                 }

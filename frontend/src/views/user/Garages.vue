@@ -164,7 +164,7 @@
             }
         },
         mounted() {
-            EventBus.$on('refreshQuery', function (payLoad) {
+            EventBus.$on('refreshQuery', (payLoad) => {
                 if (payLoad.modelType === 'Garage') {
                     this.$apollo.queries.garages.refresh();
                     this.$apollo.queries.countriesWithGarages.refresh();

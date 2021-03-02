@@ -316,10 +316,10 @@
             },
         },
         mounted() {
-            EventBus.$on('refreshMarket', function () {
+            EventBus.$on('refreshMarket', () => {
                 this.$apollo.queries.markets.refresh();
             });
-            EventBus.$on('refreshQuery', function (payload) {
+            EventBus.$on('refreshQuery', (payload) => {
                 if (['Driver', 'Truck', 'Trailer'].includes(payload.modelType)) {
                     this.$apollo.queries.trucksForOrder.refresh();
                 }

@@ -243,9 +243,7 @@
             },
         },
         mounted() {
-            EventBus.$on('refreshQuery', function (payLoad) {
-                consolo.log("payLoad");
-                consolo.log(payLoad);
+            EventBus.$on('refreshQuery', (payLoad) => {
                 if (payLoad.modelType === 'Recruitment') {
                     this.$apollo.queries.recruitmentAgencyDrivers.refresh();
                 }

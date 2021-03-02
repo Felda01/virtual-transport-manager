@@ -136,7 +136,7 @@
             }
         },
         mounted() {
-            EventBus.$on('refreshMessage', function (payLoad) {
+            EventBus.$on('refreshMessage', (payLoad) => {
                 if (payLoad.userFrom === this.selectedUser.id) {
                     this.$apollo.queries.conversation.refresh();
                 }
