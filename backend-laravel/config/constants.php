@@ -55,6 +55,13 @@ return [
         6,
     ],
 
+    'truck_emission_classes_fee_multiplier' => [
+        1,
+        1.05,
+        1.10,
+        1.15,
+    ],
+
     'road_trips' => [
         \App\Models\RoadTrip::SHORT,
         \App\Models\RoadTrip::MEDIUM,

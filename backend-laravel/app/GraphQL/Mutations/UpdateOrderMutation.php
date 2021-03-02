@@ -7,6 +7,7 @@ namespace App\GraphQL\Mutations;
 use App\Events\RefreshQuery;
 use App\Jobs\FinishOrder;
 use App\Models\Company;
+use App\Models\Driver;
 use App\Models\Order;
 use App\Models\RoadTrip;
 use App\Models\Truck;
@@ -112,13 +113,39 @@ class UpdateOrderMutation extends Mutation
             /** @var Truck $truck */
             $truck = Truck::find($args['truck']);
 
+            $needTruckPath = false;
+            $truckPath = [];
+            $truckRoutes = [];
+
+            /** @var Driver $driver */
+            $driver = $truck->drivers()->first();
+            if ($driver->location_id !== $order->market->location_from) {
+                $dataTruck = PathUtility::getPaths($driver->location_id, $order->market->location_from);
+
+                if ($dataTruck['result'] && count($dataTruck['result']) > 0) {
+                    $needTruckPath = true;
+                    $truckPath = $dataTruck['result'][0];
+                    $truckRoutes = PathUtility::getRoutesFromPath($truckPath['path']);
+                }
+            }
+
             $routes = PathUtility::getRoutesFromPath($path['path']);
 
-            $roadTrip->km = $path['cost'];
-            $roadTrip->time = $routes->sum('time');
-            $roadTrip->fees = $routes->sum('fee');
-            $roadTrip->status = StatusUtility::ON_ROAD;
-            $roadTrip->routes = json_encode($path['path']);
+            if ($needTruckPath) {
+                $pathMerge = array_merge($truckPath['path'], $path['path']);
+                $roadTrip->km = $path['cost'] + $truckPath['cost'];
+                $roadTrip->time = $routes->sum('time') + $truckRoutes->sum('time');
+                $roadTrip->fees = $routes->sum('fee') + $truckRoutes->sum('fee');
+                $roadTrip->status = StatusUtility::ON_ROAD;
+                $roadTrip->routes = json_encode($pathMerge);
+            } else {
+                $roadTrip->km = $path['cost'];
+                $roadTrip->time = $routes->sum('time');
+                $roadTrip->fees = $routes->sum('fee');
+                $roadTrip->status = StatusUtility::ON_ROAD;
+                $roadTrip->routes = json_encode($path['path']);
+            }
+
             $roadTripSaved = $roadTrip->save();
 
             $order->truck()->associate($truck);

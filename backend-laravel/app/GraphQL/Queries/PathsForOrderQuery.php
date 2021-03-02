@@ -78,9 +78,9 @@ class PathsForOrderQuery extends Query
             /** @var Truck $truck */
             $truck = Truck::find($args['truck']);
 
-            if ($truck && $truck->drivers->count() > 0) {
+            if ($truck && $truck->drivers()->count() > 0) {
                 /** @var Driver $driver */
-                $driver = $truck->drivers->first();
+                $driver = $truck->drivers()->first();
 
                 if ($driver->location_id !== $market->location_from) {
                     $dataTruck = PathUtility::getPaths($driver->location_id, $market->location_from);

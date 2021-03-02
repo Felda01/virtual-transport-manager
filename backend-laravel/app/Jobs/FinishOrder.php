@@ -19,6 +19,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class FinishOrder implements ShouldQueue
 {
@@ -64,10 +65,16 @@ class FinishOrder implements ShouldQueue
 
             $roadTripSaved = $roadTrip->save();
 
-            TransactionUtility::create($company, $this->order, $orderPrice, 'order_finish');
-            TransactionUtility::create($company, $this->order, -1 * $roadTrip->fees, 'order_road_fees');
+            $emissionClassMultipliers = config('constants.truck_emission_classes_fee_multiplier');
 
-            $sum += $orderPrice - $roadTrip->fees;
+            $roadFees = $roadTrip->fees * $emissionClassMultipliers[$this->order->truck->truckModel->emission_class - 3];
+
+            Log::emergency('Fees with emission class: ' . $roadFees);
+
+            TransactionUtility::create($company, $this->order, $orderPrice, 'order_finish');
+            TransactionUtility::create($company, $this->order, -1 * $roadFees, 'order_road_fees');
+
+            $sum += $orderPrice - $roadFees;
 
             $oldMoney = $company->money;
             $company->increment('money', $sum);
