@@ -179,12 +179,12 @@
                     console.log(data);
                     EventBus.$emit('refreshQuery', data);
                 });
-                this.$echo.channel('company-' + this.user.company.id).listen('.refresh.query', (data) => {
+                this.$echo.channel('transport_manager_database_company-' + this.user.company.id).listen('.refresh.query', (data) => {
                     console.log(".refresh.query - () => ");
                     console.log(data);
                     EventBus.$emit('refreshQuery', data);
                 });
-                window.Echo.channel('company-' + this.user.company.id).listen('.refresh.query', function(data) {
+                window.Echo.channel('transport_manager_database_company-' + this.user.company.id).listen('.refresh.query', function(data) {
                     console.log(".refresh.query - function");
                     console.log(data);
                     EventBus.$emit('refreshQuery', data);
