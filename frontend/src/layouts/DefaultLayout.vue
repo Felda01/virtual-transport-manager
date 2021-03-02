@@ -170,29 +170,16 @@
             reinitScrollbar();
             this.$loadScript(process.env.VUE_APP_LARAVEL_ENDPOINT_SOCKET_IO)
             .then(() => {
-                console.log("script loaded");
-                this.$echo.channel('company-' + this.user.company.id).listen('ProcessTransaction', (data) => {
+                this.$echo.channel('transport_manager_database_company-' + this.user.company.id).listen('ProcessTransaction', (data) => {
                     this.$store.dispatch('getCompany');
                 });
-                this.$echo.channel('company-' + this.user.company.id).listen('RefreshQuery', (data) => {
-                    console.log("company");
-                    console.log(data);
-                    EventBus.$emit('refreshQuery', data);
-                });
                 this.$echo.channel('transport_manager_database_company-' + this.user.company.id).listen('.refresh.query', (data) => {
-                    console.log(".refresh.query - () => ");
-                    console.log(data);
                     EventBus.$emit('refreshQuery', data);
                 });
-                window.Echo.channel('transport_manager_database_company-' + this.user.company.id).listen('.refresh.query', function(data) {
-                    console.log(".refresh.query - function");
-                    console.log(data);
-                    EventBus.$emit('refreshQuery', data);
-                });
-                this.$echo.channel('market').listen('RefreshMarketQuery', (data) => {
+                this.$echo.channel('transport_manager_database_market').listen('RefreshMarketQuery', (data) => {
                     EventBus.$emit('refreshMarket');
                 });
-                this.$echo.channel('message-' + this.user.id).listen('RefreshMessageQuery', (data) => {
+                this.$echo.channel('transport_manager_database_message-' + this.user.id).listen('RefreshMessageQuery', (data) => {
                     EventBus.$emit('refreshMessage', data);
                 });
             });
