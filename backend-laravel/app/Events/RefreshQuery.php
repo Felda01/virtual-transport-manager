@@ -53,14 +53,4 @@ class RefreshQuery implements ShouldBroadcast
             'id' => $this->id
         ];
     }
-
-    /**
-     * The event's broadcast name.
-     *
-     * @return string
-     */
-    public function broadcastAs()
-    {
-        return 'refresh.query';
-    }
 }
