@@ -56,10 +56,10 @@ return [
     ],
 
     'truck_emission_classes_fee_multiplier' => [
-        1,
-        1.05,
-        1.10,
         1.15,
+        1.10,
+        1.05,
+        1,
     ],
 
     'road_trips' => [
