@@ -67,7 +67,7 @@ class LocationsQuery extends Query
 
         return Location::with($with)
             ->select($select)
-            ->orderBy('name')
+            ->orderBy('name->' . app()->getLocale())
             ->paginate($args['limit'], ['*'], 'page', $args['page']);
     }
 }

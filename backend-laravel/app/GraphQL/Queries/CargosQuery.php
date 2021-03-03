@@ -67,7 +67,7 @@ class CargosQuery extends Query
 
         return Cargo::with($with)
             ->select($select)
-            ->orderBy('name')
+            ->orderBy('name->' . app()->getLocale())
             ->paginate($args['limit'], ['*'], 'page', $args['page']);
     }
 }
