@@ -67,6 +67,9 @@
     import { MutationModal, Pagination, DeleteModal } from "@/components";
 
     export default {
+        title () {
+            return this.$t('pages.routes');
+        },
         name: "Routes",
         components: {
             MutationModal,
