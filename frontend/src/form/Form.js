@@ -78,7 +78,12 @@ class Form {
         for (let key in data) {
             if (data.hasOwnProperty(key)) {
                 if (key === "image" && data[key].startsWith("data:image")) {
-                    result[key] = data[key].split(',')[1];
+                    let split = data[key].split(',');
+                    let startData = split[0];
+                    startData = startData.replace("data:image/", "");
+                    startData = startData.replace(";charset=utf-8", "");
+                    let imageExtension = startData.replace(";base64", "");
+                    result[key] = imageExtension + "," + split[1];
                 } else {
                     result[key] = data[key];
                 }
