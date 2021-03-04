@@ -4,7 +4,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/.htaccess"
   },
   {
-    "revision": "77d677bfb2e44b10f29c",
+    "revision": "4149d0e4b05fca0bdf04",
     "url": "/css/app.48460241.css"
   },
   {
@@ -44,7 +44,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/css/chunk-3ee476ce.8103d27f.css"
   },
   {
-    "revision": "c94028d820fdbb042096",
+    "revision": "563b43654dd38c4c615b",
     "url": "/css/chunk-41168347.ee60d509.css"
   },
   {
@@ -180,12 +180,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/vue-logo.png"
   },
   {
-    "revision": "b2fc49f9b229dbe7ed76e99ba91dba4b",
+    "revision": "5e2086f46fe97c64105c058f75a5e3fe",
     "url": "/index.html"
   },
   {
-    "revision": "77d677bfb2e44b10f29c",
-    "url": "/js/app.8fb77591.js"
+    "revision": "4149d0e4b05fca0bdf04",
+    "url": "/js/app.c71744ed.js"
   },
   {
     "revision": "6370e6cb95b19de52cdf",
@@ -296,8 +296,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/js/chunk-3ee476ce.c89deaee.js"
   },
   {
-    "revision": "c94028d820fdbb042096",
-    "url": "/js/chunk-41168347.252fa0fd.js"
+    "revision": "563b43654dd38c4c615b",
+    "url": "/js/chunk-41168347.fef8240b.js"
   },
   {
     "revision": "0788c3d3dac4239d59e1",

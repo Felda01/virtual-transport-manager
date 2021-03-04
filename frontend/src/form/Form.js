@@ -72,6 +72,22 @@ class Form {
         return result;
     }
 
+    transformImages(data) {
+        let result = [];
+
+        for (let key in data) {
+            if (data.hasOwnProperty(key)) {
+                if (key === "image" && data[key].startsWith("data:image")) {
+                    result[key] = data[key].split(',')[1];
+                } else {
+                    result[key] = data[key];
+                }
+            }
+        }
+
+        return result;
+    }
+
     /**
      * Get the form data keys.
      *
@@ -128,7 +144,9 @@ class Form {
 
         let data = this.data()
 
-        const finalData = this.transformTranslatableData(data);
+        let nextData = this.transformTranslatableData(data);
+
+        const finalData = this.transformImages(nextData);
 
         return new Promise((resolve, reject) => {
             apollo.mutate({
