@@ -116,12 +116,12 @@
                                 <div class="file-input md-field md-theme-default" :class="[{ 'md-error md-invalid': failed }, { 'md-valid': passed }]">
                                     <div v-if="!form[field.name]" class="file-container">
                                         <div class="image-container">
-                                            <img :src="imgPlaceholderSrc" />
+                                            <img :src="imgPlaceholderSrc" crossorigin="anonymous" />
                                         </div>
                                     </div>
                                     <div class="file-container" v-else>
                                         <div class="image-container">
-                                            <img :src="form[field.name]" />
+                                            <img :src="form[field.name]" crossorigin="anonymous" />
                                         </div>
                                     </div>
                                     <div class="button-container mb-2">
@@ -368,6 +368,7 @@
                 if (!files.length) return;
 
                 let file = files[0];
+                file.crossOrigin = "Anonymous";
                 let reader = new FileReader();
                 let vm = this;
 
