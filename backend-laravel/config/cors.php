@@ -15,11 +15,11 @@ return [
     |
     */
 
-    'paths' => ['api/*','storage/images/*'],
+    'paths' => ['*'],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => [env('FRONTEND_COOKIE_DOMAIN')],
 
     'allowed_origins_patterns' => [],
 
