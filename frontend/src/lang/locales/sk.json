@@ -469,7 +469,7 @@
     "model": "Model kamiónu",
     "property": {
       "name": "Názov",
-      "brand": "Znažka",
+      "brand": "Značka",
       "engine_power": "Výkon motora",
       "engine_powerUnit": "hp",
       "chassis": "Podvozok",
@@ -836,7 +836,7 @@
     },
     "next_payment": {
       "title": "Platby budúci mesiac",
-      "text": "Dane, poistenie, platy",
+      "text": "Dane, poistenie, platy, splátky",
       "name": "Druh platby",
       "price": "Cena",
       "priceUnit": "€",
@@ -849,17 +849,19 @@
         "4": "Dane z návesov",
         "5": "Poistenie návesov",
         "6": "Dane z garáží",
-        "7": "Poistenie garáží"
+        "7": "Poistenie garáží",
+        "8": "Splátky"
       }
     },
     "next_payment_chart": {
       "title": "Graf percentuálneho podielu platieb budúci mesiac",
       "legend": "Legenda",
-      "series_a": "Používateľ",
-      "series_b": "Vodič",
-      "series_c": "Kamión",
-      "series_d": "Náves",
-      "series_e": "Garáž"
+      "series_a": "Používatelia",
+      "series_b": "Vodiči",
+      "series_c": "Kamióny",
+      "series_d": "Návesy",
+      "series_e": "Garáže",
+      "series_f": "Splátky"
     }
   },
   "bankLoan": {

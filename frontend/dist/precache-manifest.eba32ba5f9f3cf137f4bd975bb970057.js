@@ -4,7 +4,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/.htaccess"
   },
   {
-    "revision": "6e2b1ac0bdf976d5e398",
+    "revision": "090db64feb1b33d88dd8",
     "url": "/css/app.9bc52c46.css"
   },
   {
@@ -48,6 +48,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/css/chunk-5259ad56.05ab8719.css"
   },
   {
+    "revision": "ad9b18acdf4269001d2f",
+    "url": "/css/chunk-590edacc.2b727a75.css"
+  },
+  {
     "revision": "7242d115c1c3ed61ba12",
     "url": "/css/chunk-5b18a12f.6c4c7fa7.css"
   },
@@ -62,10 +66,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "468bb5d83f08ec1650ea",
     "url": "/css/chunk-6639a099.4a55344a.css"
-  },
-  {
-    "revision": "f59cc230b9aabd8f5c4d",
-    "url": "/css/chunk-6f1ee94d.73d9db01.css"
   },
   {
     "revision": "10c99867ceb8a6a409fe",
@@ -180,12 +180,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/vue-logo.png"
   },
   {
-    "revision": "eb2a7050a9c0a16afa7363d6966c0f91",
+    "revision": "f0aca8e7ff4a6f24fe9a301ca4a3e386",
     "url": "/index.html"
   },
   {
-    "revision": "6e2b1ac0bdf976d5e398",
-    "url": "/js/app.341b626a.js"
+    "revision": "090db64feb1b33d88dd8",
+    "url": "/js/app.873d0550.js"
   },
   {
     "revision": "6370e6cb95b19de52cdf",
@@ -312,6 +312,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/js/chunk-5259ad56.bb386545.js"
   },
   {
+    "revision": "ad9b18acdf4269001d2f",
+    "url": "/js/chunk-590edacc.c21a7114.js"
+  },
+  {
     "revision": "7242d115c1c3ed61ba12",
     "url": "/js/chunk-5b18a12f.f7259bbf.js"
   },
@@ -326,10 +330,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "468bb5d83f08ec1650ea",
     "url": "/js/chunk-6639a099.8c56ca34.js"
-  },
-  {
-    "revision": "f59cc230b9aabd8f5c4d",
-    "url": "/js/chunk-6f1ee94d.bcdcbd41.js"
   },
   {
     "revision": "55451443bca955b7ea33",

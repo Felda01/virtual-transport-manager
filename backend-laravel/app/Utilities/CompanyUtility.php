@@ -10,6 +10,7 @@ use App\Models\Trailer;
 use App\Models\Truck;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class CompanyUtility
@@ -54,6 +55,11 @@ class CompanyUtility
             ->selectRaw('sum(garage_models.tax) as garage_tax, sum(garage_models.insurance) as garage_insurance')
             ->first()->toArray();
 
+        $bankLoans = DB::table('bank_loans')->where('company_id', $company->id)
+            ->leftJoin('bank_loan_types', 'bank_loans.bank_loan_type_id', '=', 'bank_loan_types.id')
+            ->where('done', false)
+            ->sum('bank_loan_types.payment');
+
         return [
             'userSalary' => $userSalary,
             'driverSalary' => $driverSalary,
@@ -63,6 +69,7 @@ class CompanyUtility
             'trailer_insurance' => $trailerData['trailer_insurance'],
             'garage_tax' => $garageData['garage_tax'],
             'garage_insurance' => $garageData['garage_insurance'],
+            'bank_loan_payment' => $bankLoans
         ];
     }
 }

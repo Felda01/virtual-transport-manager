@@ -835,7 +835,7 @@
     },
     "next_payment": {
       "title": "Next month payments",
-      "text": "Taxes, insurance, salaries",
+      "text": "Taxes, insurance, salaries, installments",
       "name": "Type of payment",
       "price": "Price",
       "priceUnit": "€",
@@ -848,17 +848,19 @@
         "4": "Trailer taxes",
         "5": "Trailer insurance",
         "6": "Garage taxes",
-        "7": "Garage insurance"
+        "7": "Garage insurance",
+        "8": "Installments"
       }
     },
     "next_payment_chart": {
       "title": "Next month payments percentage chart",
       "legend": "Legend",
-      "series_a": "User",
-      "series_b": "Driver",
-      "series_c": "Truck",
-      "series_d": "Trailer",
-      "series_e": "Garage"
+      "series_a": "Users",
+      "series_b": "Drivers",
+      "series_c": "Trucks",
+      "series_d": "Trailers",
+      "series_e": "Garages",
+      "series_f": "Installments"
     }
   },
   "bankLoan": {

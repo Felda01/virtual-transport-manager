@@ -67,6 +67,7 @@
                                 <span class="pr-3 pb-3"><span class="circle text-series-c"></span> {{ $t('transaction.next_payment_chart.series_c') }}</span>
                                 <span class="pr-3 pb-3"><span class="circle text-series-d"></span> {{ $t('transaction.next_payment_chart.series_d') }}</span>
                                 <span class="pr-3 pb-3"><span class="circle text-series-e"></span> {{ $t('transaction.next_payment_chart.series_e') }}</span>
+                                <span class="pr-3 pb-3"><span class="circle text-series-f"></span> {{ $t('transaction.next_payment_chart.series_f') }}</span>
                             </div>
                         </div>
                     </template>
@@ -152,7 +153,7 @@
                 },
                 pieChart: {
                     options: {
-                        height: "380px"
+                        height: "428px"
                     }
                 },
                 searchSchema: {
@@ -233,7 +234,7 @@
                 return this.nextPayment ? {labels: this.nextPaymentChartData.map(p => {return (p / this.totalNextPayment * 100).toFixed(0) + "%" }), series:  this.nextPaymentChartData} : {labels: [], series: []};
             },
             nextPaymentChartData() {
-                return this.nextPayment ? [this.nextPayment[0], this.nextPayment[1], this.nextPayment[2] + this.nextPayment[3], this.nextPayment[4] + this.nextPayment[5], this.nextPayment[6] + this.nextPayment[7]] : [];
+                return this.nextPayment ? [this.nextPayment[0], this.nextPayment[1], this.nextPayment[2] + this.nextPayment[3], this.nextPayment[4] + this.nextPayment[5], this.nextPayment[6] + this.nextPayment[7], this.nextPayment[8]] : [];
             }
         },
         methods: {
@@ -345,5 +346,8 @@
     }
     .text-series-e {
         background-color: #4caf50;
+    }
+    .text-series-f {
+        background-color: #9C9B99;
     }
 </style>
