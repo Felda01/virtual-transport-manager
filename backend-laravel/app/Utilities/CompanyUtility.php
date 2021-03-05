@@ -63,12 +63,12 @@ class CompanyUtility
         return [
             'userSalary' => $userSalary,
             'driverSalary' => $driverSalary,
-            'truck_tax' => $truckData['truck_tax'],
-            'truck_insurance' => $truckData['truck_insurance'],
-            'trailer_tax' => $trailerData['trailer_tax'],
-            'trailer_insurance' => $trailerData['trailer_insurance'],
-            'garage_tax' => $garageData['garage_tax'],
-            'garage_insurance' => $garageData['garage_insurance'],
+            'truck_tax' => $truckData['truck_tax'] ?? 0,
+            'truck_insurance' => $truckData['truck_insurance'] ?? 0,
+            'trailer_tax' => $trailerData['trailer_tax'] ?? 0,
+            'trailer_insurance' => $trailerData['trailer_insurance'] ?? 0,
+            'garage_tax' => $garageData['garage_tax'] ?? 0,
+            'garage_insurance' => $garageData['garage_insurance'] ?? 0,
             'bank_loan_payment' => $bankLoans
         ];
     }
