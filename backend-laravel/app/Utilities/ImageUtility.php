@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
  */
 class ImageUtility
 {
-    const BASE64_IMAGE_REGEX_PART = '(?:gif|png|jpeg|bmp|webp),(?:[A-Za-z0-9\+\/]{4})*(?:[A-Za-z0-9\+\/]{2}==|[A-Za-z0-9\+\/]{3}=)?';
+    const BASE64_IMAGE_REGEX_PART = 'data:image\/(?:gif|png|jpeg|bmp|webp)(?:;charset=utf-8)?;base64,(?:[A-Za-z0-9\+\/]{4})*(?:[A-Za-z0-9\+\/]{2}==|[A-Za-z0-9\+\/]{3}=)?';
 
     const BASE64_IMAGE_REGEX = '^' . self::BASE64_IMAGE_REGEX_PART . '$';
 
@@ -23,7 +23,7 @@ class ImageUtility
      */
     static public function changeImageProperty(string $base64Data, string $oldValue)
     {
-        if (!Str::startsWith($base64Data, ['https://'])) {
+        if (Str::startsWith($base64Data, ['data:image'])) {
             $oldFileName = Str::of($oldValue)->afterLast('/');
 
             ImageUtility::removeImage($oldFileName->__toString());
@@ -44,11 +44,13 @@ class ImageUtility
      */
     static public function convertAndSaveBase64Image(string $base64Data)
     {
-        $imageDataExplode = explode(',', $base64Data);
-        $imageData = str_replace(' ', '+', $imageDataExplode[1]);
+        preg_match('/^data:image\/(\w+)(?:;charset=utf-8)?;base64,/', $base64Data, $imageExtension);
+
+        $imageData = explode(',', $base64Data);
+        $imageData = str_replace(' ', '+', $imageData[1]);
         $imageData = base64_decode($imageData);
 
-        $fileName = Str::random(10) . time() . "." . $imageDataExplode[0];
+        $fileName = Str::random(10) . time() . "." . $imageExtension[1];
 
         if ($imageData) {
             $result = Storage::disk('public')->put(self::IMAGES_FOLDER . $fileName, $imageData);

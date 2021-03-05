@@ -86,7 +86,7 @@ class CreateCargoMutation extends Mutation
             'image' => [
                 'required',
                 'string',
-                'regex:/'.ImageUtility::BASE64_IMAGE_REGEX.'/i'
+//                'regex:/'.ImageUtility::BASE64_IMAGE_REGEX.'/i'
             ],
             'trailerModels' => [
                 'required',
@@ -166,7 +166,8 @@ class CreateCargoMutation extends Mutation
             'chassis' => $args['chassis'],
             'min_price' => $args['min_price'],
             'max_price' => $args['max_price'],
-            'image' => Storage::disk('public')->url(ImageUtility::IMAGES_FOLDER . $fileName)
+//            'image' => Storage::disk('public')->url(ImageUtility::IMAGES_FOLDER . $fileName)
+            'image' => $args['image']
         ]);
 
         $cargo->trailerModels()->sync(explode(',', $args['trailerModels']));

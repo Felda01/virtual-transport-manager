@@ -190,11 +190,20 @@
                             labelAdditionalText: this.$t('garageModel.additionalLabelText.tax')
                         }
                     },
+                    // {
+                    //     label: this.$t('garageModel.property.image'),
+                    //     rules: 'required',
+                    //     name: 'image',
+                    //     input: 'image',
+                    //     type: 'text',
+                    //     value: '',
+                    //     config: {}
+                    // },
                     {
                         label: this.$t('garageModel.property.image'),
                         rules: 'required',
                         name: 'image',
-                        input: 'image',
+                        input: 'text',
                         type: 'text',
                         value: '',
                         config: {}
@@ -277,11 +286,20 @@
                             labelAdditionalText: this.$t('garageModel.additionalLabelText.tax')
                         }
                     },
+                    // {
+                    //     label: this.$t('garageModel.property.image'),
+                    //     rules: 'required',
+                    //     name: 'image',
+                    //     input: 'image',
+                    //     type: 'text',
+                    //     value: garageModel.image,
+                    //     config: {}
+                    // },
                     {
                         label: this.$t('garageModel.property.image'),
                         rules: 'required',
                         name: 'image',
-                        input: 'image',
+                        input: 'text',
                         type: 'text',
                         value: garageModel.image,
                         config: {}

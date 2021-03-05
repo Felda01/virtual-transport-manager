@@ -248,12 +248,21 @@
                             multiple: true
                         }
                     },
+                    // {
+                    //     label: this.$t('cargo.property.image'),
+                    //     rules: 'required',
+                    //     name: 'image',
+                    //     input: 'image',
+                    //     type: 'image',
+                    //     value: '',
+                    //     config: {}
+                    // },
                     {
                         label: this.$t('cargo.property.image'),
                         rules: 'required',
                         name: 'image',
-                        input: 'image',
-                        type: 'image',
+                        input: 'text',
+                        type: 'text',
                         value: '',
                         config: {}
                     },
@@ -392,12 +401,21 @@
                             multiple: true
                         }
                     },
+                    // {
+                    //     label: this.$t('cargo.property.image'),
+                    //     rules: 'required',
+                    //     name: 'image',
+                    //     input: 'image',
+                    //     type: 'image',
+                    //     value: cargo.image,
+                    //     config: {}
+                    // },
                     {
                         label: this.$t('cargo.property.image'),
                         rules: 'required',
                         name: 'image',
-                        input: 'image',
-                        type: 'image',
+                        input: 'text',
+                        type: 'text',
                         value: cargo.image,
                         config: {}
                     },

@@ -233,11 +233,20 @@
                         label: this.$t('trailerModel.property.image'),
                         rules: 'required',
                         name: 'image',
-                        input: 'image',
-                        type: 'image',
+                        input: 'text',
+                        type: 'text',
                         value: '',
                         config: {}
                     },
+                    // {
+                    //     label: this.$t('trailerModel.property.image'),
+                    //     rules: 'required',
+                    //     name: 'image',
+                    //     input: 'image',
+                    //     type: 'image',
+                    //     value: '',
+                    //     config: {}
+                    // },
                 ];
 
                 this.$refs['addTrailerModelModal'].openModal();
@@ -359,11 +368,20 @@
                         label: this.$t('trailerModel.property.image'),
                         rules: 'required',
                         name: 'image',
-                        input: 'image',
-                        type: 'image',
+                        input: 'text',
+                        type: 'text',
                         value: trailerModel.image,
                         config: {}
                     },
+                    // {
+                    //     label: this.$t('trailerModel.property.image'),
+                    //     rules: 'required',
+                    //     name: 'image',
+                    //     input: 'image',
+                    //     type: 'image',
+                    //     value: trailerModel.image,
+                    //     config: {}
+                    // },
                 ];
 
                 this.modalSchemaUpdateTrailerModel.form.idField = trailerModel.id;

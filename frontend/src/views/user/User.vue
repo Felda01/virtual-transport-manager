@@ -329,15 +329,15 @@
                         value: this.user.email,
                         config: {}
                     },
-                    {
-                        label: this.$t('user.property.image'),
-                        rules: '',
-                        name: 'image',
-                        input: 'image',
-                        type: 'text',
-                        value: this.user.image,
-                        config: {}
-                    },
+                    // {
+                    //     label: this.$t('user.property.image'),
+                    //     rules: '',
+                    //     name: 'image',
+                    //     input: 'image',
+                    //     type: 'text',
+                    //     value: this.user.image,
+                    //     config: {}
+                    // },
                 ];
 
                 this.modalSchemaUpdateUser.form.idField = this.id;

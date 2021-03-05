@@ -84,7 +84,7 @@ class CreateTruckModelMutation extends Mutation
             'image' => [
                 'required',
                 'string',
-                'regex:/'.ImageUtility::BASE64_IMAGE_REGEX.'/i'
+//                'regex:/'.ImageUtility::BASE64_IMAGE_REGEX.'/i'
             ],
             'price' => [
                 'required',
@@ -150,11 +150,11 @@ class CreateTruckModelMutation extends Mutation
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
-        $fileName = ImageUtility::convertAndSaveBase64Image($args['image']);
-
-        if (!$fileName) {
-            throw new \GraphQL\Error\Error(trans('mutation.image_failed'));
-        }
+//        $fileName = ImageUtility::convertAndSaveBase64Image($args['image']);
+//
+//        if (!$fileName) {
+//            throw new \GraphQL\Error\Error(trans('mutation.image_failed'));
+//        }
 
         $truckModel = TruckModel::create([
             'name' => $args['name'],
@@ -167,7 +167,8 @@ class CreateTruckModelMutation extends Mutation
             'insurance' => $args['insurance'],
             'tax' => $args['tax'],
             'price' => $args['price'],
-            'image' => Storage::disk('public')->url(ImageUtility::IMAGES_FOLDER . $fileName)
+//            'image' => Storage::disk('public')->url(ImageUtility::IMAGES_FOLDER . $fileName)
+            'image' => $args['image']
         ]);
 
         $truckModel->save();

@@ -64,11 +64,11 @@ class UpdateUserMutation extends Mutation
                 'email',
                 Rule::unique('users', 'email')->ignore($args['id'])->whereNull('deleted_at')
             ],
-            'image' => [
-                'nullable',
-                'string',
-                'regex:/'.ImageUtility::getBase64ImageOrUrlImageRegex().'/i'
-            ],
+//            'image' => [
+//                'nullable',
+//                'string',
+//                'regex:/'.ImageUtility::getBase64ImageOrUrlImageRegex().'/i'
+//            ],
         ];
     }
 
@@ -96,10 +96,10 @@ class UpdateUserMutation extends Mutation
                 'name' => 'email',
                 'type' => Type::nonNull(Type::string()),
             ],
-            'image' => [
-                'name' => 'image',
-                'type' => Type::string(),
-            ],
+//            'image' => [
+//                'name' => 'image',
+//                'type' => Type::string(),
+//            ],
         ];
     }
 
@@ -108,19 +108,19 @@ class UpdateUserMutation extends Mutation
         /** @var User $user */
         $user = User::find($args['id']);
 
-        if ($args['image']) {
-            $fileName = ImageUtility::changeImageProperty($args['image'], $user->image);
-
-            if (!$fileName) {
-                throw new \GraphQL\Error\Error(trans('mutation.image_failed'));
-            }
-            $user->image = $fileName;
-        } elseif (!$args['image'] && $user->image) {
-            $oldFileName = Str::of($user->image)->afterLast('/');
-
-            ImageUtility::removeImage($oldFileName->__toString());
-            $user->image = '';
-        }
+//        if ($args['image']) {
+//            $fileName = ImageUtility::changeImageProperty($args['image'], $user->image);
+//
+//            if (!$fileName) {
+//                throw new \GraphQL\Error\Error(trans('mutation.image_failed'));
+//            }
+//            $user->image = $fileName;
+//        } elseif (!$args['image'] && $user->image) {
+//            $oldFileName = Str::of($user->image)->afterLast('/');
+//
+//            ImageUtility::removeImage($oldFileName->__toString());
+//            $user->image = '';
+//        }
 
         $user->first_name = $args['first_name'];
         $user->last_name = $args['last_name'];

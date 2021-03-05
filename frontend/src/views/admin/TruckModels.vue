@@ -260,12 +260,21 @@
                             labelAdditionalText: this.$t('truckModel.additionalLabelText.tax')
                         }
                     },
+                    // {
+                    //     label: this.$t('truckModel.property.image'),
+                    //     rules: 'required',
+                    //     name: 'image',
+                    //     input: 'image',
+                    //     type: 'image',
+                    //     value: '',
+                    //     config: {}
+                    // },
                     {
                         label: this.$t('truckModel.property.image'),
                         rules: 'required',
                         name: 'image',
-                        input: 'image',
-                        type: 'image',
+                        input: 'text',
+                        type: 'text',
                         value: '',
                         config: {}
                     },
@@ -414,12 +423,21 @@
                             labelAdditionalText: this.$t('truckModel.additionalLabelText.tax')
                         }
                     },
+                    // {
+                    //     label: this.$t('truckModel.property.image'),
+                    //     rules: 'required',
+                    //     name: 'image',
+                    //     input: 'image',
+                    //     type: 'image',
+                    //     value: truckModel.image,
+                    //     config: {}
+                    // },
                     {
                         label: this.$t('truckModel.property.image'),
                         rules: 'required',
                         name: 'image',
-                        input: 'image',
-                        type: 'image',
+                        input: 'text',
+                        type: 'text',
                         value: truckModel.image,
                         config: {}
                     },
