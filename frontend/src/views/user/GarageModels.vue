@@ -15,7 +15,7 @@
                 <search-form :search-schema="searchSchema" v-model="searchModel"></search-form>
             </div>
             <template v-if="garageModels.data && garageModels.data.length > 0">
-                <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-33" v-for="(garageModel, index) in garageModels.data" :key="index" >
+                <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-33 d-flex" v-for="(garageModel, index) in garageModels.data" :key="index" >
                     <product-card header-animation="false">
                         <img class="img" slot="imageHeader" :src="garageModel.image" />
                         <h4 slot="title" class="title mt-2 mb-2">

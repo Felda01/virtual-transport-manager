@@ -17,7 +17,7 @@
       <slot name="imageHeader"></slot>
     </md-card-header>
 
-    <md-card-content>
+    <md-card-content class="height-full">
       <div
         class="md-card-action-buttons text-center"
         v-if="headerAnimation === 'true'"
