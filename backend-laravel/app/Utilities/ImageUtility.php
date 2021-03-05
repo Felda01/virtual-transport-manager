@@ -87,7 +87,7 @@ class ImageUtility
      */
     static public function getBase64ImageOrUrlImageRegex()
     {
-        return '^(' . self::BASE64_IMAGE_REGEX . '|' . self::getUrlImageRegex() . '(?:[A-Za-z0-9]{20})\.(?:gif|png|jpeg|bmp|webp))$';
+        return '^(' . self::BASE64_IMAGE_REGEX . '|' . self::getUrlImageRegex() . '(?:[A-Za-z0-9]{20})\.(?:gif|png|jpeg|jpg|bmp|webp))$';
     }
 
     /**
