@@ -26,9 +26,6 @@ return [
         'STD',
         'CNT',
         'LOG',
-        'FDT',
-        'LWB',
-        'LLD',
     ],
 
     'truck_brands' => [

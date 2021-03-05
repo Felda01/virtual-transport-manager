@@ -174,7 +174,7 @@
                             if (this.$route.query.redirect) {
                                 nextRoute = this.$route.query.redirect;
                             }
-                            this.$router.push(nextRoute);
+                            this.$router.push(nextRoute).catch(() => {});
                         });
                     })
                     .catch(error => {

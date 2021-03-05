@@ -99,9 +99,9 @@
 
             this.$store.dispatch('setToken', payload).then(() => {
               if (this.$route.query.redirect) {
-                this.$router.push(this.$route.query.redirect);
+                this.$router.push(this.$route.query.redirect).catch(() => {});
               } else {
-                this.$router.push({ name: 'dashboard'});
+                this.$router.push({ name: 'dashboard'}).catch(() => {});
               }
             });
           })
