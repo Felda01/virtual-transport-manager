@@ -16,6 +16,7 @@ use App\Rules\AvailableMarketRule;
 use App\Utilities\BroadcastUtility;
 use App\Utilities\QueueJobUtility;
 use App\Utilities\StatusUtility;
+use Carbon\Carbon;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\Type;
@@ -119,7 +120,7 @@ class CreateOrderMutation extends Mutation
         $company = Company::currentCompany();
         BroadcastUtility::broadcast(new RefreshQuery($company, 'Order', $result['order']->id));
         BroadcastUtility::broadcast(new RefreshMarketQuery());
-        QueueJobUtility::dispatch(new DeleteOrder($result['order']), $result['market']->expires_at);
+        QueueJobUtility::dispatch(new DeleteOrder($result['order']), Carbon::parse($result['market']->expires_at, 'Europe/Bratislava'));
 
         return $result['order'];
     }
