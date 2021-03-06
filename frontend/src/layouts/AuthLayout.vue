@@ -31,6 +31,7 @@
               </md-list-item>
               <md-list-item :to="{ name: $router.name, params: { locale: $i18n.locale === 'en' ? 'sk' : 'en'} }" @click="linkClick">
                 <md-icon>language</md-icon>
+                {{ nextLanguage | uppercase }}
               </md-list-item>
             </md-list>
           </div>
@@ -98,6 +99,7 @@ export default {
         register: "/img/register.jpg",
         forgotPassword: '/img/forgot-password.jpg',
         resetPassword: '/img/reset-password.jpg',
+        notFound: '/img/notFound.jpg'
       };
       return {
         backgroundImage: `url(${images[this.$route.meta.image]})`
@@ -105,6 +107,9 @@ export default {
     },
     setPageClass() {
       return `${this.$route.name}-page`.toLowerCase();
+    },
+    nextLanguage() {
+      return this.$i18n.locale === 'en' ? 'sk' : 'en'
     }
   },
   methods: {

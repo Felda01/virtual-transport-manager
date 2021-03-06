@@ -163,6 +163,7 @@
     "title": "Obnoviť heslo",
     "submitBtn": "Obnoviť heslo"
   },
+  "notFound": "Stránka nebola nájdená.",
   "model": {
     "actions": "",
     "modal": {

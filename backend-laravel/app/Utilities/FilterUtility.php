@@ -49,6 +49,8 @@ class FilterUtility
     {
         $result = explode('_', $sortValue);
 
+        $result[0] = str_replace('-', '_', $result[0]);
+
         if (count($result) !== 2 || !in_array($result[1], ['desc', 'asc']) || !Schema::hasColumn($table, $result[0])) {
             return $query;
         }

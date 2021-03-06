@@ -242,8 +242,8 @@
                                         options: [
                                             { id: 'price_asc', name: this.$t('truckModel.searchFields.price_asc') },
                                             { id: 'price_desc', name: this.$t('truckModel.searchFields.price_desc') },
-                                            { id: 'engine_power_asc', name: this.$t('truckModel.searchFields.engine_power_asc') },
-                                            { id: 'engine_power_desc', name: this.$t('truckModel.searchFields.engine_power_desc') },
+                                            { id: 'engine-power_asc', name: this.$t('truckModel.searchFields.engine_power_asc') },
+                                            { id: 'engine-power_desc', name: this.$t('truckModel.searchFields.engine_power_desc') },
                                         ],
                                         optionValue: (option) => {
                                             return option.id;

@@ -206,8 +206,8 @@
                                         options: [
                                             { id: 'price_asc', name: this.$t('transaction.searchFields.price_asc') },
                                             { id: 'price_desc', name: this.$t('transaction.searchFields.price_desc') },
-                                            { id: 'created_at_asc', name: this.$t('transaction.searchFields.created_at_asc') },
-                                            { id: 'created_at_desc', name: this.$t('transaction.searchFields.created_at_desc') },
+                                            { id: 'created-at_asc', name: this.$t('transaction.searchFields.created_at_asc') },
+                                            { id: 'created-at_desc', name: this.$t('transaction.searchFields.created_at_desc') },
                                         ],
                                         optionValue: (option) => {
                                             return option.id;

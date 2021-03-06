@@ -7,7 +7,11 @@ export default {
     methods: {
         setErrorMessage(error) {
             if (error.graphQLErrors && error.graphQLErrors[0]) {
-                this.errorMessage = error.graphQLErrors[0].message;
+                if (error.graphQLErrors[0].extensions && error.graphQLErrors[0].extensions.validation && error.graphQLErrors[0].extensions.validation['id'] && error.graphQLErrors[0].extensions.validation['id'][0]) {
+                    this.errorMessage = error.graphQLErrors[0].extensions.validation['id'][0];
+                } else {
+                    this.errorMessage = error.graphQLErrors[0].message;
+                }
             }
         }
     }

@@ -162,6 +162,7 @@
     "title": "Reset password",
     "submitBtn": "Reset password"
   },
+  "notFound": "Page not found.",
   "model": {
     "actions": "",
     "modal": {

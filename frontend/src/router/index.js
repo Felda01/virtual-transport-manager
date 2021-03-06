@@ -38,11 +38,33 @@ const routes = [
         ...authRoutes,
         ...adminRoutes,
         ...userRoutes,
+      {
+        path: '*',
+        component: () => import('../layouts/ErrorLayout.vue'),
+        children: [
+          {
+            path: '',
+            component: () => import('../views/errors/PageNotFound.vue'),
+            meta: {
+              image: 'notFound',
+            }
+          }
+        ],
+      }
     ]
   },
   {
     path: '*',
-    component: () => import('../views/errors/PageNotFound.vue'),
+    component: () => import('../layouts/ErrorLayout.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('../views/errors/PageNotFound.vue'),
+        meta: {
+          image: 'notFound',
+        }
+      }
+    ],
   }
 ];
 
@@ -76,6 +98,15 @@ router.beforeEach((to, from, next) => {
     next(to.fullPath.slice(0, -1));
   } else {
     let currentLocale = to.params.locale;
+
+    let availableLocales = Object.keys(i18n.messages);
+    if (!availableLocales.includes(currentLocale)) {
+      next({ name: 'dashboard', params: {locale: i18n.fallbackLocale || 'en'}, replace: true});
+    }
+    if (!currentLocale) {
+      currentLocale = i18n.fallbackLocale || 'en';
+    }
+
     // setting the new locale
     i18n.locale = currentLocale;
     localize(currentLocale);
