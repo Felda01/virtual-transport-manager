@@ -6,6 +6,9 @@ namespace App\GraphQL\Queries;
 
 use App\Models\Order;
 use App\Models\Truck;
+use App\Models\User;
+use App\Rules\ModelFromCompanyRule;
+use App\Utilities\FilterUtility;
 use App\Utilities\StatusUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -83,6 +86,8 @@ class TrucksForOrderQuery extends Query
         }
 
         $query = Truck::query();
+
+        $query = FilterUtility::filterCompany($query, User::current());
 
         if ($order) {
             $cargo = $order->market->cargo;

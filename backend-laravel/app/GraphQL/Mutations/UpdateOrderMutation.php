@@ -63,7 +63,8 @@ class UpdateOrderMutation extends Mutation
             'id' => [
                 'required',
                 'exists:orders,id',
-                new AvailableOrderRule()
+                new AvailableOrderRule(),
+                new ModelFromCompanyRule('Order')
             ],
             'truck' => [
                 'required',
@@ -116,6 +117,7 @@ class UpdateOrderMutation extends Mutation
             $needTruckPath = false;
             $truckPath = [];
             $truckRoutes = [];
+            $truckPathFromEdges = [];
 
             /** @var Driver $driver */
             $driver = $truck->drivers()->first();
@@ -125,25 +127,27 @@ class UpdateOrderMutation extends Mutation
                 if ($dataTruck['result'] && count($dataTruck['result']) > 0) {
                     $needTruckPath = true;
                     $truckPath = $dataTruck['result'][0];
-                    $truckRoutes = PathUtility::getRoutesFromPath($truckPath['path']);
+                    $truckRoutes = PathUtility::getRoutesFromPath($truckPath['edges']);
+                    $truckPathFromEdges = PathUtility::getLocationsFromPath($truckPath['edges']);
                 }
             }
 
-            $routes = PathUtility::getRoutesFromPath($path['path']);
+            $routes = PathUtility::getRoutesFromPath($path['edges']);
+            $pathFromEdges = PathUtility::getLocationsFromPath($path['edges']);
 
             if ($needTruckPath) {
-                $pathMerge = array_merge($truckPath['path'], $path['path']);
-                $roadTrip->km = $path['cost'] + $truckPath['cost'];
+                $pathMerge = array_merge($truckPathFromEdges, $pathFromEdges);
+                $roadTrip->km = $path['totalCost'] + $truckPath['totalCost'];
                 $roadTrip->time = $routes->sum('time') + $truckRoutes->sum('time');
                 $roadTrip->fees = $routes->sum('fee') + $truckRoutes->sum('fee');
                 $roadTrip->status = StatusUtility::ON_ROAD;
                 $roadTrip->routes = json_encode($pathMerge);
             } else {
-                $roadTrip->km = $path['cost'];
+                $roadTrip->km = $path['totalCost'];
                 $roadTrip->time = $routes->sum('time');
                 $roadTrip->fees = $routes->sum('fee');
                 $roadTrip->status = StatusUtility::ON_ROAD;
-                $roadTrip->routes = json_encode($path['path']);
+                $roadTrip->routes = json_encode($pathFromEdges);
             }
 
             $roadTripSaved = $roadTrip->save();

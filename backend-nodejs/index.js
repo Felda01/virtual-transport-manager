@@ -1,11 +1,13 @@
 const express = require('express');
-const basicAuth = require('express-basic-auth')
+const basicAuth = require('express-basic-auth');
 require('dotenv').config();
 const fetch = require('node-fetch');
-const {GraphBuilder, GreedStrategy} = require('js-shortest-path');
 const bodyParser = require('body-parser');
-const fs = require('fs')
-const https = require('https')
+const fs = require('fs');
+const https = require('https');
+
+const graphlib = require('graphlib');
+const ksp = require('k-shortest-path');
 
 const app = express();
 
@@ -13,7 +15,6 @@ app.use( bodyParser.json() );
 app.use( bodyParser.urlencoded( {extended: true} ) );
 
 let graph = null;
-let greedy = null;
 let paths = {};
 
 app.use(basicAuth({
@@ -37,6 +38,28 @@ app.post('/ZmV0Y2hSb3V0ZXM', function (req, res) {
     });
 });
 
+// app.get('/dHJpcA', function (req, res) {
+//     console.log("start");
+//     let loc_from = req.query.from;
+//     let loc_to = req.query.to;
+//
+//     let result;
+//
+//     if (paths[loc_from + '-' + loc_to]) {
+//         result = paths[loc_from + '-' + loc_to];
+//     } else {
+//         result = ksp.ksp(graph, loc_from, loc_to, 3);
+//         paths[loc_from + '-' + loc_to] = result;
+//         paths[loc_to + '-' + loc_from] = result;
+//     }
+//     console.log("find result");
+//
+//     res.json({
+//         result: result
+//     });
+//     console.log("end");
+// });
+
 app.post('/dHJpcA', function (req, res) {
     console.log("start");
     let loc_from = req.body.from;
@@ -47,7 +70,7 @@ app.post('/dHJpcA', function (req, res) {
     if (paths[loc_from + '-' + loc_to]) {
         result = paths[loc_from + '-' + loc_to];
     } else {
-        result = threeShortestRoutes(greedy.paths(loc_from, loc_to));
+        result = ksp.ksp(graph, loc_from, loc_to, 3);
         paths[loc_from + '-' + loc_to] = result;
         paths[loc_to + '-' + loc_from] = result;
     }
@@ -64,44 +87,24 @@ app.get('*', function(req, res){
 });
 
 function fetchRoutes() {
-    fetch(process.env.LARAVEL_ROUTES_API)
+    fetch(process.env.LARAVEL_ROUTES_API || "https://virtual-transport-manager.ddev.site/cm91dGVz")
         .then(res => res.json())
         .then(json => {
-            graph = GraphBuilder();
+            graph = new graphlib.Graph();
             for (let route of json['routes']) {
-                graph = graph.edge(route['location1_id'], route['location2_id'], route['distance'])
-                    .edge(route['location2_id'], route['location1_id'], route['distance']);
+                graph.setEdge(route['location1_id'], route['location2_id'], route['distance']);
+                graph.setEdge(route['location2_id'], route['location1_id'], route['distance']);
             }
-            graph = graph.build();
-
-            greedy = GreedStrategy(graph);
         });
 }
 
-function threeShortestRoutes(routes) {
-    let MAX = Number.MAX_SAFE_INTEGER;
-    let first = {cost: MAX};
-    let second = {cost: MAX};
-    let third = {cost: MAX};
-    for (let i = 0; i < routes.length; i++) {
-        if (routes[i].cost < first.cost) {
-            third = second;
-            second = first;
-            first = routes[i];
-        } else if (routes[i].cost < second.cost) {
-            third = second;
-            second = routes[i];
-        } else if (routes[i].cost < third.cost) {
-            third = routes[i];
-        }
-    }
 
-    return [first, second, third];
-}
 
 if (process.env.ENVIROMENT === 'local') {
     const server = app.listen(process.env.PORT, function () {
         console.log("Started");
+        console.log(process.env.PORT);
+        fetchRoutes();
     });
 } else {
     const httpsServer = https.createServer({

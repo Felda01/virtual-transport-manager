@@ -13,15 +13,16 @@ use Illuminate\Support\Facades\Http;
 class PathUtility
 {
     /**
-     * @param $paths
+     * @param $edges
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public static function getRoutesFromPath($paths)
+    public static function getRoutesFromPath($edges)
     {
          $query = Route::query();
 
-         for ($i = 0; $i < count($paths) - 1; $i++) {
-             $locations = Route::getSortedLocations($paths[$i], $paths[$i + 1]);
+         for ($i = 0; $i < count($edges); $i++) {
+             $edge = $edges[$i];
+             $locations = Route::getSortedLocations($edge['fromNode'], $edge['toNode']);
 
              if ($i === 0) {
                  $query = $query->where(function($query) use ($locations) {
@@ -40,6 +41,27 @@ class PathUtility
     }
 
     /**
+     * @param $edges
+     * @return array
+     */
+    public static function getLocationsFromPath($edges)
+    {
+        $result = [];
+        $count = count($edges);
+        for ($i = 0; $i < $count; $i++) {
+            $edge = $edges[$i];
+            if ($i == $count - 1) {
+                $result[] = $edge['fromNode'];
+                $result[] = $edge['toNode'];
+            } else {
+                $result[] = $edge['fromNode'];
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * @param $locationFrom
      * @param $locationTo
      * @return array[]
@@ -47,7 +69,7 @@ class PathUtility
     public static function getPaths($locationFrom, $locationTo)
     {
         if (App::environment('local')) {
-            return ["result" => [["path" => ["6eb19875-7dba-4407-9605-3dabf4972c63","e05b0a43-0cfb-4bf6-80be-e2718b68e712","05932cb4-ec20-4745-9d01-0a4918d0a12a"],"cost" => 4404],["path" => ["6eb19875-7dba-4407-9605-3dabf4972c63","e05b0a43-0cfb-4bf6-80be-e2718b68e712","023eb1af-7df5-49e5-aed4-aab7548a183c","05932cb4-ec20-4745-9d01-0a4918d0a12a"],"cost" => 4678], ["cost" => 9007199254740991]]];
+            return ["result" => [["totalCost" => 4404,"edges"=>[["fromNode"=>"6eb19875-7dba-4407-9605-3dabf4972c63","toNode"=>"e05b0a43-0cfb-4bf6-80be-e2718b68e712","weight"=>123],["fromNode"=>"e05b0a43-0cfb-4bf6-80be-e2718b68e712","toNode"=>"05932cb4-ec20-4745-9d01-0a4918d0a12a","weight"=>4281]]],["totalCost"=>4678,"edges"=>[["fromNode"=>"6eb19875-7dba-4407-9605-3dabf4972c63","toNode"=>"e05b0a43-0cfb-4bf6-80be-e2718b68e712","weight"=>123],["fromNode"=>"e05b0a43-0cfb-4bf6-80be-e2718b68e712","toNode"=>"023eb1af-7df5-49e5-aed4-aab7548a183c","weight"=>186],["fromNode"=>"023eb1af-7df5-49e5-aed4-aab7548a183c","toNode"=>"05932cb4-ec20-4745-9d01-0a4918d0a12a","weight"=>4369]]]]];
         } else {
             $response = Http::withBasicAuth(config('services.nodejs.user'), config('services.nodejs.password'))->post(config('services.nodejs.url'), [
                 'from' => $locationFrom,

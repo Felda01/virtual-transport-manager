@@ -73,6 +73,7 @@ class PathsForOrderQuery extends Query
         $needTruckPath = false;
         $truckPath = [];
         $truckRoutes = [];
+        $truckPathFromEdges = [];
 
         if ($args['truck']) {
             /** @var Truck $truck */
@@ -88,7 +89,8 @@ class PathsForOrderQuery extends Query
                     if ($dataTruck['result'] && count($dataTruck['result']) > 0) {
                         $needTruckPath = true;
                         $truckPath = $dataTruck['result'][0];
-                        $truckRoutes = PathUtility::getRoutesFromPath($truckPath['path']);
+                        $truckRoutes = PathUtility::getRoutesFromPath($truckPath['edges']);
+                        $truckPathFromEdges = PathUtility::getLocationsFromPath($truckPath['edges']);
                     }
                 }
             }
@@ -99,14 +101,15 @@ class PathsForOrderQuery extends Query
         for ($i = 0; $i < count($data['result']); $i++) {
             $item = $data['result'][$i];
 
-            if (array_key_exists('path', $item)) {
-                $routes = PathUtility::getRoutesFromPath($item['path']);
+            if (array_key_exists('edges', $item)) {
+                $routes = PathUtility::getRoutesFromPath($item['edges']);
+                $pathFromEdges = PathUtility::getLocationsFromPath($item['edges']);
 
                 if ($needTruckPath) {
-                    $path = array_merge($truckPath['path'], $item['path']);
+                    $path = array_merge($truckPathFromEdges, $pathFromEdges);
                     $result = [
                         'path' => $path,
-                        'distance' => $truckPath['cost'] + $item['cost'],
+                        'distance' => $truckPath['totalCost'] + $item['totalCost'],
                         'time' => $truckRoutes->sum('time') + $routes->sum('time'),
                         'fee' => $truckRoutes->sum('fee') + $routes->sum('fee'),
                         'routes' => array_merge($truckRoutes->pluck('id')->all(), $routes->pluck('id')->all()),
@@ -114,12 +117,12 @@ class PathsForOrderQuery extends Query
                     ];
                 } else {
                     $result = [
-                        'path' => $item['path'],
-                        'distance' => $item['cost'],
+                        'path' => $pathFromEdges,
+                        'distance' => $item['totalCost'],
                         'time' => $routes->sum('time'),
                         'fee' => $routes->sum('fee'),
                         'routes' => $routes->pluck('id')->all(),
-                        'pathModels' => PathUtility::getPathLocations($item['path']),
+                        'pathModels' => PathUtility::getPathLocations($pathFromEdges),
                     ];
                 }
 

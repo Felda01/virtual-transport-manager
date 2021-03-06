@@ -43,7 +43,7 @@
                                         </md-table-cell>
                                         <md-table-cell :md-label="$t('truckModel.property.engine_power')">{{ item.truckModel.engine_power }} {{ $t('truckModel.property.engine_powerUnit') }}</md-table-cell>
                                         <md-table-cell :md-label="$t('truckModel.property.chassis')">{{ item.truckModel.chassis }}</md-table-cell>
-                                        <md-table-cell :md-label="$t('truckModel.property.load')">{{ item.truckModelload | currency(' ', 0, { thousandsSeparator: ' ' }) }} {{ $t('truckModel.property.loadUnit') }}</md-table-cell>
+                                        <md-table-cell :md-label="$t('truckModel.property.load')">{{ item.truckModel.load | currency(' ', 0, { thousandsSeparator: ' ' }) }} {{ $t('truckModel.property.loadUnit') }}</md-table-cell>
                                         <md-table-cell :md-label="$t('truckModel.property.emission_class')">{{ $t('truckEmissionClasses.' + item.truckModel.emission_class) }}</md-table-cell>
                                         <md-table-cell :md-label="$t('truckModel.property.km')">{{ item.km | currency(' ', 0, { thousandsSeparator: ' ' }) }} {{ $t('truckModel.property.kmUnit') }}</md-table-cell>
                                         <md-table-cell :md-label="$t('truckModel.property.insurance')">{{ item.truckModel.insurance | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('truckModel.property.insuranceUnit') }}</md-table-cell>
