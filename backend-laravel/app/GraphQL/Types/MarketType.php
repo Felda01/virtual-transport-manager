@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\GraphQL\Types;
 
 use App\Models\Market;
+use App\Utilities\GameTimeUtility;
+use Carbon\Carbon;
 use GraphQL\Type\Definition\Type;
 use Rebing\GraphQL\Support\Facades\GraphQL;
 use Rebing\GraphQL\Support\Type as GraphQLType;
@@ -58,7 +60,8 @@ class MarketType extends GraphQLType
                 'resolve' => function($root, $args) {
                     /** @var Market $root  */
                     if ($root->expires_at) {
-                        return $root->expires_at->format('d.m.Y H:i');
+                        $time = GameTimeUtility::gameTime($root->expires_at);
+                        return Carbon::parse($time, 'Europe/Bratislava')->format('d.m.Y H:i');
                     }
                     return '';
                 }
