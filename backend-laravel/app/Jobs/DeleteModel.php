@@ -44,6 +44,10 @@ class DeleteModel implements ShouldQueue
         if ($this->model instanceof Driver && $this->model->company_id !== null) {
             return;
         }
+        if ($this->model instanceof Driver && $this->model->company_id === null) {
+            $this->model->delete();
+            return;
+        }
 
         $company = Company::find($this->model->company_id);
         BroadcastUtility::broadcast(new RefreshQuery($company, class_basename($this->model), $this->model->id));
