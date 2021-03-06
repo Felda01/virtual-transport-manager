@@ -248,24 +248,24 @@
                             multiple: true
                         }
                     },
-                    // {
-                    //     label: this.$t('cargo.property.image'),
-                    //     rules: 'required',
-                    //     name: 'image',
-                    //     input: 'image',
-                    //     type: 'image',
-                    //     value: '',
-                    //     config: {}
-                    // },
                     {
                         label: this.$t('cargo.property.image'),
                         rules: 'required',
                         name: 'image',
-                        input: 'text',
-                        type: 'text',
+                        input: 'image',
+                        type: 'image',
                         value: '',
                         config: {}
                     },
+                    // {
+                    //     label: this.$t('cargo.property.image'),
+                    //     rules: 'required',
+                    //     name: 'image',
+                    //     input: 'text',
+                    //     type: 'text',
+                    //     value: '',
+                    //     config: {}
+                    // },
                 ];
 
                 this.$refs['addCargoModal'].openModal();
@@ -401,24 +401,24 @@
                             multiple: true
                         }
                     },
-                    // {
-                    //     label: this.$t('cargo.property.image'),
-                    //     rules: 'required',
-                    //     name: 'image',
-                    //     input: 'image',
-                    //     type: 'image',
-                    //     value: cargo.image,
-                    //     config: {}
-                    // },
                     {
                         label: this.$t('cargo.property.image'),
                         rules: 'required',
                         name: 'image',
-                        input: 'text',
-                        type: 'text',
+                        input: 'image',
+                        type: 'image',
                         value: cargo.image,
                         config: {}
                     },
+                    // {
+                    //     label: this.$t('cargo.property.image'),
+                    //     rules: 'required',
+                    //     name: 'image',
+                    //     input: 'text',
+                    //     type: 'text',
+                    //     value: cargo.image,
+                    //     config: {}
+                    // },
                 ];
 
                 this.modalSchemaUpdateCargo.form.idField = cargo.id;

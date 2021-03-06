@@ -7,6 +7,7 @@ use App\Jobs\ManageDriverStatus;
 use App\Jobs\PayBankLoans;
 use App\Jobs\PayFees;
 use App\Jobs\UpdatePersonalAgency;
+use App\Utilities\ImageUtility;
 use App\Utilities\QueueJobUtility;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -18,6 +19,8 @@ use Illuminate\Support\Facades\Http;
  */
 class AdminController extends Controller
 {
+
+    const CREATE_IMAGE_URL = "/Y3JlYXRlSW1hZ2U";
 
     /**
      * @param Request $request
@@ -153,5 +156,14 @@ class AdminController extends Controller
         return back()->with([
             'message' => 'Job dispatched.'
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return bool|string
+     */
+    public function createImage(Request $request)
+    {
+        return ImageUtility::convertAndSaveBase64Image($request->input('image'));
     }
 }

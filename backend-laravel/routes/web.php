@@ -19,6 +19,8 @@ Route::get('/', function () {
 
 Route::get('/cm91dGVz', [\App\Http\Controllers\JsonController::class, 'routes']);
 
+Route::post(\App\Http\Controllers\AdminController::CREATE_IMAGE_URL, [\App\Http\Controllers\AdminController::class, 'createImage'])->name('createImage');
+
 Route::middleware(['auth.basic'])->group(function() {
     Route::view('/YWRtaW4', 'admin')->name('admin');
     Route::post('/YWRtaW4/cGF5RmVlcw', [\App\Http\Controllers\AdminController::class, 'payFees'])->name('admin.payFees');
