@@ -52,7 +52,7 @@ export default {
     this.initAnimation(this.value, 0);
   },
   watch: {
-    number(newValue, oldValue) {
+    value(newValue, oldValue) {
       this.initAnimation(newValue, oldValue);
     }
   }
