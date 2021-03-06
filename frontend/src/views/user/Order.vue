@@ -289,7 +289,7 @@
                 if (payLoad.modelType === 'Order' && payLoad.id === this.id) {
                     this.$apollo.queries.order.refresh();
                 }
-                if (['Driver', 'Truck', 'Trailer'].includes(payload.modelType)) {
+                if (['Driver', 'Truck', 'Trailer'].includes(payLoad.modelType)) {
                     this.$apollo.queries.trucksForOrder.refresh();
                 }
             });

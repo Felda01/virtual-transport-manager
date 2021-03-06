@@ -26,7 +26,6 @@ app.post('/Y29ubmV0aW9u', function (req, res) {
     res.json({
         'status': 'OK'
     });
-    console.log('OK');
 });
 
 app.post('/ZmV0Y2hSb3V0ZXM', function (req, res) {
@@ -38,30 +37,7 @@ app.post('/ZmV0Y2hSb3V0ZXM', function (req, res) {
     });
 });
 
-// app.get('/dHJpcA', function (req, res) {
-//     console.log("start");
-//     let loc_from = req.query.from;
-//     let loc_to = req.query.to;
-//
-//     let result;
-//
-//     if (paths[loc_from + '-' + loc_to]) {
-//         result = paths[loc_from + '-' + loc_to];
-//     } else {
-//         result = ksp.ksp(graph, loc_from, loc_to, 3);
-//         paths[loc_from + '-' + loc_to] = result;
-//         paths[loc_to + '-' + loc_from] = result;
-//     }
-//     console.log("find result");
-//
-//     res.json({
-//         result: result
-//     });
-//     console.log("end");
-// });
-
 app.post('/dHJpcA', function (req, res) {
-    console.log("start");
     let loc_from = req.body.from;
     let loc_to = req.body.to;
 
@@ -74,12 +50,10 @@ app.post('/dHJpcA', function (req, res) {
         paths[loc_from + '-' + loc_to] = result;
         paths[loc_to + '-' + loc_from] = result;
     }
-    console.log("find result");
 
     res.json({
         result: result
     });
-    console.log("end");
 });
 
 app.get('*', function(req, res){
@@ -87,7 +61,7 @@ app.get('*', function(req, res){
 });
 
 function fetchRoutes() {
-    fetch(process.env.LARAVEL_ROUTES_API || "https://virtual-transport-manager.ddev.site/cm91dGVz")
+    fetch(process.env.LARAVEL_ROUTES_API)
         .then(res => res.json())
         .then(json => {
             graph = new graphlib.Graph();
@@ -97,8 +71,6 @@ function fetchRoutes() {
             }
         });
 }
-
-
 
 if (process.env.ENVIROMENT === 'local') {
     const server = app.listen(process.env.PORT, function () {

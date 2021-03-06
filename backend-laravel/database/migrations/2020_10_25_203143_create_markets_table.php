@@ -32,7 +32,7 @@ class CreateMarketsTable extends Migration
             $table->integer('amount');
             $table->integer('count_of_repetitions');
             $table->integer('km');
-            $table->timestamp('expires_at');
+            $table->timestamp('expires_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
