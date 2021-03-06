@@ -7,7 +7,6 @@ namespace App\GraphQL\Mutations;
 use App\Models\Cargo;
 use App\Rules\ExistsAllRule;
 use App\Rules\UniqueTranslationRule;
-use App\Utilities\ImageProxyRequest;
 use App\Utilities\ImageUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -146,11 +145,11 @@ class CreateCargoMutation extends Mutation
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
-        $fileName = ImageProxyRequest::createImage(['image' => $args['image']]);
-
-        if (!$fileName) {
-            throw new \GraphQL\Error\Error(trans('mutation.image_failed'));
-        }
+//        $fileName = ImageUtility::convertAndSaveBase64Image($args['image']);
+//
+//        if (!$fileName) {
+//            throw new \GraphQL\Error\Error(trans('mutation.image_failed'));
+//        }
 
         $nameTranslations = [];
 
@@ -167,8 +166,8 @@ class CreateCargoMutation extends Mutation
             'chassis' => $args['chassis'],
             'min_price' => $args['min_price'],
             'max_price' => $args['max_price'],
-            'image' => Storage::disk('public')->url(ImageUtility::IMAGES_FOLDER . $fileName)
-//            'image' => $args['image']
+//            'image' => Storage::disk('public')->url(ImageUtility::IMAGES_FOLDER . $fileName)
+            'image' => $args['image']
         ]);
 
         $cargo->trailerModels()->sync(explode(',', $args['trailerModels']));

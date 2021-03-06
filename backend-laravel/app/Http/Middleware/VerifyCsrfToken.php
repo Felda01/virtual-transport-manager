@@ -12,6 +12,6 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        \App\Http\Controllers\AdminController::CREATE_IMAGE_URL
+        //
     ];
 }
