@@ -145,11 +145,11 @@ class CreateCargoMutation extends Mutation
 
     public function resolve($root, $args, $context, ResolveInfo $resolveInfo, Closure $getSelectFields)
     {
-        $fileName = ImageUtility::convertAndSaveBase64Image($args['image']);
-
-        if (!$fileName) {
-            throw new \GraphQL\Error\Error(trans('mutation.image_failed'));
-        }
+//        $fileName = ImageUtility::convertAndSaveBase64Image($args['image']);
+//
+//        if (!$fileName) {
+//            throw new \GraphQL\Error\Error(trans('mutation.image_failed'));
+//        }
 
         $nameTranslations = [];
 
