@@ -38,6 +38,7 @@ app.post('/ZmV0Y2hSb3V0ZXM', function (req, res) {
 });
 
 app.post('/dHJpcA', function (req, res) {
+    console.log("start");
     let loc_from = req.body.from;
     let loc_to = req.body.to;
 
@@ -50,10 +51,12 @@ app.post('/dHJpcA', function (req, res) {
         paths[loc_from + '-' + loc_to] = result;
         paths[loc_to + '-' + loc_from] = result;
     }
+    console.log("find result");
 
     res.json({
         result: result
     });
+    console.log("end");
 });
 
 app.get('*', function(req, res){
