@@ -29,6 +29,12 @@ module.exports = {
             .use('graphql-tag/loader')
             .loader('graphql-tag/loader')
             .end();
+        config
+            .plugin('html')
+            .tap(args => {
+                args[0].title = "Transport manager";
+                return args;
+            });
     },
     //devServer: { https: true }
 };
