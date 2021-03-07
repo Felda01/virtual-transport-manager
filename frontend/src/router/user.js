@@ -335,6 +335,21 @@ const userRoutes = [
                     }
                 }
             },
+            {
+                path: enRoute.scoreBoard,
+                alias: [skRoute.scoreBoard],
+                name: 'scoreBoard',
+                component: () => import('../views/user/ScoreBoard.vue'),
+                meta: {
+                    requiresAuth: true,
+                    userOnly: true,
+                    title: 'pages.scoreBoard',
+                    path: {
+                        en: enRoute.scoreBoard,
+                        sk: skRoute.scoreBoard,
+                    }
+                }
+            },
         ]
     },
 ];

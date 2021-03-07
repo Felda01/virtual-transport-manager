@@ -62,6 +62,9 @@
                     <sidebar-item
                             :link="{ name: $t('pages.bankLoans'), path: generatePath('bankLoans') }"
                     ></sidebar-item>
+                    <sidebar-item
+                            :link="{ name: $t('pages.scoreBoard'), path: generatePath('scoreBoard') }"
+                    ></sidebar-item>
                 </sidebar-item>
             </template>
         </side-bar>

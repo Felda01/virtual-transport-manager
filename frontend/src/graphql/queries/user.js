@@ -1492,4 +1492,14 @@ export const CONVERSATION_QUERY = gql`
         }
     }
 `;
+export const SCOREBOARD_QUERY = gql`
+    query ScoreBoardQuery {
+        scoreBoard {
+            id
+            name
+            money
+            value
+        }
+    }
+`;
 

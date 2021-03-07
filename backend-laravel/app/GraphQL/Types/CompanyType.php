@@ -31,7 +31,7 @@ class CompanyType extends GraphQLType
                 'type' => Type::string(),
             ],
             'money' => [
-                'type' => Type::string(),
+                'type' => Type::float(),
             ],
             'trucks' => [
                 'type' => Type::listOf(GraphQL::type('Truck')),
@@ -63,6 +63,10 @@ class CompanyType extends GraphQLType
             'bankLoans' => [
                 'type' => Type::listOf(GraphQL::type('BankLoan')),
             ],
+            'value' => [
+                'type' => Type::float(),
+                'selectable' => false,
+            ]
         ];
     }
 }

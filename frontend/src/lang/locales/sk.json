@@ -35,7 +35,8 @@
     "order": "Objednávka",
     "transactions": "Účtovníctvo",
     "bankLoans": "Banka",
-    "messages": "Správy"
+    "messages": "Správy",
+    "scoreBoard": "Tabuľka"
   },
   "routes": {
     "login": "prihlasenie",
@@ -67,7 +68,8 @@
     "doneOrders": "dokoncene-objednavky",
     "transactions": "uctovnictvo",
     "bankLoans": "banka",
-    "messages": "spravy"
+    "messages": "spravy",
+    "scoreBoard": "tabulka"
   },
   "navigation": {
     "staticMapData": "Údaje k mape",
@@ -883,5 +885,12 @@
       "message": "Správa"
     },
     "chats": "Čety"
+  },
+  "company": {
+    "property": {
+      "name": "Názov firmy",
+      "value": "Hodnota",
+      "valueUnit": "€"
+    }
   }
 }

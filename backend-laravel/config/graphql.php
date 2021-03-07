@@ -162,6 +162,8 @@ return [
                 'pathsForOrder' => \App\GraphQL\Queries\PathsForOrderQuery::class,
 
                 'conversation' => \App\GraphQL\Queries\ConversationQuery::class,
+
+                'scoreBoard' => \App\GraphQL\Queries\ScoreBoardQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,

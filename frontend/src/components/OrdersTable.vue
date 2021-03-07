@@ -14,7 +14,7 @@
                             </div>
                         </md-table-cell>
                         <md-table-cell :md-label="$t('order.relations.cargo_name')" class="td-name">{{ item.market.cargo.name }}</md-table-cell>
-                        <md-table-cell :md-label="$t('order.relations.market_price')">{{ item.market.price }}</md-table-cell>
+                        <md-table-cell :md-label="$t('order.relations.market_price')">{{ item.market.price | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('market.property.priceUnit') }}</md-table-cell>
                         <md-table-cell :md-label="$t('order.relations.roadTrip_status')">{{ $t('status.' + item.roadTrip.status) }}</md-table-cell>
                         <md-table-cell v-if="canShowColumn('drivers')" :md-label="$t('order.relations.drivers')">{{ drivers(item.drivers) }}</md-table-cell>
                         <md-table-cell v-if="canShowColumn('truck')" :md-label="$t('order.relations.truck')">{{ item.truck.truckModel.brand }} {{ item.truck.truckModel.name }}</md-table-cell>

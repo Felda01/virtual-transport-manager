@@ -6,6 +6,7 @@ use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 
 /**
  * App\Models\Company
@@ -55,6 +56,13 @@ class Company extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends= ['value'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -145,5 +153,31 @@ class Company extends Model
             return Company::find(Auth::guard('api')->user()->company_id);
         }
         return null;
+    }
+
+    /**
+     * Return company's total value
+     *
+     * @return float|int
+     */
+    public function getValueAttribute()
+    {
+        return $this->totalValue();
+    }
+
+    /**
+     * Return total value of company
+     *
+     * @return float|int
+     */
+    public function totalValue()
+    {
+        $result = $this->attributes['money'];
+
+        $result += $this->garages()->leftJoin('garage_models', 'garages.garage_model_id', '=', 'garage_models.id')->sum('garage_models.price');
+        $result += $this->trucks()->leftJoin('truck_models', 'trucks.truck_model_id', '=', 'truck_models.id')->sum('truck_models.price');
+        $result += $this->trailers()->leftJoin('trailer_models', 'trailers.trailer_model_id', '=', 'trailer_models.id')->sum('trailer_models.price');
+
+        return $result;
     }
 }

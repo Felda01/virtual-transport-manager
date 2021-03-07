@@ -35,7 +35,8 @@
     "order": "Order",
     "transactions": "Accounting",
     "bankLoans": "Bank",
-    "messages": "Messages"
+    "messages": "Messages",
+    "scoreBoard": "ScoreBoard"
   },
   "routes": {
     "login": "login",
@@ -67,7 +68,8 @@
     "doneOrders": "done-orders",
     "transactions": "accounting",
     "bankLoans": "bank",
-    "messages": "messages"
+    "messages": "messages",
+    "scoreBoard": "scoreboard"
   },
   "navigation": {
     "staticMapData": "Map data",
@@ -882,5 +884,12 @@
       "message": "Message"
     },
     "chats": "Chats"
+  },
+  "company": {
+    "property": {
+      "name": "Company Name",
+      "value": "Value",
+      "valueUnit": "€"
+    }
   }
 }
