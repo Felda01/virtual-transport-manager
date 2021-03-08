@@ -120,6 +120,7 @@
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
                 searchModel: {
+                    driver: '',
                     chassis: [],
                     adr: [],
                     engine_power: {
@@ -133,7 +134,6 @@
                         max: ''
                     },
                     trailers: [],
-                    driver: '',
                     sort: ''
                 },
                 searchSchema: {
@@ -141,6 +141,45 @@
                         {
                             class: [''],
                             fields: [
+                                {
+                                    class: ['md-medium-size-50', 'md-xsmall-size-100' ,'md-size-33'],
+                                    type: 'select',
+                                    input: 'select',
+                                    name: 'truck',
+                                    label: this.$t('market.searchFields.drivers'),
+                                    value: '',
+                                    config: {
+                                        options: [],
+                                        optionValue: (option) => {
+                                            return option.id;
+                                        },
+                                        optionLabel: (option) => {
+                                            let result = [];
+                                            let location = {};
+
+                                            if (!option.drivers || option.drivers.length === 0) {
+                                                return '';
+                                            }
+
+                                            let status = null;
+
+                                            for (let driver of option.drivers) {
+                                                result.push(driver.first_name.charAt(0) + '. ' + driver.last_name)
+                                                location = driver.location;
+                                                if (driver.sleep) {
+                                                    status = ' - ' + this.$t('status.sleep');
+                                                } else if (driver.status === constants.STATUS.READY) {
+                                                    status = ''
+                                                } else {
+                                                    status = ' - ' + this.$t('status.' + driver.status);
+                                                }
+                                            }
+
+                                            return result.join(', ') + " - " + location.name + " (" + location.country.short_name.toUpperCase() + ")" + status;
+                                        },
+                                        emptyOption: this.$t('market.searchFields.no_drivers_option')
+                                    }
+                                },
                                 {
                                     class: ['md-medium-size-50', 'md-xsmall-size-100' ,'md-size-33'],
                                     type: 'select',
@@ -218,36 +257,6 @@
                                             return option.name;
                                         },
                                         multiple: true
-                                    }
-                                },
-                                {
-                                    class: ['md-medium-size-50', 'md-xsmall-size-100' ,'md-size-33'],
-                                    type: 'select',
-                                    input: 'select',
-                                    name: 'truck',
-                                    label: this.$t('market.searchFields.drivers'),
-                                    value: '',
-                                    config: {
-                                        options: [],
-                                        optionValue: (option) => {
-                                            return option.id;
-                                        },
-                                        optionLabel: (option) => {
-                                            let result = [];
-                                            let location = {};
-
-                                            if (!option.drivers || option.drivers.length === 0) {
-                                                return '';
-                                            }
-
-                                            for (let driver of option.drivers) {
-                                                result.push(driver.first_name.charAt(0) + '. ' + driver.last_name)
-                                                location = driver.location;
-                                            }
-
-                                            return result.join(', ') + " - " + location.name + " (" + location.country.short_name.toUpperCase() + ")";
-                                        },
-                                        emptyOption: this.$t('market.searchFields.no_drivers_option')
                                     }
                                 },
                             ],
@@ -340,7 +349,7 @@
                 result({ data, loading, networkStatus }) {
                     this.chassisOptions = data.chassis;
                     this.$nextTick( () => {
-                        this.$set(this.searchSchema.groups[0].fields[1].config, 'options', this.chassisOptions);
+                        this.$set(this.searchSchema.groups[0].fields[2].config, 'options', this.chassisOptions);
                     });
                 },
             },
@@ -349,7 +358,7 @@
                 result({ data, loading, networkStatus }) {
                     this.ADRsOptions = data.ADRs;
                     this.$nextTick( () => {
-                        this.$set(this.searchSchema.groups[0].fields[0].config, 'options', this.ADRsOptions);
+                        this.$set(this.searchSchema.groups[0].fields[1].config, 'options', this.ADRsOptions);
                     });
                 },
             },
@@ -361,7 +370,7 @@
                 result({ data, loading, networkStatus }) {
                     this.trailerModelsOptions = data.trailerModels.data;
                     this.$nextTick( () => {
-                        this.$set(this.searchSchema.groups[0].fields[4].config, 'options', this.trailerModelsOptions);
+                        this.$set(this.searchSchema.groups[0].fields[5].config, 'options', this.trailerModelsOptions);
                     });
                 },
             },
@@ -372,15 +381,12 @@
                 },
                 result({ data, loading, networkStatus }) {
                     this.trucksOptions = data.trucksForOrder.data;
+
                     this.$nextTick( () => {
-                        this.$set(this.searchSchema.groups[0].fields[5].config, 'options', this.trucksOptions);
+                        this.$set(this.searchSchema.groups[0].fields[0].config, 'options', this.trucksOptions);
                     });
                 },
             }
         }
     }
 </script>
-
-<style scoped>
-
-</style>

@@ -132,7 +132,7 @@ class AuthController extends Controller
         DB::transaction(function() use ($validatedData) {
             $company = Company::create([
                 'name' => $validatedData['company_name'],
-                'money' => 100000
+                'money' => 500000
             ]);
 
             $user = User::create([

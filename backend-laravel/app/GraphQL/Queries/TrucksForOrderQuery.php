@@ -94,9 +94,9 @@ class TrucksForOrderQuery extends Query
             $query = Truck::trucksForOrder($query, $cargo);
         } else {
             $query = $query->whereHas('trailer')->whereHas('drivers', function (Builder $query) {
-                $query->where('sleep', 0)->where('status', StatusUtility::READY);
+                $query->whereIn('status', [StatusUtility::READY, StatusUtility::ON_ROAD]);
             })->whereHas('drivers', function (Builder $query) {
-                $query->where('sleep', 1)->orWhere('status', '!=', StatusUtility::READY);
+                $query->whereNotIn('status', [StatusUtility::READY, StatusUtility::ON_ROAD]);
             }, '=', 0);
         }
 

@@ -30,7 +30,7 @@
                 {{ $t('pages.login') }}
               </md-list-item>
               <md-list-item :to="{ name: $router.name, params: { locale: $i18n.locale === 'en' ? 'sk' : 'en'} }" @click="linkClick">
-                <md-icon>language</md-icon>
+                <md-icon :md-src="require('@/assets/' + nextLanguage + '.svg')" />
                 {{ nextLanguage | uppercase }}
               </md-list-item>
             </md-list>

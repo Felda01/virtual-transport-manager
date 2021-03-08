@@ -14,7 +14,7 @@
     </li>
     <li>
       <router-link :to="{ name: $router.name, params: { locale: $i18n.locale === 'en' ? 'sk' : 'en'} }">
-        <md-icon>language</md-icon>
+        <md-icon :md-src="require('@/assets/' + nextLanguage + '.svg')" />
         <p>{{ nextLanguage | uppercase }}</p>
       </router-link>
     </li>

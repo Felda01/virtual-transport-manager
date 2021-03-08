@@ -34,8 +34,7 @@
               </div>
             </li>
             <md-list-item :to="{ name: $router.name, params: { locale: $i18n.locale === 'en' ? 'sk' : 'en'} }">
-              <i class="material-icons">language</i>
-              <p class="hidden-lg hidden-md">{{ nextLanguage | uppercase }}</p>
+              <md-icon :md-src="require('@/assets/' + nextLanguage + '.svg')" class="ml-0 mr-0"/>
             </md-list-item>
 
             <md-list-item href="#" @click.prevent="logout">

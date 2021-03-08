@@ -35,6 +35,12 @@ module.exports = {
                 args[0].title = "Transport manager";
                 return args;
             });
+        config.module
+            .rule('svg')
+            .test(/\.(svg)(\?.*)?$/)
+            .use('file-loader')
+            .loader('file-loader')
+            .end();
     },
     //devServer: { https: true }
 };

@@ -1277,6 +1277,8 @@ export const TRUCKS_FOR_ORDER_QUERY = gql`
                             short_name
                         }
                     }
+                    sleep
+                    status
                 }
             }
         }
