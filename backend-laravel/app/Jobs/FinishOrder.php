@@ -69,8 +69,6 @@ class FinishOrder implements ShouldQueue
 
             $roadFees = $roadTrip->fees * $emissionClassMultipliers[$this->order->truck->truckModel->emission_class - 3];
 
-            Log::emergency('Fees with emission class: ' . $roadFees);
-
             TransactionUtility::create($company, $this->order, $orderPrice, 'order_finish');
             TransactionUtility::create($company, $this->order, -1 * $roadFees, 'order_road_fees');
 
@@ -85,7 +83,7 @@ class FinishOrder implements ShouldQueue
             $driversUpdated = $this->order->drivers()->update([
                 'location_id' => $this->order->market->location_to,
                 'status' => StatusUtility::READY,
-                'sleep' => $now->hour < 7 || $now->hour > 16
+                'sleep' => config('app.testing') ? false : ($now->hour < 7 || $now->hour > 16)
             ]);
 
             $truck = $this->order->truck;

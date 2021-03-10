@@ -117,7 +117,9 @@ class CreateDriverMutation extends Mutation
         });
         BroadcastUtility::broadcast(new RefreshQuery($company, 'Driver', $result['driver']->id));
         BroadcastUtility::broadcast(new RefreshQuery($company, 'Garage', $result['garage']->id));
-        QueueJobUtility::dispatch(new UpdateModelStatus($result['driver'], StatusUtility::IDLE), Carbon::parse(GameTimeUtility::addTimeToRealTime(60 * 6), 'Europe/Bratislava'));
+
+        $time = config('app.testing') ? 10 : 60 * 6;
+        QueueJobUtility::dispatch(new UpdateModelStatus($result['driver'], StatusUtility::IDLE), Carbon::parse(GameTimeUtility::addTimeToRealTime($time), 'Europe/Bratislava'));
         return $result['driver'];
     }
 }

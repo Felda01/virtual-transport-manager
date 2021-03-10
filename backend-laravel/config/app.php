@@ -125,6 +125,8 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'testing' => env('TESTING'),
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers

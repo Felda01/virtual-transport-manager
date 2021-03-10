@@ -68,7 +68,7 @@ return [
     'expired_order' => 5000,
 
     'start_game_time' => '24.1.2021 00:00:00',
-    'time_acceleration' => 30,
+    'time_acceleration' => 10,
 
     'working_hours' => 9,
 

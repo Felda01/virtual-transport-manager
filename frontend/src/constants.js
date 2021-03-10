@@ -30,6 +30,6 @@ export default {
     },
     TIME: {
         START: '24-01-2021 00:00:00',
-        ACCELERATION: 30
+        ACCELERATION: 10
     }
 }

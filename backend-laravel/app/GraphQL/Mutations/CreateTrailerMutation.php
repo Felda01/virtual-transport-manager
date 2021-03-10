@@ -128,7 +128,9 @@ class CreateTrailerMutation extends Mutation
         BroadcastUtility::broadcast(new ProcessTransaction($company));
         BroadcastUtility::broadcast(new RefreshQuery($company, 'Trailer', $result['trailer']->id));
         BroadcastUtility::broadcast(new RefreshQuery($company, 'Garage', $result['garageId']));
-        QueueJobUtility::dispatch(new UpdateModelStatus($result['trailer'], StatusUtility::IDLE), Carbon::parse(GameTimeUtility::addTimeToRealTime(60 * 6), 'Europe/Bratislava'));
+
+        $time = config('app.testing') ? 10 : 60 * 6;
+        QueueJobUtility::dispatch(new UpdateModelStatus($result['trailer'], StatusUtility::IDLE), Carbon::parse(GameTimeUtility::addTimeToRealTime($time), 'Europe/Bratislava'));
         return $result['trailer'];
     }
 }
