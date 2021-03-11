@@ -171,21 +171,21 @@ if (typeof io !== 'undefined') {
   Vue.prototype.$echo = echo_instance;
 }
 
-Vue.use(VueGtag, {
-  config: {
-    id: "GTM-PZB7VZB",
-    params: {
-      send_page_view: true
-    }
-  },
-  pageTrackerTemplate(to) {
-    return {
-      page_title: to.name,
-      page_path: to.path
-    }
-  },
-  enabled: true,
-}, router);
+// Vue.use(VueGtag, {
+//   config: {
+//     id: "GTM-PZB7VZB",
+//     params: {
+//       send_page_view: true
+//     }
+//   },
+//   pageTrackerTemplate(to) {
+//     return {
+//       page_title: to.name,
+//       page_path: to.path
+//     }
+//   },
+//   enabled: false,
+// }, router);
 
 
 new Vue({
