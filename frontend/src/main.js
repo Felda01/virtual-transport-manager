@@ -173,8 +173,6 @@ if (typeof io !== 'undefined') {
 
 Vue.use(VueGtag, {
   config: { id: "GTM-PZB7VZB" },
-  appName: 'Transport managere',
-  pageTrackerScreenviewEnabled: true,
   pageTrackerTemplate(to) {
     return {
       page_title: to.name,
