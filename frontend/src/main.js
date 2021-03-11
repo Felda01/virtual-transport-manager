@@ -172,7 +172,12 @@ if (typeof io !== 'undefined') {
 }
 
 Vue.use(VueGtag, {
-  config: { id: "GTM-PZB7VZB" },
+  config: {
+    id: "GTM-PZB7VZB",
+    params: {
+      send_page_view: true
+    }
+  },
   pageTrackerTemplate(to) {
     return {
       page_title: to.name,
