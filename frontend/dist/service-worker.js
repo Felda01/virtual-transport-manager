@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.ef40692c20aeb2b68eb799f0a1800f9c.js"
+  "/precache-manifest.83e34ba14327128182cae6d8a080cda1.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "transport-manager"});

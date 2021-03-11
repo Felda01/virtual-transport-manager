@@ -153,6 +153,7 @@
     "register": "Create account"
   },
   "register": {
+    "title": "Register",
     "submitBtn": "Get Started"
   },
   "logout": "Log out",

@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-// import './registerServiceWorker'
+import VueGtag from "vue-gtag";
 import router from './router'
 
 import VueApollo from "vue-apollo";
@@ -170,6 +170,19 @@ if (typeof io !== 'undefined') {
   window.Echo = echo_instance;
   Vue.prototype.$echo = echo_instance;
 }
+
+Vue.use(VueGtag, {
+  config: { id: "GTM-PZB7VZB" },
+  appName: 'Transport managere',
+  pageTrackerScreenviewEnabled: true,
+  pageTrackerTemplate(to) {
+    return {
+      page_title: to.name,
+      page_path: to.path
+    }
+  },
+  enabled: true,
+}, router);
 
 
 new Vue({
