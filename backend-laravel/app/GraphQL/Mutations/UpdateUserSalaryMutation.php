@@ -9,6 +9,7 @@ use App\Models\Company;
 use App\Models\Role;
 use App\Models\User;
 use App\Rules\ExistsAllRule;
+use App\Rules\ExistsCompanyOwnerRule;
 use App\Utilities\BroadcastUtility;
 use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
@@ -55,7 +56,8 @@ class UpdateUserSalaryMutation extends Mutation
             'roles' => [
                 'required',
                 'string',
-                new ExistsAllRule('Role')
+                new ExistsAllRule('Role'),
+                new ExistsCompanyOwnerRule($args['id']),
             ],
         ];
     }

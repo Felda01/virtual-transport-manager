@@ -136,7 +136,7 @@ return [
     'general_exception' => "Vyskytla sa chyba, skúste to znova neskôr.",
     'unauthorized' => "Na vykonanie tejto akcie nemáte oprávnenie.",
     'available_location' => "V tomto meste už vlastníte garáž.",
-    'not_enough_money' => "Vaša spoločnosť namá dostatok peňazí.",
+    'not_enough_money' => "Vaša firma namá dostatok peňazí.",
     'model_from_company' => "Na prácu s týmto objektom nemáte oprávnenie.",
     'available_garage_spot' => "V tejto garáži nie je dostatok miesta.",
     'available_driver_recruitment_agency' => "Vodiča si najala iná spoločnosť.",
@@ -164,6 +164,7 @@ return [
     'available_order' => "Vybraná objednávka už nie je k dispozícii na priradenie.",
     'truck_for_order' => "Zvolení vodiči nie sú vhodní pre túto objednávku.",
     'maximum_bank_loans' => "Dosiahli ste maximálny počet aktívnych pôžičiek.",
+    'exists_company_owner' => "Vaša firma potrebuje aspoň jedného vlastníka.",
 
     /*
     |--------------------------------------------------------------------------

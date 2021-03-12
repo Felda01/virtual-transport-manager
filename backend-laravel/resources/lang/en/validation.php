@@ -164,6 +164,7 @@ return [
     'available_order' => "This order is not available for assignment anymore.",
     'truck_for_order' => "Selected drivers are not suitable for this order.",
     'maximum_bank_loans' => "You reached the maximum count of active loans.",
+    'exists_company_owner' => "Your company needs at least one owner.",
 
     /*
     |--------------------------------------------------------------------------

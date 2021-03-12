@@ -547,6 +547,10 @@
     "truckModels": "Truck models",
     "cargos": "Cargos"
   },
+  "dashboard": {
+    "title": "Welcome to Virtual Transport Manager",
+    "text": "Virtual Transport Manager allows users to try out their own virtual business. Users can hire drivers, manage the material goods of a company, select and deliver orders to make as big profit as possible."
+  },
   "garage": {
     "property": {
       "location": "Location",

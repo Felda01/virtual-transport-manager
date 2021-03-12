@@ -547,6 +547,10 @@
     "truckModels": "Modely kmiónov",
     "cargos": "Náklady"
   },
+  "dashboard": {
+    "title": "Vitajte v aplikácií Virtuálny dopravný manažér",
+    "text": "Virtuálny dopravný manažér umožňuje používateľom vyskúšať si spravovať vlastnú virtuálnu firmu. Používatelia môžu najímať vodičov, spravovať hmotný majetok firmy, vyberať a doručovať objednávky na vytvorenie čo najväčšieho zisku pre firmu."
+  },
   "garage": {
     "property": {
       "location": "Miesto",

@@ -404,6 +404,10 @@
                 });
 
                 this.$apollo.queries.user.refresh();
+
+                if (this.currentUser && user.id === this.currentUser.id) {
+                    this.$store.dispatch('getUser', {});
+                }
             }
         },
         mounted() {
