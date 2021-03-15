@@ -83,7 +83,7 @@
                                         <md-table-cell :md-label="$t('driver.property.status')"><template v-if="item.sleep">{{ $t('status.sleep') }}</template><template v-else>{{ $t('status.' + item.status) }}</template></md-table-cell>
                                         <md-table-cell :md-label="$t('driver.property.location')">{{ item.location.name }} ({{ item.location.country.short_name | uppercase }})</md-table-cell>
                                         <md-table-cell :md-label="$t('driver.property.adr')">{{ $t('ADRsShort.' + item.adr) }}</md-table-cell>
-                                        <md-table-cell md-label="" v-if="item.sleep === 0 && hasPermission(constants.PERMISSION.MANAGE_VEHICLES) && hasPermission(constants.PERMISSION.MANAGE_DRIVERS)">
+                                        <md-table-cell md-label="" v-if="item.sleep === 0 && [constants.STATUS.READY, constants.STATUS.IDLE].includes(item.status) && hasPermission(constants.PERMISSION.MANAGE_VEHICLES) && hasPermission(constants.PERMISSION.MANAGE_DRIVERS)">
                                             <md-button class="md-danger md-simple md-full-text" @click.native.stop="unassignDriverFromTruckModal(item)"><md-icon>close</md-icon>{{ $t('detail.btn.unassign')}}</md-button>
                                         </md-table-cell>
                                     </md-table-row>
@@ -121,7 +121,7 @@
                                         <md-table-cell :md-label="$t('trailer.relations.trailerModel')" class="td-name">{{ item.trailerModel.name }}</md-table-cell>
                                         <md-table-cell :md-label="$t('trailer.property.status')">{{ $t('status.' + item.status) }}</md-table-cell>
                                         <md-table-cell :md-label="$t('trailer.property.adr')">{{ $t('ADRs.' + item.trailerModel.adr) }}</md-table-cell>
-                                        <md-table-cell md-label="" v-if="hasPermission(constants.PERMISSION.MANAGE_VEHICLES)">
+                                        <md-table-cell md-label="" v-if="hasPermission(constants.PERMISSION.MANAGE_VEHICLES) && canUnassignTrailer">
                                             <md-button class="md-danger md-simple md-full-text" @click.native.stop="unassignTrailerFromTruckModal(item)"><md-icon>close</md-icon>{{ $t('detail.btn.unassign')}}</md-button>
                                         </md-table-cell>
                                     </md-table-row>
@@ -229,7 +229,10 @@
             },
             canDeleteTruck() {
                 return this.truck ? constants.STATUS.IDLE === this.truck.status && this.truck.drivers.length === 0 && this.truck.trailer === null : false;
-            }
+            },
+            canUnassignTrailer() {
+                return (this.truck && this.truck.drivers && this.truck.drivers.length === 0) || (this.truck && this.truck.drivers && this.truck.drivers.length > 0 && this.truck.drivers[0] && !this.truck.drivers[0].sleep && [this.constants.STATUS.READY, this.constants.STATUS.IDLE].includes(this.truck.drivers[0].status))
+            },
         },
         data() {
             return {

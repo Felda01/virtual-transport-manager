@@ -81,7 +81,7 @@
                                         <md-table-cell :md-label="$t('truckModel.model')" class="td-name">{{ item.truckModel.brand }} {{ item.truckModel.name }}</md-table-cell>
                                         <md-table-cell :md-label="$t('truck.property.status')">{{ $t('status.' + item.status) }}</md-table-cell>
                                         <md-table-cell :md-label="$t('truck.relations.drivers')"><template v-if="item.drivers && item.drivers.length > 0">{{ driversString(item.drivers) }}</template><template v-else>{{ $t('truck.relations.no_drivers') }}</template></md-table-cell>
-                                        <md-table-cell md-label="" v-if="hasPermission(constants.PERMISSION.MANAGE_VEHICLES)">
+                                        <md-table-cell md-label="" v-if="hasPermission(constants.PERMISSION.MANAGE_VEHICLES) && canUnassignTruck">
                                             <md-button class="md-danger md-simple md-full-text" @click.native.stop="unassignTruckFromTrailerModal(item)"><md-icon>close</md-icon>{{ $t('detail.btn.unassign')}}</md-button>
                                         </md-table-cell>
                                     </md-table-row>
@@ -180,6 +180,9 @@
             },
             canDeleteTrailer() {
                 return this.trailer ? this.trailer.status === constants.STATUS.IDLE : false;
+            },
+            canUnassignTruck() {
+                return this.trailer ? (this.trailer.truck && this.trailer.truck.drivers && this.trailer.truck.drivers.length === 0) || (this.trailer.truck && this.trailer.truck.drivers && this.trailer.truck.drivers.length > 0 && !this.trailer.truck.drivers[0].sleep && [this.constants.STATUS.READY].includes(this.trailer.truck.drivers[0].status) ) : false;
             }
         },
         data() {

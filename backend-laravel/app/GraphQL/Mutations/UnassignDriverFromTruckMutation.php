@@ -59,7 +59,7 @@ class UnassignDriverFromTruckMutation extends Mutation
                 'string',
                 'exists:drivers,id,deleted_at,NULL',
                 new ModelFromCompanyRule('Driver'),
-                new ModelStatusRule('Driver', [StatusUtility::READY]),
+                new ModelStatusRule('Driver', [StatusUtility::READY, StatusUtility::IDLE]),
                 new DriverHasTruckRule($args['truck'])
             ],
             'truck' => [

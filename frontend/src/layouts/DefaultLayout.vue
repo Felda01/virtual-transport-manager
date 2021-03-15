@@ -76,7 +76,7 @@
             >
                 <zoom-center-transition :duration="200" mode="out-in">
                     <!-- your content here -->
-                    <router-view></router-view>
+                    <router-view :key="$route.path"></router-view>
                 </zoom-center-transition>
             </div>
             <content-footer v-if="!$route.meta.hideFooter"></content-footer>
