@@ -793,7 +793,7 @@
       "adr": "Trieda ADR",
       "weight": "Váha",
       "trailers": "Modely návesov",
-      "drivers": "Filter vodičov",
+      "drivers": "Filter vodič + kamión + náves",
       "no_drivers_option": "Nie sú k dispozícii žiadni vodiči",
       "price_asc": "Cena od najnižšej po najvyššiu",
       "price_desc": "Cena od najvyššej po najnižšiu",

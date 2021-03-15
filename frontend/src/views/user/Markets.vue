@@ -180,6 +180,11 @@
                                         emptyOption: this.$t('market.searchFields.no_drivers_option')
                                     }
                                 },
+                            ],
+                        },
+                        {
+                            class: [''],
+                            fields: [
                                 {
                                     class: ['md-medium-size-50', 'md-xsmall-size-100' ,'md-size-33'],
                                     type: 'select',
@@ -349,7 +354,7 @@
                 result({ data, loading, networkStatus }) {
                     this.chassisOptions = data.chassis;
                     this.$nextTick( () => {
-                        this.$set(this.searchSchema.groups[0].fields[2].config, 'options', this.chassisOptions);
+                        this.$set(this.searchSchema.groups[1].fields[1].config, 'options', this.chassisOptions);
                     });
                 },
             },
@@ -358,7 +363,7 @@
                 result({ data, loading, networkStatus }) {
                     this.ADRsOptions = data.ADRs;
                     this.$nextTick( () => {
-                        this.$set(this.searchSchema.groups[0].fields[1].config, 'options', this.ADRsOptions);
+                        this.$set(this.searchSchema.groups[1].fields[0].config, 'options', this.ADRsOptions);
                     });
                 },
             },
@@ -370,7 +375,7 @@
                 result({ data, loading, networkStatus }) {
                     this.trailerModelsOptions = data.trailerModels.data;
                     this.$nextTick( () => {
-                        this.$set(this.searchSchema.groups[0].fields[5].config, 'options', this.trailerModelsOptions);
+                        this.$set(this.searchSchema.groups[1].fields[4].config, 'options', this.trailerModelsOptions);
                     });
                 },
             },
