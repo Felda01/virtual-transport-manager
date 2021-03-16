@@ -61,7 +61,7 @@ class ManageDriverStatus implements ShouldQueue
             BroadcastUtility::broadcast(new RefreshQuery($item, 'Driver'));
         });
 
-        if ($updated && !$this->single) {
+        if (!$this->single) {
             QueueJobUtility::dispatch(new ManageDriverStatus(!$this->goSleep), Carbon::parse(GameTimeUtility::addTimeToRealTime($delayMinutes), 'Europe/Bratislava'));
         }
     }
