@@ -178,6 +178,14 @@ class Company extends Model
         $result += $this->trucks()->leftJoin('truck_models', 'trucks.truck_model_id', '=', 'truck_models.id')->sum('truck_models.price');
         $result += $this->trailers()->leftJoin('trailer_models', 'trailers.trailer_model_id', '=', 'trailer_models.id')->sum('trailer_models.price');
 
+        $bankLoans = $this->bankLoans()->with('bankLoanType')->get();
+
+        $result -= $bankLoans->reduce(function ($carry, $item) {
+            /** @var BankLoanType $bankLoanType */
+            $bankLoanType = $item->bankLoanType;
+            return $carry += ($bankLoanType->period - $item->paid) * $bankLoanType->payment;
+        }, 0);
+
         return $result;
     }
 }

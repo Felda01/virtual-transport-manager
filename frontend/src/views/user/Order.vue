@@ -247,7 +247,7 @@
                     variables: this.form
                 }).then(response => {
                     let order = response.data.updateOrder;
-                    let price = this.$options.filters.currency(order.price, ' ', 2, { thousandsSeparator: ' ' }) + ' €';
+                    let price = this.$options.filters.currency(order.market.price, ' ', 2, { thousandsSeparator: ' ' }) + ' €';
                     this.$notify({
                         timeout: 5000,
                         message: this.$t('model.response.success.updated.order', {cargoName: order.market.cargo.name, locationFromName: order.market.locationFrom.name, locationToName: order.market.locationTo.name, price: price}),
