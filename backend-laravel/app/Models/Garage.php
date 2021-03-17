@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Contracts\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
@@ -75,6 +76,15 @@ class Garage extends Model
         'available_truck_spot',
         'available_trailer_spot',
     ];
+
+    /**
+     * @param Activity $activity
+     * @param string $eventName
+     */
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        $activity->description = "activity.{$eventName}.garage";
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
