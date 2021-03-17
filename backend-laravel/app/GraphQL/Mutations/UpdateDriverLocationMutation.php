@@ -8,6 +8,7 @@ use App\Events\RefreshQuery;
 use App\Jobs\UpdateModelStatus;
 use App\Models\Company;
 use App\Models\Driver;
+use App\Models\Truck;
 use App\Rules\CanUpdateDriverADRRule;
 use App\Rules\DriverInGarageRule;
 use App\Rules\DriverNotInGarageRule;
@@ -85,7 +86,11 @@ class UpdateDriverLocationMutation extends Mutation
 
         /** @var Driver $driver */
         $driver = Driver::find($args['id']);
-        $driverSaved = $driver->update([
+
+        /** @var Truck $truck */
+        $truck = $driver->truck;
+
+        $driverSaved = $truck->drivers()->update([
             'location_id' => $driver->garage->location_id,
             'status' => StatusUtility::TRAVEL
         ]);
@@ -102,8 +107,10 @@ class UpdateDriverLocationMutation extends Mutation
 
             $timeInMinutes = PathUtility::calculateRoadTripTime($routes->sum('time'), $driver->truck->drivers()->count());
 
-            QueueJobUtility::dispatch(new UpdateModelStatus($driver, StatusUtility::READY), Carbon::parse(GameTimeUtility::addTimeToRealTime($timeInMinutes), 'Europe/Bratislava'));
-            BroadcastUtility::broadcast(new RefreshQuery($company, 'Driver', $driver->id));
+            $truck->drivers->each(function ($item) use ($company, $timeInMinutes) {
+                QueueJobUtility::dispatch(new UpdateModelStatus($item, StatusUtility::READY), Carbon::parse(GameTimeUtility::addTimeToRealTime($timeInMinutes), 'Europe/Bratislava'));
+                BroadcastUtility::broadcast(new RefreshQuery($company, 'Driver', $item->id));
+            });
 
             return $driver;
         }
