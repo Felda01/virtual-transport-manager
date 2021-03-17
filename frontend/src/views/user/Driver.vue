@@ -60,7 +60,7 @@
                                         <md-tooltip :md-active.sync="tooltipCanNotTrain" md-direction="left">{{ $t('driver.can_not_train_info') }}</md-tooltip>
                                     </md-button>
                                 </div>
-                                <template v-if="hasPermission(constants.PERMISSION.MANAGE_DRIVERS) && !driver.sleep && driver.status === constants.STATUS.READY && driver.location.id !== driver.garage.location.id">
+                                <template v-if="hasPermission(constants.PERMISSION.MANAGE_DRIVERS) && !driver.sleep && driver.status === constants.STATUS.READY && driver.location.id !== driver.garage.location.id && 1 === 0">
                                     <md-button class="md-primary md-simple" @click="updateDriverLocationModal"><md-icon>edit</md-icon>{{ $t('detail.btn.travel_to_garage') }}</md-button>
                                 </template>
                                 <template v-if="canDeleteDriver">
