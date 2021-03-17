@@ -111,7 +111,8 @@
       "fire": "Vyhodiť",
       "acceptOffer": "Akceptovať ponuku",
       "apply": "Uchádzať sa",
-      "repay": "Splatiť"
+      "repay": "Splatiť",
+      "sendToGarage": "Poslať do garáže"
     },
     "select": {
       "emptyOption": "Nie sú k dispozícii žiadne možnosti"
@@ -132,7 +133,8 @@
       "training": "Tréning",
       "updatePassword": "Zmeniť heslo",
       "updateProfile": "Upraviť profil",
-      "updateSalary": "Upraviť plat / role"
+      "updateSalary": "Upraviť plat / role",
+      "travel_to_garage": "Cesta do garáže"
     }
   },
   "pagination": {
@@ -201,7 +203,8 @@
           "userPassword": "Zmeniť heslo",
           "user": "Upraviť informácie v profile",
           "userSalary": "Upraviť používateľovi plat / role",
-          "bankLoan": "Naozaj chcete splatiť túto pôžičku?"
+          "bankLoan": "Naozaj chcete splatiť túto pôžičku?",
+          "driverLocation": "Naozaj chcete poslať tohto vodiča do jeho garáže?"
         },
         "delete": {
           "bankLoanType": "Naozaj chcete odstrániť tento typ bankovej pôžička?",
@@ -267,7 +270,8 @@
           "user": "Informácie o vašom profile boli úspešne aktualizované.",
           "userSalary": "Informácie o používateľovi {modelName} boli úspešne aktualizované.",
           "order": "Objednávka {cargoName} z {locationFromName} do {locationToName} za {price} bola úspešne priradená vybraným vodičom.",
-          "bankLoan": "Pôžička za {price} bola úspešne splatená."
+          "bankLoan": "Pôžička za {price} bola úspešne splatená.",
+          "driverLocation": " Vodič {modelName} úspešne cestuje do garáže."
         },
         "deleted": {
           "bankLoanType": "Typ bankovej pôžičky {modelName} bol úspešne vymazaný.",
@@ -858,7 +862,8 @@
         "6": "Dane z garáží",
         "7": "Poistenie garáží",
         "8": "Splátky"
-      }
+      },
+      "info": "Platia sa skoro ráno v prvý deň každého mesiaca."
     },
     "next_payment_chart": {
       "title": "Graf percentuálneho podielu platieb budúci mesiac",

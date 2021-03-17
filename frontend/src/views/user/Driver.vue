@@ -60,6 +60,9 @@
                                         <md-tooltip :md-active.sync="tooltipCanNotTrain" md-direction="left">{{ $t('driver.can_not_train_info') }}</md-tooltip>
                                     </md-button>
                                 </div>
+                                <template v-if="hasPermission(constants.PERMISSION.MANAGE_DRIVERS) && !driver.sleep && driver.status === constants.STATUS.READY && driver.location.id !== driver.garage.location.id">
+                                    <md-button class="md-primary md-simple" @click="updateDriverLocationModal"><md-icon>edit</md-icon>{{ $t('detail.btn.travel_to_garage') }}</md-button>
+                                </template>
                                 <template v-if="canDeleteDriver">
                                     <md-button class="md-danger md-simple" @click="deleteDriverModal"><md-icon>close</md-icon>{{ $t('detail.btn.fire') }}</md-button>
                                 </template>
@@ -153,6 +156,9 @@
             <!-- Update driver modal-->
             <delete-modal ref="updateDriverModal" @ok="updateDriver" :modalSchema="modalSchemaUpdateDriver" />
 
+            <!-- Update driver location modal-->
+            <delete-modal ref="updateDriverLocationModal" @ok="updateDriverLocation" :modalSchema="modalSchemaUpdateDriverLocation" />
+
             <!-- Delete driver modal-->
             <delete-modal ref="deleteDriverModal" @ok="deleteDriver" :modalSchema="modalSchemaDeleteDriver" />
         </template>
@@ -161,7 +167,7 @@
 
 <script>
     import { DRIVER_QUERY, AVAILABLE_TRUCKS_IN_GARAGE_QUERY } from '@/graphql/queries/user';
-    import { UPDATE_DRIVER_MUTATION, DELETE_DRIVER_MUTATION, ASSIGN_DRIVER_TO_TRUCK_MUTATION, UNASSIGN_DRIVER_FROM_TRUCK_MUTATION } from '@/graphql/mutations/user';
+    import { UPDATE_DRIVER_MUTATION, DELETE_DRIVER_MUTATION, ASSIGN_DRIVER_TO_TRUCK_MUTATION, UNASSIGN_DRIVER_FROM_TRUCK_MUTATION, UPDATE_DRIVER_LOCATION_MUTATION } from '@/graphql/mutations/user';
     import { Tabs, ProductCard, MutationModal, DeleteModal, OrdersTable } from "@/components";
     import constants from "../../constants";
     import { mapGetters } from "vuex";
@@ -212,6 +218,15 @@
                         idField: null,
                     },
                     okBtnTitle: this.$t('modal.btn.training'),
+                    cancelBtnTitle: this.$t('modal.btn.cancel')
+                },
+                modalSchemaUpdateDriverLocation: {
+                    message: '',
+                    form: {
+                        mutation: UPDATE_DRIVER_LOCATION_MUTATION,
+                        idField: null,
+                    },
+                    okBtnTitle: this.$t('modal.btn.sendToGarage'),
                     cancelBtnTitle: this.$t('modal.btn.cancel')
                 },
                 modalSchemaDeleteDriver: {
@@ -271,6 +286,26 @@
                 this.$notify({
                     timeout: 5000,
                     message: this.$t('model.response.success.updated.driver', { modelName: driver.first_name + " " + driver.last_name }),
+                    icon: "add_alert",
+                    horizontalAlign: 'right',
+                    verticalAlign: 'top',
+                    type: 'success'
+                });
+
+                this.$apollo.queries.driver.refresh();
+            },
+            updateDriverLocationModal() {
+                this.modalSchemaUpdateDriverLocation.message = this.$t('model.modal.title.update.driverLocation');
+
+                this.modalSchemaUpdateDriverLocation.form.idField = this.id;
+
+                this.$refs['updateDriverLocationModal'].openModal();
+            },
+            updateDriverLocation(response) {
+                let driver = response.data.updateDriverLocation;
+                this.$notify({
+                    timeout: 5000,
+                    message: this.$t('model.response.success.updated.driverLocation', { modelName: driver.first_name + " " + driver.last_name }),
                     icon: "add_alert",
                     horizontalAlign: 'right',
                     verticalAlign: 'top',

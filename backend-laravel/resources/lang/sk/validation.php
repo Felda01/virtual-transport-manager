@@ -165,6 +165,7 @@ return [
     'truck_for_order' => "Zvolení vodiči nie sú vhodní pre túto objednávku.",
     'maximum_bank_loans' => "Dosiahli ste maximálny počet aktívnych pôžičiek.",
     'exists_company_owner' => "Vaša firma potrebuje aspoň jedného vlastníka.",
+    'driver_not_in_garage' => "Zvolený vodič už je v garáži.",
 
     /*
     |--------------------------------------------------------------------------

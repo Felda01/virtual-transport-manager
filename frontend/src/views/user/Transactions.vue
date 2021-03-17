@@ -33,6 +33,10 @@
                                     {{ $t('transaction.next_payment.total') }}
                                 </div>
                                 <span>{{ totalNextPayment | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('transaction.next_payment.priceUnit') }}</span>
+                                <md-button class="md-primary md-simple md-just-icon md-round" @click="tooltipPayments = !tooltipPayments">
+                                    <md-icon>help</md-icon>
+                                    <md-tooltip :md-active.sync="tooltipPayments" md-direction="left">{{ $t('transaction.next_payment.info') }}</md-tooltip>
+                                </md-button>
                             </div>
                         </div>
                     </md-card-content>
@@ -117,6 +121,7 @@
 <script>
     import { Pagination, SearchForm, ChartCard } from "@/components";
     import { TRANSACTIONS_QUERY, USERS_SELECT_QUERY, NEXT_PAYMENT_QUERY } from "@/graphql/queries/user";
+    import EventBus from "../../event-bus";
 
     export default {
         title () {
@@ -156,6 +161,7 @@
                         height: "428px"
                     }
                 },
+                tooltipPayments: false,
                 searchSchema: {
                     groups: [
                         {
@@ -260,6 +266,11 @@
                 }
             },
         },
+        mounted() {
+            EventBus.$on('refreshQuery', (payLoad) => {
+                this.$apollo.queries.transactions.refresh();
+            });
+        },
         apollo: {
             transactions: {
                 query: TRANSACTIONS_QUERY,
@@ -323,6 +334,9 @@
         > div {
             flex: 0 0 100%;
             padding: 12px 8px;
+            display: flex;
+            justify-content: end;
+            align-items: baseline;
         }
     }
     .circle {

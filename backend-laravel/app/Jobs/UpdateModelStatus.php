@@ -4,7 +4,10 @@ namespace App\Jobs;
 
 use App\Events\RefreshQuery;
 use App\Models\Company;
+use App\Models\Driver;
 use App\Utilities\BroadcastUtility;
+use App\Utilities\GameTimeUtility;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -37,9 +40,18 @@ class UpdateModelStatus implements ShouldQueue
      */
     public function handle()
     {
-        $this->model->update([
-            'status' => $this->status
-        ]);
+        if ($this->model instanceof Driver) {
+            $now = Carbon::parse(GameTimeUtility::gameTime(Carbon::now('Europe/Bratislava')), 'Europe/Bratislava');
+
+            $this->model->update([
+                'status' => $this->status,
+                'sleep' => config('app.testing') ? false : ($now->hour < 7 || $now->hour > 16)
+            ]);
+        } else {
+            $this->model->update([
+                'status' => $this->status
+            ]);
+        }
 
         $company = Company::find($this->model->company_id);
         BroadcastUtility::broadcast(new RefreshQuery($company, class_basename($this->model), $this->model->id));

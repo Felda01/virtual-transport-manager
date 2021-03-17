@@ -31,5 +31,9 @@ Route::middleware(['auth.basic'])->group(function() {
     Route::post('/YWRtaW4/ZmV0Y2hSb3V0ZXM', [\App\Http\Controllers\AdminController::class, 'fetchRoutes'])->name('admin.fetchRoutes');
 });
 
+Route::get('/plmko', function() {
+    dd(\Queue::getRedis()->connection(null)->zrange('queues:default:delayed' ,0, -1));
+});
+
 
 

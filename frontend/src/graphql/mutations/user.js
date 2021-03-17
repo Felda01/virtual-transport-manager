@@ -192,6 +192,16 @@ export const UPDATE_DRIVER_MUTATION = gql`
     }
 `;
 
+export const UPDATE_DRIVER_LOCATION_MUTATION = gql`
+    mutation UpdateDriverLocationMutation($id: String!) {
+        updateDriverLocation(id: $id) {
+            id
+            first_name
+            last_name
+        }
+    }
+`;
+
 export const DELETE_DRIVER_MUTATION = gql`
     mutation DeleteDriverMutation($id: String!) {
         deleteDriver(id: $id) {

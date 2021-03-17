@@ -165,6 +165,7 @@ return [
     'truck_for_order' => "Selected drivers are not suitable for this order.",
     'maximum_bank_loans' => "You reached the maximum count of active loans.",
     'exists_company_owner' => "Your company needs at least one owner.",
+    'driver_not_in_garage' => "The selected driver is already in the garage.",
 
     /*
     |--------------------------------------------------------------------------

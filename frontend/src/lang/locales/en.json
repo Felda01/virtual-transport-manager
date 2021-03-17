@@ -111,7 +111,8 @@
       "fire": "Fire",
       "acceptOffer": "Accept offer",
       "apply": "Apply",
-      "repay": "Repay"
+      "repay": "Repay",
+      "sendToGarage": "Send to garage"
     },
     "select": {
       "emptyOption": "No available options"
@@ -132,7 +133,8 @@
       "training": "Training",
       "updatePassword": "Change password",
       "updateProfile": "Update profile",
-      "updateSalary": "Update salary / roles"
+      "updateSalary": "Update salary / roles",
+      "travel_to_garage": "Send to garage"
     }
   },
   "pagination": {
@@ -201,7 +203,8 @@
           "userPassword": "Change password",
           "user": "Update profile info",
           "userSalary": "Update user salary / roles",
-          "bankLoan": "Are you sure you want to repay this loan?"
+          "bankLoan": "Are you sure you want to repay this loan?",
+          "driverLocation": "Are you sure you want to send this driver to his garage?"
         },
         "delete": {
           "bankLoanType": "Are you sure you want to delete this bank loan type?",
@@ -267,7 +270,8 @@
           "user": "Your profile info has been successfully updated.",
           "userSalary": "The user {modelName} was successfully updated.",
           "order": "The order {cargoName} from {locationFromName} to {locationToName} for {price} was successfully assigned to selected drivers.",
-          "bankLoan": "The loan of {price} was successfully repaid."
+          "bankLoan": "The loan of {price} was successfully repaid.",
+          "driverLocation": "The driver {modelName} is successfully traveling to the garage."
         },
         "deleted": {
           "bankLoanType": "The bank loan type {modelName} was successfully deleted.",
@@ -858,7 +862,8 @@
         "6": "Garage taxes",
         "7": "Garage insurance",
         "8": "Installments"
-      }
+      },
+      "info": "It is paid early in the morning on the first day of each month."
     },
     "next_payment_chart": {
       "title": "Next month payments percentage chart",

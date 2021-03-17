@@ -218,6 +218,7 @@ return [
                 'createDriver' => \App\GraphQL\Mutations\CreateDriverMutation::class,
                 'updateDriver' => \App\GraphQL\Mutations\UpdateDriverMutation::class,
                 'deleteDriver' => \App\GraphQL\Mutations\DeleteDriverMutation::class,
+                'updateDriverLocation' => \App\GraphQL\Mutations\UpdateDriverLocationMutation::class,
 
                 'assignDriverToTruck' => \App\GraphQL\Mutations\AssignDriverToTruckMutation::class,
                 'assignTrailerToTruck' => \App\GraphQL\Mutations\AssignTrailerToTruckMutation::class,
