@@ -230,6 +230,7 @@ class Garage extends Model
             ->leftjoin($garageModelTable, $garageTable . '.garage_model_id', '=', $garageModelTable . '.id')
             ->leftjoin($table, $table . '.garage_id', '=', $garageTable . '.id')
             ->where($garageTable . '.company_id', $user->company_id)
+            ->where($table . '.deleted_at', null)
             ->groupBy($garageTable . '.id', $garageModelTable . '.' . $column)
             ->havingRaw('COUNT(DISTINCT `' . $table . '`.`id`) < `' . $garageModelTable . '`.`' . $column . '` * ' . ($table === (new Driver())->getTable() ? 2 : 1));
     }
