@@ -745,7 +745,8 @@
       "roadTrip_damageUnit": "%",
       "no_roadTrip": "Čaká na priradenie vodičov",
       "customer_from": "Odovzdávajúci zákazník",
-      "customer_to": "Preberajúci zákazník"
+      "customer_to": "Preberajúci zákazník",
+      "roadTrip_arrival": "Predpokladaný príchod"
     },
     "no_orders": "Žiadne objednávky",
     "searchFields": {

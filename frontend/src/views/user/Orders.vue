@@ -29,6 +29,7 @@
                                     <md-table-cell :md-label="$t('order.relations.cargo_name')" class="td-name">{{ item.market.cargo.name }}</md-table-cell>
                                     <md-table-cell :md-label="$t('order.relations.market_price')">{{ item.market.price | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('order.relations.market_priceUnit') }}</md-table-cell>
                                     <md-table-cell :md-label="$t('order.relations.roadTrip_status')">{{ $t('status.' + item.roadTrip.status) }}</md-table-cell>
+                                    <md-table-cell :md-label="$t('order.relations.roadTrip_arrival')">{{ item.roadTrip.arrival }}</md-table-cell>
                                     <md-table-cell :md-label="$t('market.property.expires_at')">{{ item.market.expires_at }}</md-table-cell>
                                     <md-table-cell :md-label="$t('order.relations.drivers')"><template v-if="item.drivers && item.drivers.length > 0">{{ drivers(item.drivers) }}</template><template v-else>{{ $t('order.relations.no_drivers') }}</template></md-table-cell>
                                     <md-table-cell :md-label="$t('order.relations.truck')"><template v-if="item.truck">{{ item.truck.truckModel.brand }} {{ item.truck.truckModel.name }}</template><template v-else>{{ $t('order.relations.no_truck') }}</template></md-table-cell>

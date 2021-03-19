@@ -75,6 +75,7 @@ class CountriesWithGaragesQuery extends Query
             $q->select('country_id')
                 ->from($locationTable)
                 ->rightjoin($garageTable, $garageTable . '.location_id', '=', $locationTable . '.id')
+                ->where($garageTable . '.deleted_at', null)
                 ->where('company_id', $user->company_id)
                 ->get();
         });

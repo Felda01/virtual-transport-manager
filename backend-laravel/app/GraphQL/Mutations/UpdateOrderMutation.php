@@ -138,13 +138,13 @@ class UpdateOrderMutation extends Mutation
             if ($needTruckPath) {
                 $pathMerge = array_merge($truckPathFromEdges, $pathFromEdges);
                 $roadTrip->km = $path['totalCost'] + $truckPath['totalCost'];
-                $roadTrip->time = $routes->sum('time') + $truckRoutes->sum('time');
+                $roadTrip->time = PathUtility::calculateRoadTripTime(($routes->sum('time') + $truckRoutes->sum('time')), $truck->drivers()->count());
                 $roadTrip->fees = $routes->sum('fee') + $truckRoutes->sum('fee');
                 $roadTrip->status = StatusUtility::ON_ROAD;
                 $roadTrip->routes = json_encode($pathMerge);
             } else {
                 $roadTrip->km = $path['totalCost'];
-                $roadTrip->time = $routes->sum('time');
+                $roadTrip->time = PathUtility::calculateRoadTripTime($routes->sum('time'), $truck->drivers()->count());
                 $roadTrip->fees = $routes->sum('fee');
                 $roadTrip->status = StatusUtility::ON_ROAD;
                 $roadTrip->routes = json_encode($pathFromEdges);
@@ -167,13 +167,11 @@ class UpdateOrderMutation extends Mutation
 
             return [
                 'order' => $order,
-                'roadTrip' => $roadTrip,
-                'driversCount' => $order->drivers()->count()
+                'roadTrip' => $roadTrip
             ];
         });
 
-        $timeInMinutes = PathUtility::calculateRoadTripTime($result['roadTrip']->time, $result['driversCount']);
-        QueueJobUtility::dispatch(new FinishOrder($result['order']), Carbon::parse(GameTimeUtility::addTimeToRealTime($timeInMinutes), 'Europe/Bratislava'));
+        QueueJobUtility::dispatch(new FinishOrder($result['order']), Carbon::parse(GameTimeUtility::addTimeToRealTime($result['roadTrip']->time), 'Europe/Bratislava'));
         $company = Company::currentCompany();
         BroadcastUtility::broadcast(new RefreshQuery($company, 'Order', $result['order']->id));
 

@@ -745,7 +745,8 @@
       "roadTrip_damageUnit": "%",
       "no_roadTrip": "Waiting for assign",
       "customer_from": "Customer from",
-      "customer_to": "Customer to"
+      "customer_to": "Customer to",
+      "roadTrip_arrival": "Expected arrival"
     },
     "no_orders": "No orders",
     "searchFields": {

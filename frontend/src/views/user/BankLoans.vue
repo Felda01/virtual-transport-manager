@@ -53,7 +53,7 @@
                                     <md-table-cell :md-label="$t('bankLoan.property.left_to_repay')">{{ leftToRepay(item) | currency(' ', 0, { thousandsSeparator: ' ' }) }} {{ $t('bankLoan.property.loanUnit') }}</md-table-cell>
                                     <md-table-cell :md-label="$t('bankLoan.property.duration')">{{ item.paid }} / {{ item.bankLoanType.period }}</md-table-cell>
                                     <md-table-cell :md-label="$t('bankLoan.property.installment')">{{ item.bankLoanType.payment }} {{ $t('bankLoan.property.installmentUnit') }}</md-table-cell>
-                                    <md-table-cell>
+                                    <md-table-cell v-if="hasPermission(constants.PERMISSION.MANAGE_SALARY)">
                                         <md-button class="md-success normal" @click="updateBankLoanModal(item)">{{ $t('bankLoan.property.repay') }}</md-button>
                                     </md-table-cell>
                                 </md-table-row>
