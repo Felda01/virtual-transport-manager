@@ -48,7 +48,6 @@ app.post('/dHJpcA', function (req, res) {
     } else {
         result = ksp.ksp(graph, loc_from, loc_to, 3);
         paths[loc_from + '-' + loc_to] = result;
-        paths[loc_to + '-' + loc_from] = result;
     }
 
     res.json({
