@@ -57,10 +57,10 @@ class GameTimeUtility
      * Return real time with game minutes
      *
      * @param $minutes
-     * @param string|null $time
+     * @param null $time
      * @return string
      */
-    public static function addTimeToRealTime($minutes, string $time = null)
+    public static function addTimeToRealTime($minutes, $time = null)
     {
         if ($time == null) {
             $time = Carbon::now(Config::get('app.timezone'));
