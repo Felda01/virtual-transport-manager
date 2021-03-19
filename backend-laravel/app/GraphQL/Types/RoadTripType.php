@@ -59,7 +59,10 @@ class RoadTripType extends GraphQLType
                     }
                     return '-';
                 }
-            ]
+            ],
+            'updated_at' => [
+                'type' => Type::string(),
+            ],
         ];
     }
 }

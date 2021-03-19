@@ -1069,6 +1069,8 @@ export const ORDERS_QUERY = gql`
                 roadTrip {
                     id
                     status
+                    time
+                    updated_at
                     arrival
                 }
                 drivers {
@@ -1218,6 +1220,8 @@ export const ORDER_QUERY = gql`
             roadTrip {
                 id
                 status
+                time
+                updated_at
                 arrival
             }
             drivers {
