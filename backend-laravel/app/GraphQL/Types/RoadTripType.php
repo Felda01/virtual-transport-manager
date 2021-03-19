@@ -54,7 +54,7 @@ class RoadTripType extends GraphQLType
                     /** @var RoadTrip $root  */
                     if ($root->time && $root->updated_at && $root->status === StatusUtility::ON_ROAD) {
                         $customTime = $root->time + random_int(0, 30) - 15;
-                        $time = GameTimeUtility::gameTime(GameTimeUtility::addTimeToRealTime($customTime, $root->updated_at->toDateTimeString()));
+                        $time = GameTimeUtility::gameTime(GameTimeUtility::addTimeToRealTime($customTime, Carbon::parse($root->updated_at, 'Europe/Bratislava')->toDateTimeString()));
                         return Carbon::parse($time, 'Europe/Bratislava')->format('d.m.Y H:i');
                     }
                     return '-';
