@@ -49,7 +49,7 @@ class Order extends Model
 {
     use HasFactory, HasUuid, LogsActivity, SoftDeletes;
 
-    const LAST_ORDERS_COUNT = 10;
+    const LAST_ORDERS_COUNT = 5;
 
     /**
      * The attributes that aren't mass assignable.

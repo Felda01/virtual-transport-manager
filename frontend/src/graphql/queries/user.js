@@ -672,26 +672,10 @@ export const TRUCK_QUERY = gql`
                 roadTrip {
                     id
                     status
-                }
-                drivers {
-                    id
-                    first_name
-                    last_name
-                }
-                truck {
-                    id
-                    truckModel {
-                        id
-                        brand
-                        name
-                    }
-                }
-                trailer {
-                    id
-                    trailerModel {
-                        id
-                        name
-                    }
+                    km
+                    time
+                    fees
+                    damage
                 }
             }
         }
@@ -800,26 +784,10 @@ export const TRAILER_QUERY = gql`
                 roadTrip {
                     id
                     status
-                }
-                drivers {
-                    id
-                    first_name
-                    last_name
-                }
-                truck {
-                    id
-                    truckModel {
-                        id
-                        brand
-                        name
-                    }
-                }
-                trailer {
-                    id
-                    trailerModel {
-                        id
-                        name
-                    }
+                    km
+                    time
+                    fees
+                    damage
                 }
             }
         }
@@ -960,26 +928,10 @@ export const DRIVER_QUERY = gql`
                 roadTrip {
                     id
                     status
-                }
-                drivers {
-                    id
-                    first_name
-                    last_name
-                }
-                truck {
-                    id
-                    truckModel {
-                        id
-                        brand
-                        name
-                    }
-                }
-                trailer {
-                    id
-                    trailerModel {
-                        id
-                        name
-                    }
+                    km
+                    time
+                    fees
+                    damage
                 }
             }
         }
@@ -1142,26 +1094,6 @@ export const DONE_ORDERS_QUERY = gql`
                     time
                     fees
                     damage
-                }
-                drivers {
-                    id
-                    first_name
-                    last_name
-                }
-                truck {
-                    id
-                    truckModel {
-                        id
-                        name
-                        brand
-                    }
-                }
-                trailer {
-                    id
-                    trailerModel {
-                        id
-                        name
-                    }
                 }
             }
             total
@@ -1508,6 +1440,12 @@ export const SCOREBOARD_QUERY = gql`
             money
             value
         }
+    }
+`;
+
+export const DASHBOARD_QUERY = gql`
+    query DashboardQuery {
+        dashboard
     }
 `;
 

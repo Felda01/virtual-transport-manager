@@ -164,6 +164,8 @@ return [
                 'conversation' => \App\GraphQL\Queries\ConversationQuery::class,
 
                 'scoreBoard' => \App\GraphQL\Queries\ScoreBoardQuery::class,
+
+                'dashboard' => \App\GraphQL\Queries\DashboardQuery::class,
             ],
             'mutation' => [
                 // 'example_mutation'  => ExampleMutation::class,

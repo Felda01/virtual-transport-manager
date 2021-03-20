@@ -32,9 +32,6 @@
                                     <md-table-cell :md-label="$t('order.relations.roadTrip_km')">{{ item.roadTrip.km }} {{ $t('order.relations.roadTrip_kmUnit') }}</md-table-cell>
                                     <md-table-cell :md-label="$t('order.relations.roadTrip_fees')">{{ item.roadTrip.fees }} {{ $t('order.relations.roadTrip_feesUnit') }}</md-table-cell>
                                     <md-table-cell :md-label="$t('order.relations.roadTrip_damage')">{{ item.roadTrip.damage }} {{ $t('order.relations.roadTrip_damageUnit') }}</md-table-cell>
-                                    <md-table-cell :md-label="$t('order.relations.drivers')"><template v-if="item.drivers && item.drivers.length > 0">{{ drivers(item.drivers) }}</template><template v-else>{{ $t('order.relations.no_drivers') }}</template></md-table-cell>
-                                    <md-table-cell :md-label="$t('order.relations.truck')"><template v-if="item.truck">{{ item.truck.truckModel.brand }} {{ item.truck.truckModel.name }}</template><template v-else>{{ $t('order.relations.no_truck') }}</template></md-table-cell>
-                                    <md-table-cell :md-label="$t('order.relations.trailer')"><template v-if="item.trailer">{{ item.trailer.trailerModel.name }}</template><template v-else>{{ $t('order.relations.no_trailer') }}</template></md-table-cell>
                                     <md-table-cell :md-label="$t('order.relations.location_from')">{{ item.market.locationFrom.name }} ({{ item.market.locationFrom.country.short_name | uppercase }})</md-table-cell>
                                     <md-table-cell :md-label="$t('order.relations.location_to')">{{ item.market.locationTo.name }} ({{ item.market.locationTo.country.short_name | uppercase }})</md-table-cell>
                                 </md-table-row>

@@ -158,7 +158,7 @@
                 },
                 pieChart: {
                     options: {
-                        height: "428px"
+                        height: "450px"
                     }
                 },
                 tooltipPayments: false,
@@ -335,7 +335,7 @@
             flex: 0 0 100%;
             padding: 12px 8px;
             display: flex;
-            justify-content: end;
+            justify-content: flex-end;
             align-items: baseline;
         }
     }

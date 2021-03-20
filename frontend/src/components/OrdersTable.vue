@@ -16,9 +16,9 @@
                         <md-table-cell :md-label="$t('order.relations.cargo_name')" class="td-name">{{ item.market.cargo.name }}</md-table-cell>
                         <md-table-cell :md-label="$t('order.relations.market_price')">{{ item.market.price | currency(' ', 2, { thousandsSeparator: ' ' }) }} {{ $t('market.property.priceUnit') }}</md-table-cell>
                         <md-table-cell :md-label="$t('order.relations.roadTrip_status')">{{ $t('status.' + item.roadTrip.status) }}</md-table-cell>
-                        <md-table-cell v-if="canShowColumn('drivers')" :md-label="$t('order.relations.drivers')">{{ drivers(item.drivers) }}</md-table-cell>
-                        <md-table-cell v-if="canShowColumn('truck')" :md-label="$t('order.relations.truck')">{{ item.truck.truckModel.brand }} {{ item.truck.truckModel.name }}</md-table-cell>
-                        <md-table-cell v-if="canShowColumn('trailer')" :md-label="$t('order.relations.trailer')">{{ item.trailer.trailerModel.name }}</md-table-cell>
+                        <md-table-cell :md-label="$t('order.relations.roadTrip_km')">{{ item.roadTrip.km }} {{ $t('order.relations.roadTrip_kmUnit') }}</md-table-cell>
+                        <md-table-cell :md-label="$t('order.relations.roadTrip_fees')">{{ item.roadTrip.fees }} {{ $t('order.relations.roadTrip_feesUnit') }}</md-table-cell>
+                        <md-table-cell :md-label="$t('order.relations.roadTrip_damage')">{{ item.roadTrip.damage }} {{ $t('order.relations.roadTrip_damageUnit') }}</md-table-cell>
                         <md-table-cell :md-label="$t('order.relations.location_from')">{{ item.market.locationFrom.name }} ({{ item.market.locationFrom.country.short_name | uppercase }})</md-table-cell>
                         <md-table-cell :md-label="$t('order.relations.location_to')">{{ item.market.locationTo.name }} ({{ item.market.locationTo.country.short_name | uppercase }})</md-table-cell>
                     </md-table-row>
@@ -39,9 +39,6 @@
             'hiddenColumn'
         ],
         methods: {
-            canShowColumn(column) {
-                return this.hiddenColumn ? this.hiddenColumn === column : true;
-            },
             drivers(drivers) {
                 let result = [];
 
