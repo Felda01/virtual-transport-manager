@@ -102,7 +102,7 @@
                         }),
                         axisY: {
                             showGrid: true,
-                            offset: 30
+                            offset: 60
                         },
                         axisX: {
                             showGrid: false
