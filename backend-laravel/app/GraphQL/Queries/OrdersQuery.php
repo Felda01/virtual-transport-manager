@@ -101,6 +101,7 @@ class OrdersQuery extends Query
 
         return $query->with($with)
             ->select($select)
+            ->orderBy('updated_at', 'DESC')
             ->paginate($args['limit'], ['*'], 'page', $args['page']);
     }
 }
