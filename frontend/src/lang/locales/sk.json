@@ -528,7 +528,8 @@
       "max_price": "Maximálna cena",
       "max_priceUnit": "€",
       "own_trailer": "Vlastný náves",
-      "image": "Obrázok"
+      "image": "Obrázok",
+      "trailer_models": "Typy návesov"
     },
     "additionalLabelText": {
       "engine_power": "(v hp)",

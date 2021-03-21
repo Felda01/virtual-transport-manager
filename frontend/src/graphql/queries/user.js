@@ -974,6 +974,10 @@ export const MARKETS_QUERY = gql`
                     weight
                     engine_power
                     chassis
+                    trailerModels {
+                        id
+                        type
+                    }
                 }
             }
             total

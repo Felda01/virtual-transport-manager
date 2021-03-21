@@ -528,7 +528,8 @@
       "max_price": "Max price",
       "max_priceUnit": "€",
       "own_trailer": "Own trailer",
-      "image": "Image"
+      "image": "Image",
+      "trailer_models": "Trailer types"
     },
     "additionalLabelText": {
       "engine_power": "(in hp)",

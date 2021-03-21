@@ -36,6 +36,7 @@
                                     <md-table-cell :md-label="$t('cargo.property.weight')">{{ item.cargo.weight | currency(' ', 0, { thousandsSeparator: ' ' }) }} {{ $t('cargo.property.weightUnit') }}</md-table-cell>
                                     <md-table-cell :md-label="$t('cargo.property.engine_power')">{{ item.cargo.engine_power }}  {{ $t('cargo.property.engine_powerUnit') }}</md-table-cell>
                                     <md-table-cell :md-label="$t('cargo.property.chassis')">{{ item.cargo.chassis }}</md-table-cell>
+                                    <md-table-cell :md-label="$t('cargo.property.trailer_models')">{{ cargoTrailerModels(item.cargo.trailerModels) }}</md-table-cell>
                                 </md-table-row>
                             </md-table>
                         </md-card-content>
@@ -328,6 +329,15 @@
 
                 this.$apollo.queries.markets.refresh();
             },
+            cargoTrailerModels(trailerModels) {
+                let result = [];
+
+                for (let trailerModel of trailerModels) {
+                    result.push(trailerModel.type);
+                }
+
+                return this._.uniq(result).join(', ');
+            }
         },
         mounted() {
             EventBus.$on('refreshMarket', () => {
