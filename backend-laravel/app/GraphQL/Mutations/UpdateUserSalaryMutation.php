@@ -51,6 +51,7 @@ class UpdateUserSalaryMutation extends Mutation
             ],
             'salary' => [
                 'required',
+                'numeric',
                 'min:0'
             ],
             'roles' => [

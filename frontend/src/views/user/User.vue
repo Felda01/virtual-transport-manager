@@ -360,7 +360,7 @@
                 this.modalSchemaUpdateUserSalary.form.fields = [
                     {
                         label: this.$t('user.property.salary'),
-                        rules: 'required|min:0',
+                        rules: 'required|min_integer:0',
                         name: 'salary',
                         input: 'text',
                         type: 'text',
