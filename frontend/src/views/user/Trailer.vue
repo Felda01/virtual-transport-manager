@@ -89,7 +89,7 @@
                                         {{ $t('trailer.relations.no_truck') }}
                                     </md-table-empty-state>
                                 </md-table>
-                                <template v-if="hasPermission(constants.PERMISSION.MANAGE_VEHICLES)">
+                                <template v-if="hasPermission(constants.PERMISSION.MANAGE_VEHICLES) && [constants.STATUS.ON_DUTY, constants.STATUS.IDLE].includes(trailer.status)">
                                     <div class="text-center mt-3" v-if="!trailer.truck">
                                         <template v-if="this.availableTrucksInGarage && this.availableTrucksInGarage.data && this.availableTrucksInGarage.data.length > 0">
                                             <md-button class="md-success md-simple" @click="assignTruckToTrailerModal"><md-icon>add</md-icon>{{ $t('detail.btn.assign') }}</md-button>

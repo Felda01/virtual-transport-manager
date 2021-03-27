@@ -91,7 +91,7 @@
                                         {{ $t('truck.relations.no_drivers') }}
                                     </md-table-empty-state>
                                 </md-table>
-                                <template v-if="hasPermission(constants.PERMISSION.MANAGE_VEHICLES) && hasPermission(constants.PERMISSION.MANAGE_DRIVERS)">
+                                <template v-if="hasPermission(constants.PERMISSION.MANAGE_VEHICLES) && hasPermission(constants.PERMISSION.MANAGE_DRIVERS) && [constants.STATUS.ON_DUTY, constants.STATUS.IDLE].includes(truck.status)">
                                     <div class="text-center mt-3" v-if="!truck.drivers || truck.drivers.length < 2">
                                         <template v-if="this.availableDriversInGarage && this.availableDriversInGarage.data && this.availableDriversInGarage.data.length > 0">
                                             <md-button class="md-success md-simple" @click="assignDriverToTruckModal"><md-icon>add</md-icon>{{ $t('detail.btn.assign') }}</md-button>
@@ -129,7 +129,7 @@
                                         {{ $t('truck.relations.no_trailer') }}
                                     </md-table-empty-state>
                                 </md-table>
-                                <template v-if="hasPermission(constants.PERMISSION.MANAGE_VEHICLES)">
+                                <template v-if="hasPermission(constants.PERMISSION.MANAGE_VEHICLES) && [constants.STATUS.ON_DUTY, constants.STATUS.IDLE].includes(truck.status)">
                                     <div class="text-center mt-3" v-if="!truck.trailer">
                                         <template v-if="this.availableTrailersInGarage && this.availableTrailersInGarage.data && this.availableTrailersInGarage.data.length > 0">
                                             <md-button class="md-success md-simple" @click="assignTrailerToTruckModal"><md-icon>add</md-icon>{{ $t('detail.btn.assign') }}</md-button>
@@ -232,7 +232,7 @@
             },
             canUnassignTrailer() {
                 return (this.truck && this.truck.drivers && this.truck.drivers.length === 0) || (this.truck && this.truck.drivers && this.truck.drivers.length > 0 && this.truck.drivers[0] && !this.truck.drivers[0].sleep && [this.constants.STATUS.READY, this.constants.STATUS.IDLE].includes(this.truck.drivers[0].status))
-            },
+            }
         },
         data() {
             return {
