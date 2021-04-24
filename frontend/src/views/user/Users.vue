@@ -11,14 +11,15 @@
             </content-placeholders>
         </template>
         <template v-else>
-            <div class="md-layout-item md-size-100 mb-3">
-                <search-form :search-schema="searchSchema" v-model="searchModel"></search-form>
-            </div>
             <div class="md-layout-item md-size-100 mb-5">
                 <md-button @click="addUserModal" class="md-success">
                     <md-icon>add</md-icon> {{ $t('user.register') }}
                 </md-button>
             </div>
+            <div class="md-layout-item md-size-100 mb-3">
+                <search-form :search-schema="searchSchema" v-model="searchModel"></search-form>
+            </div>
+
             <template v-if="users.data && users.data.length > 0">
                 <div class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-25 mb-4" v-for="(user, index) in users.data" :key="index">
                     <md-card class="md-card-profile" >

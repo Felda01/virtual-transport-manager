@@ -4,7 +4,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/.htaccess"
   },
   {
-    "revision": "1055a2520817be286b73",
+    "revision": "7f324f8e5c2a82d3307e",
     "url": "/css/app.9bc52c46.css"
   },
   {
@@ -36,16 +36,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/css/chunk-234a66c0.e07e5673.css"
   },
   {
-    "revision": "415d6e3dc1ef496e0aea",
-    "url": "/css/chunk-373ab5e0.f7f40ac0.css"
-  },
-  {
     "revision": "f2891daf2cdea148749e",
     "url": "/css/chunk-3be2e3ca.84834687.css"
   },
   {
     "revision": "ca65b871c1d202227a71",
     "url": "/css/chunk-41168347.ee60d509.css"
+  },
+  {
+    "revision": "1d0ac8daa74d70b18678",
+    "url": "/css/chunk-453edb80.82e33f6a.css"
   },
   {
     "revision": "e88472b7afdc48a97971",
@@ -200,12 +200,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/img/vue-logo.png"
   },
   {
-    "revision": "ae828f7790ac0a37c7f15d23d71e415c",
+    "revision": "e244aa63c0f75d16a1bf55c5f23a170b",
     "url": "/index.html"
   },
   {
-    "revision": "1055a2520817be286b73",
-    "url": "/js/app.0a39b599.js"
+    "revision": "7f324f8e5c2a82d3307e",
+    "url": "/js/app.c31af5d4.js"
   },
   {
     "revision": "d7f91965dba4247ce9d5",
@@ -308,10 +308,6 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/js/chunk-2d2371b2.ca13e7d4.js"
   },
   {
-    "revision": "415d6e3dc1ef496e0aea",
-    "url": "/js/chunk-373ab5e0.4899903e.js"
-  },
-  {
     "revision": "f2891daf2cdea148749e",
     "url": "/js/chunk-3be2e3ca.51413a07.js"
   },
@@ -322,6 +318,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "ccf9090c09c72ceb8572",
     "url": "/js/chunk-41ba2243.a9c87a28.js"
+  },
+  {
+    "revision": "1d0ac8daa74d70b18678",
+    "url": "/js/chunk-453edb80.ad0752c7.js"
   },
   {
     "revision": "92136c422a59393f1ccb",
